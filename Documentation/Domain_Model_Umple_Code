@@ -1,0 +1,117 @@
+class GymUser
+{
+  name;
+email;
+password;
+  * -> * Person;
+abstract;
+}
+
+class Customer
+{
+  isA GymUser;
+  Integer customerId;
+
+  * customers -<@> 1 SportsRegistrationSystem;
+}
+
+// Is there a need for staff?
+class Staff  
+{
+  abstract;
+  isA GymUser;
+}
+
+class Instructor
+{
+  isA Staff;
+  Integer intructorId;
+  * instructors -<@> 1 SportsRegistrationSystem;
+}
+
+class Owner
+{
+  isA Staff;
+  1 -- 1 Schedule;
+  Integer ownerId;
+  * owner -<@> 1 SportsRegistrationSystem;
+
+}
+
+class Schedule
+{
+  1 <- * Session;
+  * schedule -<@> 1 SportsRegistrationSystem;
+  
+}
+
+//Registration class for clients
+// => those that want to participate in a session
+// => includes all users (instead of switching accounts)
+class CustomerRegistration
+{
+  Integer id;
+Date date;
+* -> 1 Session;
+  * -> 1 Customer;
+  * customerRegistrations-<@> 1 SportsRegistrationSystem;
+
+}
+
+// start and end Times included as fields.
+// Use 1h duration for all?
+class Session
+{
+  Integer id;
+  Date date;
+  Time startTime;
+  Time endTime;
+  String description;
+  String name;
+  String location; 
+  * sessions -<@> 1 SportsRegistrationSystem;
+
+}
+
+class InstructorRegistration
+{
+  Integer id;
+Date date;
+* -> 1 Instructor;
+  * -> 1 Session;
+  * instructorRegistrations -<@> 1 SportsRegistrationSystem;
+
+}
+
+class ClassType
+{
+  1 <- * ClassTypeProposal;
+  1 <- * Session;
+  Integer id; // Necessary?? can use name for PK?
+  String name;
+  * classTypes -<@> 1 SportsRegistrationSystem;
+
+  
+}
+
+class ClassTypeProposal
+{
+  Integer id;
+name;
+* -> 1 Instructor;
+  * -> 1 Owner ;
+   * classTypeProposals-<@> 1 SportsRegistrationSystem;
+
+  
+}
+
+class Person
+{
+    * persons -<@> 1 SportsRegistrationSystem;
+
+}
+class SportsRegistrationSystem
+{
+
+}
+
