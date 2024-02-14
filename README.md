@@ -1,4 +1,5 @@
 # Project Group 3
+## Deliverable 1:
 | Member            | Responsibilities                     | Hours Worked |
 | ----------------- | ------------------------------------ | ------------ |
 | Erik Cupsa        | Build Persistence and Write Tests    |              |
