@@ -1,4 +1,8 @@
 # Project Group 3
+
+## Project Overview
+Our group has been tasked with creating a digital management system for a local gym.
+
 ## Deliverable 1:
 | Member            | Responsibilities                     | Hours Worked |
 | ----------------- | ------------------------------------ | ------------ |
