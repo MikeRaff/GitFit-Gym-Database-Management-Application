@@ -1,6 +1,6 @@
 class GymUser
 {
-  name;
+  
 email;
 password;
   * -> * Person;
@@ -12,8 +12,7 @@ class Customer
   isA GymUser;
   Integer customerId;
 
-  * customers -<@> 1 SportsRegistrationSystem;
-}
+  }
 
 // Is there a need for staff?
 class Staff  
@@ -26,15 +25,14 @@ class Instructor
 {
   isA Staff;
   Integer intructorId;
-  * instructors -<@> 1 SportsRegistrationSystem;
-}
+  }
 
 class Owner
 {
   isA Staff;
-  1 -- 1 Schedule;
+ 
   Integer ownerId;
-  * owner -<@> 1 SportsRegistrationSystem;
+ 
 
 }
 
@@ -45,6 +43,7 @@ class Schedule
   1 <- * Session;
   * schedule -<@> 1 SportsRegistrationSystem;
   
+  1 <- * Staff;
 }
 
 //Registration class for clients
@@ -109,6 +108,7 @@ name;
 
 class Person
 {
+  	name;
     * persons -<@> 1 SportsRegistrationSystem;
 
 }
