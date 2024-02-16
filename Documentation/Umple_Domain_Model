@@ -3,48 +3,34 @@ class GymUser
   
 email;
 password;
-  * -> * Person;
+Integer id;
+  
 abstract;
 }
 
 class Customer
 {
   isA GymUser;
-  Integer customerId;
-
-  }
+  Integer CreditCardNumber;
+ 
+}
 
 // Is there a need for staff?
-class Staff  
-{
-  abstract;
-  isA GymUser;
-}
+
 
 class Instructor
 {
-  isA Staff;
-  Integer intructorId;
+  isA GymUser;
+
   }
 
 class Owner
 {
-  isA Staff;
- 
-  Integer ownerId;
- 
-
-}
-
-class Schedule
-{
-  int openTime;
-  int closeTime; 
-  1 <- * Session;
-  * schedule -<@> 1 SportsRegistrationSystem;
+  isA GymUser;
   
-  1 <- * Staff;
 }
+
+
 
 //Registration class for clients
 // => those that want to participate in a session
@@ -52,11 +38,9 @@ class Schedule
 class CustomerRegistration
 {
   Integer id;
-Date date;
-* -> 1 Session;
+  Date date;
+  * -> 1 Session;
   * -> 1 Customer;
- 
-
 }
 
 // start and end Times included as fields.
@@ -70,8 +54,7 @@ class Session
   String description;
   String name;
   String location; 
-  Time openingTime;
-  Time closingTime;
+  * Session -<@> 1 SportsRegistrationSystem;
   
 }
 
@@ -87,33 +70,25 @@ Date date;
 
 class ClassType
 {
-  1 <- * ClassTypeProposal;
   1 <- * Session;
   Integer id; // Necessary?? can use name for PK?
   String name;
- 
+  Boolean isApproved;
 
   
 }
 
-class ClassTypeProposal
-{
-  Integer id;
-name;
-* -> 1 Instructor;
-  * -> 1 Owner ;
-   
 
-  
-}
 
 class Person
 {
   	name;
     * persons -<@> 1 SportsRegistrationSystem;
+  	1 -> 1..3 GymUser;
 
 }
 class SportsRegistrationSystem
 {
-
+ Time openingTime;
+  Time closingTime;
 }
