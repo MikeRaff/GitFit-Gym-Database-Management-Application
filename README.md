@@ -18,8 +18,8 @@ In this project, our team of software developers was tasked with creating a web 
 
 [Requirements](https://github.com/McGill-ECSE321-Winter2024/project-group-3/wiki/Requirements#:~:text=Domain%20Model-,Requirements,-Functional%20Requirements)
 
-[Domain Model](https://github.com/McGill-ECSE321-Winter2024/project-group-3/wiki/Requirements#:~:text=Meetings%20and%20Effort-,Domain%20Model,-Requirements)
+[Domain Model](https://github.com/McGill-ECSE321-Winter2024/project-group-3/wiki/Domain-Model)
 
-[Use Case Diagrams](https://github.com/McGill-ECSE321-Winter2024/project-group-3/wiki/Requirements#:~:text=Use%20Cases%20and%20Diagrams)
+[Use Case Diagrams](https://github.com/McGill-ECSE321-Winter2024/project-group-3/wiki/Use-Cases-and-Diagrams)
 
 
