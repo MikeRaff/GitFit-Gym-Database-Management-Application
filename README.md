@@ -12,5 +12,6 @@ In this project, our team of software developers was tasked with creating a web 
 | Michael Rafferty  | Electrical Engineering    |              |
 | Bill Zimmerman    | Computer Engineering |    U2          |
 
-## Deliverable 1:
+## Deliverable 1 Overview:
 
+https://github.com/McGill-ECSE321-Winter2024/project-group-3/wiki/Deliverable-1-Meetings-and-Effort#effort-and-responsibilities:~:text=Home-,Deliverable%201%20Meetings%20and%20Effort,-Effort%20and%20Responsibilities
