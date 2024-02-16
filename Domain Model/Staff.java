@@ -1,16 +1,12 @@
-/*PLEASE DO NOT EDIT THIS CODE*/
-/*This code was generated using the UMPLE 1.33.0.6934.a386b0a58 modeling language!*/
+package ca.mcgill.ecse321.gymregistration.model;
 
+import jakarta.persistence.*;
 
-import java.util.*;
-
-/**
- * Is there a need for staff?
- */
-// line 19 "model.ump"
-// line 137 "model.ump"
-public abstract class Staff extends GymUser
-{
+@MappedSuperclass
+public abstract class Staff extends GymUser{
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @ManyToOne
+    private Schedule schedule;
 
   //------------------------
   // MEMBER VARIABLES
@@ -23,9 +19,9 @@ public abstract class Staff extends GymUser
   // CONSTRUCTOR
   //------------------------
 
-  public Staff(String aEmail, String aPassword, Schedule aSchedule)
+  public Staff(String aEmail, String aPassword, int aID, Schedule aSchedule)
   {
-    super(aEmail, aPassword);
+    super(aEmail, aPassword, aID);
     if (!setSchedule(aSchedule))
     {
       throw new RuntimeException("Unable to create Staff due to aSchedule. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");

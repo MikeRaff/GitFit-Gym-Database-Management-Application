@@ -1,38 +1,39 @@
+/*PLEASE DO NOT EDIT THIS CODE*/
+/*This code was generated using the UMPLE 1.33.0.6934.a386b0a58 modeling language!*/
+
 package ca.mcgill.ecse321.gymregistration.model;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
 
+/**
+ * Is there a need for staff?
+ */
+// line 22 "model.ump"
+// line 111 "model.ump"
 @Entity
-public class Instructor extends Staff{
-    @Id
-    private int instructorId;
+public class Instructor extends GymUser
+{
 
-    public Instructor(String aEmail, String aPassword, Schedule schedule, int instructorId) {
-        super(aEmail, aPassword, schedule);
-        this.instructorId = instructorId;
-    }
+  //------------------------
+  // MEMBER VARIABLES
+  //------------------------
 
-    public Instructor() {
-    }
+  //------------------------
+  // CONSTRUCTOR
+  //------------------------
 
-    public void delete()
-    {
-        super.delete();
-    }
+  public Instructor(String aEmail, String aPassword, int aId)
+  {
+    super(aEmail, aPassword, aId);
+  }
 
-    public int getInstructorId() {
-        return instructorId;
-    }
+  //------------------------
+  // INTERFACE
+  //------------------------
 
-    public void setInstructorId(int instructorId) {
-        this.instructorId = instructorId;
-    }
+  public void delete()
+  {
+    super.delete();
+  }
 
-    @Override
-    public String toString() {
-        return "Instructor{" +
-                "instructorId=" + instructorId +
-                '}';
-    }
 }

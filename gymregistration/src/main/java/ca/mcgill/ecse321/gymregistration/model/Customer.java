@@ -1,40 +1,58 @@
+/*PLEASE DO NOT EDIT THIS CODE*/
+/*This code was generated using the UMPLE 1.33.0.6934.a386b0a58 modeling language!*/
 package ca.mcgill.ecse321.gymregistration.model;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
 
+// line 12 "model.ump"
+// line 106 "model.ump"
 @Entity
-public class Customer extends GymUser{
-    @Id
-    private int customerId;
+public class Customer extends GymUser
+{
 
-    public Customer(String aEmail, String aPassword, int aCustomerId)
-    {
-        super(aEmail, aPassword);
-        this.customerId = aCustomerId;
-    }
+  //------------------------
+  // MEMBER VARIABLES
+  //------------------------
 
-    public Customer() {
-        super();
-    }
+  //Customer Attributes
+  private int CreditCardNumber;
 
-    public int getCustomerId() {
-        return customerId;
-    }
+  //------------------------
+  // CONSTRUCTOR
+  //------------------------
 
-    public void setCustomerId(int customerId) {
-        this.customerId = customerId;
-    }
+  public Customer(String aEmail, String aPassword, int aId, int aCreditCardNumber)
+  {
+    super(aEmail, aPassword, aId);
+    CreditCardNumber = aCreditCardNumber;
+  }
 
-    public void delete()
-    {
-        super.delete();
-    }
+  //------------------------
+  // INTERFACE
+  //------------------------
 
-    @Override
-    public String toString() {
-        return "Customer{" +
-                "customerId=" + customerId +
-                '}';
-    }
+  public boolean setCreditCardNumber(int aCreditCardNumber)
+  {
+    boolean wasSet = false;
+    CreditCardNumber = aCreditCardNumber;
+    wasSet = true;
+    return wasSet;
+  }
+
+  public int getCreditCardNumber()
+  {
+    return CreditCardNumber;
+  }
+
+  public void delete()
+  {
+    super.delete();
+  }
+
+
+  public String toString()
+  {
+    return super.toString() + "["+
+            "CreditCardNumber" + ":" + getCreditCardNumber()+ "]";
+  }
 }

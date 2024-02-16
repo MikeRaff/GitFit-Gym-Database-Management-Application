@@ -1,76 +1,130 @@
+/*PLEASE DO NOT EDIT THIS CODE*/
+/*This code was generated using the UMPLE 1.33.0.6934.a386b0a58 modeling language!*/
 package ca.mcgill.ecse321.gymregistration.model;
+
+
+import java.sql.Date;
+
+import org.hibernate.annotations.ManyToAny;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 
-import java.sql.Date;
-
+// line 62 "model.ump"
+// line 135 "model.ump"
 @Entity
-public class InstructorRegistration {
-    @Id
-    private int id;
-    private Date date;
-    @ManyToOne
-    private Instructor instructor;
-    @ManyToOne
-    private Session session;
+public class InstructorRegistration
+{
 
-    public InstructorRegistration(int id, Date date, Instructor instructor, Session session) {
-        this.id = id;
-        this.date = date;
-        this.instructor = instructor;
-        this.session = session;
-    }
+  //------------------------
+  // MEMBER VARIABLES
+  //------------------------
 
-    public InstructorRegistration() {
-    }
+  //InstructorRegistration Attributes
+  @Id
+  private Integer id;
+  private Date date;
 
-    public int getId() {
-        return id;
-    }
+  //InstructorRegistration Associations
+  @ManyToOne
+  private Instructor instructor;
+  @ManyToOne
+  private Session session;
 
-    public void setId(int id) {
-        this.id = id;
-    }
+  //------------------------
+  // CONSTRUCTOR
+  //------------------------
 
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
-    public Instructor getInstructor() {
-        return instructor;
-    }
-
-    public void setInstructor(Instructor instructor) {
-        this.instructor = instructor;
-    }
-
-    public Session getSession() {
-        return session;
-    }
-
-    public void setSession(Session session) {
-        this.session = session;
-    }
-
-    public void delete()
+  public InstructorRegistration(int aId, Date aDate, Instructor aInstructor, Session aSession)
+  {
+    id = aId;
+    date = aDate;
+    if (!setInstructor(aInstructor))
     {
-        instructor = null;
-        session = null;
+      throw new RuntimeException("Unable to create InstructorRegistration due to aInstructor. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
     }
+    if (!setSession(aSession))
+    {
+      throw new RuntimeException("Unable to create InstructorRegistration due to aSession. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
+    }
+  }
 
-    @Override
-    public String toString() {
-        return "InstructorRegistration{" +
-                "id=" + id +
-                ", date=" + date +
-                ", instructor=" + instructor +
-                ", session=" + session +
-                '}';
+  //------------------------
+  // INTERFACE
+  //------------------------
+
+  public boolean setId(int aId)
+  {
+    boolean wasSet = false;
+    id = aId;
+    wasSet = true;
+    return wasSet;
+  }
+
+  public boolean setDate(Date aDate)
+  {
+    boolean wasSet = false;
+    date = aDate;
+    wasSet = true;
+    return wasSet;
+  }
+
+  public int getId()
+  {
+    return id;
+  }
+
+  public Date getDate()
+  {
+    return date;
+  }
+  /* Code from template association_GetOne */
+  public Instructor getInstructor()
+  {
+    return instructor;
+  }
+  /* Code from template association_GetOne */
+  public Session getSession()
+  {
+    return session;
+  }
+  /* Code from template association_SetUnidirectionalOne */
+  public boolean setInstructor(Instructor aNewInstructor)
+  {
+    boolean wasSet = false;
+    if (aNewInstructor != null)
+    {
+      instructor = aNewInstructor;
+      wasSet = true;
     }
+    return wasSet;
+  }
+  /* Code from template association_SetUnidirectionalOne */
+  public boolean setSession(Session aNewSession)
+  {
+    boolean wasSet = false;
+    if (aNewSession != null)
+    {
+      session = aNewSession;
+      wasSet = true;
+    }
+    return wasSet;
+  }
+
+  public void delete()
+  {
+    instructor = null;
+    session = null;
+  }
+
+
+  public String toString()
+  {
+    return super.toString() + "["+
+            "id" + ":" + getId()+ "]" + System.getProperties().getProperty("line.separator") +
+            "  " + "date" + "=" + (getDate() != null ? !getDate().equals(this)  ? getDate().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
+            "  " + "instructor = "+(getInstructor()!=null?Integer.toHexString(System.identityHashCode(getInstructor())):"null") + System.getProperties().getProperty("line.separator") +
+            "  " + "session = "+(getSession()!=null?Integer.toHexString(System.identityHashCode(getSession())):"null");
+  }
 }
