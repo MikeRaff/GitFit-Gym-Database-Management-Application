@@ -7,8 +7,8 @@ In this project, our team of software developers was tasked with creating a web 
 | Member            | Major   |  Year |
 | ----------------- | ------------------------------------ | ------------ |
 | Erik Cupsa        | Computer Engineering |   U2          |
-| Jerome Desrosiers |                                      |   U          |
-| Paul Kevorkov     | Computer Engineering                |    U         |
+| Jerome Desrosiers | Computer Engineering |   U2          |
+| Paul Kevorkov     | Computer Engineering |   U2          |
 | Michael Rafferty  | Electrical Engineering    |    U3        |
 | Bill Zimmerman    | Computer Engineering |    U2          |
 
