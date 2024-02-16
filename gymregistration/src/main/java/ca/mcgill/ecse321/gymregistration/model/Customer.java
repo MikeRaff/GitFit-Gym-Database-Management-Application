@@ -6,5 +6,35 @@ import jakarta.persistence.Id;
 @Entity
 public class Customer extends GymUser{
     @Id
-    private Long customerId;
+    private int customerId;
+
+    public Customer(String aEmail, String aPassword, int aCustomerId)
+    {
+        super(aEmail, aPassword);
+        this.customerId = aCustomerId;
+    }
+
+    public Customer() {
+        super();
+    }
+
+    public int getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(int customerId) {
+        this.customerId = customerId;
+    }
+
+    public void delete()
+    {
+        super.delete();
+    }
+
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "customerId=" + customerId +
+                '}';
+    }
 }
