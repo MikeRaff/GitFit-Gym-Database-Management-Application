@@ -4,14 +4,16 @@
 package ca.mcgill.ecse321.gymregistration.model;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.Inheritance;
-import jakarta.persistence.InheritanceType;
+
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.MappedSuperclass;
 
 // line 2 "model.ump"
-// line 100 "model.ump"
-@Entity
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+// line 101 "model.ump"
+@MappedSuperclass
 public abstract class GymUser
 {
 
@@ -23,17 +25,26 @@ public abstract class GymUser
   private String email;
   private String password;
   @Id
-  private int id;
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  private Integer id;
+
+  //GymUser Associations
+  @ManyToOne
+  private Person person;
 
   //------------------------
   // CONSTRUCTOR
   //------------------------
 
-  public GymUser(String aEmail, String aPassword, int aId)
+  public GymUser(String aEmail, String aPassword, int aId, Person aPerson)
   {
     email = aEmail;
     password = aPassword;
     id = aId;
+    if (!setPerson(aPerson))
+    {
+      throw new RuntimeException("Unable to create GymUser due to aPerson. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
+    }
   }
 
   //------------------------
@@ -78,9 +89,27 @@ public abstract class GymUser
   {
     return id;
   }
+  /* Code from template association_GetOne */
+  public Person getPerson()
+  {
+    return person;
+  }
+  /* Code from template association_SetUnidirectionalOne */
+  public boolean setPerson(Person aNewPerson)
+  {
+    boolean wasSet = false;
+    if (aNewPerson != null)
+    {
+      person = aNewPerson;
+      wasSet = true;
+    }
+    return wasSet;
+  }
 
   public void delete()
-  {}
+  {
+    person = null;
+  }
 
 
   public String toString()
@@ -88,6 +117,7 @@ public abstract class GymUser
     return super.toString() + "["+
             "email" + ":" + getEmail()+ "," +
             "password" + ":" + getPassword()+ "," +
-            "id" + ":" + getId()+ "]";
+            "id" + ":" + getId()+ "]" + System.getProperties().getProperty("line.separator") +
+            "  " + "person = "+(getPerson()!=null?Integer.toHexString(System.identityHashCode(getPerson())):"null");
   }
 }

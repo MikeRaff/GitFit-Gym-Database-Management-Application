@@ -9,7 +9,7 @@ import jakarta.persistence.Entity;
  * Is there a need for staff?
  */
 // line 22 "model.ump"
-// line 111 "model.ump"
+// line 112 "model.ump"
 @Entity
 public class Instructor extends GymUser
 {
@@ -22,9 +22,9 @@ public class Instructor extends GymUser
   // CONSTRUCTOR
   //------------------------
 
-  public Instructor(String aEmail, String aPassword, int aId)
+  public Instructor(String aEmail, String aPassword, int aId, Person aPerson)
   {
-    super(aEmail, aPassword, aId);
+    super(aEmail, aPassword, aId, aPerson);
   }
 
   //------------------------

@@ -1,15 +1,12 @@
+/*PLEASE DO NOT EDIT THIS CODE*/
+/*This code was generated using the UMPLE 1.33.0.6934.a386b0a58 modeling language!*/
 package ca.mcgill.ecse321.gymregistration.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 
-/*PLEASE DO NOT EDIT THIS CODE*/
-/*This code was generated using the UMPLE 1.33.0.6934.a386b0a58 modeling language!*/
-
-
-
-// line 72 "model.ump"
-// line 142 "model.ump"
+// line 73 "model.ump"
+// line 143 "model.ump"
 @Entity
 public class ClassType
 {
@@ -89,7 +86,7 @@ public class ClassType
   public void delete()
   {}
 
-  @Override
+
   public String toString()
   {
     return super.toString() + "["+

@@ -5,14 +5,13 @@ package ca.mcgill.ecse321.gymregistration.model;
 
 import java.sql.Date;
 
-import org.hibernate.annotations.ManyToAny;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 
-// line 62 "model.ump"
-// line 135 "model.ump"
+// line 63 "model.ump"
+// line 136 "model.ump"
 @Entity
 public class InstructorRegistration
 {
@@ -23,7 +22,7 @@ public class InstructorRegistration
 
   //InstructorRegistration Attributes
   @Id
-  private Integer id;
+  private int id;
   private Date date;
 
   //InstructorRegistration Associations

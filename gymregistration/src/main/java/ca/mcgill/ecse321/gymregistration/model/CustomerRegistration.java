@@ -15,7 +15,7 @@ import jakarta.persistence.ManyToOne;
  * => includes all users (instead of switching accounts)
  */
 // line 39 "model.ump"
-// line 122 "model.ump"
+// line 123 "model.ump"
 @Entity
 public class CustomerRegistration
 {
