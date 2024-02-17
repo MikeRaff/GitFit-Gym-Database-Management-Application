@@ -3,6 +3,7 @@
 package ca.mcgill.ecse321.gymregistration.model;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 
 // line 85 "model.ump"
@@ -17,6 +18,7 @@ public class Person
 
   //Person Attributes
   @Id
+  @GeneratedValue
   private Integer id;
   private String name;
 

@@ -22,9 +22,9 @@ public class Instructor extends GymUser
   // CONSTRUCTOR
   //------------------------
 
-  public Instructor(String aEmail, String aPassword, int aId, Person aPerson)
+  public Instructor(String aEmail, String aPassword, Person aPerson)
   {
-    super(aEmail, aPassword, aId, aPerson);
+    super(aEmail, aPassword, aPerson);
   }
 
   //------------------------

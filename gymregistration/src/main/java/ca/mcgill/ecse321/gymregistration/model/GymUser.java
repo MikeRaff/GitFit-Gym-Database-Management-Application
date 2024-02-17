@@ -3,7 +3,6 @@
 
 package ca.mcgill.ecse321.gymregistration.model;
 
-import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -36,11 +35,11 @@ public abstract class GymUser
   // CONSTRUCTOR
   //------------------------
 
-  public GymUser(String aEmail, String aPassword, int aId, Person aPerson)
+  public GymUser(String aEmail, String aPassword, Person aPerson)
   {
     email = aEmail;
     password = aPassword;
-    id = aId;
+    
     if (!setPerson(aPerson))
     {
       throw new RuntimeException("Unable to create GymUser due to aPerson. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");

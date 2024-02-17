@@ -18,9 +18,9 @@ public class Owner extends GymUser
   // CONSTRUCTOR
   //------------------------
 
-  public Owner(String aEmail, String aPassword, int aId, Person aPerson)
+  public Owner(String aEmail, String aPassword, Person aPerson)
   {
-    super(aEmail, aPassword, aId, aPerson);
+    super(aEmail, aPassword, aPerson);
   }
 
   //------------------------

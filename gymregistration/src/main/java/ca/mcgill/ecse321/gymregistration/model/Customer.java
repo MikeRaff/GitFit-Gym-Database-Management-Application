@@ -21,9 +21,9 @@ public class Customer extends GymUser
   // CONSTRUCTOR
   //------------------------
 
-  public Customer(String aEmail, String aPassword, int aId, Person aPerson, int aCreditCardNumber)
+  public Customer(String aEmail, String aPassword, Person aPerson, int aCreditCardNumber)
   {
-    super(aEmail, aPassword, aId, aPerson);
+    super(aEmail, aPassword, aPerson);
     creditCardNumber = aCreditCardNumber;
   }
 

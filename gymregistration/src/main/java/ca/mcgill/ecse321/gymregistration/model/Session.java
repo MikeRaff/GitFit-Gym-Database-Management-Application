@@ -7,6 +7,7 @@ import java.sql.Date;
 import java.sql.Time;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 
@@ -26,6 +27,7 @@ public class Session
 
   //Session Attributes
   @Id
+  @GeneratedValue
   private Integer id;
   private Date date;
   private Time startTime;
@@ -43,9 +45,8 @@ public class Session
   // CONSTRUCTOR
   //------------------------
 
-  public Session(int aId, Date aDate, Time aStartTime, Time aEndTime, String aDescription, String aName, String aLocation, ClassType aClassType)
+  public Session(Date aDate, Time aStartTime, Time aEndTime, String aDescription, String aName, String aLocation, ClassType aClassType)
   {
-    id = aId;
     date = aDate;
     startTime = aStartTime;
     endTime = aEndTime;

@@ -3,6 +3,7 @@
 package ca.mcgill.ecse321.gymregistration.model;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 
 // line 73 "model.ump"
@@ -17,6 +18,7 @@ public class ClassType
 
   //ClassType Attributes
   @Id
+  @GeneratedValue
   private int id;
   private String name;
   private boolean isApproved;
@@ -25,9 +27,8 @@ public class ClassType
   // CONSTRUCTOR
   //------------------------
 
-  public ClassType(int aId, String aName, boolean aIsApproved)
+  public ClassType(String aName, boolean aIsApproved)
   {
-    id = aId;
     name = aName;
     isApproved = aIsApproved;
   }
