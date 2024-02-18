@@ -4,8 +4,8 @@
 
 import java.util.*;
 
-// line 11 "model.ump"
-// line 131 "model.ump"
+// line 12 "model.ump"
+// line 129 "model.ump"
 public class Customer extends GymUser
 {
 
@@ -13,45 +13,22 @@ public class Customer extends GymUser
   // MEMBER VARIABLES
   //------------------------
 
-  //Customer Attributes
-  private int customerId;
-
   //------------------------
   // CONSTRUCTOR
   //------------------------
 
-  public Customer(String aEmail, String aPassword, int aCustomerId)
+  public Customer(String aEmail, String aPassword, int aID)
   {
-    super(aEmail, aPassword);
-    customerId = aCustomerId;
+    super(aEmail, aPassword, aID);
   }
 
   //------------------------
   // INTERFACE
   //------------------------
 
-  public boolean setCustomerId(int aCustomerId)
-  {
-    boolean wasSet = false;
-    customerId = aCustomerId;
-    wasSet = true;
-    return wasSet;
-  }
-
-  public int getCustomerId()
-  {
-    return customerId;
-  }
-
   public void delete()
   {
     super.delete();
   }
 
-
-  public String toString()
-  {
-    return super.toString() + "["+
-            "customerId" + ":" + getCustomerId()+ "]";
-  }
 }

@@ -4,5 +4,5 @@ import ca.mcgill.ecse321.gymregistration.model.Customer;
 import org.springframework.data.repository.CrudRepository;
 
 public interface CustomerRepository extends CrudRepository<Customer, Integer>{
-    Customer findCustomerByCustomerId(int customerId);
+    Customer findCustomerById(Integer id);
 }

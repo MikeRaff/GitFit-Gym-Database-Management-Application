@@ -1,37 +1,35 @@
+/*PLEASE DO NOT EDIT THIS CODE*/
+/*This code was generated using the UMPLE 1.33.0.6934.a386b0a58 modeling language!*/
 package ca.mcgill.ecse321.gymregistration.model;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
 
+// line 28 "model.ump"
+// line 117 "model.ump"
 @Entity
-public class Owner extends Staff{
-    @Id
-    private int ownerId;
+public class Owner extends GymUser
+{
 
-    public Owner(String aEmail, String aPassword, Schedule schedule, int ownerId) {
-        super(aEmail, aPassword, schedule);
-        this.ownerId = ownerId;
-    }
+  //------------------------
+  // MEMBER VARIABLES
+  //------------------------
 
-    public Owner() {
-    }
+  //------------------------
+  // CONSTRUCTOR
+  //------------------------
 
-    public int getOwnerId() {
-        return ownerId;
-    }
+  public Owner(String aEmail, String aPassword, Person aPerson)
+  {
+    super(aEmail, aPassword, aPerson);
+  }
 
-    public void setOwnerId(int ownerId) {
-        this.ownerId = ownerId;
-    }
-    public void delete()
-    {
-        super.delete();
-    }
+  //------------------------
+  // INTERFACE
+  //------------------------
 
-    @Override
-    public String toString() {
-        return "Owner{" +
-                "ownerId=" + ownerId +
-                '}';
-    }
+  public void delete()
+  {
+    super.delete();
+  }
+
 }

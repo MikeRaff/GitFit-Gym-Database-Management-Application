@@ -1,54 +1,72 @@
+/*PLEASE DO NOT EDIT THIS CODE*/
+/*This code was generated using the UMPLE 1.33.0.6934.a386b0a58 modeling language!*/
 package ca.mcgill.ecse321.gymregistration.model;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
 
+// line 85 "model.ump"
+// line 150 "model.ump"
 @Entity
-public class Person {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int personId;
-    private String name;
-    @ManyToOne
-    SportsRegistrationSystem sportsRegistrationSystem;
+public class Person
+{
 
-    public Person(String name, SportsRegistrationSystem sportsRegistrationSystem) {
-        this.name = name;
-        this.sportsRegistrationSystem = sportsRegistrationSystem;
-    }
+  //------------------------
+  // MEMBER VARIABLES
+  //------------------------
 
-    public Person() {
-    }
+  //Person Attributes
+  @Id
+  @GeneratedValue
+  private Integer id;
+  private String name;
 
-    public int getPersonId() {
-        return personId;
-    }
+  //Person Associations
 
-    public void setPersonId(int personId) {
-        this.personId = personId;
-    }
+  //------------------------
+  // CONSTRUCTOR
+  //------------------------
 
-    public String getName() {
-        return name;
-    }
+  public Person(String aName)
+  {
+    name = aName;
+    
+  }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+  //------------------------
+  // INTERFACE
+  //------------------------
 
-    public SportsRegistrationSystem getSportsRegistrationSystem() {
-        return sportsRegistrationSystem;
-    }
+  public boolean setName(String aName)
+  {
+    boolean wasSet = false;
+    name = aName;
+    wasSet = true;
+    return wasSet;
+  }
 
-    public void setSportsRegistrationSystem(SportsRegistrationSystem sportsRegistrationSystem) {
-        this.sportsRegistrationSystem = sportsRegistrationSystem;
-    }
+  public String getName()
+  {
+    return name;
+  }
+  /* Code from template association_GetOne */
+  
+  /* Code from template association_SetOneToMany */
+  
+  public void delete()
+  {
+   
+  }
 
-    @Override
-    public String toString() {
-        return "Person{" +
-                "personId=" + personId +
-                ", name='" + name + '\'' +
-                ", sportsRegistrationSystem=" + sportsRegistrationSystem +
-                '}';
-    }
+
+  public String toString()
+  {
+    return super.toString() + "["+
+            "name" + ":" + getName()+ "]" + System.getProperties().getProperty("line.separator");
+  }
+
+public Integer getId() {
+    return id;
+}
 }

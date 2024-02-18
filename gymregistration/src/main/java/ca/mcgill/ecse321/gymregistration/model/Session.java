@@ -1,148 +1,185 @@
+/*PLEASE DO NOT EDIT THIS CODE*/
+/*This code was generated using the UMPLE 1.33.0.6934.a386b0a58 modeling language!*/
 package ca.mcgill.ecse321.gymregistration.model;
 
+
+import java.sql.Date;
+import java.sql.Time;
+
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 
-import java.sql.Time;
-import java.sql.Date;
-
+/**
+ * start and end Times included as fields.
+ * Use 1h duration for all?
+ */
+// line 49 "model.ump"
+// line 130 "model.ump"
 @Entity
-public class Session {
-    @Id
-    private int sessionId;
-    private Date date;
-    private Time startTime;
-    private Time endTime;
-    private String description;
-    private String name;
-    private String location;
-    private Time openingTime;
-    private Time closingTIme;
-    @ManyToOne
-    private Schedule schedule;
-    @ManyToOne
-    private ClassType classType;
+public class Session
+{
 
-    public Session(int sessionId, Date date, Time startTime, Time endTime, String description, String name, String location, Time openingTime, Time closingTIme, Schedule schedule, ClassType classType) {
-        this.sessionId = sessionId;
-        this.date = date;
-        this.startTime = startTime;
-        this.endTime = endTime;
-        this.description = description;
-        this.name = name;
-        this.location = location;
-        this.openingTime = openingTime;
-        this.closingTIme = closingTIme;
-        this.schedule = schedule;
-        this.classType = classType;
-    }
+  //------------------------
+  // MEMBER VARIABLES
+  //------------------------
 
-    public Session() {
-    }
+  //Session Attributes
+  @Id
+  @GeneratedValue
+  private Integer id;
+  private Date date;
+  private Time startTime;
+  private Time endTime;
+  private String description;
+  private String name;
+  private String location;
 
-    public int getSessionId() {
-        return sessionId;
-    }
+  //Session Associations
+  
+  @ManyToOne
+  private ClassType classType;
 
-    public void setSessionId(int sessionId) {
-        this.sessionId = sessionId;
-    }
+  //------------------------
+  // CONSTRUCTOR
+  //------------------------
 
-    public Date getDate() {
-        return date;
+  public Session(Date aDate, Time aStartTime, Time aEndTime, String aDescription, String aName, String aLocation, ClassType aClassType)
+  {
+    date = aDate;
+    startTime = aStartTime;
+    endTime = aEndTime;
+    description = aDescription;
+    name = aName;
+    location = aLocation;
+    
+    if (!setClassType(aClassType))
+    {
+      throw new RuntimeException("Unable to create Session due to aClassType. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
     }
+  }
 
-    public void setDate(Date date) {
-        this.date = date;
-    }
+  //------------------------
+  // INTERFACE
+  //------------------------
 
-    public Time getStartTime() {
-        return startTime;
-    }
+  public boolean setId(int aId)
+  {
+    boolean wasSet = false;
+    id = aId;
+    wasSet = true;
+    return wasSet;
+  }
 
-    public void setStartTime(Time startTime) {
-        this.startTime = startTime;
-    }
+  public boolean setDate(Date aDate)
+  {
+    boolean wasSet = false;
+    date = aDate;
+    wasSet = true;
+    return wasSet;
+  }
 
-    public Time getEndTime() {
-        return endTime;
-    }
+  public boolean setStartTime(Time aStartTime)
+  {
+    boolean wasSet = false;
+    startTime = aStartTime;
+    wasSet = true;
+    return wasSet;
+  }
 
-    public void setEndTime(Time endTime) {
-        this.endTime = endTime;
-    }
+  public boolean setEndTime(Time aEndTime)
+  {
+    boolean wasSet = false;
+    endTime = aEndTime;
+    wasSet = true;
+    return wasSet;
+  }
 
-    public String getDescription() {
-        return description;
-    }
+  public boolean setDescription(String aDescription)
+  {
+    boolean wasSet = false;
+    description = aDescription;
+    wasSet = true;
+    return wasSet;
+  }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
+  public boolean setName(String aName)
+  {
+    boolean wasSet = false;
+    name = aName;
+    wasSet = true;
+    return wasSet;
+  }
 
-    public String getName() {
-        return name;
-    }
+  public boolean setLocation(String aLocation)
+  {
+    boolean wasSet = false;
+    location = aLocation;
+    wasSet = true;
+    return wasSet;
+  }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+  public int getId()
+  {
+    return id;
+  }
 
-    public String getLocation() {
-        return location;
-    }
+  public Date getDate()
+  {
+    return date;
+  }
 
-    public void setLocation(String location) {
-        this.location = location;
-    }
+  public Time getStartTime()
+  {
+    return startTime;
+  }
 
-    public Time getOpeningTime() {
-        return openingTime;
-    }
+  public Time getEndTime()
+  {
+    return endTime;
+  }
 
-    public void setOpeningTime(Time openingTime) {
-        this.openingTime = openingTime;
-    }
+  public String getDescription()
+  {
+    return description;
+  }
 
-    public Time getClosingTIme() {
-        return closingTIme;
-    }
+  public String getName()
+  {
+    return name;
+  }
 
-    public void setClosingTIme(Time closingTIme) {
-        this.closingTIme = closingTIme;
+  public String getLocation()
+  {
+    return location;
+  }
+  /* Code from template association_GetOne */
+  
+  /* Code from template association_GetOne */
+  public ClassType getClassType()
+  {
+    return classType;
+  }
+  /* Code from template association_SetOneToMany */
+  
+  /* Code from template association_SetUnidirectionalOne */
+  public boolean setClassType(ClassType aNewClassType)
+  {
+    boolean wasSet = false;
+    if (aNewClassType != null)
+    {
+      classType = aNewClassType;
+      wasSet = true;
     }
+    return wasSet;
+  }
 
-    public Schedule getSchedule() {
-        return schedule;
-    }
+  public void delete()
+  {
+    classType = null;
+  }
 
-    public void setSchedule(Schedule schedule) {
-        this.schedule = schedule;
-    }
 
-    public ClassType getClassType() {
-        return classType;
-    }
-
-    public void setClassType(ClassType classType) {
-        this.classType = classType;
-    }
-
-    @Override
-    public String toString() {
-        return "Session{" +
-                "sessionId=" + sessionId +
-                ", date=" + date +
-                ", startTime=" + startTime +
-                ", endTime=" + endTime +
-                ", description='" + description + '\'' +
-                ", name='" + name + '\'' +
-                ", location='" + location + '\'' +
-                ", openingTime=" + openingTime +
-                ", closingTIme=" + closingTIme +
-                ", schedule=" + schedule +
-                ", classType=" + classType +
-                '}';
-    }
+  
 }

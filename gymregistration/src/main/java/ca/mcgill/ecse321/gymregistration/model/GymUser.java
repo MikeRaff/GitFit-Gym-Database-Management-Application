@@ -1,135 +1,122 @@
+/*PLEASE DO NOT EDIT THIS CODE*/
+/*This code was generated using the UMPLE 1.33.0.6934.a386b0a58 modeling language!*/
+
 package ca.mcgill.ecse321.gymregistration.model;
-import jakarta.persistence.ManyToMany;
+
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MappedSuperclass;
 
-import java.util.Collections;
-import java.util.List;
-
+// line 2 "model.ump"
+// line 101 "model.ump"
 @MappedSuperclass
-public abstract class GymUser {
-    private String email;
-    private String password;
-    @ManyToMany
-    private List<Person> persons;
+public abstract class GymUser
+{
 
-    public GymUser(String aEmail, String aPassword) {
-    }
+  //------------------------
+  // MEMBER VARIABLES
+  //------------------------
 
-    public void delete()
+  //GymUser Attributes
+  private String email;
+  private String password;
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  private Integer id;
+
+  //GymUser Associations
+  @ManyToOne
+  private Person person;
+
+  //------------------------
+  // CONSTRUCTOR
+  //------------------------
+
+  public GymUser(String aEmail, String aPassword, Person aPerson)
+  {
+    email = aEmail;
+    password = aPassword;
+    
+    if (!setPerson(aPerson))
     {
-        persons.clear();
+      throw new RuntimeException("Unable to create GymUser due to aPerson. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
     }
+  }
 
-    public GymUser() {
-    }
+  //------------------------
+  // INTERFACE
+  //------------------------
 
-    public String getEmail() {
-        return email;
-    }
+  public boolean setEmail(String aEmail)
+  {
+    boolean wasSet = false;
+    email = aEmail;
+    wasSet = true;
+    return wasSet;
+  }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+  public boolean setPassword(String aPassword)
+  {
+    boolean wasSet = false;
+    password = aPassword;
+    wasSet = true;
+    return wasSet;
+  }
 
-    public String getPassword() {
-        return password;
-    }
+  public boolean setId(int aId)
+  {
+    boolean wasSet = false;
+    id = aId;
+    wasSet = true;
+    return wasSet;
+  }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+  public String getEmail()
+  {
+    return email;
+  }
 
-    public Person getPerson(int index)
+  public String getPassword()
+  {
+    return password;
+  }
+
+  public int getId()
+  {
+    return id;
+  }
+  /* Code from template association_GetOne */
+  public Person getPerson()
+  {
+    return person;
+  }
+  /* Code from template association_SetUnidirectionalOne */
+  public boolean setPerson(Person aNewPerson)
+  {
+    boolean wasSet = false;
+    if (aNewPerson != null)
     {
-        Person aPerson = persons.get(index);
-        return aPerson;
+      person = aNewPerson;
+      wasSet = true;
     }
+    return wasSet;
+  }
 
-    public List<Person> getPersons()
-    {
-        List<Person> newPersons = Collections.unmodifiableList(persons);
-        return newPersons;
-    }
+  public void delete()
+  {
+    person = null;
+  }
 
-    public void setPersons(List<Person> persons) {
-        this.persons = persons;
-    }
 
-    public int numberOfPersons()
-    {
-        int number = persons.size();
-        return number;
-    }
-
-    public boolean hasPersons()
-    {
-        boolean has = persons.size() > 0;
-        return has;
-    }
-
-    public int indexOfPerson(Person aPerson)
-    {
-        int index = persons.indexOf(aPerson);
-        return index;
-    }
-
-    public boolean addPerson(Person aPerson)
-    {
-        boolean wasAdded = false;
-        if (persons.contains(aPerson)) { return false; }
-        persons.add(aPerson);
-        wasAdded = true;
-        return wasAdded;
-    }
-
-    public boolean removePerson(Person aPerson)
-    {
-        boolean wasRemoved = false;
-        if (persons.contains(aPerson))
-        {
-            persons.remove(aPerson);
-            wasRemoved = true;
-        }
-        return wasRemoved;
-    }
-    /* Code from template association_AddIndexControlFunctions */
-    public boolean addPersonAt(Person aPerson, int index)
-    {
-        boolean wasAdded = false;
-        if(addPerson(aPerson))
-        {
-            if(index < 0 ) { index = 0; }
-            if(index > numberOfPersons()) { index = numberOfPersons() - 1; }
-            persons.remove(aPerson);
-            persons.add(index, aPerson);
-            wasAdded = true;
-        }
-        return wasAdded;
-    }
-
-    public boolean addOrMovePersonAt(Person aPerson, int index)
-    {
-        boolean wasAdded = false;
-        if(persons.contains(aPerson))
-        {
-            if(index < 0 ) { index = 0; }
-            if(index > numberOfPersons()) { index = numberOfPersons() - 1; }
-            persons.remove(aPerson);
-            persons.add(index, aPerson);
-            wasAdded = true;
-        }
-        else
-        {
-            wasAdded = addPersonAt(aPerson, index);
-        }
-        return wasAdded;
-    }
-
-    @Override
-    public String toString() {
-        return "GymUser{" +
-                "email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                '}';
-    }
+  public String toString()
+  {
+    return super.toString() + "["+
+            "email" + ":" + getEmail()+ "," +
+            "password" + ":" + getPassword()+ "," +
+            "id" + ":" + getId()+ "]" + System.getProperties().getProperty("line.separator") +
+            "  " + "person = "+(getPerson()!=null?Integer.toHexString(System.identityHashCode(getPerson())):"null");
+  }
 }

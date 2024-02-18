@@ -4,8 +4,8 @@
 
 import java.util.*;
 
-// line 25 "model.ump"
-// line 142 "model.ump"
+// line 26 "model.ump"
+// line 139 "model.ump"
 public class Instructor extends Staff
 {
 
@@ -13,45 +13,22 @@ public class Instructor extends Staff
   // MEMBER VARIABLES
   //------------------------
 
-  //Instructor Attributes
-  private int intructorId;
-
   //------------------------
   // CONSTRUCTOR
   //------------------------
 
-  public Instructor(String aEmail, String aPassword, Schedule aSchedule, int aIntructorId)
+  public Instructor(String aEmail, String aPassword, int aID, Schedule aSchedule)
   {
-    super(aEmail, aPassword, aSchedule);
-    intructorId = aIntructorId;
+    super(aEmail, aPassword, aID, aSchedule);
   }
 
   //------------------------
   // INTERFACE
   //------------------------
 
-  public boolean setIntructorId(int aIntructorId)
-  {
-    boolean wasSet = false;
-    intructorId = aIntructorId;
-    wasSet = true;
-    return wasSet;
-  }
-
-  public int getIntructorId()
-  {
-    return intructorId;
-  }
-
   public void delete()
   {
     super.delete();
   }
 
-
-  public String toString()
-  {
-    return super.toString() + "["+
-            "intructorId" + ":" + getIntructorId()+ "]";
-  }
 }

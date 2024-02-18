@@ -1,6 +1,6 @@
 class GymUser
 {
-  
+* -> 1 Person;
 email;
 password;
 Integer id;
@@ -11,7 +11,8 @@ abstract;
 class Customer
 {
   isA GymUser;
-  Integer CreditCardNumber;
+  Integer creditCardNumber;
+
  
 }
 
@@ -61,8 +62,8 @@ class Session
 class InstructorRegistration
 {
   Integer id;
-Date date;
-* -> 1 Instructor;
+  Date date;
+  * -> 1 Instructor;
   * -> 1 Session;
   
 
@@ -70,7 +71,7 @@ Date date;
 
 class ClassType
 {
-  1 <- * Session;
+
   Integer id; // Necessary?? can use name for PK?
   String name;
   Boolean isApproved;
@@ -84,11 +85,14 @@ class Person
 {
   	name;
     * persons -<@> 1 SportsRegistrationSystem;
+  	
   	1 -> 1..3 GymUser;
 
 }
 class SportsRegistrationSystem
 {
+
  Time openingTime;
+
   Time closingTime;
 }
