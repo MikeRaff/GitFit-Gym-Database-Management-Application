@@ -92,10 +92,9 @@ public class InstructorRegistrationTests {
         assertEquals(registrationDate, instructorRegistrationFromDB.getDate());
 
         assertNotNull(instructorRegistrationFromDB.getInstructor());
-        assertEquals(instructorMaxime, instructorRegistrationFromDB.getInstructor());
-
+        //assertEquals(instructorMaxime, instructorRegistrationFromDB.getInstructor()); // compares addresses, not values
         assertNotNull(instructorRegistrationFromDB.getSession());
-        assertEquals(badmintonSession, instructorRegistrationFromDB.getSession());
+        //assertEquals(badmintonSession, instructorRegistrationFromDB.getSession()); // compares addresses, not values
 
         // Assert instructor is not null and has correct non-null attributes.
         assertNotNull(instructorRepository.findInstructorById(instructorMaxime.getId()));
@@ -105,7 +104,7 @@ public class InstructorRegistrationTests {
         assertEquals(password, instructorRegistrationFromDB.getInstructor().getPassword());
 
         assertNotNull(instructorRegistrationFromDB.getInstructor().getPerson());
-        assertEquals(maxime, instructorRegistrationFromDB.getInstructor().getPerson());
+        //assertEquals(maxime, instructorRegistrationFromDB.getInstructor().getPerson());   // compares addresses, not values
 
         // Assert person is not null and has correct attributes.
         assertNotNull(personRepository.findPersonById(maxime.getId()));
@@ -125,7 +124,7 @@ public class InstructorRegistrationTests {
         assertEquals(sessionLocation, instructorRegistrationFromDB.getSession().getLocation());
 
         assertNotNull(instructorRegistrationFromDB.getSession().getClassType());
-        assertEquals(badminton, instructorRegistrationFromDB.getSession().getClassType());
+        //assertEquals(badminton, instructorRegistrationFromDB.getSession().getClassType());    // compares addresses, not values
 
         // Assert class type is not null and has correct attributes.
         assertNotNull(classTypeRepository.findClassTypeById(badminton.getId()));
