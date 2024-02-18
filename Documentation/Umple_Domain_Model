@@ -3,6 +3,7 @@ class GymUser
 email;
 password;
 Integer id;
+0..3 -> 1 Person;
   
 abstract;
 }
@@ -84,14 +85,12 @@ class Person
 {
   	name;
     * persons -<@> 1 SportsRegistrationSystem;
-  	
-  	1 -> 1..3 GymUser;
+  
 
 }
 class SportsRegistrationSystem
 {
 
- Time openingTime;
-
+  Time openingTime;
   Time closingTime;
 }
