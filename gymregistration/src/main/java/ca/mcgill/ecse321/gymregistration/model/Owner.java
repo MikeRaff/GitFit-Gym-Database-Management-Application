@@ -18,6 +18,13 @@ public class Owner extends GymUser
   // CONSTRUCTOR
   //------------------------
 
+  // Hibernate needs a default constructor, but it doesn't need to be public
+  @SuppressWarnings("unused")
+  public Owner()
+  {
+    super();
+  }
+
   public Owner(String aEmail, String aPassword, Person aPerson)
   {
     super(aEmail, aPassword, aPerson);
