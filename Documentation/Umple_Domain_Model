@@ -12,6 +12,7 @@ class Customer
 {
   isA GymUser;
   Integer creditCardNumber;
+
  
 }
 
@@ -55,7 +56,6 @@ class Session
   String name;
   String location; 
   * Session -<@> 1 SportsRegistrationSystem;
-  * -> 1 ClassType;
   
 }
 
@@ -71,7 +71,7 @@ class InstructorRegistration
 
 class ClassType
 {
-  
+
   Integer id; // Necessary?? can use name for PK?
   String name;
   Boolean isApproved;
@@ -86,10 +86,13 @@ class Person
   	name;
     * persons -<@> 1 SportsRegistrationSystem;
   	
+  	1 -> 1..3 GymUser;
 
 }
 class SportsRegistrationSystem
 {
-  Time openingTime;
+
+ Time openingTime;
+
   Time closingTime;
 }
