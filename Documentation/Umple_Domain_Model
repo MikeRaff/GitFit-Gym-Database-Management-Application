@@ -1,6 +1,5 @@
 class GymUser
 {
-* -> 1 Person;
 email;
 password;
 Integer id;
@@ -75,7 +74,7 @@ class ClassType
   Integer id; // Necessary?? can use name for PK?
   String name;
   Boolean isApproved;
-
+  1 <-* Session;
   
 }
 
