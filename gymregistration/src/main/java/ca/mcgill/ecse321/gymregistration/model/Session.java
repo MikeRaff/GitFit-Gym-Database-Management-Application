@@ -45,6 +45,11 @@ public class Session
   // CONSTRUCTOR
   //------------------------
 
+  // Hibernate needs a default constructor, but it doesn't need to be public
+  @SuppressWarnings("unused")
+  private Session() {
+  }
+
   public Session(Date aDate, Time aStartTime, Time aEndTime, String aDescription, String aName, String aLocation, ClassType aClassType)
   {
     date = aDate;

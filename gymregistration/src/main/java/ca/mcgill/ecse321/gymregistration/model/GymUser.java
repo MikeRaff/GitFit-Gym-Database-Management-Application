@@ -35,6 +35,11 @@ public abstract class GymUser
   // CONSTRUCTOR
   //------------------------
 
+  // Hibernate needs a default constructor, but it doesn't need to be public
+  @SuppressWarnings("unused")
+  private GymUser() {
+  }
+
   public GymUser(String aEmail, String aPassword, Person aPerson)
   {
     email = aEmail;

@@ -36,6 +36,11 @@ public class InstructorRegistration
   // CONSTRUCTOR
   //------------------------
 
+  // Hibernate needs a default constructor, but it doesn't need to be public
+  @SuppressWarnings("unused")
+  private InstructorRegistration() {
+  }
+
   public InstructorRegistration(Date aDate, Instructor aInstructor, Session aSession)
   {
     date = aDate;

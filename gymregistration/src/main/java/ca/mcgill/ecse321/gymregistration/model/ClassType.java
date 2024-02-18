@@ -27,6 +27,11 @@ public class ClassType
   // CONSTRUCTOR
   //------------------------
 
+  // Hibernate needs a default constructor, but it doesn't need to be public
+  @SuppressWarnings("unused")
+  private ClassType() {
+  }
+
   public ClassType(String aName, boolean aIsApproved)
   {
     name = aName;

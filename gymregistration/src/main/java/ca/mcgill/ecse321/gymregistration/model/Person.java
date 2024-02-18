@@ -28,6 +28,11 @@ public class Person
   // CONSTRUCTOR
   //------------------------
 
+  // Hibernate needs a default constructor, but it doesn't need to be public
+  @SuppressWarnings("unused")
+  private Person() {
+  }
+
   public Person(String aName)
   {
     name = aName;

@@ -41,6 +41,11 @@ public class CustomerRegistration
   // CONSTRUCTOR
   //------------------------
 
+  // Hibernate needs a default constructor, but it doesn't need to be public
+  @SuppressWarnings("unused")
+  private CustomerRegistration() {
+  }
+
   public CustomerRegistration(Date aDate, Session aSession, Customer aCustomer)
   {
     date = aDate;
