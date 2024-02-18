@@ -38,6 +38,8 @@ public class ClassTypeTests {
 
         // Assert approved class type is not null and has correct attributes.
         assertNotNull(approvedClassTypeFromDB);
+        
+        assertEquals(approvedClassType.getId(), approvedClassTypeFromDB.getId());
         assertEquals(name, approvedClassTypeFromDB.getName());
         assertEquals(isApproved, approvedClassTypeFromDB.getIsApproved());
     }
@@ -57,6 +59,8 @@ public class ClassTypeTests {
 
         // Assert not approved class type is not null and has correct attributes.
         assertNotNull(notApprovedClassTypeFromDB);
+        
+        assertEquals(notApprovedClassType.getId(), notApprovedClassTypeFromDB.getId());
         assertEquals(name, notApprovedClassTypeFromDB.getName());
         assertEquals(isApproved, notApprovedClassTypeFromDB.getIsApproved());
     }

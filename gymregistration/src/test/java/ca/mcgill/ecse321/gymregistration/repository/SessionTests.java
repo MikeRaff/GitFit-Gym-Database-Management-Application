@@ -35,7 +35,7 @@ public class SessionTests {
     public void testCreateAndReadSession() {
         // Create and persist class type.
         String classTypeName = "testClassType";
-        Boolean isApproved = true;
+        Boolean isApproved = true;  // Must be approved to create session.
         ClassType classType = new ClassType(classTypeName, isApproved);
         classType = classTypeRepository.save(classType);
 
@@ -54,8 +54,10 @@ public class SessionTests {
         // Read session from database.
         Session sessionFromDB = sessionRepository.findSessionById(session.getId());
 
-        // Assert session not null and has correct attributes.
+        // Assert session not null and has correct non-null attributes.
         assertNotNull(sessionFromDB);
+
+        assertEquals(session.getId(), sessionFromDB.getId());
         assertEquals(date, sessionFromDB.getDate());
         assertEquals(startTime, sessionFromDB.getStartTime());
         assertEquals(endTime, sessionFromDB.getEndTime());
@@ -63,12 +65,14 @@ public class SessionTests {
         assertEquals(sessionName, sessionFromDB.getName());
         assertEquals(location, sessionFromDB.getLocation());
 
-        // Assert session class type not null and has correct attributes.
         assertNotNull(sessionFromDB.getClassType());
+        assertEquals(classType, sessionFromDB.getClassType());
+
+        // Assert session class type not null and has correct attributes.
+        assertNotNull(classTypeRepository.findClassTypeById(classType.getId()));
+
         assertEquals(classType.getId(), sessionFromDB.getClassType().getId());
         assertEquals(classTypeName, sessionFromDB.getClassType().getName());
         assertEquals(isApproved, sessionFromDB.getClassType().getIsApproved());
-
-
-}
+    }
 }

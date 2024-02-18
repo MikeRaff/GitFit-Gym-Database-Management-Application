@@ -6,6 +6,7 @@ package ca.mcgill.ecse321.gymregistration.model;
 import java.sql.Date;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 
@@ -26,6 +27,7 @@ public class CustomerRegistration
 
   //CustomerRegistration Attributes
   @Id
+  @GeneratedValue
   private int id;
   private Date date;
 
@@ -39,9 +41,8 @@ public class CustomerRegistration
   // CONSTRUCTOR
   //------------------------
 
-  public CustomerRegistration(int aId, Date aDate, Session aSession, Customer aCustomer)
+  public CustomerRegistration(Date aDate, Session aSession, Customer aCustomer)
   {
-    id = aId;
     date = aDate;
     if (!setSession(aSession))
     {

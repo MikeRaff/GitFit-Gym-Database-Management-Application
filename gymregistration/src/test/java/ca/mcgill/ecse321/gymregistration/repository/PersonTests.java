@@ -11,41 +11,34 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import ca.mcgill.ecse321.gymregistration.dao.PersonRepository;
 import ca.mcgill.ecse321.gymregistration.model.Person;
-import ca.mcgill.ecse321.gymregistration.dao.GymUserRepository;
-import ca.mcgill.ecse321.gymregistration.model.GymUser;
-import ca.mcgill.ecse321.gymregistration.model.Owner;
-import ca.mcgill.ecse321.gymregistration.model.Instructor;
-import ca.mcgill.ecse321.gymregistration.model.Customer;
-
 
 @SpringBootTest
 public class PersonTests {
     @Autowired
     private PersonRepository personRepository;
-    @Autowired
-    private GymUserRepository gymUserRepository;
 
     @BeforeEach
     @AfterEach
     private void clearDatabase() {
-        gymUserRepository.deleteAll();
         personRepository.deleteAll();
     }
 
     @Test
-    public void testCreateAndReadOwnerPerson() {    // this is all garbage redo it all
-        // Create and persist owner.
-        String email = "myemail@emailprovider.com";
-        String password = "1234abcd";
+    public void testCreateAndReadPerson() {
+        // Create person.
+        String name = "John";
+        Person person = new Person(name);
 
-        String name = "John Doe";
-        Person john = new Person(name);
+        // Save person to database.
+        personRepository.save(person);
 
-        john = repo.save(john);
+        // Read person from database.
+        Person personFromDB = personRepository.findPersonById(person.getId());
 
-        Person johnFromDB = repo.findPersonById(john.getId());
-
-        assertNotNull(johnFromDB);
-        assertEquals(name, johnFromDB.getName());    
-}
+        // Assert person is not null and has correct attributes.
+        assertNotNull(personFromDB);
+        
+        assertEquals(person.getId(), personFromDB.getId());
+        assertEquals(name, personFromDB.getName());
+    }
 }

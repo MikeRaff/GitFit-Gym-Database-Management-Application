@@ -5,8 +5,8 @@ package ca.mcgill.ecse321.gymregistration.model;
 
 import java.sql.Date;
 
-
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 
@@ -22,6 +22,7 @@ public class InstructorRegistration
 
   //InstructorRegistration Attributes
   @Id
+  @GeneratedValue
   private int id;
   private Date date;
 
@@ -35,9 +36,8 @@ public class InstructorRegistration
   // CONSTRUCTOR
   //------------------------
 
-  public InstructorRegistration(int aId, Date aDate, Instructor aInstructor, Session aSession)
+  public InstructorRegistration(Date aDate, Instructor aInstructor, Session aSession)
   {
-    id = aId;
     date = aDate;
     if (!setInstructor(aInstructor))
     {
