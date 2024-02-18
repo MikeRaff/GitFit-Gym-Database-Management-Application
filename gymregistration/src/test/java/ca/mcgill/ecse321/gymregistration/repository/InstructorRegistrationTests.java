@@ -39,11 +39,11 @@ public class InstructorRegistrationTests {
     @BeforeEach
     @AfterEach
     private void clearDatabase() {
-        personRepository.deleteAll();
-        instructorRepository.deleteAll();
-        classTypeRepository.deleteAll();
-        sessionRepository.deleteAll();
         instructorRegistrationRepository.deleteAll();
+        instructorRepository.deleteAll();
+        personRepository.deleteAll();
+        sessionRepository.deleteAll();
+        classTypeRepository.deleteAll();
     }
 
     @Test

@@ -27,8 +27,8 @@ public class SessionTests {
     @BeforeEach
     @AfterEach
     private void clearDatabase() {
-        classTypeRepository.deleteAll();
         sessionRepository.deleteAll();
+        classTypeRepository.deleteAll();
     }
 
     @Test

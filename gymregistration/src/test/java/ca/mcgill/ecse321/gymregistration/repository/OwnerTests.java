@@ -24,8 +24,8 @@ public class OwnerTests {
     @BeforeEach
     @AfterEach
     private void clearDatabase() {
-        personRepository.deleteAll();
         ownerRepository.deleteAll();
+        personRepository.deleteAll();
     }
 
     @Test
@@ -54,13 +54,12 @@ public class OwnerTests {
         assertEquals(password, ownerFromDB.getPassword());
 
         assertNotNull(ownerFromDB.getPerson());
-        assertEquals(john, ownerFromDB.getPerson());
+        //assertEquals(john, ownerFromDB.getPerson());  // compares addresses, not values
         
         // Assert person is not null and has correct attributes.
         assertNotNull(personRepository.findPersonById(john.getId()));
         
         assertEquals(john.getId(), ownerFromDB.getPerson().getId());
         assertEquals(name, ownerFromDB.getPerson().getName());
-        
     }
 }
