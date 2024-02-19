@@ -1,13 +1,10 @@
-/*PLEASE DO NOT EDIT THIS CODE*/
-/*This code was generated using the UMPLE 1.33.0.6934.a386b0a58 modeling language!*/
 package ca.mcgill.ecse321.gymregistration.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
-// line 73 "model.ump"
-// line 143 "model.ump"
 @Entity
 public class ClassType
 {
@@ -18,7 +15,7 @@ public class ClassType
 
   //ClassType Attributes
   @Id
-  @GeneratedValue
+  @GeneratedValue(strategy = GenerationType.AUTO)
   private int id;
   private String name;
   private boolean isApproved;
@@ -27,77 +24,50 @@ public class ClassType
   // CONSTRUCTOR
   //------------------------
 
-  // Hibernate needs a default constructor, but it doesn't need to be public
-  @SuppressWarnings("unused")
-  private ClassType() {
+  // Hibernate needs a default constructor
+  public ClassType() {
   }
 
-  public ClassType(String aName, boolean aIsApproved)
-  {
-    name = aName;
-    isApproved = aIsApproved;
+  public ClassType(String name, boolean isApproved) {
+    this.name = name;
+    this.isApproved = isApproved;
   }
 
   //------------------------
   // INTERFACE
   //------------------------
 
-  public boolean setId(int aId)
-  {
-    boolean wasSet = false;
-    id = aId;
-    wasSet = true;
-    return wasSet;
+  //all getters and setters
+  public void setId(int id) {
+    this.id = id;
   }
 
-  public boolean setName(String aName)
-  {
-    boolean wasSet = false;
-    name = aName;
-    wasSet = true;
-    return wasSet;
+  public void setName(String name) {
+    this.name = name;
   }
 
-  public boolean setIsApproved(boolean aIsApproved)
-  {
-    boolean wasSet = false;
-    isApproved = aIsApproved;
-    wasSet = true;
-    return wasSet;
+  public void setApproved(boolean approved) {
+    this.isApproved = approved;
   }
 
-  /**
-   * Necessary?? can use name for PK?
-   */
-  public int getId()
-  {
+  public int getId() {
     return id;
   }
 
-  public String getName()
-  {
+  public String getName() {
     return name;
   }
 
-  public boolean getIsApproved()
-  {
-    return isApproved;
-  }
-  /* Code from template attribute_IsBoolean */
-  public boolean isIsApproved()
-  {
+  public boolean getIsApproved() {
     return isApproved;
   }
 
-  public void delete()
-  {}
-
-
-  public String toString()
-  {
-    return super.toString() + "["+
-            "id" + ":" + getId()+ "," +
-            "name" + ":" + getName()+ "," +
-            "isApproved" + ":" + getIsApproved()+ "]";
+  @Override
+  public String toString() {
+    return "ClassType{" +
+            "id=" + id +
+            ", name='" + name + '\'' +
+            ", isApproved=" + isApproved +
+            '}';
   }
 }
