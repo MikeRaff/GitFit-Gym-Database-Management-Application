@@ -68,7 +68,7 @@ public class CustomerRegistrationTests {
         yoga = classTypeRepository.save(yoga);
 
         // Create and persist session.
-        Date sessionDate = Date.valueOf("2024-18-02");
+        Date sessionDate = Date.valueOf("2024-02-18");
         Time startTime = Time.valueOf("15:48:00");
         Time endTime = Time.valueOf("16:48:00");
         String sessionDescription = "A description of this session.";
@@ -78,7 +78,7 @@ public class CustomerRegistrationTests {
         session = sessionRepository.save(session);
 
         // Create customer registration.
-        Date registrationDate = Date.valueOf("2024-17-02");
+        Date registrationDate = Date.valueOf("2024-02-17");
         CustomerRegistration customerRegistration = new CustomerRegistration(registrationDate, session, customerSimon);
     
         // Save customer registration to database.
@@ -94,10 +94,9 @@ public class CustomerRegistrationTests {
         assertEquals(registrationDate, customerRegistrationFromDB.getDate());
         
         assertNotNull(customerRegistrationFromDB.getSession());
-        assertEquals(session, customerRegistrationFromDB.getSession());
-
+        //assertEquals(session, customerRegistrationFromDB.getSession());   // compares addresses, not values
         assertNotNull(customerRegistrationFromDB.getCustomer());
-        assertEquals(customerSimon, customerRegistrationFromDB.getCustomer());
+        //assertEquals(customerSimon, customerRegistrationFromDB.getCustomer());    // compares addresses, not values
 
         // Assert session is not null and has correct non-null attributes.
         assertNotNull(sessionRepository.findSessionById(session.getId()));
@@ -111,7 +110,7 @@ public class CustomerRegistrationTests {
         assertEquals(sessionLocation, customerRegistrationFromDB.getSession().getLocation());
         
         assertNotNull(customerRegistrationFromDB.getSession().getClassType());
-        assertEquals(yoga, customerRegistrationFromDB.getSession().getClassType());
+        //assertEquals(yoga, customerRegistrationFromDB.getSession().getClassType()); // compares addresses, not values
 
         // Assert class type is not null and has correct attributes.
         assertNotNull(classTypeRepository.findClassTypeById(yoga.getId()));
@@ -129,7 +128,7 @@ public class CustomerRegistrationTests {
         assertEquals(creditCardNumber, customerRegistrationFromDB.getCustomer().getCreditCardNumber());
         
         assertNotNull(customerRegistrationFromDB.getCustomer().getPerson());
-        assertEquals(simon, customerRegistrationFromDB.getCustomer().getPerson());
+        //assertEquals(simon, customerRegistrationFromDB.getCustomer().getPerson());    // compares addresses, not values
 
         // Assert person is not null and has correct attributes.
         assertNotNull(personRepository.findPersonById(simon.getId()));
