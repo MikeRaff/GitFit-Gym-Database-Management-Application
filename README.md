@@ -23,3 +23,4 @@ In this project, our team of software developers was tasked with creating a web 
 [Use Case Diagrams](https://github.com/McGill-ECSE321-Winter2024/project-group-3/wiki/Use-Cases-and-Diagrams)
 
 
+# NOTE PLEASE USE JAVA 21; THE TESTS WILL FAIL IF YOU DON'T
