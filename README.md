@@ -14,7 +14,7 @@ In this project, our team of software developers was tasked with creating a web 
 | Michael Rafferty  | Electrical Engineering    |    U3        |
 | Bill Zimmerman    | Computer Engineering |    U2          |
 
-## Deliverable 1:
+## 📓 Deliverable 1:
 
 [Requirements Model](https://github.com/McGill-ECSE321-Winter2024/project-group-3/wiki/%F0%9F%8E%92-Requirements-Model)
 
