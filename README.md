@@ -1,8 +1,10 @@
 # Project Group 3
 
-## Project Overview: 
+## 💼 Project Overview: 
 
 In this project, our team of software developers was tasked with creating a web app registration and management system for a local gym. The system should allow users to create accounts and register for classes. They are able to find classes of different types taught by different people. Instructors should be able to create classes of a certain then manage those classes by changing their time, type, adding teachers, and removing/adding clientele. Finally they are able to propose new class types. The owner is able to reject or approve different class types as well as alter classes the same as an instructor and promote, fire, or remove users. The owner is also able to manage qualities of the gym such as class length, opening and closing time, and capacity. 
+
+## 🧠 The Team : 
 
 | Member            | Major   |  Year |
 | ----------------- | ------------------------------------ | ------------ |
