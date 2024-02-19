@@ -16,13 +16,19 @@ In this project, our team of software developers was tasked with creating a web 
 
 ## Deliverable 1:
 
-[Project 1 Report and Meeting Notes](https://github.com/McGill-ECSE321-Winter2024/project-group-3/wiki/Deliverable-1-Meetings-and-Effort#effort-and-responsibilities:~:text=Home-,Deliverable%201%20Meetings%20and%20Effort,-Effort%20and%20Responsibilities)
+[Requirements Model](https://github.com/McGill-ECSE321-Winter2024/project-group-3/wiki/%F0%9F%8E%92-Requirements-Model)
 
-[Requirements](https://github.com/McGill-ECSE321-Winter2024/project-group-3/wiki/Requirements#:~:text=Domain%20Model-,Requirements,-Functional%20Requirements)
+[Use Case Diagrams](https://github.com/McGill-ECSE321-Winter2024/project-group-3/wiki/%F0%9F%91%B7-Use-Cases-and-Diagrams#-use-case-diagram-1)
 
-[Domain Model](https://github.com/McGill-ECSE321-Winter2024/project-group-3/wiki/Domain-Model)
+[Detailed Use Case Specifications](https://github.com/McGill-ECSE321-Winter2024/project-group-3/wiki/%F0%9F%91%B7-Use-Cases-and-Diagrams#-detailed-specifications)
 
-[Use Case Diagrams](https://github.com/McGill-ECSE321-Winter2024/project-group-3/wiki/Use-Cases-and-Diagrams)
+[Domain Model](https://github.com/McGill-ECSE321-Winter2024/project-group-3/wiki/%F0%9F%97%82%EF%B8%8F-Domain-Model)
+
+[Project Board](https://github.com/orgs/McGill-ECSE321-Winter2024/projects/36/views/1)
+
+[Project Management and Project Report](https://github.com/McGill-ECSE321-Winter2024/project-group-3/wiki/%F0%9F%93%93-Project-Management-and-Project-Report)
+
+[Meeting Minutes](https://github.com/McGill-ECSE321-Winter2024/project-group-3/wiki/%E2%9C%8F%EF%B8%8F-Meetings-Minutes#-meeting-notes-for-deliverable-one)
 
 
 # ⚠️ NOTE: PLEASE USE JAVA 21; THE TESTS WILL FAIL IF YOU DON'T
