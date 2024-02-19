@@ -14,6 +14,8 @@ import ca.mcgill.ecse321.gymregistration.dao.PersonRepository;
 import ca.mcgill.ecse321.gymregistration.model.Customer;
 import ca.mcgill.ecse321.gymregistration.model.Person;
 
+import java.util.List;
+
 @SpringBootTest
 public class CustomerTests {
     @Autowired
@@ -63,5 +65,41 @@ public class CustomerTests {
         
         assertEquals(jim.getId(), customerFromDB.getPerson().getId());
         assertEquals(name, customerFromDB.getPerson().getName());
+    }
+    @Test
+    public void testFindCustomersByPersonName() {
+        // Create and persist person.
+        String name = "Bob Johnson";
+        Person bob = new Person(name);
+        bob = personRepository.save(bob);
+
+        // Create customers with the same person.
+        String email1 = "customer1@emailprovider.ca";
+        String password1 = "customer1Password";
+        int creditCardNumber1 = 987654321;
+        Customer customer1 = new Customer(email1, password1, bob, creditCardNumber1);
+        customerRepository.save(customer1);
+
+        String email2 = "customer2@emailprovider.ca";
+        String password2 = "customer2Password";
+        int creditCardNumber2 = 456789123;
+        Customer customer2 = new Customer(email2, password2, bob, creditCardNumber2);
+        customerRepository.save(customer2);
+
+        // Find customers by person name.
+        List<Customer> customers = customerRepository.findCustomersByPerson_Name(name);
+
+        // Assert the list is not null and contains the expected number of customers.
+        assertNotNull(customers);
+        assertEquals(2, customers.size());
+
+        // Assert that the customers in the list have the correct attributes.
+        assertEquals(email1, customers.get(0).getEmail());
+        assertEquals(password1, customers.get(0).getPassword());
+        assertEquals(creditCardNumber1, customers.get(0).getCreditCardNumber());
+
+        assertEquals(email2, customers.get(1).getEmail());
+        assertEquals(password2, customers.get(1).getPassword());
+        assertEquals(creditCardNumber2, customers.get(1).getCreditCardNumber());
     }
 }

@@ -12,6 +12,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import ca.mcgill.ecse321.gymregistration.dao.PersonRepository;
 import ca.mcgill.ecse321.gymregistration.model.Person;
 
+import java.util.List;
+
 @SpringBootTest
 public class PersonTests {
     @Autowired
@@ -40,5 +42,29 @@ public class PersonTests {
         
         assertEquals(person.getId(), personFromDB.getId());
         assertEquals(name, personFromDB.getName());
+    }
+    @Test
+    public void testFindPersonByName() {
+        // Create persons with different names.
+        Person john = new Person("John");
+        Person jane = new Person("Jane");
+        Person jim = new Person("Jim");
+
+        // Save persons to the database.
+        personRepository.save(john);
+        personRepository.save(jane);
+        personRepository.save(jim);
+
+        // Search for persons by name.
+        List<Person> foundPersons = personRepository.findPersonsByName("John");
+
+        // Assert the list is not null and contains the correct number of persons.
+        assertNotNull(foundPersons);
+        assertEquals(1, foundPersons.size());
+
+        // Assert the attributes of the found person.
+        Person foundPerson = foundPersons.get(0);
+        assertEquals(john.getId(), foundPerson.getId());
+        assertEquals("John", foundPerson.getName());
     }
 }

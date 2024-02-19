@@ -1,9 +1,8 @@
-/*PLEASE DO NOT EDIT THIS CODE*/
-/*This code was generated using the UMPLE 1.33.0.6934.a386b0a58 modeling language!*/
 package ca.mcgill.ecse321.gymregistration.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 // line 85 "model.ump"
@@ -18,60 +17,47 @@ public class Person
 
   //Person Attributes
   @Id
-  @GeneratedValue
-  private Integer id;
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  private int id;
   private String name;
-
-  //Person Associations
-
   //------------------------
   // CONSTRUCTOR
   //------------------------
 
-  // Hibernate needs a default constructor, but it doesn't need to be public
-  @SuppressWarnings("unused")
-  private Person() {
+  // Hibernate needs a default constructor
+  public Person() {
   }
 
-  public Person(String aName)
-  {
-    name = aName;
-    
+  public Person(String name) {
+    this.name = name;
   }
 
   //------------------------
   // INTERFACE
   //------------------------
 
-  public boolean setName(String aName)
-  {
-    boolean wasSet = false;
-    name = aName;
-    wasSet = true;
-    return wasSet;
+
+  public void setId(int id) {
+    this.id = id;
   }
 
-  public String getName()
-  {
+  public String getName() {
     return name;
   }
-  /* Code from template association_GetOne */
-  
-  /* Code from template association_SetOneToMany */
-  
-  public void delete()
-  {
-   
+
+  public void setName(String name) {
+    this.name = name;
   }
 
-
-  public String toString()
-  {
-    return super.toString() + "["+
-            "name" + ":" + getName()+ "]" + System.getProperties().getProperty("line.separator");
-  }
-
-public Integer getId() {
+  public int getId() {
     return id;
-}
+  }
+
+  @Override
+  public String toString() {
+    return "Person{" +
+            "id=" + id +
+            ", name='" + name + '\'' +
+            '}';
+  }
 }
