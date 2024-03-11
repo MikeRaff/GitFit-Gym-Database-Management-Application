@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="ca.mcgill.ecse321.gymregistration.repository.OwnerTests" tests="2" skipped="0" failures="0" errors="0" timestamp="2024-03-11T19:10:10" hostname="Eriks-MacBook-Air-2.local" time="0.093">
+<testsuite name="ca.mcgill.ecse321.gymregistration.repository.OwnerTests" tests="2" skipped="0" failures="0" errors="0" timestamp="2024-03-11T19:13:09" hostname="Eriks-MacBook-Air-2.local" time="0.107">
   <properties/>
-  <testcase name="testCreateAndReadOwner()" classname="ca.mcgill.ecse321.gymregistration.repository.OwnerTests" time="0.054"/>
-  <testcase name="testFindOwnersByPersonName()" classname="ca.mcgill.ecse321.gymregistration.repository.OwnerTests" time="0.036"/>
-  <system-out><![CDATA[2024-03-11T15:10:10.556-04:00  INFO 86169 --- [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [ca.mcgill.ecse321.gymregistration.repository.OwnerTests]: OwnerTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-2024-03-11T15:10:10.560-04:00  INFO 86169 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration ca.mcgill.ecse321.gymregistration.GymregistrationApplication for test class ca.mcgill.ecse321.gymregistration.repository.OwnerTests
+  <testcase name="testCreateAndReadOwner()" classname="ca.mcgill.ecse321.gymregistration.repository.OwnerTests" time="0.061"/>
+  <testcase name="testFindOwnersByPersonName()" classname="ca.mcgill.ecse321.gymregistration.repository.OwnerTests" time="0.043"/>
+  <system-out><![CDATA[2024-03-11T15:13:09.275-04:00  INFO 86312 --- [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [ca.mcgill.ecse321.gymregistration.repository.OwnerTests]: OwnerTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2024-03-11T15:13:09.283-04:00  INFO 86312 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration ca.mcgill.ecse321.gymregistration.GymregistrationApplication for test class ca.mcgill.ecse321.gymregistration.repository.OwnerTests
 ]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

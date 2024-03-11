@@ -25,75 +25,73 @@ public class OwnerTests {
 
     @BeforeEach
     @AfterEach
-    private void clearDatabase() {
+    public void clearDatabase() {
         ownerRepository.deleteAll();
         personRepository.deleteAll();
     }
-
     @Test
     public void testCreateAndReadOwner() {
         // Create and persist person.
-        String name = "John";
-        Person john = new Person(name);
-        john = personRepository.save(john);
-        
-        // Create owner.
-        String email = "myemail@emailprovider.com";
-        String password = "password";
-        Owner owner = new Owner(email, password, john);
+        Person john = createAndPersistPerson("John");
 
-        // Save owner to database.
-        owner = ownerRepository.save(owner);
+        // Create owner.
+        Owner owner = createAndPersistOwner("myemail@emailprovider.com", "password", john);
 
         // Read owner from database.
         Owner ownerFromDB = ownerRepository.findOwnerById(owner.getId());
 
-        // Assert owner is not null and has correct non-null attributes.
-        assertNotNull(ownerFromDB);
-
-        assertEquals(owner.getId(), ownerFromDB.getId());
-        assertEquals(email, ownerFromDB.getEmail());
-        assertEquals(password, ownerFromDB.getPassword());
-
-        assertNotNull(ownerFromDB.getPerson());
-        //assertEquals(john, ownerFromDB.getPerson());  // compares addresses, not values
-        
-        // Assert person is not null and has correct attributes.
-        assertNotNull(personRepository.findPersonById(john.getId()));
-        
-        assertEquals(john.getId(), ownerFromDB.getPerson().getId());
-        assertEquals(name, ownerFromDB.getPerson().getName());
+        // Assertions
+        assertOwnerAttributes(owner, ownerFromDB);
+        assertPersonAttributes(john, ownerFromDB.getPerson());
     }
+
     @Test
     public void testFindOwnersByPersonName() {
         // Create and persist person.
-        String name = "John Doe";
-        Person john = new Person(name);
-        john = personRepository.save(john);
+        Person john = createAndPersistPerson("John Doe");
 
         // Create owners with the same person.
-        String email1 = "owner1@emailprovider.ca";
-        String password1 = "owner1Password";
-        Owner owner1 = new Owner(email1, password1, john);
-        ownerRepository.save(owner1);
-
-        String email2 = "owner2@emailprovider.ca";
-        String password2 = "owner2Password";
-        Owner owner2 = new Owner(email2, password2, john);
-        ownerRepository.save(owner2);
+        createAndPersistOwner("owner1@emailprovider.ca", "owner1Password", john);
+        createAndPersistOwner("owner2@emailprovider.ca", "owner2Password", john);
 
         // Find owners by person name.
-        List<Owner> owners = ownerRepository.findOwnersByPerson_Name(name);
+        List<Owner> owners = ownerRepository.findOwnersByPerson_Name(john.getName());
 
-        // Assert the list is not null and contains the expected number of owners.
+        // Assertions
+        assertOwnersListAttributes(owners);
+    }
+
+    private Person createAndPersistPerson(String name) {
+        Person person = new Person(name);
+        return personRepository.save(person);
+    }
+
+    private Owner createAndPersistOwner(String email, String password, Person person) {
+        Owner owner = new Owner(email, password, person);
+        return ownerRepository.save(owner);
+    }
+
+    private void assertOwnerAttributes(Owner expected, Owner actual) {
+        assertNotNull(actual);
+        assertEquals(expected.getId(), actual.getId());
+        assertEquals(expected.getEmail(), actual.getEmail());
+        assertEquals(expected.getPassword(), actual.getPassword());
+    }
+
+    private void assertPersonAttributes(Person expected, Person actual) {
+        assertNotNull(actual);
+        assertEquals(expected.getId(), actual.getId());
+        assertEquals(expected.getName(), actual.getName());
+    }
+
+    private void assertOwnersListAttributes(List<Owner> owners) {
         assertNotNull(owners);
         assertEquals(2, owners.size());
 
-        // Assert that the owners in the list have the correct attributes.
-        assertEquals(email1, owners.get(0).getEmail());
-        assertEquals(password1, owners.get(0).getPassword());
+        assertEquals("owner1@emailprovider.ca", owners.get(0).getEmail());
+        assertEquals("owner1Password", owners.get(0).getPassword());
 
-        assertEquals(email2, owners.get(1).getEmail());
-        assertEquals(password2, owners.get(1).getPassword());
+        assertEquals("owner2@emailprovider.ca", owners.get(1).getEmail());
+        assertEquals("owner2Password", owners.get(1).getPassword());
     }
 }

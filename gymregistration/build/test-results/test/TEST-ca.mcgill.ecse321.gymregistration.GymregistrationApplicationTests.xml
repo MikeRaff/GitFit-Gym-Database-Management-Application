@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="ca.mcgill.ecse321.gymregistration.GymregistrationApplicationTests" tests="1" skipped="0" failures="0" errors="0" timestamp="2024-03-11T19:10:07" hostname="Eriks-MacBook-Air-2.local" time="1.176">
+<testsuite name="ca.mcgill.ecse321.gymregistration.GymregistrationApplicationTests" tests="1" skipped="0" failures="0" errors="0" timestamp="2024-03-11T19:13:06" hostname="Eriks-MacBook-Air-2.local" time="1.175">
   <properties/>
-  <testcase name="contextLoads()" classname="ca.mcgill.ecse321.gymregistration.GymregistrationApplicationTests" time="1.176"/>
-  <system-out><![CDATA[15:09:58.015 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [ca.mcgill.ecse321.gymregistration.GymregistrationApplicationTests]: GymregistrationApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-15:09:58.246 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration ca.mcgill.ecse321.gymregistration.GymregistrationApplication for test class ca.mcgill.ecse321.gymregistration.GymregistrationApplicationTests
+  <testcase name="contextLoads()" classname="ca.mcgill.ecse321.gymregistration.GymregistrationApplicationTests" time="1.175"/>
+  <system-out><![CDATA[15:12:56.578 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [ca.mcgill.ecse321.gymregistration.GymregistrationApplicationTests]: GymregistrationApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+15:12:56.806 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration ca.mcgill.ecse321.gymregistration.GymregistrationApplication for test class ca.mcgill.ecse321.gymregistration.GymregistrationApplicationTests
 
   .   ____          _            __ _ _
  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
@@ -13,21 +13,21 @@
  =========|_|==============|___/=/_/_/_/
  :: Spring Boot ::                (v3.2.2)
 
-2024-03-11T15:09:59.073-04:00  INFO 86169 --- [    Test worker] c.m.e.g.GymregistrationApplicationTests  : Starting GymregistrationApplicationTests using Java 21.0.2 with PID 86169 (started by erikcupsa in /Users/erikcupsa/Desktop/Coding/ECSE 321/project-group-3/gymregistration)
-2024-03-11T15:09:59.076-04:00  INFO 86169 --- [    Test worker] c.m.e.g.GymregistrationApplicationTests  : No active profile set, falling back to 1 default profile: "default"
-2024-03-11T15:10:00.942-04:00  INFO 86169 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2024-03-11T15:10:01.114-04:00  INFO 86169 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 160 ms. Found 8 JPA repository interfaces.
-2024-03-11T15:10:02.171-04:00  INFO 86169 --- [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
-2024-03-11T15:10:02.244-04:00  INFO 86169 --- [    Test worker] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.4.1.Final
-2024-03-11T15:10:02.287-04:00  INFO 86169 --- [    Test worker] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
-2024-03-11T15:10:02.775-04:00  INFO 86169 --- [    Test worker] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
-2024-03-11T15:10:02.998-04:00  INFO 86169 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
-2024-03-11T15:10:03.248-04:00  INFO 86169 --- [    Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@21be14c2
-2024-03-11T15:10:03.252-04:00  INFO 86169 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-2024-03-11T15:10:05.017-04:00  INFO 86169 --- [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-2024-03-11T15:10:05.238-04:00  INFO 86169 --- [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
-2024-03-11T15:10:05.688-04:00  WARN 86169 --- [    Test worker] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2024-03-11T15:10:07.825-04:00  INFO 86169 --- [    Test worker] c.m.e.g.GymregistrationApplicationTests  : Started GymregistrationApplicationTests in 9.312 seconds (process running for 12.17)
+2024-03-11T15:12:57.623-04:00  INFO 86312 --- [    Test worker] c.m.e.g.GymregistrationApplicationTests  : Starting GymregistrationApplicationTests using Java 21.0.2 with PID 86312 (started by erikcupsa in /Users/erikcupsa/Desktop/Coding/ECSE 321/project-group-3/gymregistration)
+2024-03-11T15:12:57.626-04:00  INFO 86312 --- [    Test worker] c.m.e.g.GymregistrationApplicationTests  : No active profile set, falling back to 1 default profile: "default"
+2024-03-11T15:12:59.569-04:00  INFO 86312 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-03-11T15:12:59.753-04:00  INFO 86312 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 172 ms. Found 8 JPA repository interfaces.
+2024-03-11T15:13:00.883-04:00  INFO 86312 --- [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-03-11T15:13:00.959-04:00  INFO 86312 --- [    Test worker] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.4.1.Final
+2024-03-11T15:13:01.001-04:00  INFO 86312 --- [    Test worker] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-03-11T15:13:01.590-04:00  INFO 86312 --- [    Test worker] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-03-11T15:13:01.714-04:00  INFO 86312 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-03-11T15:13:01.961-04:00  INFO 86312 --- [    Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@566fe83c
+2024-03-11T15:13:01.965-04:00  INFO 86312 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-03-11T15:13:03.724-04:00  INFO 86312 --- [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-03-11T15:13:03.961-04:00  INFO 86312 --- [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-03-11T15:13:04.442-04:00  WARN 86312 --- [    Test worker] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-03-11T15:13:06.503-04:00  INFO 86312 --- [    Test worker] c.m.e.g.GymregistrationApplicationTests  : Started GymregistrationApplicationTests in 9.435 seconds (process running for 12.333)
 ]]></system-out>
   <system-err><![CDATA[WARNING: A Java agent has been loaded dynamically (/Users/erikcupsa/.gradle/caches/modules-2/files-2.1/net.bytebuddy/byte-buddy-agent/1.14.11/f9cb566608fbac6bc7bf54901a7aa11543a989ee/byte-buddy-agent-1.14.11.jar)
 WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
