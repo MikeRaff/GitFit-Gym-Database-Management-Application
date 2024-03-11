@@ -27,7 +27,7 @@ public class SessionTests {
 
     @BeforeEach
     @AfterEach
-    private void clearDatabase() {
+    public void clearDatabase() {
         sessionRepository.deleteAll();
         classTypeRepository.deleteAll();
     }
@@ -35,81 +35,79 @@ public class SessionTests {
     @Test
     public void testCreateAndReadSession() {
         // Create and persist class type.
-        String classTypeName = "testClassType";
-        Boolean isApproved = true;  // Must be approved to create session.
-        ClassType classType = new ClassType(classTypeName, isApproved);
-        classType = classTypeRepository.save(classType);
+        ClassType classType = createAndPersistClassType("testClassType" + System.currentTimeMillis(), true);
 
         // Create session.
-        Date date = Date.valueOf("2024-02-17");
-        Time startTime = Time.valueOf("17:22:00");
-        Time endTime = Time.valueOf("18:22:00");
-        String description = "A description of the session.";
-        String sessionName = "Session name";
-        String location = "Where session takes place.";
-        Session session = new Session(date, startTime, endTime, description, sessionName, location, classType);
-
-        // Save session
-        sessionRepository.save(session);
+        Session session = createAndPersistSession("2024-02-17", "17:22:00", "18:22:00",
+                "A description of the session.", "Session name", "Where session takes place.", classType);
 
         // Read session from database.
         Session sessionFromDB = sessionRepository.findSessionById(session.getId());
 
-        // Assert session not null and has correct non-null attributes.
-        assertNotNull(sessionFromDB);
-
-        assertEquals(session.getId(), sessionFromDB.getId());
-        assertEquals(date, sessionFromDB.getDate());
-        assertEquals(startTime, sessionFromDB.getStartTime());
-        assertEquals(endTime, sessionFromDB.getEndTime());
-        assertEquals(description, sessionFromDB.getDescription());
-        assertEquals(sessionName, sessionFromDB.getName());
-        assertEquals(location, sessionFromDB.getLocation());
-
-        assertNotNull(sessionFromDB.getClassType());
-        //assertEquals(classType, sessionFromDB.getClassType()); // compares addresses, not values
-
-        // Assert session class type not null and has correct attributes.
-        assertNotNull(classTypeRepository.findClassTypeById(classType.getId()));
-
-        assertEquals(classType.getId(), sessionFromDB.getClassType().getId());
-        assertEquals(classTypeName, sessionFromDB.getClassType().getName());
-        assertEquals(isApproved, sessionFromDB.getClassType().getIsApproved());
+        // Assertions
+        assertSessionAttributes(session, sessionFromDB);
+        assertClassTypeAttributes(classType, sessionFromDB.getClassType());
     }
+
     @Test
     public void testFindSessionsByClassTypeName() {
         // Create and persist class type.
-        String classTypeName = "testClassType";
-        Boolean isApproved = true;  // Must be approved to create session.
-        ClassType classType = new ClassType(classTypeName, isApproved);
-        classType = classTypeRepository.save(classType);
+        ClassType classType = createAndPersistClassType("testClassType", true);
 
         // Create sessions for the class type.
-        Date date1 = Date.valueOf("2024-02-17");
-        Time startTime1 = Time.valueOf("17:22:00");
-        Time endTime1 = Time.valueOf("18:22:00");
-        String description1 = "A description of the session 1";
-        String sessionName1 = "Session name 1";
-        String location1 = "Where session takes place 1";
-        Session session1 = new Session(date1, startTime1, endTime1, description1, sessionName1, location1, classType);
-        sessionRepository.save(session1);
+        createAndPersistSession("2024-02-17", "17:22:00", "18:22:00",
+                "A description of the session 1", "Session name 1", "Where session takes place 1", classType);
 
-        Date date2 = Date.valueOf("2024-02-18");
-        Time startTime2 = Time.valueOf("19:00:00");
-        Time endTime2 = Time.valueOf("20:00:00");
-        String description2 = "A description of the session 2";
-        String sessionName2 = "Session name 2";
-        String location2 = "Where session takes place 2";
-        Session session2 = new Session(date2, startTime2, endTime2, description2, sessionName2, location2, classType);
-        sessionRepository.save(session2);
+        createAndPersistSession("2024-02-18", "19:00:00", "20:00:00",
+                "A description of the session 2", "Session name 2", "Where session takes place 2", classType);
 
         // Perform the test
-        List<Session> sessions = sessionRepository.findSessionsByClassType_Name(classTypeName);
+        List<Session> sessions = sessionRepository.findSessionsByClassType_Name(classType.getName());
 
-        // Assert the results
+        // Assertions
+        assertSessionsListAttributes(sessions);
+    }
+
+    private ClassType createAndPersistClassType(String name, boolean isApproved) {
+        ClassType classType = new ClassType(name, isApproved);
+        return classTypeRepository.save(classType);
+    }
+
+    private Session createAndPersistSession(String date, String startTime, String endTime,
+                                            String description, String sessionName, String location, ClassType classType) {
+        Session session = new Session(Date.valueOf(date), Time.valueOf(startTime), Time.valueOf(endTime),
+                description, sessionName, location, classType);
+        return sessionRepository.save(session);
+    }
+
+    private void assertSessionAttributes(Session expected, Session actual) {
+        assertNotNull(actual);
+        assertEquals(expected.getId(), actual.getId());
+        assertEquals(expected.getDate(), actual.getDate());
+        assertEquals(expected.getStartTime(), actual.getStartTime());
+        assertEquals(expected.getEndTime(), actual.getEndTime());
+        assertEquals(expected.getDescription(), actual.getDescription());
+        assertEquals(expected.getName(), actual.getName());
+        assertEquals(expected.getLocation(), actual.getLocation());
+    }
+
+    private void assertClassTypeAttributes(ClassType expected, ClassType actual) {
+        assertNotNull(actual);
+        assertEquals(expected.getId(), actual.getId());
+        assertEquals(expected.getName(), actual.getName());
+        assertEquals(expected.getIsApproved(), actual.getIsApproved());
+    }
+
+    private void assertSessionsListAttributes(List<Session> sessions) {
         assertNotNull(sessions);
         assertEquals(2, sessions.size());
-        assertEquals(session1.getId(), sessions.get(0).getId());
-        assertEquals(session2.getId(), sessions.get(1).getId());
+
+        assertEquals("A description of the session 1", sessions.get(0).getDescription());
+        assertEquals("Session name 1", sessions.get(0).getName());
+        assertEquals("Where session takes place 1", sessions.get(0).getLocation());
+
+        assertEquals("A description of the session 2", sessions.get(1).getDescription());
+        assertEquals("Session name 2", sessions.get(1).getName());
+        assertEquals("Where session takes place 2", sessions.get(1).getLocation());
     }
 }
