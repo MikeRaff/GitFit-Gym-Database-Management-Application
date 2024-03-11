@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="ca.mcgill.ecse321.gymregistration.repository.ClassTypeTests" tests="2" skipped="0" failures="0" errors="0" timestamp="2024-02-19T02:05:39" hostname="Eriks-MacBook-Air.local" time="0.226">
+<testsuite name="ca.mcgill.ecse321.gymregistration.repository.ClassTypeTests" tests="2" skipped="0" failures="0" errors="0" timestamp="2024-03-11T18:35:12" hostname="Eriks-MacBook-Air-2.local" time="0.851">
   <properties/>
-  <testcase name="testCreateAndReadNotApprovedClassType()" classname="ca.mcgill.ecse321.gymregistration.repository.ClassTypeTests" time="0.213"/>
-  <testcase name="testCreateAndReadApprovedClassType()" classname="ca.mcgill.ecse321.gymregistration.repository.ClassTypeTests" time="0.012"/>
-  <system-out><![CDATA[2024-02-18T21:05:39.534-05:00  INFO 19174 --- [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [ca.mcgill.ecse321.gymregistration.repository.ClassTypeTests]: ClassTypeTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-2024-02-18T21:05:39.542-05:00  INFO 19174 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration ca.mcgill.ecse321.gymregistration.GymregistrationApplication for test class ca.mcgill.ecse321.gymregistration.repository.ClassTypeTests
+  <testcase name="testCreateAndReadNotApprovedClassType()" classname="ca.mcgill.ecse321.gymregistration.repository.ClassTypeTests" time="0.795"/>
+  <testcase name="testCreateAndReadApprovedClassType()" classname="ca.mcgill.ecse321.gymregistration.repository.ClassTypeTests" time="0.027"/>
+  <system-out><![CDATA[2024-03-11T14:35:11.903-04:00  INFO 85175 --- [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [ca.mcgill.ecse321.gymregistration.repository.ClassTypeTests]: ClassTypeTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2024-03-11T14:35:11.983-04:00  INFO 85175 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration ca.mcgill.ecse321.gymregistration.GymregistrationApplication for test class ca.mcgill.ecse321.gymregistration.repository.ClassTypeTests
 ]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

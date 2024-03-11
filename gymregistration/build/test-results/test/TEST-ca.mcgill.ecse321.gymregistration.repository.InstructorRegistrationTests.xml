@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="ca.mcgill.ecse321.gymregistration.repository.InstructorRegistrationTests" tests="1" skipped="0" failures="0" errors="0" timestamp="2024-02-19T02:05:39" hostname="Eriks-MacBook-Air.local" time="0.054">
+<testsuite name="ca.mcgill.ecse321.gymregistration.repository.InstructorRegistrationTests" tests="1" skipped="0" failures="0" errors="0" timestamp="2024-03-11T18:35:13" hostname="Eriks-MacBook-Air-2.local" time="0.136">
   <properties/>
-  <testcase name="testCreateAndReadInstructorRegistration()" classname="ca.mcgill.ecse321.gymregistration.repository.InstructorRegistrationTests" time="0.054"/>
-  <system-out><![CDATA[2024-02-18T21:05:39.923-05:00  INFO 19174 --- [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [ca.mcgill.ecse321.gymregistration.repository.InstructorRegistrationTests]: InstructorRegistrationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-2024-02-18T21:05:39.924-05:00  INFO 19174 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration ca.mcgill.ecse321.gymregistration.GymregistrationApplication for test class ca.mcgill.ecse321.gymregistration.repository.InstructorRegistrationTests
+  <testcase name="testCreateAndReadInstructorRegistration()" classname="ca.mcgill.ecse321.gymregistration.repository.InstructorRegistrationTests" time="0.136"/>
+  <system-out><![CDATA[2024-03-11T14:35:13.301-04:00  INFO 85175 --- [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [ca.mcgill.ecse321.gymregistration.repository.InstructorRegistrationTests]: InstructorRegistrationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2024-03-11T14:35:13.307-04:00  INFO 85175 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration ca.mcgill.ecse321.gymregistration.GymregistrationApplication for test class ca.mcgill.ecse321.gymregistration.repository.InstructorRegistrationTests
 ]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

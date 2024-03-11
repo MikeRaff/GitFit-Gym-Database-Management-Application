@@ -27,18 +27,14 @@ public class ClassTypeTests {
     public void testCreateAndReadApprovedClassType() {
         // Create approved class type.
         String name = "testApprovedClassType";
-        Boolean isApproved = true;
+        boolean isApproved = true;
         ClassType approvedClassType = new ClassType(name, isApproved);
-    
         // Save approved class type.
         approvedClassType = repo.save(approvedClassType);
-
         // Read approved class type from database.
         ClassType approvedClassTypeFromDB = repo.findClassTypeById(approvedClassType.getId());
-
         // Assert approved class type is not null and has correct attributes.
         assertNotNull(approvedClassTypeFromDB);
-        
         assertEquals(approvedClassType.getId(), approvedClassTypeFromDB.getId());
         assertEquals(name, approvedClassTypeFromDB.getName());
         assertEquals(isApproved, approvedClassTypeFromDB.getIsApproved());
@@ -48,21 +44,16 @@ public class ClassTypeTests {
     public void testCreateAndReadNotApprovedClassType() {
         // Create not approved class type.
         String name = "testNotApprovedClassType";
-        Boolean isApproved = false;
+        boolean isApproved = false;
         ClassType notApprovedClassType = new ClassType(name, isApproved);
-    
         // Save not approved class type.
         notApprovedClassType = repo.save(notApprovedClassType);
-
         // Read not approved class type from database.
         ClassType notApprovedClassTypeFromDB = repo.findClassTypeById(notApprovedClassType.getId());
-
         // Assert not approved class type is not null and has correct attributes.
         assertNotNull(notApprovedClassTypeFromDB);
-        
         assertEquals(notApprovedClassType.getId(), notApprovedClassTypeFromDB.getId());
         assertEquals(name, notApprovedClassTypeFromDB.getName());
         assertEquals(isApproved, notApprovedClassTypeFromDB.getIsApproved());
     }
-    
 }
