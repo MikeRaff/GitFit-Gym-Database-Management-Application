@@ -39,7 +39,7 @@ public class CustomerRegistrationTests {
 
     @BeforeEach
     @AfterEach
-    private void clearDatabase() {
+    public void clearDatabase() {
         customerRegistrationRepository.deleteAll();
         customerRepository.deleteAll();
         personRepository.deleteAll();
@@ -50,90 +50,99 @@ public class CustomerRegistrationTests {
     @Test
     public void testCreateAndReadCustomerRegistration() {
         // Create and persist person.
-        String personName = "Simon";
-        Person simon = new Person(personName);
-        simon = personRepository.save(simon);
-        
+        Person simon = createAndPersistPerson();
         // Create and persist customer.
+        Customer customerSimon = createAndPersistCustomer(simon);
+        // Create and persist class type.
+        ClassType yoga = createAndPersistClassType();
+        // Create and persist session.
+        Session session = createAndPersistSession(yoga);
+        // Create customer registration.
+        CustomerRegistration customerRegistration = createCustomerRegistration(session, customerSimon);
+        // Save customer registration to the database.
+        customerRegistration = customerRegistrationRepository.save(customerRegistration);
+        // Read customer registration from the database.
+        CustomerRegistration customerRegistrationFromDB = customerRegistrationRepository.findCustomerRegistrationById(customerRegistration.getId());
+        // Assertions
+        assertCustomerRegistrationAttributes(customerRegistration, customerRegistrationFromDB);
+        assertSessionAttributes(session, customerRegistrationFromDB.getSession());
+        assertClassTypeAttributes(yoga, customerRegistrationFromDB.getSession().getClassType());
+        assertCustomerAttributes(customerSimon, customerRegistrationFromDB.getCustomer());
+        assertPersonAttributes(simon, customerRegistrationFromDB.getCustomer().getPerson());
+    }
+
+    private Person createAndPersistPerson() {
+        String personName = "Simon";
+        Person person = new Person(personName);
+        return personRepository.save(person);
+    }
+
+    private Customer createAndPersistCustomer(Person person) {
         String email = "customeremailaddress@emailprovider.org";
         String password = "password";
         int creditCardNumber = 987654321;
-        Customer customerSimon = new Customer(email, password, simon, creditCardNumber);
-        customerSimon = customerRepository.save(customerSimon);
+        Customer customer = new Customer(email, password, person, creditCardNumber);
+        return customerRepository.save(customer);
+    }
 
-        // Create and persist class type.
+    private ClassType createAndPersistClassType() {
         String className = "Yoga";
-        boolean isApproved = true;  // must be true in order to sign up for class.
-        ClassType yoga = new ClassType(className, isApproved);
-        yoga = classTypeRepository.save(yoga);
+        boolean isApproved = true;
+        ClassType classType = new ClassType(className, isApproved);
+        return classTypeRepository.save(classType);
+    }
 
-        // Create and persist session.
+    private Session createAndPersistSession(ClassType yoga) {
         Date sessionDate = Date.valueOf("2024-02-18");
         Time startTime = Time.valueOf("15:48:00");
         Time endTime = Time.valueOf("16:48:00");
         String sessionDescription = "A description of this session.";
         String sessionName = "Session name";
-        String sessionLocation = "Where session takes place.";
+        String sessionLocation = "Where the session takes place.";
         Session session = new Session(sessionDate, startTime, endTime, sessionDescription, sessionName, sessionLocation, yoga);
-        session = sessionRepository.save(session);
+        return sessionRepository.save(session);
+    }
 
-        // Create customer registration.
+    private CustomerRegistration createCustomerRegistration(Session session, Customer customer) {
         Date registrationDate = Date.valueOf("2024-02-17");
-        CustomerRegistration customerRegistration = new CustomerRegistration(registrationDate, session, customerSimon);
-    
-        // Save customer registration to database.
-        customerRegistration = customerRegistrationRepository.save(customerRegistration);
-    
-        // Read customer registration from database.
-        CustomerRegistration customerRegistrationFromDB = customerRegistrationRepository.findCustomerRegistrationById(customerRegistration.getId());
+        return new CustomerRegistration(registrationDate, session, customer);
+    }
 
-        // Assert customer registration is not null and has correct non-null attributes.
-        assertNotNull(customerRegistrationFromDB);
-        
-        assertEquals(customerRegistration.getId(), customerRegistrationFromDB.getId());
-        assertEquals(registrationDate, customerRegistrationFromDB.getDate());
-        
-        assertNotNull(customerRegistrationFromDB.getSession());
-        //assertEquals(session, customerRegistrationFromDB.getSession());   // compares addresses, not values
-        assertNotNull(customerRegistrationFromDB.getCustomer());
-        //assertEquals(customerSimon, customerRegistrationFromDB.getCustomer());    // compares addresses, not values
+    private void assertCustomerRegistrationAttributes(CustomerRegistration expected, CustomerRegistration actual) {
+        assertNotNull(actual);
+        assertEquals(expected.getId(), actual.getId());
+        assertEquals(expected.getDate(), actual.getDate());
+    }
 
-        // Assert session is not null and has correct non-null attributes.
-        assertNotNull(sessionRepository.findSessionById(session.getId()));
-        
-        assertEquals(session.getId(), customerRegistrationFromDB.getSession().getId());
-        assertEquals(sessionDate, customerRegistrationFromDB.getSession().getDate());
-        assertEquals(startTime, customerRegistrationFromDB.getSession().getStartTime());
-        assertEquals(endTime, customerRegistrationFromDB.getSession().getEndTime());
-        assertEquals(sessionDescription, customerRegistrationFromDB.getSession().getDescription());
-        assertEquals(sessionName, customerRegistrationFromDB.getSession().getName());
-        assertEquals(sessionLocation, customerRegistrationFromDB.getSession().getLocation());
-        
-        assertNotNull(customerRegistrationFromDB.getSession().getClassType());
-        //assertEquals(yoga, customerRegistrationFromDB.getSession().getClassType()); // compares addresses, not values
+    private void assertSessionAttributes(Session expected, Session actual) {
+        assertNotNull(actual);
+        assertEquals(expected.getId(), actual.getId());
+        assertEquals(expected.getDate(), actual.getDate());
+        assertEquals(expected.getStartTime(), actual.getStartTime());
+        assertEquals(expected.getEndTime(), actual.getEndTime());
+        assertEquals(expected.getDescription(), actual.getDescription());
+        assertEquals(expected.getName(), actual.getName());
+        assertEquals(expected.getLocation(), actual.getLocation());
+    }
 
-        // Assert class type is not null and has correct attributes.
-        assertNotNull(classTypeRepository.findClassTypeById(yoga.getId()));
-        
-        assertEquals(yoga.getId(), customerRegistrationFromDB.getSession().getClassType().getId());
-        assertEquals(className, customerRegistrationFromDB.getSession().getClassType().getName());
-        assertEquals(isApproved, customerRegistrationFromDB.getSession().getClassType().getIsApproved());
+    private void assertClassTypeAttributes(ClassType expected, ClassType actual) {
+        assertNotNull(actual);
+        assertEquals(expected.getId(), actual.getId());
+        assertEquals(expected.getName(), actual.getName());
+        assertEquals(expected.getIsApproved(), actual.getIsApproved());
+    }
 
-        // Assert customer is not null and has correct non-null attributes.
-        assertNotNull(customerRepository.findCustomerById(customerSimon.getId()));
+    private void assertCustomerAttributes(Customer expected, Customer actual) {
+        assertNotNull(actual);
+        assertEquals(expected.getId(), actual.getId());
+        assertEquals(expected.getEmail(), actual.getEmail());
+        assertEquals(expected.getPassword(), actual.getPassword());
+        assertEquals(expected.getCreditCardNumber(), actual.getCreditCardNumber());
+    }
 
-        assertEquals(customerSimon.getId(), customerRegistrationFromDB.getCustomer().getId());
-        assertEquals(email, customerRegistrationFromDB.getCustomer().getEmail());
-        assertEquals(password, customerRegistrationFromDB.getCustomer().getPassword());
-        assertEquals(creditCardNumber, customerRegistrationFromDB.getCustomer().getCreditCardNumber());
-        
-        assertNotNull(customerRegistrationFromDB.getCustomer().getPerson());
-        //assertEquals(simon, customerRegistrationFromDB.getCustomer().getPerson());    // compares addresses, not values
-
-        // Assert person is not null and has correct attributes.
-        assertNotNull(personRepository.findPersonById(simon.getId()));
-        
-        assertEquals(simon.getId(), customerRegistrationFromDB.getCustomer().getPerson().getId());
-        assertEquals(personName, customerRegistrationFromDB.getCustomer().getPerson().getName());
+    private void assertPersonAttributes(Person expected, Person actual) {
+        assertNotNull(actual);
+        assertEquals(expected.getId(), actual.getId());
+        assertEquals(expected.getName(), actual.getName());
     }
 }

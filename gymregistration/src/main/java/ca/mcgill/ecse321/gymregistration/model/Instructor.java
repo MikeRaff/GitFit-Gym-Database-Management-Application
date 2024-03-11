@@ -1,7 +1,6 @@
 package ca.mcgill.ecse321.gymregistration.model;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Instructor extends GymUser

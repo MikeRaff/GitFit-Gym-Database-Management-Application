@@ -21,7 +21,7 @@ public class PersonTests {
 
     @BeforeEach
     @AfterEach
-    private void clearDatabase() {
+    public void clearDatabase() {
         personRepository.deleteAll();
     }
 
@@ -49,19 +49,15 @@ public class PersonTests {
         Person john = new Person("John");
         Person jane = new Person("Jane");
         Person jim = new Person("Jim");
-
         // Save persons to the database.
         personRepository.save(john);
         personRepository.save(jane);
         personRepository.save(jim);
-
         // Search for persons by name.
         List<Person> foundPersons = personRepository.findPersonsByName("John");
-
         // Assert the list is not null and contains the correct number of persons.
         assertNotNull(foundPersons);
         assertEquals(1, foundPersons.size());
-
         // Assert the attributes of the found person.
         Person foundPerson = foundPersons.get(0);
         assertEquals(john.getId(), foundPerson.getId());

@@ -2,7 +2,6 @@ package ca.mcgill.ecse321.gymregistration.model;
 
 
 import java.sql.Date;
-
 import jakarta.persistence.*;
 
 @Entity

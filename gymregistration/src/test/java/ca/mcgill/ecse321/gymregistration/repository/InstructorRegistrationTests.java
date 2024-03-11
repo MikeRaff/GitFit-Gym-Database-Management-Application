@@ -38,100 +38,118 @@ public class InstructorRegistrationTests {
 
     @BeforeEach
     @AfterEach
-    private void clearDatabase() {
+    public void clearDatabase() {
         instructorRegistrationRepository.deleteAll();
         instructorRepository.deleteAll();
         personRepository.deleteAll();
         sessionRepository.deleteAll();
         classTypeRepository.deleteAll();
     }
-
     @Test
     public void testCreateAndReadInstructorRegistration() {
         // Create and persist person.
-        String personName = "Maxime";
-        Person maxime = new Person(personName);
-        maxime = personRepository.save(maxime);
-        
+        Person maxime = createAndPersistPerson();
+
         // Create and persist instructor.
-        String email = "emailaddress@emailprovider.us";
-        String password = "instructorPassword";
-        Instructor instructorMaxime = new Instructor(email, password, maxime);
-        instructorMaxime = instructorRepository.save(instructorMaxime);
+        Instructor instructorMaxime = createAndPersistInstructor(maxime);
 
         // Create and persist class type.
-        String className = "Badminton";
-        boolean isApproved = true;  // must be true in order to sign up for class.
-        ClassType badminton = new ClassType(className, isApproved);
-        badminton = classTypeRepository.save(badminton);
+        ClassType badminton = createAndPersistClassType();
 
         // Create and persist session.
-        Date sessionDate = Date.valueOf("2024-02-18");
-        Time startTime = Time.valueOf("16:25:00");
-        Time endTime = Time.valueOf("17:25:00");
-        String sessionDescription = "Badminton for beginners";
-        String sessionName = "Badminton 101";
-        String sessionLocation = "Gymnasium";
-        Session badmintonSession = new Session(sessionDate, startTime, endTime, sessionDescription, sessionName, sessionLocation, badminton);
-        badmintonSession = sessionRepository.save(badmintonSession);
+        Session badmintonSession = createAndPersistSession(badminton);
 
         // Create instructor registration.
-        Date registrationDate = Date.valueOf("2024-02-19");
-        InstructorRegistration instructorRegistration = new InstructorRegistration(registrationDate, instructorMaxime, badmintonSession);
-        
+        InstructorRegistration instructorRegistration = createInstructorRegistration(instructorMaxime, badmintonSession);
+
         // Save instructor registration to database.
         instructorRegistration = instructorRegistrationRepository.save(instructorRegistration);
 
         // Read instructor registration from database.
         InstructorRegistration instructorRegistrationFromDB = instructorRegistrationRepository.findInstructorRegistrationById(instructorRegistration.getId());
 
-        // Assert instructor registration is not null and has correct non-null attributes.
-        assertNotNull(instructorRegistrationFromDB);
-        
-        assertEquals(instructorRegistration.getId(), instructorRegistrationFromDB.getId());
-        assertEquals(registrationDate, instructorRegistrationFromDB.getDate());
+        // Assertions
+        assertInstructorRegistrationAttributes(instructorRegistration, instructorRegistrationFromDB);
+        assertInstructorAttributes(instructorMaxime, instructorRegistrationFromDB.getInstructor());
+        assertPersonAttributes(maxime, instructorRegistrationFromDB.getInstructor().getPerson());
+        assertSessionAttributes(badmintonSession, instructorRegistrationFromDB.getSession());
+        assertClassTypeAttributes(badminton, instructorRegistrationFromDB.getSession().getClassType());
+    }
 
-        assertNotNull(instructorRegistrationFromDB.getInstructor());
-        //assertEquals(instructorMaxime, instructorRegistrationFromDB.getInstructor()); // compares addresses, not values
-        assertNotNull(instructorRegistrationFromDB.getSession());
-        //assertEquals(badmintonSession, instructorRegistrationFromDB.getSession()); // compares addresses, not values
+    private Person createAndPersistPerson() {
+        String name = "Maxime";
+        Person person = new Person(name);
+        return personRepository.save(person);
+    }
 
-        // Assert instructor is not null and has correct non-null attributes.
-        assertNotNull(instructorRepository.findInstructorById(instructorMaxime.getId()));
+    private Instructor createAndPersistInstructor(Person person) {
+        String email = "emailaddress@emailprovider.us";
+        String password = "instructorPassword";
+        Instructor instructor = new Instructor(email, password, person);
+        return instructorRepository.save(instructor);
+    }
 
-        assertEquals(instructorMaxime.getId(), instructorRegistrationFromDB.getInstructor().getId());
-        assertEquals(email, instructorRegistrationFromDB.getInstructor().getEmail());
-        assertEquals(password, instructorRegistrationFromDB.getInstructor().getPassword());
+    private ClassType createAndPersistClassType() {
+        String className = "Badminton";
+        boolean isApproved = true;
+        ClassType classType = new ClassType(className, isApproved);
+        return classTypeRepository.save(classType);
+    }
 
-        assertNotNull(instructorRegistrationFromDB.getInstructor().getPerson());
-        //assertEquals(maxime, instructorRegistrationFromDB.getInstructor().getPerson());   // compares addresses, not values
+    private Session createAndPersistSession(ClassType classType) {
+        Date sessionDate = Date.valueOf("2024-02-18");
+        Time startTime = Time.valueOf("16:25:00");
+        Time endTime = Time.valueOf("17:25:00");
+        String sessionDescription = "Badminton for beginners";
+        String sessionName = "Badminton 101";
+        String sessionLocation = "Gymnasium";
+        Session session = new Session(sessionDate, startTime, endTime, sessionDescription, sessionName, sessionLocation, classType);
+        return sessionRepository.save(session);
+    }
 
-        // Assert person is not null and has correct attributes.
-        assertNotNull(personRepository.findPersonById(maxime.getId()));
+    private InstructorRegistration createInstructorRegistration(Instructor instructor, Session session) {
+        Date registrationDate = Date.valueOf("2024-02-19");
+        return new InstructorRegistration(registrationDate, instructor, session);
+    }
 
-        assertEquals(maxime.getId(), instructorRegistrationFromDB.getInstructor().getPerson().getId());
-        assertEquals(personName, instructorRegistrationFromDB.getInstructor().getPerson().getName());
+    private void assertInstructorRegistrationAttributes(InstructorRegistration expected, InstructorRegistration actual) {
+        assertNotNull(actual);
+        assertEquals(expected.getId(), actual.getId());
+        assertEquals(expected.getDate(), actual.getDate());
+    }
 
-        // Assert session is not null and has correct non-null attributes.
-        assertNotNull(sessionRepository.findSessionById(badmintonSession.getId()));
-        
-        assertEquals(badmintonSession.getId(), instructorRegistrationFromDB.getSession().getId());
-        assertEquals(sessionDate, instructorRegistrationFromDB.getSession().getDate());
-        assertEquals(startTime, instructorRegistrationFromDB.getSession().getStartTime());
-        assertEquals(endTime, instructorRegistrationFromDB.getSession().getEndTime());
-        assertEquals(sessionDescription, instructorRegistrationFromDB.getSession().getDescription());
-        assertEquals(sessionName, instructorRegistrationFromDB.getSession().getName());
-        assertEquals(sessionLocation, instructorRegistrationFromDB.getSession().getLocation());
+    private void assertInstructorAttributes(Instructor expected, Instructor actual) {
+        assertNotNull(actual);
+        assertEquals(expected.getId(), actual.getId());
+        assertEquals(expected.getEmail(), actual.getEmail());
+        assertEquals(expected.getPassword(), actual.getPassword());
+    }
 
-        assertNotNull(instructorRegistrationFromDB.getSession().getClassType());
-        //assertEquals(badminton, instructorRegistrationFromDB.getSession().getClassType());    // compares addresses, not values
+    private void assertPersonAttributes(Person expected, Person actual) {
+        assertNotNull(actual);
+        assertEquals(expected.getId(), actual.getId());
+        assertEquals(expected.getName(), actual.getName());
+    }
 
-        // Assert class type is not null and has correct attributes.
-        assertNotNull(classTypeRepository.findClassTypeById(badminton.getId()));
-        
-        assertEquals(badminton.getId(), instructorRegistrationFromDB.getSession().getClassType().getId());
-        assertEquals(className, instructorRegistrationFromDB.getSession().getClassType().getName());
-        assertEquals(isApproved, instructorRegistrationFromDB.getSession().getClassType().getIsApproved());  
-        
-    }        
+    private void assertSessionAttributes(Session expected, Session actual) {
+        assertNotNull(actual);
+        assertEquals(expected.getId(), actual.getId());
+        assertEquals(expected.getDate(), actual.getDate());
+        assertEquals(expected.getStartTime(), actual.getStartTime());
+        assertEquals(expected.getEndTime(), actual.getEndTime());
+        assertEquals(expected.getDescription(), actual.getDescription());
+        assertEquals(expected.getName(), actual.getName());
+        assertEquals(expected.getLocation(), actual.getLocation());
+        assertNotNull(actual.getClassType());
+        assertEquals(expected.getClassType().getId(), actual.getClassType().getId());
+        assertEquals(expected.getClassType().getName(), actual.getClassType().getName());
+        assertEquals(expected.getClassType().getIsApproved(), actual.getClassType().getIsApproved());
+    }
+
+    private void assertClassTypeAttributes(ClassType expected, ClassType actual) {
+        assertNotNull(actual);
+        assertEquals(expected.getId(), actual.getId());
+        assertEquals(expected.getName(), actual.getName());
+        assertEquals(expected.getIsApproved(), actual.getIsApproved());
+    }
 }
