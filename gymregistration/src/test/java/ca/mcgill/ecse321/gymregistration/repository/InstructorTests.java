@@ -25,75 +25,73 @@ public class InstructorTests {
 
     @BeforeEach
     @AfterEach
-    private void clearDatabase() {    
+    public void clearDatabase() {
         instructorRepository.deleteAll();
         personRepository.deleteAll();
     }
-
     @Test
     public void testCreateAndReadInstructor() {
         // Create and persist person.
-        String name = "Joe Smith";
-        Person joe = new Person(name);
-        joe = personRepository.save(joe);
-        
-        // Create instructor.
-        String email = "instructoremail@emailprovider.ca";
-        String password = "instructorPassword";
-        Instructor instructor = new Instructor(email, password, joe);
+        Person joe = createAndPersistPerson("Joe Smith");
 
-        // Save instructor to database.
-        instructor = instructorRepository.save(instructor);
+        // Create instructor.
+        Instructor instructor = createAndPersistInstructor("instructoremail@emailprovider.ca", "instructorPassword", joe);
 
         // Read instructor from database.
         Instructor instructorFromDB = instructorRepository.findInstructorById(instructor.getId());
 
-        // Assert instructor is not null and has correct non-null attributes.
-        assertNotNull(instructorFromDB);
-
-        assertEquals(instructor.getId(), instructorFromDB.getId());
-        assertEquals(email, instructorFromDB.getEmail());
-        assertEquals(password, instructorFromDB.getPassword());
-        
-        assertNotNull(instructorFromDB.getPerson());
-        //assertEquals(joe, instructorFromDB.getPerson());  // compares addresses, not values
-
-        // Assert person is not null and has correct attributes.
-        assertNotNull(personRepository.findPersonById(joe.getId()));
-        
-        assertEquals(joe.getId(), instructorFromDB.getPerson().getId());
-        assertEquals(name, instructorFromDB.getPerson().getName());
+        // Assertions
+        assertInstructorAttributes(instructor, instructorFromDB);
+        assertPersonAttributes(joe, instructorFromDB.getPerson());
     }
+
     @Test
     public void testFindInstructorsByPersonName() {
         // Create and persist person.
-        String name = "John Doe";
-        Person john = new Person(name);
-        john = personRepository.save(john);
+        Person john = createAndPersistPerson("John Doe");
 
         // Create instructors with the same person.
-        String email1 = "instructor1@emailprovider.ca";
-        String password1 = "instructor1Password";
-        Instructor instructor1 = new Instructor(email1, password1, john);
-        instructorRepository.save(instructor1);
-
-        String email2 = "instructor2@emailprovider.ca";
-        String password2 = "instructor2Password";
-        Instructor instructor2 = new Instructor(email2, password2, john);
-        instructorRepository.save(instructor2);
+        createAndPersistInstructor("instructor1@emailprovider.ca", "instructor1Password", john);
+        createAndPersistInstructor("instructor2@emailprovider.ca", "instructor2Password", john);
 
         // Find instructors by person name.
-        List<Instructor> instructors = (List<Instructor>) instructorRepository.findInstructorsByPerson_Name(name);
+        List<Instructor> instructors =  instructorRepository.findInstructorsByPerson_Name(john.getName());
 
-        // Assert the list is not null and contains the expected number of instructors.
+        // Assertions
+        assertInstructorsListAttributes(instructors);
+    }
+
+    private Person createAndPersistPerson(String name) {
+        Person person = new Person(name);
+        return personRepository.save(person);
+    }
+
+    private Instructor createAndPersistInstructor(String email, String password, Person person) {
+        Instructor instructor = new Instructor(email, password, person);
+        return instructorRepository.save(instructor);
+    }
+
+    private void assertInstructorAttributes(Instructor expected, Instructor actual) {
+        assertNotNull(actual);
+        assertEquals(expected.getId(), actual.getId());
+        assertEquals(expected.getEmail(), actual.getEmail());
+        assertEquals(expected.getPassword(), actual.getPassword());
+    }
+
+    private void assertPersonAttributes(Person expected, Person actual) {
+        assertNotNull(actual);
+        assertEquals(expected.getId(), actual.getId());
+        assertEquals(expected.getName(), actual.getName());
+    }
+
+    private void assertInstructorsListAttributes(List<Instructor> instructors) {
         assertNotNull(instructors);
         assertEquals(2, instructors.size());
 
-        // Assert that the instructors in the list have the correct attributes.
-        assertEquals(email1, instructors.get(0).getEmail());
-        assertEquals(password1, instructors.get(0).getPassword());
+        assertEquals("instructor1@emailprovider.ca", instructors.get(0).getEmail());
+        assertEquals("instructor1Password", instructors.get(0).getPassword());
 
-        assertEquals(email2, instructors.get(1).getEmail());
-        assertEquals(password2, instructors.get(1).getPassword());
+        assertEquals("instructor2@emailprovider.ca", instructors.get(1).getEmail());
+        assertEquals("instructor2Password", instructors.get(1).getPassword());
     }
 }

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="ca.mcgill.ecse321.gymregistration.repository.SessionTests" tests="2" skipped="0" failures="0" errors="0" timestamp="2024-03-11T18:49:00" hostname="Eriks-MacBook-Air-2.local" time="0.124">
+<testsuite name="ca.mcgill.ecse321.gymregistration.repository.SessionTests" tests="2" skipped="0" failures="0" errors="0" timestamp="2024-03-11T19:10:10" hostname="Eriks-MacBook-Air-2.local" time="0.144">
   <properties/>
-  <testcase name="testFindSessionsByClassTypeName()" classname="ca.mcgill.ecse321.gymregistration.repository.SessionTests" time="0.066"/>
-  <testcase name="testCreateAndReadSession()" classname="ca.mcgill.ecse321.gymregistration.repository.SessionTests" time="0.053"/>
-  <system-out><![CDATA[2024-03-11T14:49:00.414-04:00  INFO 85644 --- [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [ca.mcgill.ecse321.gymregistration.repository.SessionTests]: SessionTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-2024-03-11T14:49:00.416-04:00  INFO 85644 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration ca.mcgill.ecse321.gymregistration.GymregistrationApplication for test class ca.mcgill.ecse321.gymregistration.repository.SessionTests
+  <testcase name="testFindSessionsByClassTypeName()" classname="ca.mcgill.ecse321.gymregistration.repository.SessionTests" time="0.07"/>
+  <testcase name="testCreateAndReadSession()" classname="ca.mcgill.ecse321.gymregistration.repository.SessionTests" time="0.066"/>
+  <system-out><![CDATA[2024-03-11T15:10:10.733-04:00  INFO 86169 --- [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [ca.mcgill.ecse321.gymregistration.repository.SessionTests]: SessionTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2024-03-11T15:10:10.735-04:00  INFO 86169 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration ca.mcgill.ecse321.gymregistration.GymregistrationApplication for test class ca.mcgill.ecse321.gymregistration.repository.SessionTests
 ]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

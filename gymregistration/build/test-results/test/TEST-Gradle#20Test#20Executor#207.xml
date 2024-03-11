@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="Gradle Test Executor 6" tests="1" skipped="0" failures="1" errors="0" timestamp="2024-03-11T18:48:46" hostname="Eriks-MacBook-Air-2.local" time="13.775">
+<testsuite name="Gradle Test Executor 7" tests="1" skipped="0" failures="1" errors="0" timestamp="2024-03-11T19:09:56" hostname="Eriks-MacBook-Air-2.local" time="13.989">
   <properties/>
-  <testcase name="failed to execute tests" classname="Gradle Test Executor 6" time="13.775">
+  <testcase name="failed to execute tests" classname="Gradle Test Executor 7" time="13.989">
     <failure message="org.gradle.api.internal.tasks.testing.TestSuiteExecutionException: Could not execute test class 'ca.mcgill.ecse321.gymregistration.repository.ClassTypeTests 2'." type="org.gradle.api.internal.tasks.testing.TestSuiteExecutionException">org.gradle.api.internal.tasks.testing.TestSuiteExecutionException: Could not execute test class 'ca.mcgill.ecse321.gymregistration.repository.ClassTypeTests 2'.
 	at org.gradle.api.internal.tasks.testing.SuiteTestClassProcessor.processTestClass(SuiteTestClassProcessor.java:54)
 	at java.base@21.0.2/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
