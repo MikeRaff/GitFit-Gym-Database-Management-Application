@@ -5,4 +5,6 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface ClassTypeRepository extends CrudRepository<ClassType, Integer> {
     ClassType findClassTypeById(int id);
+
+    ClassType findClassTypeByName(String name);
 }
