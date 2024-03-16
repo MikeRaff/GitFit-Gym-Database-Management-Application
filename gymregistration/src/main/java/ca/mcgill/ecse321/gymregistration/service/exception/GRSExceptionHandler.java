@@ -12,7 +12,7 @@ public class GRSExceptionHandler {
     /**
      * handleGRSException: handling the grs exception
      * @param e : The grs exception
-     * @return : response entity of error message and status
+     * @return response entity of error message and status
      */
     @ExceptionHandler(GRSException.class)
     public ResponseEntity<String> handleGRSException(GRSException e) {
@@ -25,7 +25,7 @@ public class GRSExceptionHandler {
     /**
      * handleValidationException: handling method argument not valid exception
      * @param e: exception
-     * @return: Response entity of response message and status code
+     * @return Response entity of response message and status code
      */
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<String> handleValidationException(MethodArgumentNotValidException e){
@@ -33,6 +33,6 @@ public class GRSExceptionHandler {
         for (FieldError fieldError: e.getBindingResult().getFieldErrors()){
             response += fieldError.getDefaultMessage() + "\n";
         }
-        return new ResponseEntity<String>(response, e.getStatusCode());
+        return new ResponseEntity<>(response, e.getStatusCode());
     }
 }

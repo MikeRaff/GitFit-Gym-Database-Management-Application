@@ -2,14 +2,17 @@ package ca.mcgill.ecse321.gymregistration.service.exception;
 
 import org.springframework.http.HttpStatus;
 
+import java.io.Serial;
+
 public class GRSException extends RuntimeException{
+    @Serial
     private static final long serialVersionUID = 1L;
 
     private HttpStatus httpStatus;
 
     /**
      * getStatus: Get the current http status
-     * @return
+     * @return the httpStatus
      */
     public HttpStatus getStatus() {
         return httpStatus;

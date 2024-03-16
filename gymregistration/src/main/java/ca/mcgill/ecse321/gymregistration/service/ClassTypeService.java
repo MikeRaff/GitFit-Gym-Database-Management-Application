@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ClassTypeService {
 
@@ -19,20 +21,103 @@ public class ClassTypeService {
      * @param name: name of class type
      * @param isApproved: approval of class type
      * @return created class type
-     * @throws Exception of name is null or class type already exists in repository
+     * @throws GRSException if attempt to create class type is invalid
      */
     @Transactional
-    public ClassType createClassType(String name, boolean isApproved) throws Exception {
+    public ClassType createClassType(String name, boolean isApproved){
+        if(name == null || name.trim().isEmpty()){
+            throw new GRSException(HttpStatus.BAD_REQUEST, "Name cannot be empty.");
+        }
+        else if(!isApproved){
+            throw new GRSException(HttpStatus.BAD_REQUEST, "Class Type must be approved.");
+        }
+        else if(classTypeRepository.findClassTypeByName(name) == null){
+            throw new GRSException(HttpStatus.CONFLICT, "Class Type " + name + " already exists.");
+        }
         ClassType classType = new ClassType();
         classType.setName(name);
         classType.setApproved(isApproved);
-        if(name == null){
-            throw new GRSException(HttpStatus.BAD_REQUEST, "Name cannot be empty.");
-        }
-        else if(classTypeRepository.findClassTypeByName(name) == null){
-            throw new GRSException(HttpStatus.BAD_REQUEST, "Class Type " + name + " already exists.");
-        }
         classTypeRepository.save(classType);
         return classType;
     }
+
+    /**
+     * GetClassTypeByName: fetch an existing class type with a name
+     * @param name: Name used to fetch class type
+     * @return class type that is found
+     * @throws GRSException class type not found
+     */
+    @Transactional
+    public ClassType getClassTypeByName(String name){
+        ClassType classType = classTypeRepository.findClassTypeByName(name);
+        if (classType == null){
+            throw new GRSException(HttpStatus.NOT_FOUND, "Class Type not found.");
+        }
+        return classType;
+    }
+
+    /**
+     * GetAllClassTypes: getting all existing class types
+     * @return List of all existing class types
+     * @throws GRSException No class types found
+     */
+    @Transactional
+    public List<ClassType> getAllClassTypes(){
+        List<ClassType> classTypes = classTypeRepository.findAll();
+        if(classTypes.size() == 0){
+            throw new GRSException(HttpStatus.NOT_FOUND, "No Class Types found in the system.");
+        }
+        return classTypes;
+    }
+
+    /**
+     * DeleteClassType: delete the class type
+     * @param name: class type to be deleted
+     * @throws GRSException Class type not found
+     */
+    @Transactional
+    public void deleteClassType(String name){
+        ClassType classType = classTypeRepository.findClassTypeByName(name);
+        if(classType == null){
+            throw new GRSException(HttpStatus.NOT_FOUND, "Class Type not found.");
+        }
+        classTypeRepository.deleteClassTypeByName(name);
+    }
+
+    /**
+     * ProposeClassType: proposing a new class type
+     * @param name: name of class type
+     * @return the class type
+     * @throws GRSException Invalid request for class type
+     */
+    @Transactional
+    public ClassType proposeClassType(String name) {
+        if (name == null || name.trim().isEmpty()){
+            throw new GRSException(HttpStatus.BAD_REQUEST, "Name cannot be empty.");
+        }
+        if (classTypeRepository.findClassTypeByName(name) != null) {
+            throw new GRSException(HttpStatus.BAD_REQUEST, "Class Type " + name + " already exists.");
+        }
+        ClassType classType = new ClassType();
+        classType.setName(name);
+        classType.setApproved(false); // Not approved until owner approves it
+        classTypeRepository.save(classType);
+        return classType;
+    }
+
+    /**
+     * ApproveProposedClassType: approving a proposed class type
+     * @param name: class type to be approved
+     * @throws GRSException Class type not found
+     */
+    @Transactional
+    public void approveProposedClassType(String name){
+        ClassType classType = classTypeRepository.findClassTypeByName(name);
+        if(classType == null){
+            new GRSException(HttpStatus.NOT_FOUND, "Class Type not found.");
+        }
+        classType.setApproved(true);
+        classTypeRepository.save(classType);
+    }
+
 }
