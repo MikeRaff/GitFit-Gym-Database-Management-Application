@@ -6,10 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="8b559f4f-1cbf-4215-8cfa-543b8af52d7a" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ca/mcgill/ecse321/gymregistration/dao/ClassTypeRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ca/mcgill/ecse321/gymregistration/dao/ClassTypeRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/ca/mcgill/ecse321/gymregistration/service/ClassTypeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ca/mcgill/ecse321/gymregistration/service/ClassTypeService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ca/mcgill/ecse321/gymregistration/service/exception/GRSException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ca/mcgill/ecse321/gymregistration/service/exception/GRSException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ca/mcgill/ecse321/gymregistration/service/exception/GRSExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ca/mcgill/ecse321/gymregistration/service/exception/GRSExceptionHandler.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -118,7 +115,7 @@
       <updated>1708025505526</updated>
       <workItem from="1708025506787" duration="314000" />
       <workItem from="1710178282646" duration="12280000" />
-      <workItem from="1710614287818" duration="8586000" />
+      <workItem from="1710614287818" duration="9290000" />
     </task>
     <servers />
   </component>

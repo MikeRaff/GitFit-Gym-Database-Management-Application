@@ -16,6 +16,8 @@ public class ClassTypeService {
     @Autowired
     ClassTypeRepository classTypeRepository;
 
+    private static final int MAX_CLASS_TYPES = 100;
+
     /**
      * CreateClassType: service method to create and store a class type in the database
      * @param name: name of class type
@@ -28,10 +30,13 @@ public class ClassTypeService {
         if(name == null || name.trim().isEmpty()){
             throw new GRSException(HttpStatus.BAD_REQUEST, "Name cannot be empty.");
         }
-        else if(!isApproved){
+        if(!isApproved){
             throw new GRSException(HttpStatus.BAD_REQUEST, "Class Type must be approved.");
         }
-        else if(classTypeRepository.findClassTypeByName(name) == null){
+        if (classTypeRepository.count() >= MAX_CLASS_TYPES) {
+            throw new GRSException(HttpStatus.BAD_REQUEST, "Maximum number of class types reached.");
+        }
+        if(classTypeRepository.findClassTypeByName(name) == null){
             throw new GRSException(HttpStatus.CONFLICT, "Class Type " + name + " already exists.");
         }
         ClassType classType = new ClassType();
@@ -94,6 +99,9 @@ public class ClassTypeService {
     public ClassType proposeClassType(String name) {
         if (name == null || name.trim().isEmpty()){
             throw new GRSException(HttpStatus.BAD_REQUEST, "Name cannot be empty.");
+        }
+        if (classTypeRepository.count() >= MAX_CLASS_TYPES) {
+            throw new GRSException(HttpStatus.BAD_REQUEST, "Maximum number of class types reached.");
         }
         if (classTypeRepository.findClassTypeByName(name) != null) {
             throw new GRSException(HttpStatus.BAD_REQUEST, "Class Type " + name + " already exists.");
