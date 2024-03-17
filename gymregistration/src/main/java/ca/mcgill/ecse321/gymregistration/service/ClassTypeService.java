@@ -122,7 +122,7 @@ public class ClassTypeService {
     public void approveProposedClassType(String name){
         ClassType classType = classTypeRepository.findClassTypeByName(name);
         if(classType == null){
-            new GRSException(HttpStatus.NOT_FOUND, "Class Type not found.");
+            throw new GRSException(HttpStatus.NOT_FOUND, "Class Type not found.");
         }
         classType.setApproved(true);
         classTypeRepository.save(classType);

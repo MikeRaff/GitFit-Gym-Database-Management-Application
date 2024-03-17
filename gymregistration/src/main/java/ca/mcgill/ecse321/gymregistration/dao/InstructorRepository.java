@@ -8,4 +8,6 @@ import java.util.List;
 public interface InstructorRepository extends CrudRepository<Instructor, Integer> {
     Instructor findInstructorById(Integer id);
     List<Instructor> findInstructorsByPerson_Name(String name);
+
+    Instructor findInstructorByEmail(String email);
 }
