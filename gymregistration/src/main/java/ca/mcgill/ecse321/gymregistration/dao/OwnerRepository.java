@@ -8,4 +8,6 @@ import java.util.List;
 public interface OwnerRepository extends CrudRepository<Owner, Integer> {
     Owner findOwnerById(Integer id);
     List<Owner> findOwnersByPerson_Name(String name);
+
+    Owner findOwnerByEmail(String email);
 }

@@ -5,8 +5,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
-// line 85 "model.ump"
-// line 150 "model.ump"
 @Entity
 public class Person
 {
