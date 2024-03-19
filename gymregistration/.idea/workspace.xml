@@ -5,12 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8b559f4f-1cbf-4215-8cfa-543b8af52d7a" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/ca/mcgill/ecse321/gymregistration/service/CustomerService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ca/mcgill/ecse321/gymregistration/dao/CustomerRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ca/mcgill/ecse321/gymregistration/dao/CustomerRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ca/mcgill/ecse321/gymregistration/dao/InstructorRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ca/mcgill/ecse321/gymregistration/dao/InstructorRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ca/mcgill/ecse321/gymregistration/dao/OwnerRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ca/mcgill/ecse321/gymregistration/dao/OwnerRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ca/mcgill/ecse321/gymregistration/model/Person.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ca/mcgill/ecse321/gymregistration/model/Person.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ca/mcgill/ecse321/gymregistration/controller/GymRegistrationRestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ca/mcgill/ecse321/gymregistration/controller/GymRegistrationRestController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ca/mcgill/ecse321/gymregistration/dto/ClassTypeDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ca/mcgill/ecse321/gymregistration/dto/ClassTypeDto.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/ca/mcgill/ecse321/gymregistration/service/ClassTypeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ca/mcgill/ecse321/gymregistration/service/ClassTypeService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -120,7 +117,7 @@
       <updated>1708025505526</updated>
       <workItem from="1708025506787" duration="314000" />
       <workItem from="1710178282646" duration="12280000" />
-      <workItem from="1710614287818" duration="17990000" />
+      <workItem from="1710614287818" duration="26376000" />
     </task>
     <servers />
   </component>
