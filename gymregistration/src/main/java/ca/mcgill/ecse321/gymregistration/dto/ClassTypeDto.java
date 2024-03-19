@@ -1,5 +1,7 @@
 package ca.mcgill.ecse321.gymregistration.dto;
 
+import ca.mcgill.ecse321.gymregistration.model.ClassType;
+
 public class ClassTypeDto {
     //ClassType Attributes
     private int id;
@@ -30,6 +32,12 @@ public class ClassTypeDto {
     public ClassTypeDto(String name, boolean isApproved) {
         this.name = name;
         this.isApproved = isApproved;
+    }
+
+    public ClassTypeDto(ClassType classType) {
+        this.id = classType.getId();
+        this.name = classType.getName();
+        this.isApproved = classType.getIsApproved();
     }
 
     public int getId() {

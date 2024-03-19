@@ -36,7 +36,7 @@ public class ClassTypeService {
         if (classTypeRepository.count() >= MAX_CLASS_TYPES) {
             throw new GRSException(HttpStatus.BAD_REQUEST, "Maximum number of class types reached.");
         }
-        if(classTypeRepository.findClassTypeByName(name) == null){
+        if(classTypeRepository.findClassTypeByName(name) != null){
             throw new GRSException(HttpStatus.CONFLICT, "Class Type " + name + " already exists.");
         }
         ClassType classType = new ClassType();
@@ -44,6 +44,31 @@ public class ClassTypeService {
         classType.setApproved(isApproved);
         classTypeRepository.save(classType);
         return classType;
+    }
+
+    /**
+     * UpdateClassType: service method to update class type and store in database
+     * @param oldName: name of old class type
+     * @param newName: name of new class type
+     * @param isApproved: is approved of new class type
+     * @return Updated ClassType
+     */
+    @Transactional
+    public ClassType updateClassType(String oldName, String newName, boolean isApproved){
+        if(newName == null || newName.trim().isEmpty()){
+            throw new GRSException(HttpStatus.BAD_REQUEST, "Name cannot be empty.");
+        }
+        if(!isApproved){
+            throw new GRSException(HttpStatus.BAD_REQUEST, "Class Type must be approved.");
+        }
+        if(classTypeRepository.findClassTypeByName(oldName) == null){
+            throw new GRSException(HttpStatus.CONFLICT, "Class Type " + oldName + " does not exist.");
+        }
+
+        ClassType toUpdate = classTypeRepository.findClassTypeByName(oldName);
+        toUpdate.setName(newName);
+        toUpdate.setApproved(isApproved);
+        return classTypeRepository.save(toUpdate);
     }
 
     /**
