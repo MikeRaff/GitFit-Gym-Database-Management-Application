@@ -15,6 +15,11 @@ import ca.mcgill.ecse321.gymregistration.service.exception.GRSException;
 public class SessionService {
     @Autowired
     SessionRepository sessionRepository;
+
+    public sessionservice()
+    {
+
+    }
     /*
      * Create Session: Creates a new session
      * @param Instructor: The instructor creating the course
@@ -28,10 +33,14 @@ public class SessionService {
      * @return the created session
      * @throws GRSException Invalid creation request
      */
-    Session CreateSession(ClassType classType, Time startTime, Time endTime, Date date, String description, String name, String location)
+    Session createSession(Date date, Time startTime, Time endTime, String description, String name, String location, ClassType classType)
     {
         if(sessionRepository.findSessionByStartTimeAndDate(startTime, date)!=null)
              throw new GRSException(HttpStatus.BAD_REQUEST, "Time Not Available");
+        if(classType == null || startTime == null || endTime == null || date == null || description == null || name == null || location == null)
+            throw new GRSException(HttpStatus.BAD_REQUEST, "Please enter missing information");
+        if(!classType.getIsApproved())
+            throw new GRSException(HttpStatus.BAD_REQUEST, "Class must be approved");
         
         Session session = new Session(date, startTime, endTime, description, name, location, classType);
        
