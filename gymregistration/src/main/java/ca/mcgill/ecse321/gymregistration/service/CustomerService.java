@@ -1,11 +1,14 @@
 package ca.mcgill.ecse321.gymregistration.service;
 
+import ca.mcgill.ecse321.gymregistration.dao.CustomerRegistrationRepository;
 import ca.mcgill.ecse321.gymregistration.dao.CustomerRepository;
 import ca.mcgill.ecse321.gymregistration.dao.InstructorRepository;
 import ca.mcgill.ecse321.gymregistration.dao.OwnerRepository;
 import ca.mcgill.ecse321.gymregistration.model.ClassType;
 import ca.mcgill.ecse321.gymregistration.model.Customer;
+import ca.mcgill.ecse321.gymregistration.model.CustomerRegistration;
 import ca.mcgill.ecse321.gymregistration.model.Instructor;
+import ca.mcgill.ecse321.gymregistration.model.Session;
 import ca.mcgill.ecse321.gymregistration.service.exception.GRSException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +26,8 @@ public class CustomerService {
     OwnerRepository ownerRepository;
     @Autowired
     InstructorRepository instructorRepository;
+    @Autowired
+    CustomerRegistrationRepository customerRegistrationRepository;
 
     /**
      * CreateCustomer: creating a customer
@@ -161,5 +166,18 @@ public class CustomerService {
             throw new GRSException(HttpStatus.UNAUTHORIZED, "Invalid email or password");
         }
         return customer;
+    }
+
+    public  CustomerRegistration registerCustomerForClass(Session session, String email, String password)
+    {
+        Customer customer = customerRepository.findCustomerByEmailAndPassword(email, password);
+        CustomerRegistration customerRegistration = customerRegistrationRepository.findCustomerRegistrationByCustomerAndSession(customer, session);
+        if(customerRegistration !=null)
+        {
+            throw new GRSException(HttpStatus.UNAUTHORIZED, "already registered");
+        }
+        customerRegistration = new CustomerRegistration(session.getDate(),session, customer);
+        customerRegistrationRepository.save(customerRegistration);
+        return customerRegistration;
     }
 }
