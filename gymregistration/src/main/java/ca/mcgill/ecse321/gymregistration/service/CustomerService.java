@@ -167,10 +167,20 @@ public class CustomerService {
         }
         return customer;
     }
-
+     /**
+     * registerCustomerForClass: allow a customer to log in
+     * @param session: the session to be reigstered for
+     * @param email: Email of the customer
+     * @param password: password of the customer
+     * @return The customerregistration
+     * @throws GRSException Invalid customer email or password or already registered
+     */
     public  CustomerRegistration registerCustomerForClass(Session session, String email, String password)
     {
         Customer customer = customerRepository.findCustomerByEmailAndPassword(email, password);
+        if (customer == null) {
+            throw new GRSException(HttpStatus.UNAUTHORIZED, "Invalid email or password");
+        }
         CustomerRegistration customerRegistration = customerRegistrationRepository.findCustomerRegistrationByCustomerAndSession(customer, session);
         if(customerRegistration !=null)
         {
