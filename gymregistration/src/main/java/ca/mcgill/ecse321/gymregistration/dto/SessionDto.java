@@ -2,7 +2,6 @@ package ca.mcgill.ecse321.gymregistration.dto;
 
 import org.checkerframework.checker.units.qual.Time;
 import ca.mcgill.ecse321.gymregistration.model.ClassType;
-import ca.mcgill.ecse321.gymregistration.model.Session;
 import java.sql.Date;
 public class SessionDto {
 

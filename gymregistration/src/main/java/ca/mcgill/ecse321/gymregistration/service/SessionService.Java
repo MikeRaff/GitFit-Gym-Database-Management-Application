@@ -17,10 +17,9 @@ public class SessionService {
     @Autowired
     SessionRepository sessionRepository;
 
-    public sessionservice()
-    {
-
-    }
+    public SessionService()
+    {}
+    
     /*
      * Create Session: Creates a new session
      * @param Instructor: The instructor creating the course
@@ -51,7 +50,9 @@ public class SessionService {
         return session;
     }
 
-    Session 
-
+    List<Session> getAllSessions()
+    {
+        return sessionRepository.findAll();
+    }
     
 }

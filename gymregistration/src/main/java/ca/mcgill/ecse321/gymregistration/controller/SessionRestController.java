@@ -16,6 +16,14 @@ public class SessionRestController {
     @Autowired
     private SessionService sessionService;
 
+    /**
+     * GetAllClassTypes: getting all class types
+     * @return All class types in database
+     */
+    @GetMapping(value = { "/sessions", "/sessions/"})
+    public List<Session> getAllSessions() {
+        return SessionService.getAllSessions().stream().map(Session::new).collect(Collectors.toList());
+    }
     
    
 }
