@@ -12,6 +12,7 @@ import ca.mcgill.ecse321.gymregistration.model.InstructorRegistration;
 import ca.mcgill.ecse321.gymregistration.model.Session;
 import ca.mcgill.ecse321.gymregistration.service.exception.GRSException;
 
+@Service
 public class SessionService {
     @Autowired
     SessionRepository sessionRepository;
