@@ -4,14 +4,18 @@ import java.sql.Date;
 import java.sql.Time;
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 
+import ca.mcgill.ecse321.gymregistration.dao.InstructorRegistrationRepository;
 import ca.mcgill.ecse321.gymregistration.dao.SessionRepository;
 import ca.mcgill.ecse321.gymregistration.model.ClassType;
+import ca.mcgill.ecse321.gymregistration.model.Instructor;
+import ca.mcgill.ecse321.gymregistration.model.InstructorRegistration;
 import ca.mcgill.ecse321.gymregistration.model.Session;
 import ca.mcgill.ecse321.gymregistration.service.exception.GRSException;
 import org.springframework.stereotype.Service;
@@ -20,6 +24,8 @@ import org.springframework.stereotype.Service;
 public class SessionService {
     @Autowired
     SessionRepository sessionRepository;
+    @Autowired 
+    InstructorRegistrationRepository instructorRegistrationRepository;
 
     /**
      * Create Session: Creates a new session
@@ -69,6 +75,7 @@ public class SessionService {
     }
 
     @Transactional
+    //POSSIBLY NEED TO ADD FUNCTIONALITY TO PREVENT ANYONE FROM ALTERING IT
     /**
      * Update Existing Session
      * @param oldSessionId: Session to be updated
@@ -125,6 +132,26 @@ public class SessionService {
         }
         return sessions;
     }
+
+    // @Transactional
+    // //Current idea for implementation
+    // //Not great, open to better ideas
+    // public List<Session> filterSessions(ClassType classType, Time earliestStartTime, Time latestStartTime, Instructor instructor, int capacity)
+    // {
+    //     List<Session> sessions = getAllSessions();
+    //     List<Session> filteredSesssions = getAllSessions();
+        
+    //     for(Session s: sessions)
+    //     {
+    //             InstructorRegistration instructorRegistration = instructorRegistrationRepository.findInstructorRegistrationByInstructorAndSession(instructor,s )
+    //            if(classType !=null && !s.getClassType().getName().equals(classType.getName()) || earliestStartTime !=null && s.getStartTime().before(earliestStartTime) || latestStartTime !=null && s.getStartTime().after(latestStartTime) || instructor !=null && instructor.getEmail().equals(instructorRegistration.getInstructor().getEmail()))
+    //            {
+    //             filteredSesssions.remove(s);
+    //            }
+        
+    //     }
+    //     return filteredSesssions;
+    // }
 
     @Transactional
     /**
