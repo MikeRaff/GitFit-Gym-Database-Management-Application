@@ -69,6 +69,13 @@ public class SessionService {
     }
 
     @Transactional
+    /**
+     * Update Existing Session
+     * @param oldSessionId: Session to be updated
+     * @param newSession: New session to be changed to 
+     * @return the new updated Session
+     * @throws GRSException Session Empty
+     **/
     public Session updateSession(int oldSessionId, Session newSession){
         if(sessionRepository.findSessionById(oldSessionId) == null){
             throw new GRSException(HttpStatus.CONFLICT, "Session with id " + oldSessionId + " does not exist.");
@@ -91,6 +98,12 @@ public class SessionService {
     }
 
     @Transactional
+    /**
+     * find session by a specific ID
+     * @param id
+     * @return the found session
+     * @throws GRSException session not found
+     */
     public Session getSessionById(int id){
         Session session = sessionRepository.findSessionById(id);
         if (session == null){
@@ -100,6 +113,11 @@ public class SessionService {
     }
 
     @Transactional
+    /**
+     * find all sessions
+     * @return a list of all the sessions
+     *  @throws GRSException session not found
+     */
     public List<Session> getAllSessions(){
         List<Session> sessions = sessionRepository.findAll();
         if(sessions.size() == 0){
@@ -109,6 +127,12 @@ public class SessionService {
     }
 
     @Transactional
+    /**
+     * Delete a session
+     * @param id
+     * @return none
+     * @throws GRSException session not found
+     */
     public void deleteSession(int id){
         Session session = sessionRepository.findSessionById(id);
         if(session == null){
