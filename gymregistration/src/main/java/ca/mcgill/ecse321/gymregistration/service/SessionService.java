@@ -133,6 +133,7 @@ public class SessionService {
     }
 
     // @Transactional
+    
     // //Current idea for implementation
     // //Not great, open to better ideas
     // public List<Session> filterSessions(ClassType classType, Time earliestStartTime, Time latestStartTime, Instructor instructor, int capacity)
