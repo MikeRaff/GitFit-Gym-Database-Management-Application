@@ -13,7 +13,7 @@ public class ClassTypeDto {
     }
 
     /**
-     * ClassTypeDto: constructor
+     * ClassTypeDto: constructor all attributes
      * @param id
      * @param name
      * @param isApproved
@@ -25,7 +25,7 @@ public class ClassTypeDto {
     }
 
     /**
-     * ClassTypeDto: constructor
+     * ClassTypeDto: constructor no id
      * @param name
      * @param isApproved
      */
@@ -34,6 +34,10 @@ public class ClassTypeDto {
         this.isApproved = isApproved;
     }
 
+    /**
+     * ClassTypeDto: constructor from ClassType
+     * @param classType
+     */
     public ClassTypeDto(ClassType classType) {
         this.id = classType.getId();
         this.name = classType.getName();
