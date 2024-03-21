@@ -11,4 +11,6 @@ public interface InstructorRegistrationRepository extends CrudRepository<Instruc
     InstructorRegistration findInstructorRegistrationById(int id);
     InstructorRegistration findInstructorRegistrationByInstructorAndSession(Instructor instructor, Session session);
     List<InstructorRegistration> findInstructorRegistrationsBySession(Session session);
+    InstructorRegistration findInstructorRegistrationByInstructorAndSession(Instructor instructor, Session session);
+    List<InstructorRegistration> findInstructorRegistrationsBySession(Session session);
 }
