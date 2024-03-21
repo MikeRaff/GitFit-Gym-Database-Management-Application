@@ -4,7 +4,6 @@ import java.sql.Date;
 import java.sql.Time;
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.transaction.Transactional;
@@ -14,8 +13,8 @@ import org.springframework.http.HttpStatus;
 import ca.mcgill.ecse321.gymregistration.dao.InstructorRegistrationRepository;
 import ca.mcgill.ecse321.gymregistration.dao.SessionRepository;
 import ca.mcgill.ecse321.gymregistration.model.ClassType;
-import ca.mcgill.ecse321.gymregistration.model.Instructor;
-import ca.mcgill.ecse321.gymregistration.model.InstructorRegistration;
+//import ca.mcgill.ecse321.gymregistration.model.Instructor; //needed for filtering
+//import ca.mcgill.ecse321.gymregistration.model.InstructorRegistration; //needed for filtering
 import ca.mcgill.ecse321.gymregistration.model.Session;
 import ca.mcgill.ecse321.gymregistration.service.exception.GRSException;
 import org.springframework.stereotype.Service;
