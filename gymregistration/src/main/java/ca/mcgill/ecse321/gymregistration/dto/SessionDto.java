@@ -15,10 +15,23 @@ public class SessionDto {
   
   private String location;
   private ClassType classType;
+  private int capacity;
+
   public SessionDto() {
   }
+  public SessionDto(SessionDto sessionDto){
+    this.id = sessionDto.getId();
+    this.date = sessionDto.getDate();
+    this.startTime = sessionDto.getStartTime();
+    this.endTime = sessionDto.getEndTime();
+    this.description = sessionDto.getDescription();
+    this.name = sessionDto.getName();
+    this.location = sessionDto.getLocation();
+    this.classType = sessionDto.classType;
+    this.capacity = sessionDto.getCapacity();
+  }
 
-  public SessionDto(Date date, Time startTime, Time endTime, String description, String name, String location, ClassType classType) {
+  public SessionDto(Date date, Time startTime, Time endTime, String description, String name, String location, ClassType classType, int capacity) {
     this.date = date;
     this.startTime = startTime;
     this.endTime = endTime;
@@ -26,6 +39,7 @@ public class SessionDto {
     this.name = name;
     this.location = location;
     this.classType = classType;
+    this.capacity = capacity;
   }
   //------------------------
   // INTERFACE
@@ -95,19 +109,12 @@ public class SessionDto {
   public void setClassType(ClassType classType) {
     this.classType = classType;
   }
+  public int getCapacity() {
+    return capacity;
+  }
 
-  @Override
-  public String toString() {
-    return "Session{" +
-            "id=" + id +
-            ", date=" + date +
-            ", startTime=" + startTime +
-            ", endTime=" + endTime +
-            ", description='" + description + '\'' +
-            ", name='" + name + '\'' +
-            ", location='" + location + '\'' +
-            ", classType=" + classType +
-            '}';
+  public void setCapacity(int capacity) {
+    this.capacity = capacity;
   }
 }
 
