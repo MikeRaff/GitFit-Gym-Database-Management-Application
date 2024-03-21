@@ -22,7 +22,7 @@ public class SessionRestController {
      */
     @GetMapping(value = { "/sessions", "/sessions/"})
     public List<Session> getAllSessions() {
-        return SessionService.getAllSessions().stream().map(Session::new).collect(Collectors.toList());
+        return sessionService.getAllSessions().stream().map(Session::new).collect(Collectors.toList());
     }
     
    

@@ -11,4 +11,7 @@ public interface SessionRepository extends CrudRepository<Session, Integer> {
     Session findSessionById(int sessionId);
     List<Session> findSessionsByClassType_Name(String name);
     Session findSessionByStartTimeAndDate(Time startTime, Date date);
+    List<Session> findAll();
+
+    void deleteSessionById(int id);
 }

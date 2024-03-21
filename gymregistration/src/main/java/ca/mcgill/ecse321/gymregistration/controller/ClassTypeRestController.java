@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 
 @CrossOrigin(origins="*")
 @RestController
-public class GymRegistrationRestController {
+public class ClassTypeRestController {
     @Autowired
     private ClassTypeService classTypeService;
 

@@ -24,6 +24,7 @@ public class Session
   private String description;
   private String name;
   private String location;
+  private int capacity;
 
   //Session Associations
   
@@ -38,7 +39,7 @@ public class Session
   public Session() {
   }
 
-  public Session(Date date, Time startTime, Time endTime, String description, String name, String location, ClassType classType) {
+  public Session(Date date, Time startTime, Time endTime, String description, String name, String location, ClassType classType, int capacity) {
     this.date = date;
     this.startTime = startTime;
     this.endTime = endTime;
@@ -46,12 +47,29 @@ public class Session
     this.name = name;
     this.location = location;
     this.classType = classType;
+    this.capacity = capacity;
   }
-  //------------------------
+
+    public Session(Session session) {
+      this.date = session.getDate();
+      this.startTime = session.getStartTime();
+      this.endTime = session.getEndTime();
+      this.description = session.getName();
+      this.name = session.getName();
+      this.location = session.getLocation();
+      this.classType = session.getClassType();
+    }
+    //------------------------
   // INTERFACE
   //------------------------
 
+  public int getCapacity() {
+    return capacity;
+  }
 
+  public void setCapacity(int capacity) {
+    this.capacity = capacity;
+  }
   public int getId() {
     return id;
   }
