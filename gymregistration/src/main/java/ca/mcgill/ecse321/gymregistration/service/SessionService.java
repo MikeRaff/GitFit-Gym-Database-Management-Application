@@ -13,8 +13,6 @@ import org.springframework.http.HttpStatus;
 import ca.mcgill.ecse321.gymregistration.dao.InstructorRegistrationRepository;
 import ca.mcgill.ecse321.gymregistration.dao.SessionRepository;
 import ca.mcgill.ecse321.gymregistration.model.ClassType;
-//import ca.mcgill.ecse321.gymregistration.model.Instructor; //needed for filtering
-//import ca.mcgill.ecse321.gymregistration.model.InstructorRegistration; //needed for filtering
 import ca.mcgill.ecse321.gymregistration.model.Session;
 import ca.mcgill.ecse321.gymregistration.service.exception.GRSException;
 import org.springframework.stereotype.Service;
