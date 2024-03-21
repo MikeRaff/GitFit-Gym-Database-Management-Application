@@ -49,6 +49,15 @@ public class Session
     this.classType = classType;
     this.capacity = capacity;
   }
+  public Session(Date date, Time startTime, Time endTime, String description, String name, String location, ClassType classType) {
+    this.date = date;
+    this.startTime = startTime;
+    this.endTime = endTime;
+    this.description = description;
+    this.name = name;
+    this.location = location;
+    this.classType = classType;
+  }
 
     public Session(Session session) {
       this.date = session.getDate();
