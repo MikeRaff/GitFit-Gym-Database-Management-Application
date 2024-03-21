@@ -65,13 +65,5 @@ public class InstructorRegistrationService {
         throw new GRSException(HttpStatus.UNAUTHORIZED, "instructor not teaching course");
     }
 
-    @Transactional
-    public List<Instructor> getAllInstructors()
-    {
-         List<Instructor> instructors = instructorRepository.findAll();
-        if(instructors.size() == 0){
-            throw new GRSException(HttpStatus.NOT_FOUND, "No Instructors found in the system.");
-        }
-        return instructors;
-    }
+   
 }
