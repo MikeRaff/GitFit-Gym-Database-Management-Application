@@ -10,4 +10,9 @@ public interface OwnerRepository extends CrudRepository<Owner, Integer> {
     List<Owner> findOwnersByPerson_Name(String name);
 
     Owner findOwnerByEmail(String email);
+
+    void deleteOwnerByEmail(String email); 
+
+    Owner findOwnerByEmailAndPassword(String email, String password); 
+
 }
