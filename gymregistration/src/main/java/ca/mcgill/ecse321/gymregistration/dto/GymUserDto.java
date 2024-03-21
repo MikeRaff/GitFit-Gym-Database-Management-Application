@@ -9,11 +9,7 @@ public class GymUserDto {
     private String email;
     private String password;
     private Person person;
-    public GymUserDto(String email, String password, PersonDto person) {
-        this.id = 1;
-        this.email = email;
-        this.password = password;
-    }
+
     public GymUserDto(){
     }
 
@@ -55,6 +51,7 @@ public class GymUserDto {
         this.password = gymUser.getPassword();
         this.person = gymUser.getPerson();
     }
+
     public int getId() {
         return id;
     }
