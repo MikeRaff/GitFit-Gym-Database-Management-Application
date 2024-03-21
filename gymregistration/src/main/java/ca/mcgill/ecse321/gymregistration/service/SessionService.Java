@@ -2,6 +2,8 @@ package ca.mcgill.ecse321.gymregistration.service;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import jakarta.transaction.Transactional;
@@ -34,13 +36,25 @@ public class SessionService {
     @Transactional
     public Session createSession(Date date, Time startTime, Time endTime, String description, String name, String location, ClassType classType, int capacity)
     {
-        if(sessionRepository.findSessionByStartTimeAndDate(startTime, date)!=null)
-             throw new GRSException(HttpStatus.BAD_REQUEST, "Time not available.");
-        if(classType == null || startTime == null || endTime == null || date == null || description == null || description.length() == 0 || name == null || name.length() == 0 || location == null || location.length() == 0)
+        if(sessionRepository.findSessionByStartTimeAndDate(startTime, date)!=null){
+            throw new GRSException(HttpStatus.BAD_REQUEST, "Time not available.");
+        }
+        if(classType == null || startTime == null || endTime == null || date == null || description == null || description.length() == 0 || name == null || name.length() == 0 || location == null || location.length() == 0){
             throw new GRSException(HttpStatus.BAD_REQUEST, "Missing information.");
-        if(!classType.getIsApproved())
+        }
+        if(!classType.getIsApproved()) {
             throw new GRSException(HttpStatus.BAD_REQUEST, "Class must be approved.");
-
+        }
+        //getting current date and time
+        LocalDateTime currentDateTime = LocalDateTime.now();
+        //converting startTime and date to LocalDateTime
+        LocalDateTime sessionDatetime = LocalDateTime.of(date.toLocalDate(), startTime.toLocalTime());
+        //calculating difference
+        Duration timeDifference = Duration.between(currentDateTime, sessionDatetime);
+        //checking if session is at least 48 hours ahead of current time
+        if (timeDifference.toHours() < 48){
+            throw new GRSException(HttpStatus.BAD_REQUEST, "Session must be at least 48 hours ahead of the current time.");
+        }
         Session session = new Session();
         session.setDate(date);
         session.setStartTime(startTime);
