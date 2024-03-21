@@ -20,14 +20,14 @@ import org.springframework.stereotype.Service;
 public class SessionService {
     @Autowired
     SessionRepository sessionRepository;
-    
+
     /**
      * Create Session: Creates a new session
      * @param classType: The classtype of the session
      * @param startTime: The start time of the class
      * @param endTime: the end time of the class
      * @param date: the day the class takes place
-     * @param description: a textual description of the class 
+     * @param description: a textual description of the class
      * @param name: the name of this specific class
      * @param location: where this class is being taught
      * @return the created session
