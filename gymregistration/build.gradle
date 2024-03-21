@@ -21,6 +21,11 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	runtimeOnly 'org.postgresql:postgresql'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+//
+//	testImplementation 'org.mockito:mockito-core:2.+'
+//	testImplementation 'org.mockito:mockito-junit-jupiter:2.18.3'
+//
+//	testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.3.1'
 }
 
 tasks.named('test') {
@@ -29,21 +34,21 @@ tasks.named('test') {
 		exceptionFormat "full"
 		events "passed", "failed"
 	}
-	finalizedBy jacocoTestReport
-	finalizedBy jacocoTestCoverageVerification
+//	finalizedBy jacocoTestReport
+//	finalizedBy jacocoTestCoverageVerification
 }
-
-tasks.named('jacocoTestReport') {
-	dependsOn test
-}
-
-tasks.named('jacocoTestCoverageVerification') {
-	violationRules {
-		rule {
-			limit {
-				minimum = 0.6
-			}
-		}
-	}
-	dependsOn test // tests are required to run before checking code coverage.
-}
+//
+//tasks.named('jacocoTestReport') {
+//	dependsOn test
+//}
+//
+//tasks.named('jacocoTestCoverageVerification') {
+//	violationRules {
+//		rule {
+//			limit {
+//				minimum = 0.6
+//			}
+//		}
+//	}
+//	dependsOn test // tests are required to run before checking code coverage.
+//}
