@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 
 @CrossOrigin(origins="*")
 @RestController
-public class GymRegistrationRestController {
+public class ClassTypeRestController {
     @Autowired
     private ClassTypeService classTypeService;
 
@@ -32,7 +32,7 @@ public class GymRegistrationRestController {
      * @return ClassType in system
      * @throws IllegalArgumentException
      */
-    @GetMapping(value = {"/class-types/{name}", "/class-types/{name}"})
+    @GetMapping(value = {"/class-types/{name}", "/class-types/{name}/"})
     public ResponseEntity<ClassTypeDto> getClassType(@PathVariable("name") String name) throws IllegalArgumentException {
         ClassType classType = classTypeService.getClassTypeByName(name);
         return new ResponseEntity<>(new ClassTypeDto(classType), HttpStatus.OK);
