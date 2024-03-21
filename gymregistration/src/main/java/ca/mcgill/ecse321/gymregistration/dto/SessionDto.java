@@ -1,6 +1,8 @@
 package ca.mcgill.ecse321.gymregistration.dto;
 
 import ca.mcgill.ecse321.gymregistration.model.ClassType;
+import ca.mcgill.ecse321.gymregistration.model.Session;
+
 import java.sql.Date;
 import java.sql.Time;
 
@@ -19,7 +21,7 @@ public class SessionDto {
 
   public SessionDto() {
   }
-  public SessionDto(SessionDto sessionDto){
+  public SessionDto(Session sessionDto){
     this.id = sessionDto.getId();
     this.date = sessionDto.getDate();
     this.startTime = sessionDto.getStartTime();
@@ -27,7 +29,7 @@ public class SessionDto {
     this.description = sessionDto.getDescription();
     this.name = sessionDto.getName();
     this.location = sessionDto.getLocation();
-    this.classType = sessionDto.classType;
+    this.classType = sessionDto.getClassType();
     this.capacity = sessionDto.getCapacity();
   }
 
@@ -41,6 +43,7 @@ public class SessionDto {
     this.classType = classType;
     this.capacity = capacity;
   }
+
   //------------------------
   // INTERFACE
   //------------------------
