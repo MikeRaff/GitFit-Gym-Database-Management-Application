@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
 
 import ca.mcgill.ecse321.gymregistration.dao.InstructorRegistrationRepository;
 import ca.mcgill.ecse321.gymregistration.dao.InstructorRepository;
@@ -14,27 +15,33 @@ import ca.mcgill.ecse321.gymregistration.model.Session;
 import ca.mcgill.ecse321.gymregistration.service.exception.GRSException;
 import jakarta.transaction.Transactional;
 
+
+@Service
 public class InstructorRegistrationService {
+    
     @Autowired
     InstructorRepository instructorRepository;
     @Autowired
     SessionRepository sessionRepository;
     @Autowired
     InstructorRegistrationRepository instructorRegistrationRepository;
+    
+    
     /**
      * Create a new instructor registeration to add an instructor to a class
-     * @param session
-     * @param email
+     * @param sessionid
+     * @param instructorid
      * @return new registration
      * @throws GRSException Invalid email or already registered
      */
-    public InstructorRegistration registerInstructorForClass(Session session, String email)
+    public InstructorRegistration registerInstructorForClass(int sessionId, int instructorId)
     {
-        Instructor instructor = instructorRepository.findInstructorByEmail(email);
+        Instructor instructor = instructorRepository.findInstructorById(instructorId);
+        Session session = sessionRepository.findSessionById(sessionId);
         if (instructor == null) {
-            throw new GRSException(HttpStatus.UNAUTHORIZED, "Invalid email");
+            throw new GRSException(HttpStatus.UNAUTHORIZED, "Instructor not found");
         }
-        InstructorRegistration instructorRegistration = instructorRegistrationRepository.findInstructorRegistrationByInstructorAndSession(instructor, session);
+        InstructorRegistration instructorRegistration = instructorRegistrationRepository.findInstructorRegistrationByInstructor_idAndSession_id(instructorId, sessionId);
         if(instructorRegistration !=null)
         {
             throw new GRSException(HttpStatus.UNAUTHORIZED, "already registered");
@@ -51,27 +58,17 @@ public class InstructorRegistrationService {
      * @throws GRSException not able to remove instructor
      */
     @Transactional
-    public void removeInstructorFromClass(Session Session, String email)
+    public void removeInstructorFromClass(int sessionId, int instructorId)
     {
-        List<InstructorRegistration> instructorRegistrations = instructorRegistrationRepository.findInstructorRegistrationsBySession(Session);
+        List<InstructorRegistration> instructorRegistrations = instructorRegistrationRepository.findInstructorRegistrationsBySession_id(sessionId);
         if(instructorRegistrations.size() <2)
             throw new GRSException(HttpStatus.UNAUTHORIZED, "not enough instructors registered");
         for(InstructorRegistration r: instructorRegistrations )
         {
-            if(r.getInstructor().getEmail().equals(email))
+            if(r.getInstructor().getId() == instructorId)
                 instructorRegistrationRepository.delete(r);
             return;
         }
         throw new GRSException(HttpStatus.UNAUTHORIZED, "instructor not teaching course");
-    }
-
-    @Transactional
-    public List<Instructor> getAllInstructors()
-    {
-         List<Instructor> instructors = instructorRepository.findAll();
-        if(instructors.size() == 0){
-            throw new GRSException(HttpStatus.NOT_FOUND, "No Instructors found in the system.");
-        }
-        return instructors;
-    }
+    }    
 }

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ca.mcgill.ecse321.gymregistration.repository.CustomerTests" tests="2" skipped="0" failures="0" errors="0" timestamp="2024-03-22T04:23:26" hostname="MacBook-Pro-5.local" time="0.02">
+  <properties/>
+  <testcase name="testFindCustomersByPersonName()" classname="ca.mcgill.ecse321.gymregistration.repository.CustomerTests" time="0.011"/>
+  <testcase name="testCreateAndReadCustomer()" classname="ca.mcgill.ecse321.gymregistration.repository.CustomerTests" time="0.008"/>
+  <system-out><![CDATA[2024-03-22T00:23:26.477-04:00  INFO 36608 --- [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [ca.mcgill.ecse321.gymregistration.repository.CustomerTests]: CustomerTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2024-03-22T00:23:26.478-04:00  INFO 36608 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration ca.mcgill.ecse321.gymregistration.GymregistrationApplication for test class ca.mcgill.ecse321.gymregistration.repository.CustomerTests
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
