@@ -3,7 +3,6 @@ package ca.mcgill.ecse321.gymregistration.service;
 
 import ca.mcgill.ecse321.gymregistration.dao.InstructorRegistrationRepository;
 import ca.mcgill.ecse321.gymregistration.dao.InstructorRepository;
-import ca.mcgill.ecse321.gymregistration.dao.PersonRepository;
 import ca.mcgill.ecse321.gymregistration.dao.SessionRepository;
 import ca.mcgill.ecse321.gymregistration.model.Instructor;
 import ca.mcgill.ecse321.gymregistration.model.InstructorRegistration;
@@ -18,13 +17,12 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.mockito.stubbing.Answer;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 
-@SpringBootTest
 @ExtendWith(MockitoExtension.class)
 public class TestInstructorRegistrationService
 {
@@ -34,14 +32,10 @@ public class TestInstructorRegistrationService
     private InstructorRepository instructorRepository; 
     @Mock
     private SessionRepository sessionRepository;
-    @Mock 
-    private PersonRepository personRepository;
 
-    
-    
 
     @InjectMocks
-    private InstructorRegistrationService instructorRegistrationService = new InstructorRegistrationService();
+    private static InstructorRegistrationService instructorRegistrationService = new InstructorRegistrationService();
 
     private static final InstructorRegistration INSTRUCTORREGISTRATION = new InstructorRegistration();
 
@@ -94,6 +88,21 @@ public class TestInstructorRegistrationService
             }
         });
 
+        lenient().when(instructorRegistrationRepository.findInstructorRegistrationByInstructor_idAndSession_id(anyInt(), anyInt())).thenAnswer((InvocationOnMock invocation) -> {
+            int instructorId = invocation.getArgument(0);
+            int sessionId = invocation.getArgument(1);
+            
+            // Customize your behavior based on instructorId and sessionId
+            if (instructorId == INSTRUCTOR_ID && sessionId == SESSION_ID) {
+                InstructorRegistration instructorRegistration = new InstructorRegistration();
+                instructorRegistration.setSession(SESSION);
+                instructorRegistration.setInstructor(INSTRUCTOR);
+                return instructorRegistration;
+            } else {
+                return null;
+            }
+        });
+        
         // Stubbing save methods to return the saved object
         lenient().when(instructorRegistrationRepository.save(any(InstructorRegistration.class))).thenAnswer((InvocationOnMock invocation) -> {
             return invocation.getArgument(0); // Return the saved object
@@ -104,6 +113,10 @@ public class TestInstructorRegistrationService
         lenient().when(sessionRepository.save(any(Session.class))).thenAnswer((InvocationOnMock invocation) -> {
             return invocation.getArgument(0); // Return the saved object
         });
+
+        
+        // Whenever anything is saved, just return the parameter object
+		
     }
 
     @Test
@@ -113,6 +126,8 @@ public class TestInstructorRegistrationService
         Instructor instructor = new Instructor(null, null, null);
         instructorRepository.save(instructor);
         sessionRepository.save(session);
+        lenient().when(instructorRegistrationRepository.findInstructorRegistrationByInstructor_idAndSession_id(anyInt(), anyInt()))
+            .thenReturn(null);
         InstructorRegistration instructorRegistration = instructorRegistrationService.registerInstructorForClass(session.getId(), instructor.getId());
         assertNotNull(instructorRegistration);
         assertEquals(session.getId(), instructorRegistration.getSession().getId());
@@ -127,6 +142,8 @@ public class TestInstructorRegistrationService
        
         instructorRepository.save(instructor);
         sessionRepository.save(session);
+        lenient().when(instructorRegistrationRepository.findInstructorRegistrationByInstructor_idAndSession_id(anyInt(), anyInt()))
+            .thenReturn(null);
         InstructorRegistration instructorRegistration = instructorRegistrationService.registerInstructorForClass(session.getId(), instructor.getId());
         try {
             instructorRegistrationService.removeInstructorFromClass(instructorRegistration.getSession().getId(),instructorRegistration.getInstructor().getId().intValue());
@@ -134,4 +151,24 @@ public class TestInstructorRegistrationService
             assertEquals(e.getMessage(), "not enough instructors registered");
         }
     }
+
+    @Test
+    public void testGetInstructorRegistration()
+    {
+        Session session = new Session();
+        Instructor instructor = new Instructor();
+
+        instructor = instructorRepository.save(instructor);
+    
+        session = sessionRepository.save(session);
+        
+        InstructorRegistration instructorRegistration = new InstructorRegistration(null, instructor, session);
+        
+        instructorRegistration = instructorRegistrationRepository.save(instructorRegistration);
+        
+        InstructorRegistration newInstructorRegistration = instructorRegistrationService.getInstructorRegistration(instructor.getId(), session.getId());
+
+        assertNotNull(newInstructorRegistration);
+
+    };
 }

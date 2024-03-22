@@ -7,6 +7,7 @@ import ca.mcgill.ecse321.gymregistration.dao.InstructorRepository;
 import ca.mcgill.ecse321.gymregistration.dao.PersonRepository;
 import ca.mcgill.ecse321.gymregistration.model.Instructor;
 import ca.mcgill.ecse321.gymregistration.model.Person;
+import ca.mcgill.ecse321.gymregistration.service.exception.GRSException;
 
 import static org.mockito.Mockito.lenient;
 import org.junit.jupiter.api.BeforeEach;
@@ -90,9 +91,57 @@ public class TestInstructorService {
         {
             System.out.println(e.getMessage());
         }
+        assertNotNull(instructor);
         assertEquals(email, instructor.getEmail());
         assertEquals(password, instructor.getPassword());
         assertEquals(person_id, instructor.getPerson().getId());
+
     }
 
+    @Test
+    public void testDeleteInstructor()
+    {
+        lenient().doAnswer(invocation -> {
+            Instructor instructor = invocation.getArgument(0);
+            return null; // Simulate successful deletion
+        }).when(instructorRepository).delete(any(Instructor.class));
+        String email = "Email@email.com";
+        String password = "password";
+        Person person = new Person();
+        int person_id = person.getId();
+        Instructor instructor = null;
+        personRepository.save(person);
+        instructor = instructorService.createInstructor(email, password, person_id);
+        instructorService.deleteIntructor(instructor.getId());
+        lenient().doReturn(null).when(instructorRepository).findInstructorById(instructor.getId());
+        instructor = instructorRepository.findInstructorById(instructor.getId());
+        assertNull(instructor);
+    }
+
+    @Test
+    public void testUpdateInstuctor()
+    {
+        String email = "email@example.com";
+        String password = "password";
+       
+
+        Instructor instructor = new Instructor();
+        instructorRepository.save(instructor);
+
+        Instructor updatedInstructor = instructorService.updateInstructor(instructor.getId(), email, password);
+
+        assertEquals(instructor.getId(), updatedInstructor.getId());
+        assertEquals(email, updatedInstructor.getEmail());
+        assertEquals(updatedInstructor.getPassword(), password);
+
+    }
+
+    @Test 
+    public void testGetInstructor()
+    {
+        Instructor instructor = new Instructor();
+        instructorRepository.save(instructor);
+        Instructor newInstructor = instructorService.getInstructorById(instructor.getId());
+        assertEquals(instructor.getId(), newInstructor.getId());
+    }
 }

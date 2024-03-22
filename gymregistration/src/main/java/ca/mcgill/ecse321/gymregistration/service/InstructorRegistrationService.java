@@ -20,11 +20,11 @@ import jakarta.transaction.Transactional;
 public class InstructorRegistrationService {
     
     @Autowired
-    InstructorRepository instructorRepository;
+    private InstructorRepository instructorRepository;
     @Autowired
-    SessionRepository sessionRepository;
+    private SessionRepository sessionRepository;
     @Autowired
-    InstructorRegistrationRepository instructorRegistrationRepository;
+    private InstructorRegistrationRepository instructorRegistrationRepository;
     
     
     /**
@@ -41,13 +41,14 @@ public class InstructorRegistrationService {
         if (instructor == null) {
             throw new GRSException(HttpStatus.UNAUTHORIZED, "Instructor not found");
         }
+        if (session == null)
+            throw new GRSException(HttpStatus.UNAUTHORIZED, "Session not found");
         InstructorRegistration instructorRegistration = instructorRegistrationRepository.findInstructorRegistrationByInstructor_idAndSession_id(instructorId, sessionId);
         if(instructorRegistration !=null)
-        {
             throw new GRSException(HttpStatus.UNAUTHORIZED, "already registered");
-        }
+
         instructorRegistration = new InstructorRegistration(session.getDate(),instructor, session);
-        instructorRegistrationRepository.save(instructorRegistration);
+        instructorRegistration = instructorRegistrationRepository.save(instructorRegistration);
         return instructorRegistration;
     }
     
@@ -71,4 +72,31 @@ public class InstructorRegistrationService {
         }
         throw new GRSException(HttpStatus.UNAUTHORIZED, "instructor not teaching course");
     }    
+    /**
+     * return an instructor registration
+     * @param instructorId
+     * @param sessionId
+     * @returnx
+     */
+    @Transactional
+    public InstructorRegistration getInstructorRegistration(int instructorId, int sessionId)
+    {
+        Instructor instructor = instructorRepository.findInstructorById(instructorId);
+        Session session = sessionRepository.findSessionById(sessionId);
+
+        
+        if (instructor == null) 
+            throw new GRSException(HttpStatus.NOT_FOUND, "Instructor not found");
+        
+        if (session == null)
+            throw new GRSException(HttpStatus.NOT_FOUND, "Session not found");
+        
+        
+        InstructorRegistration instructorRegistration = instructorRegistrationRepository.findInstructorRegistrationByInstructor_idAndSession_id(instructor.getId().intValue(), session.getId());
+        
+        if(instructorRegistration == null)
+            throw new GRSException(HttpStatus.NOT_FOUND, "Instructor not registered for this session");
+        
+        return instructorRegistration;
+    }
 }
