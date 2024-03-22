@@ -1,9 +1,8 @@
 package ca.mcgill.ecse321.gymregistration.service;
 
-import org.springframework.stereotype.Service;
-
 import java.util.List;
 
+import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import jakarta.transaction.Transactional;
 
@@ -12,7 +11,6 @@ import ca.mcgill.ecse321.gymregistration.dao.CustomerRepository;
 import ca.mcgill.ecse321.gymregistration.dao.SessionRepository;
 import ca.mcgill.ecse321.gymregistration.model.Customer;
 import ca.mcgill.ecse321.gymregistration.model.CustomerRegistration;
-import ca.mcgill.ecse321.gymregistration.model.InstructorRegistration;
 import ca.mcgill.ecse321.gymregistration.model.Session;
 
 import ca.mcgill.ecse321.gymregistration.service.exception.GRSException;
@@ -30,62 +28,98 @@ public class CustomerRegistrationService {
 
      /**
      * Create a new customer registeration to add a customer to a class
-     * @param session
-     * @param email
+     * @param sessionId
+     * @param customerId
      * @return new customer registration
-     * @throws GRSException attempt to register for session is invalid
+     * @throws GRSException if attempt to register for session is invalid
      */
     @Transactional
     public CustomerRegistration registerCustomerToSession(int sessionId, int customerId){
 
-        // can't have null customer register
-        Customer customer = customerRepository.findCustomerById(customerId);
-        if (customer == null){
-            throw new GRSException(HttpStatus.UNAUTHORIZED, "Customer does not exist.");
-        } 
-
-        // can't register for null session
-        Session session = sessionRepository.findSessionById(sessionId);
-        if(session == null){
-            throw new GRSException(HttpStatus.UNAUTHORIZED, "Session does not exist.");
+        if (sessionId == 0 || customerId == 0){
+            throw new GRSException(HttpStatus.NOT_FOUND, "No session or customer entered.");
         }
 
-        // can't register again for same session
+        Customer customer = customerRepository.findCustomerById(customerId);
+        if (customer == null){
+            throw new GRSException(HttpStatus.NOT_FOUND, "Customer not found.");
+        } 
+        if (customer.getCreditCardNumber() == 0){
+            throw new GRSException(HttpStatus.UNAUTHORIZED, "Credit card must be entered to register for a class.");
+        }
+        
+        Session session = sessionRepository.findSessionById(sessionId);
+        if(session == null){
+            throw new GRSException(HttpStatus.NOT_FOUND, "Session not found.");
+        }
+
         CustomerRegistration customerRegistration = customerRegistrationRepository.findCustomerRegistrationByCustomerAndSession(customer, session);
         if (customerRegistration != null){
             throw new GRSException(HttpStatus.UNAUTHORIZED, "Cannot register for same session twice.");
         }
         
-        // can't register if session is at capacity
-        // Check if the customer has entered their credit card info
+        List<CustomerRegistration> customerRegistrations = customerRegistrationRepository.findCustomerRegistrationsBySession_Id(sessionId);
+        if(customerRegistrations.size() == session.getCapacity()){
+            throw new GRSException(HttpStatus.UNAUTHORIZED, "Session is already at capacity.");
+        }
 
-        // can't register if session has already started   
         customerRegistration = new CustomerRegistration(session.getDate(), session, customer);     
-        if (customerRegistration.getDate().after(session.getDate())){
-            throw new GRSException(HttpStatus.UNAUTHORIZED, "Cannot register for in-progress session.");
+        /*
+         * Need to refactor this to include time as well 
+         */
+        if (customerRegistration.getDate().after(session.getDate()) || customerRegistration.getDate().equals(session.getDate())){
+            throw new GRSException(HttpStatus.UNAUTHORIZED, "Cannot register for in-progress or completed session.");
         }
 
         customerRegistrationRepository.save(customerRegistration);
         return customerRegistration;
     }
 
-
     /**
      * Remove customer from a session 
-     * @param Session
-     * @param email
+     * @param sessionId
+     * @param customerId
      * @throws GRSException not able to remove customer
      */
     @Transactional
-    public void removeCustomerFromSession(Session Session, String email)
-    {
+    public void removeCustomerFromSession(int sessionId , int customerId) {
+        if (sessionId == 0 || customerId == 0){
+            throw new GRSException(HttpStatus.NOT_FOUND, "No session or customer entered.");
+        }
 
+        Customer customer = customerRepository.findCustomerById(customerId);
+        Session session = sessionRepository.findSessionById(sessionId);
+
+        if (customer == null){
+            throw new GRSException(HttpStatus.NOT_FOUND, "Customer not found.");
+        } 
+        if(session == null){
+            throw new GRSException(HttpStatus.NOT_FOUND, "Session not found.");
+        }
+
+        CustomerRegistration customerRegistration = customerRegistrationRepository.findCustomerRegistrationByCustomerAndSession(customer, session);
+        if (customerRegistration == null){
+            throw new GRSException(HttpStatus.NOT_FOUND, "The registration does not exist.");
+        }
+
+        /*
+        * Look into using Calendar instead of java.sql.Date & java.sql.Time 
+        * Need to set constraint for deleting within 48 hours of session start
+        */
+
+        customerRegistrationRepository.deleteCustomerRegistrationById(customerId);
     }
 
 
     @Transactional 
-    public void removeCustomerFromAllSessions(String email){
+    public void removeCustomerFromAllSessions(int id){
+        Customer customer = customerRepository.findCustomerById(id);
 
+        if (customer == null){
+            throw new GRSException(HttpStatus.NOT_FOUND, "Customer not found.");
+        }
+
+        customerRegistrationRepository.deleteCustomerRegistrationsByCustomer_Id(id);
     }
 
 }
