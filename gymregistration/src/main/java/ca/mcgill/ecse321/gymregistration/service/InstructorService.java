@@ -31,8 +31,8 @@ public class InstructorService {
      */
     @Transactional
     public Instructor createInstructor(String email, String password, int person_id){
-        if (email == null || password == null){
-            throw new GRSException(HttpStatus.BAD_REQUEST, "Must include email and password.");
+        if (email == null || password == null || !email.contains("@")){
+            throw new GRSException(HttpStatus.BAD_REQUEST, "Invalid Email or Password");
         }
         Instructor instructor = instructorRepository.findInstructorByEmail(email);
         if(instructor != null)
@@ -42,8 +42,11 @@ public class InstructorService {
         if(person == null)
             throw new GRSException(HttpStatus.NOT_FOUND, "Person not found");
         
+        
         instructor = new Instructor(email, password, person);
+        
         instructor = instructorRepository.save(instructor);
+
         return instructor;
     }
 
@@ -105,6 +108,7 @@ public class InstructorService {
         if(instructors.size() == 0){
             throw new GRSException(HttpStatus.NOT_FOUND, "No Instructors found in the system.");
         }
+        
         return instructors;
     }
 }

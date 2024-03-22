@@ -25,6 +25,7 @@ public class InstructorDto extends GymUserDto{
       public InstructorDto(Instructor instructor)
       {
         super(instructor.getEmail(), instructor.getPassword(), instructor.getPerson());
+        this.setId(instructor.getId());
       }
     
 }

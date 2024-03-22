@@ -18,11 +18,12 @@ public class InstructorRestController {
     @Autowired
     private InstructorService instructorService;
 
-    @GetMapping(value ={ "/instructors/{id}", "/instructors/{id}/"})
+    @GetMapping(value ={"/instructors/{id}", "/instructors/{id}/"})
     public ResponseEntity<InstructorDto> getInstructor(@PathVariable("id") int id)
     {
         Instructor instructor = instructorService.getInstructorById(id);
-        return new ResponseEntity<>(new InstructorDto(instructor), HttpStatus.OK);
+
+        return new ResponseEntity<InstructorDto>(new InstructorDto(instructor), HttpStatus.OK);
     }
 
     @GetMapping(value = { "/instructors", "/instructors/"})
@@ -32,8 +33,8 @@ public class InstructorRestController {
 
     @PostMapping(value = { "/instructors/create", "/instructors/create/"})
     public ResponseEntity<InstructorDto> createInstructor(@RequestBody InstructorDto instructorDto) throws IllegalArgumentException{
-       Instructor instructor = instructorService.createInstructor(instructorDto.getEmail(), instructorDto.getPassword(), instructorDto.getPerson().getId());
-        return new ResponseEntity<>(new InstructorDto(instructor), HttpStatus.CREATED);
+        Instructor instructor = instructorService.createInstructor(instructorDto.getEmail(), instructorDto.getPassword(), instructorDto.getPerson().getId());
+        return new ResponseEntity<InstructorDto>(new InstructorDto(instructor), HttpStatus.CREATED);
     }
 
     @PutMapping(value = {"/instructors/{id}", "/instructors/{id}/"})
@@ -43,7 +44,7 @@ public class InstructorRestController {
         return new ResponseEntity<>(new InstructorDto(instructor), HttpStatus.OK);
     }
 
-    @DeleteMapping(value = {"/instructors/delete/{id}", "/instructors/delete/{id}/"})
+    @DeleteMapping(value = {"/instructors/delete/{id}", "/class-types/delete/{id}/"})
     public void deleteInstructor(@PathVariable("id") int id) throws IllegalArgumentException{
         instructorService.deleteIntructor(id);
     }
