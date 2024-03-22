@@ -17,7 +17,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import ca.mcgill.ecse321.gymregistration.dao.InstructorRepository;
 import ca.mcgill.ecse321.gymregistration.dao.PersonRepository;
 import ca.mcgill.ecse321.gymregistration.dto.InstructorDto;
-import ca.mcgill.ecse321.gymregistration.dto.PersonDto;
 import ca.mcgill.ecse321.gymregistration.model.Person;
 
 import org.springframework.http.HttpMethod;
@@ -95,5 +94,8 @@ public class InstructorServiceIntegrationTests {
         }
     }
     
-    
+    private void testUpdateInstructor(int id, String email, String password)
+    {
+
+    }
 }
