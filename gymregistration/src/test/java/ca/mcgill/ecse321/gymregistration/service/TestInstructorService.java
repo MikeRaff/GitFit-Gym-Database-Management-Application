@@ -77,18 +77,16 @@ public class TestInstructorService {
     }
 
     @Test
-    public void testCreateInstructor()
-    {
+    public void testCreateInstructor() {
         String email = "Email@email.com";
         String password = "password";
         Person person = new Person();
         int person_id = person.getId();
         Instructor instructor = null;
         personRepository.save(person);
-        try{
-        instructor = instructorService.createInstructor(email, password, person_id);}
-        catch(Exception e)
-        {
+        try {
+            instructor = instructorService.createInstructor(email, password, person_id);
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
         assertNotNull(instructor);
@@ -99,8 +97,7 @@ public class TestInstructorService {
     }
 
     @Test
-    public void testDeleteInstructor()
-    {
+    public void testDeleteInstructor() {
         lenient().doAnswer(invocation -> {
             Instructor instructor = invocation.getArgument(0);
             return null; // Simulate successful deletion
@@ -116,14 +113,17 @@ public class TestInstructorService {
         lenient().doReturn(null).when(instructorRepository).findInstructorById(instructor.getId());
         instructor = instructorRepository.findInstructorById(instructor.getId());
         assertNull(instructor);
+        try {
+           instructorService.deleteIntructor(1000);
+        } catch (GRSException e) {
+            assertEquals(e.getMessage(), "Instructor not found");
+        }
     }
 
     @Test
-    public void testUpdateInstuctor()
-    {
+    public void testUpdateInstuctor() {
         String email = "email@example.com";
         String password = "password";
-       
 
         Instructor instructor = new Instructor();
         instructorRepository.save(instructor);
@@ -134,14 +134,24 @@ public class TestInstructorService {
         assertEquals(email, updatedInstructor.getEmail());
         assertEquals(updatedInstructor.getPassword(), password);
 
+        try {
+            updatedInstructor = instructorService.updateInstructor(1000, null, null);
+        } catch (GRSException e) {
+            assertEquals(e.getMessage(), "Instructor not found");
+        }
+
     }
 
-    @Test 
-    public void testGetInstructor()
-    {
+    @Test
+    public void testGetInstructor() {
         Instructor instructor = new Instructor();
         instructorRepository.save(instructor);
         Instructor newInstructor = instructorService.getInstructorById(instructor.getId());
         assertEquals(instructor.getId(), newInstructor.getId());
+        try {
+            newInstructor = instructorService.getInstructorById(1000);
+        } catch (GRSException e) {
+            assertEquals(e.getMessage(), "Instructor not found");
+        }
     }
 }
