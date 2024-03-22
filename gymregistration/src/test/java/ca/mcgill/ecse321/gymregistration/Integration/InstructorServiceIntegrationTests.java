@@ -96,6 +96,11 @@ public class InstructorServiceIntegrationTests {
     
     private void testUpdateInstructor(int id, String email, String password)
     {
-
+        ResponseEntity<InstructorDto> response = client.exchange("/update-instructors/" + id + "/" + email + "/" + password, HttpMethod.PUT,null,InstructorDto.class);
+        assertNotNull(response.getBody());
+        assertEquals(id, response.getBody().getId());
+        assertEquals(email, response.getBody().getEmail());
+        assertEquals(password, response.getBody().getPassword());
+    
     }
 }

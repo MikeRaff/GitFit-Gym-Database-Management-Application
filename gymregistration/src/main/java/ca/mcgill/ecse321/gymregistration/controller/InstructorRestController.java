@@ -37,15 +37,26 @@ public class InstructorRestController {
         return new ResponseEntity<InstructorDto>(new InstructorDto(instructor), HttpStatus.CREATED);
     }
 
-    @PutMapping(value = {"/instructors/{id}", "/instructors/{id}/"})
-    public ResponseEntity<InstructorDto> updateInstructor(@PathVariable("id") int id, @RequestBody InstructorDto instructorDto) throws IllegalArgumentException{
+    @PutMapping(value = {"/update-instructors/{id}/{email}/{password}", "/update-instructors/{id}/{email}/{password}/"})
+    public ResponseEntity<InstructorDto> updateInstructor(@PathVariable("id") int id, @PathVariable("email") String email, @PathVariable("password") String password, @RequestBody InstructorDto instructorDto) throws IllegalArgumentException{
         Instructor toUpdate = instructorService.getInstructorById(id);
-        Instructor instructor = instructorService.updateInstructor(toUpdate.getId(), instructorDto.getEmail(), instructorDto.getPassword());
-        return new ResponseEntity<>(new InstructorDto(instructor), HttpStatus.OK);
+        Instructor instructor = instructorService.updateInstructor(toUpdate.getId(), email, password);
+        return new ResponseEntity<InstructorDto>(new InstructorDto(instructor), HttpStatus.OK);
     }
 
     @DeleteMapping(value = {"/instructors/delete/{id}", "/class-types/delete/{id}/"})
     public void deleteInstructor(@PathVariable("id") int id) throws IllegalArgumentException{
         instructorService.deleteIntructor(id);
+    }
+
+    @GetMapping(value = {"/instructor/log-in/{email}/{password}","/instructor/log-in/{email}/{password}/"})
+    public ResponseEntity<InstructorDto> logInInstructor(@PathVariable("email") String email,@PathVariable("password") String password ) throws IllegalArgumentException{
+        Instructor instructor;
+        try {
+            instructor = instructorService.logInInstructor(email, password);
+            return new ResponseEntity<InstructorDto>(new InstructorDto(instructor), HttpStatus.OK);
+        } catch (Exception e) {
+            return null;
+        }
     }
 }

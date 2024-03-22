@@ -111,4 +111,14 @@ public class InstructorService {
         
         return instructors;
     }
+
+    @Transactional
+    public Instructor logInInstructor(String email, String password)
+    {
+        Instructor instructor = instructorRepository.findInstructorByEmailAndPassword(email, password);
+        if (instructor == null) {
+            throw new GRSException(HttpStatus.UNAUTHORIZED, "Invalid email or password");
+        }
+        return instructor;
+    }
 }

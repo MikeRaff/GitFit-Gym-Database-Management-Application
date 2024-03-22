@@ -20,6 +20,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.anyString;
 
 @SpringBootTest
 @ExtendWith(MockitoExtension.class)
@@ -41,6 +42,9 @@ public class TestInstructorService {
     private Person PERSON = new Person();
     private int PERSON_ID = PERSON.getId();
 
+    String EMAIL = "example@email.com";
+    String PASSWORD = "password";
+
     @BeforeEach
     public void setMockOutput() {
         // Stubbing findInstructorById method
@@ -50,6 +54,20 @@ public class TestInstructorService {
                 Instructor instructor = new Instructor();
                 instructor.setId(id);
                 instructor.setEmail(null);
+                return instructor;
+            } else {
+                return null;
+            }
+        });
+
+        lenient().when(instructorRepository.findInstructorByEmailAndPassword(anyString(),anyString())).thenAnswer((InvocationOnMock invocation) -> {
+            String email = invocation.getArgument(0);
+            String password = invocation.getArgument(1);
+            if (EMAIL.equals(email) && PASSWORD.equals(password)) {
+                Instructor instructor = new Instructor();
+                instructor.setId(ID);
+                instructor.setEmail(EMAIL);
+                instructor.setPassword(PASSWORD);
                 return instructor;
             } else {
                 return null;
@@ -153,5 +171,19 @@ public class TestInstructorService {
         } catch (GRSException e) {
             assertEquals(e.getMessage(), "Instructor not found");
         }
+    }
+
+    @Test
+    public void testLogInInstructor()
+    {
+        Instructor instructor = new Instructor(EMAIL, PASSWORD, null);
+        Instructor logInInstructor;
+        instructorRepository.save(instructor);
+
+        logInInstructor = instructorRepository.findInstructorByEmailAndPassword(EMAIL, PASSWORD);
+
+        assertNotNull(logInInstructor);
+        assertEquals(EMAIL, logInInstructor.getEmail());
+        assertEquals(PASSWORD, logInInstructor.getPassword());
     }
 }
