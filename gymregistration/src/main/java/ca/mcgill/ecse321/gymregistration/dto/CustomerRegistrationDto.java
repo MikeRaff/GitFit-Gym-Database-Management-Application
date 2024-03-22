@@ -19,7 +19,10 @@ public class CustomerRegistrationDto {
     public CustomerRegistrationDto(){
     }
 
-    // Constructor from CustomerRegistration
+    /**
+     * CustomerRegistrationDto: constructor from CustomerRegistration
+     * @param customerRegistration
+     */
     public CustomerRegistrationDto(CustomerRegistration customerRegistration){
         this.id = customerRegistration.getId();
         this.date = customerRegistration.getDate();
@@ -27,7 +30,13 @@ public class CustomerRegistrationDto {
         this.customer = customerRegistration.getCustomer();
     }
 
-    // Constructor from all attributes
+    /**
+     * CustomerRegistrationDto: constructor from all attributes
+     * @param id
+     * @param date
+     * @param session
+     * @param customer
+     */
     public CustomerRegistrationDto(int id, Date date, Session session, Customer customer){
         this.id = id;
         this.date = date;

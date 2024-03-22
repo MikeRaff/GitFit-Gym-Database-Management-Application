@@ -13,7 +13,7 @@ public interface CustomerRegistrationRepository extends CrudRepository<CustomerR
     CustomerRegistration findCustomerRegistrationByCustomerAndSession(Customer customer, Session session);
 
     List<CustomerRegistration> findCustomerRegistrationsBySession_Id(Integer sessionId);
-    List<CustomerRegistration> findCustomerRegistrationsByCustomer_Id(Integer id);
+    List<CustomerRegistration> findCustomerRegistrationsByCustomer_Email(String email);
 
-    CustomerRegistration deleteCustomerRegistrationById(Integer id);
+    void deleteCustomerRegistrationsByCustomer_Email(String email);
 }

@@ -28,6 +28,7 @@ public class InstructorRegistrationService {
      * @return new registration
      * @throws GRSException Invalid email or already registered
      */
+    @Transactional
     public InstructorRegistration registerInstructorForClass(Session session, String email)
     {
         Instructor instructor = instructorRepository.findInstructorByEmail(email);
