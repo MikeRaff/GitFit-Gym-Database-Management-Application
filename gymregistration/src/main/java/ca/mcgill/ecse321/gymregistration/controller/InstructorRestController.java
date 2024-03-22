@@ -31,7 +31,7 @@ public class InstructorRestController {
     }
 
     @PostMapping(value = { "/instructors/create", "/instructors/create/"})
-    public ResponseEntity<InstructorDto> createClassType(@RequestBody InstructorDto instructorDto) throws IllegalArgumentException{
+    public ResponseEntity<InstructorDto> createInstructor(@RequestBody InstructorDto instructorDto) throws IllegalArgumentException{
        Instructor instructor = instructorService.createInstructor(instructorDto.getEmail(), instructorDto.getPassword(), instructorDto.getPerson().getId());
         return new ResponseEntity<>(new InstructorDto(instructor), HttpStatus.CREATED);
     }
@@ -43,7 +43,7 @@ public class InstructorRestController {
         return new ResponseEntity<>(new InstructorDto(instructor), HttpStatus.OK);
     }
 
-    @DeleteMapping(value = {"/instructors/delete/{id}", "/class-types/delete/{id}/"})
+    @DeleteMapping(value = {"/instructors/delete/{id}", "/instructors/delete/{id}/"})
     public void deleteInstructor(@PathVariable("id") int id) throws IllegalArgumentException{
         instructorService.deleteIntructor(id);
     }
