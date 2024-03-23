@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -54,7 +55,7 @@ public class CustomerRegistrationRestController {
      * @return customer registration in the system
      * @throws IllegalArgumentException
      */
-    @GetMapping(value = {"/customer-registration/{email}/{id}", "/customer-registration/{email}/{sessionId}/"})
+    @GetMapping(value = {"/customer-registrations/{email}/{id}", "/customer-registration/{email}/{sessionId}/"})
     public ResponseEntity<CustomerRegistrationDto> getCustomerRegistration(@PathVariable("email") String email, 
             @PathVariable("sessionId") int sessionId) throws IllegalArgumentException{
         CustomerRegistration customerRegistration = customerRegistrationService.getCustomerRegistrationByCustomerAndSession(sessionId, email);
@@ -68,10 +69,9 @@ public class CustomerRegistrationRestController {
      * @return customer registration in the system
      * @throws IllegalArgumentException
      */
-    @PostMapping(value = {"/customer-registration/register", "/customer-registration/register/"})
-    public ResponseEntity<CustomerRegistrationDto> registerCustomerToSession(@RequestParam(name = "sessionId") int sessionId, 
-            @RequestParam(name="email") String email) throws IllegalArgumentException{
-        CustomerRegistration customerRegistration = customerRegistrationService.registerCustomerToSession(sessionId, email);
+    @PostMapping(value = {"/customer-registrations/register", "/customer-registration/register/"})
+    public ResponseEntity<CustomerRegistrationDto> registerCustomerToSession(@RequestBody CustomerRegistrationDto customerRegistrationDto) throws IllegalArgumentException{
+        CustomerRegistration customerRegistration = customerRegistrationService.registerCustomerToSession(customerRegistrationDto.getSession().getId(), customerRegistrationDto.getCustomer().getEmail());
         return new ResponseEntity<>(new CustomerRegistrationDto(customerRegistration), HttpStatus.OK);
     }
 
@@ -81,7 +81,7 @@ public class CustomerRegistrationRestController {
      * @param sessionId
      * @throws IllegalArgumentException
      */
-    @DeleteMapping(value = {"/customer-registration/remove/{email}/{sessionId}", "/customer-registration/remove/{email}/{sessionId}/"})
+    @DeleteMapping(value = {"/customer-registrations/remove/{email}/{sessionId}", "/customer-registration/remove/{email}/{sessionId}/"})
     public void removeCustomerRegistration(@PathVariable("email") String email, @PathVariable("sessionId") int sessionId) throws IllegalArgumentException{
         customerRegistrationService.removeCustomerFromSession(sessionId, email);
     }
@@ -91,7 +91,7 @@ public class CustomerRegistrationRestController {
      * @param email
      * @throws IllegalArgumentException
      */
-    @DeleteMapping(value = {"/customer-registration/remove/{email}", "/customer-registration/remove/{email}/"})
+    @DeleteMapping(value = {"/customer-registrations/remove/{email}", "/customer-registration/remove/{email}/"})
     public void removeAllCustomerRegistrations(@PathVariable("email") String email) throws IllegalArgumentException{
         customerRegistrationService.removeCustomerFromAllSessions(email);
     }
