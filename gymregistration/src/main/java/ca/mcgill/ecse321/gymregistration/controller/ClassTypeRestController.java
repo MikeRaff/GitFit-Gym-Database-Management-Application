@@ -52,6 +52,18 @@ public class ClassTypeRestController {
     }
 
     /**
+     * ProposeClassType: proposing a class type
+     * @param name: name of class type
+     * @return Proposed class type
+     * @throws IllegalArgumentException
+     */
+    @PostMapping(value = { "/class-types/propose", "/class-types/propose/"})
+    public ResponseEntity<ClassTypeDto> proposeClassType(@RequestBody String name) throws IllegalArgumentException{
+        ClassType classType = classTypeService.proposeClassType(name);
+        return new ResponseEntity<>(new ClassTypeDto(classType), HttpStatus.CREATED);
+    }
+
+    /**
      * UpdateClassType: updating an existing class type
      * @param name: name of class type to update
      * @param classTypeDto : class type dto to be updated
@@ -62,6 +74,18 @@ public class ClassTypeRestController {
     public ResponseEntity<ClassTypeDto> updateClassType(@PathVariable("name") String name, @RequestBody ClassTypeDto classTypeDto) throws IllegalArgumentException{
         ClassType toUpdate = classTypeService.getClassTypeByName(name);
         ClassType classType = classTypeService.updateClassType(toUpdate.getName(), classTypeDto.getName(), classTypeDto.isApproved());
+        return new ResponseEntity<>(new ClassTypeDto(classType), HttpStatus.OK);
+    }
+
+    /**
+     * ApproveProposedClassType: approving the proposed class type
+     * @param name: Name of class type
+     * @return Approved class type
+     * @throws IllegalArgumentException
+     */
+    @PutMapping(value = {"/class-types/approve/{name}", "/class-types/approve/{name}/"})
+    public ResponseEntity<ClassTypeDto> approveProposedClassType(@PathVariable("name") String name) throws IllegalArgumentException{
+        ClassType classType = classTypeService.approveProposedClassType(name);
         return new ResponseEntity<>(new ClassTypeDto(classType), HttpStatus.OK);
     }
 
