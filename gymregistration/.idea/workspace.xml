@@ -5,6 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8b559f4f-1cbf-4215-8cfa-543b8af52d7a" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/test/java/ca/mcgill/ecse321/gymregistration/service/TestSessionService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.5/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.5/executionHistory/executionHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.5/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.5/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.5/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.5/fileHashes/fileHashes.bin" afterDir="false" />
@@ -12,29 +13,13 @@
       <change beforePath="$PROJECT_DIR$/.gradle/8.5/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.5/fileHashes/resourceHashesCache.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/ca/mcgill/ecse321/gymregistration/service/ClassTypeService.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/ca/mcgill/ecse321/gymregistration/service/ClassTypeService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/test/ca/mcgill/ecse321/gymregistration/service/TestClassTypeService.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/test/ca/mcgill/ecse321/gymregistration/service/TestClassTypeService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/jacoco/test.exec" beforeDir="false" afterPath="$PROJECT_DIR$/build/jacoco/test.exec" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/tests/test/classes/ca.mcgill.ecse321.gymregistration.service.TestClassTypeService.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/reports/tests/test/classes/ca.mcgill.ecse321.gymregistration.service.TestClassTypeService.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/tests/test/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/reports/tests/test/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/tests/test/packages/ca.mcgill.ecse321.gymregistration.service.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/reports/tests/test/packages/ca.mcgill.ecse321.gymregistration.service.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/test-results/test/TEST-ca.mcgill.ecse321.gymregistration.service.TestClassTypeService.xml" beforeDir="false" afterPath="$PROJECT_DIR$/build/test-results/test/TEST-ca.mcgill.ecse321.gymregistration.service.TestClassTypeService.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/test-results/test/binary/results.bin" beforeDir="false" afterPath="$PROJECT_DIR$/build/test-results/test/binary/results.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/CustomerService.class.uniqueId0" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/InstructorRegistrationDto.class.uniqueId1" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/InstructorRegistrationRepository.class.uniqueId5" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/InstructorRepository.class.uniqueId3" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/OwnerRepository.class.uniqueId2" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/SessionRestController.class.uniqueId6" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/SessionService.class.uniqueId4" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/ca/mcgill/ecse321/gymregistration/service/SessionService.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/ca/mcgill/ecse321/gymregistration/service/SessionService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/ClassTypeRestController.class.uniqueId0" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/ClassTypeService.class.uniqueId1" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/tmp/compileTestJava/compileTransaction/stash-dir/InstructorRegistrationTests.class.uniqueId1" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/tmp/compileTestJava/compileTransaction/stash-dir/InstructorTests.class.uniqueId2" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/tmp/compileTestJava/compileTransaction/stash-dir/OwnerTests.class.uniqueId3" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/build/tmp/compileTestJava/compileTransaction/stash-dir/TestClassTypeService.class.uniqueId0" beforeDir="false" afterPath="$PROJECT_DIR$/build/tmp/compileTestJava/compileTransaction/stash-dir/TestClassTypeService.class.uniqueId0" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/tmp/compileTestJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/build/tmp/compileTestJava/previous-compilation-data.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ca/mcgill/ecse321/gymregistration/service/ClassTypeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ca/mcgill/ecse321/gymregistration/service/ClassTypeService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/ca/mcgill/ecse321/gymregistration/service/TestClassTypeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/ca/mcgill/ecse321/gymregistration/service/TestClassTypeService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ca/mcgill/ecse321/gymregistration/service/SessionService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ca/mcgill/ecse321/gymregistration/service/SessionService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
