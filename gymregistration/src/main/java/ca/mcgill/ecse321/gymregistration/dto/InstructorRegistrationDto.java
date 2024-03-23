@@ -14,14 +14,14 @@ public class InstructorRegistrationDto{
   //------------------------
 
   //InstructorRegistration Attributes
- 
+
   private int id;
   private Date date;
 
   //InstructorRegistration Associations
 
   private Instructor instructor;
-  
+
   private Session session;
 
 

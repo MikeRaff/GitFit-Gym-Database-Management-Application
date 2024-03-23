@@ -33,7 +33,7 @@ public class ClassTypeService {
         if(!isApproved){
             throw new GRSException(HttpStatus.BAD_REQUEST, "Class Type must be approved.");
         }
-        if (classTypeRepository.count() >= MAX_CLASS_TYPES) {
+        if (classTypeRepository.findAll().size() >= MAX_CLASS_TYPES) {
             throw new GRSException(HttpStatus.BAD_REQUEST, "Maximum number of class types reached.");
         }
         if(classTypeRepository.findClassTypeByName(name) != null){
@@ -42,8 +42,7 @@ public class ClassTypeService {
         ClassType classType = new ClassType();
         classType.setName(name);
         classType.setApproved(isApproved);
-        classTypeRepository.save(classType);
-        return classType;
+        return classTypeRepository.save(classType);
     }
 
     /**
@@ -125,7 +124,7 @@ public class ClassTypeService {
         if (name == null || name.trim().isEmpty()){
             throw new GRSException(HttpStatus.BAD_REQUEST, "Name cannot be empty.");
         }
-        if (classTypeRepository.count() >= MAX_CLASS_TYPES) {
+        if (classTypeRepository.findAll().size() >= MAX_CLASS_TYPES) {
             throw new GRSException(HttpStatus.BAD_REQUEST, "Maximum number of class types reached.");
         }
         if (classTypeRepository.findClassTypeByName(name) != null) {
@@ -144,13 +143,13 @@ public class ClassTypeService {
      * @throws GRSException Class type not found
      */
     @Transactional
-    public void approveProposedClassType(String name){
+    public ClassType approveProposedClassType(String name){
         ClassType classType = classTypeRepository.findClassTypeByName(name);
         if(classType == null){
             throw new GRSException(HttpStatus.NOT_FOUND, "Class Type not found.");
         }
         classType.setApproved(true);
-        classTypeRepository.save(classType);
+        return classTypeRepository.save(classType);
     }
 
 }
