@@ -38,9 +38,8 @@ public class InstructorRestController {
     }
 
     @PutMapping(value = {"/update-instructors/{id}/{email}/{password}", "/update-instructors/{id}/{email}/{password}/"})
-    public ResponseEntity<InstructorDto> updateInstructor(@PathVariable("id") int id, @PathVariable("email") String email, @PathVariable("password") String password, @RequestBody InstructorDto instructorDto) throws IllegalArgumentException{
-        Instructor toUpdate = instructorService.getInstructorById(id);
-        Instructor instructor = instructorService.updateInstructor(toUpdate.getId(), email, password);
+    public ResponseEntity<InstructorDto> updateInstructor(@PathVariable("id") int id, @PathVariable("email") String email, @PathVariable("password") String password) throws IllegalArgumentException{
+        Instructor instructor = instructorService.updateInstructor(id, email, password);
         return new ResponseEntity<InstructorDto>(new InstructorDto(instructor), HttpStatus.OK);
     }
 

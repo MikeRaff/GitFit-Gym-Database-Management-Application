@@ -66,6 +66,7 @@ public class InstructorService {
             throw new GRSException(HttpStatus.NOT_FOUND, "Instructor not found");
         instructor.setEmail(email);
         instructor.setPassword(password);
+        instructor.setId(id);
         instructorRepository.save(instructor);
         return instructor;
     }

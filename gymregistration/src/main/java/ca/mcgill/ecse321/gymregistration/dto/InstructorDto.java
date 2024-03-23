@@ -6,11 +6,6 @@ import ca.mcgill.ecse321.gymregistration.model.Person;
 
 public class InstructorDto extends GymUserDto{
     
-    
-      //------------------------
-      // CONSTRUCTOR
-      //------------------------
-    
       // Hibernate needs a default constructor
       public InstructorDto()
       {
