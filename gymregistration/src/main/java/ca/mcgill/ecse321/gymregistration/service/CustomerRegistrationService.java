@@ -1,5 +1,7 @@
 package ca.mcgill.ecse321.gymregistration.service;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -55,7 +57,7 @@ public class CustomerRegistrationService {
 
         CustomerRegistration customerRegistration = customerRegistrationRepository.findCustomerRegistrationByCustomerAndSession(customer, session);
         if (customerRegistration != null){
-            throw new GRSException(HttpStatus.UNAUTHORIZED, "Cannot register for same session twice.");
+            throw new GRSException(HttpStatus.CONFLICT, "Cannot register for same session twice.");
         }
         
         List<CustomerRegistration> customerRegistrations = customerRegistrationRepository.findCustomerRegistrationsBySession_Id(sessionId);
@@ -63,14 +65,18 @@ public class CustomerRegistrationService {
             throw new GRSException(HttpStatus.UNAUTHORIZED, "Session is already at capacity.");
         }
 
-        customerRegistration = new CustomerRegistration(session.getDate(), session, customer);     
-        /*
-         * Need to refactor this to include time as well 
-         */
-        if (customerRegistration.getDate().after(session.getDate()) || customerRegistration.getDate().equals(session.getDate())){
-            throw new GRSException(HttpStatus.UNAUTHORIZED, "Cannot register for in-progress or completed session.");
+        //getting current date and time
+        LocalDateTime currentDateTime = LocalDateTime.now();
+        //converting startTime and date to LocalDateTime
+        LocalDateTime sessionDatetime = LocalDateTime.of(session.getDate().toLocalDate(), session.getStartTime().toLocalTime());
+        //calculating difference
+        Duration timeDifference = Duration.between(currentDateTime, sessionDatetime);
+        //checking if registration time (current) is before the start of the session
+        if (timeDifference.toHours() < 0){
+            throw new GRSException(HttpStatus.BAD_REQUEST, "Cannot register for in-progress or completed session.");
         }
 
+        customerRegistration = new CustomerRegistration(session.getDate(), session, customer);     
         customerRegistrationRepository.save(customerRegistration);
         return customerRegistration;
     }
@@ -177,10 +183,15 @@ public class CustomerRegistrationService {
             throw new GRSException(HttpStatus.NOT_FOUND, "The registration does not exist.");
         }
 
-        /*
-        * Look into using Calendar instead of java.sql.Date & java.sql.Time 
-        * Need to set constraint for deleting within 48 hours of session start
-        */
+        // current date and time
+        LocalDateTime currentDateTime = LocalDateTime.now();
+        // session date and time
+        LocalDateTime sessionDateTime = LocalDateTime.of(session.getDate().toLocalDate(), session.getStartTime().toLocalTime());
+        // getting difference
+        Duration timeDifference = Duration.between(currentDateTime, sessionDateTime);
+        if (timeDifference.toHours() < 48){
+            throw new GRSException(HttpStatus.BAD_REQUEST, "Cancellation of registration must be at least 48 hours before session start.");
+        }
 
         customerRegistrationRepository.delete(customerRegistration);
     }
@@ -191,14 +202,14 @@ public class CustomerRegistrationService {
      * @throws GRSException if customer is invalid
      */
     @Transactional 
-    public void removeCustomerFromAllSessions(int id){
-        Customer customer = customerRepository.findCustomerById(id);
+    public void removeCustomerFromAllSessions(String email){
+        Customer customer = customerRepository.findCustomerByEmail(email);
 
         if (customer == null){
             throw new GRSException(HttpStatus.NOT_FOUND, "Customer not found.");
         }
 
-        customerRegistrationRepository.deleteCustomerRegistrationsByCustomer_Id(id);
+        customerRegistrationRepository.deleteCustomerRegistrationsByCustomer_Email(email);
     }
 
 }

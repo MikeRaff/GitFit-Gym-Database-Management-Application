@@ -70,7 +70,7 @@ public class ClassTypeRestController {
      * @param name: Name of class type to be deleted
      * @throws IllegalArgumentException
      */
-    @DeleteMapping(value = {"/class-types/delete/{name}", "/class-types/delete/{name}/"})
+    @DeleteMapping(value = {"/class-types/delete/{name}", "/class-types/delete/{email}/{sessionId}"})
     public void deleteClassType(@PathVariable("name") String name) throws IllegalArgumentException{
         classTypeService.deleteClassType(name);
     }

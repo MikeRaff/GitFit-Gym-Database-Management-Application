@@ -9,7 +9,7 @@ import java.util.List;
 import org.springframework.data.repository.CrudRepository;
 
 public interface CustomerRegistrationRepository extends CrudRepository<CustomerRegistration, Integer> {
-    CustomerRegistration findCustomerRegistrationById(int id);
+    CustomerRegistration findCustomerRegistrationById(Integer id);
     CustomerRegistration findCustomerRegistrationByCustomerAndSession(Customer customer, Session session);
 
     List<CustomerRegistration> findCustomerRegistrationsBySession_Id(Integer sessionId);
