@@ -143,13 +143,13 @@ public class ClassTypeService {
      * @throws GRSException Class type not found
      */
     @Transactional
-    public void approveProposedClassType(String name){
+    public ClassType approveProposedClassType(String name){
         ClassType classType = classTypeRepository.findClassTypeByName(name);
         if(classType == null){
             throw new GRSException(HttpStatus.NOT_FOUND, "Class Type not found.");
         }
         classType.setApproved(true);
-        classTypeRepository.save(classType);
+        return classTypeRepository.save(classType);
     }
 
 }
