@@ -270,7 +270,7 @@ public class TestClassTypeService {
         try {
             classType = classTypeService.getClassTypeByName(NAME);
         } catch (Exception e) {
-            fail();
+            fail(e.getMessage());
         }
         assertNotNull(classType);
         assertEquals(NAME, classType.getName());
@@ -304,7 +304,7 @@ public class TestClassTypeService {
     }
 
     @Test
-    public void testGetAllClassTypesOneClassTypes(){
+    public void testGetAllClassTypesOne(){
         List<ClassType> classTypes = new ArrayList<>();
         try {
             classTypes = classTypeService.getAllClassTypes();
@@ -349,5 +349,17 @@ public class TestClassTypeService {
             assertEquals(e.getMessage(), "No Class Types found in the system.");
         }
         assertEquals(0, classTypes.size());
+    }
+
+    @Test
+    public void testDeleteClassType() {
+        when(classTypeRepository.findClassTypeByName(anyString())).thenReturn(null);
+        try {
+            classTypeService.deleteClassType("Pilates");
+        } catch (Exception e) {
+            fail(e.getMessage());
+        }
+        ClassType classType = classTypeService.getClassTypeByName(NAME);
+        assertNull(classType);
     }
 }

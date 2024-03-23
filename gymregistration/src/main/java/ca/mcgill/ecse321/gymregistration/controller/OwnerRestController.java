@@ -62,16 +62,17 @@ public class OwnerRestController {
      * @return The updated owner
      * @throws IllegalArgumentException
      */
-    @PutMapping(value = {"/update-owners/{id}/{email}/{password}", "/update-owners/{id}/{email}/{password}/"})
-    public ResponseEntity<OwnerDto> updateOwner(@PathVariable("id") int id, @PathVariable("email") String email, @PathVariable("password") String password, @RequestBody OwnerDto ownerDto) throws IllegalArgumentException{
+    @PutMapping(value = {"/owners/{email}", "/owners/{email}/"})
+    public ResponseEntity<OwnerDto> updateOwner(@PathVariable("email") String email, @RequestBody OwnerDto ownerDto) throws IllegalArgumentException{
         Owner toUpdate = ownerService.getOwnerByEmail(email);
-        Owner owner = ownerService.updateOwner(toUpdate.getId(), email, password);
+        Owner owner = ownerService.updateEmail(toUpdate.getEmail(), ownerDto.getEmail());
+        owner = ownerService.updatePassword(owner.getEmail(), toUpdate.getPassword(), ownerDto.getPassword());
         return new ResponseEntity<OwnerDto>(new OwnerDto(owner), HttpStatus.OK);
     }
 
     /**
      * DeleteOwner: deleting an owner from the system
-     * @param name: Name of owner to be deleted
+     * @param email: Email of owner to be deleted
      * @throws IllegalArgumentException
      */
     @DeleteMapping(value = {"/owners/delete/{email}", "/owners/delete/{email}/"})
@@ -90,7 +91,7 @@ public class OwnerRestController {
     public ResponseEntity<OwnerDto> logInOwner(@PathVariable("email") String email,@PathVariable("password") String password ) throws IllegalArgumentException{
         Owner owner;
         try {
-            owner = ownerService.logInOwner(email, password);
+            owner = ownerService.loginOwner(email, password);
             return new ResponseEntity<OwnerDto>(new OwnerDto(owner), HttpStatus.OK);
         } catch (Exception e) {
             return null;
