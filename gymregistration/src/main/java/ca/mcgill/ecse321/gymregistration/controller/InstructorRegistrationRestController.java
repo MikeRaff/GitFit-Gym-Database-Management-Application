@@ -42,14 +42,14 @@ public class InstructorRegistrationRestController {
      * @throws IllegalArgumentException
      * 
      */
-    @DeleteMapping(value = { "/instructor-registration/delete/{id}", "/instructor-registration/delete/{id}/" })
-    public ResponseEntity<InstructorRegistrationDto> removeInstructorFromClass(@PathVariable("id") int id, @RequestBody GymUserDto gymuserDto)
+    @DeleteMapping(value = { "/instructor-registration/delete/{id}/{gid}", "/instructor-registration/delete/{id}/{gid}/" })
+    public ResponseEntity<InstructorRegistrationDto> removeInstructorFromClass(@PathVariable("id") int id, @PathVariable("gid") int gid)
             throws IllegalArgumentException {
         try {
             InstructorRegistration instructorRegistration = instructorRegistrationService
                     .getInstructorRegistrationById(id);
             instructorRegistrationService.removeInstructorFromClass(instructorRegistration.getInstructor().getId(),
-                    instructorRegistration.getSession().getId(), gymuserDto.getId());
+                    instructorRegistration.getSession().getId(), gid);
             return new ResponseEntity<InstructorRegistrationDto>(new InstructorRegistrationDto(), HttpStatus.OK);
         } catch (GRSException e) {
             return new ResponseEntity<InstructorRegistrationDto>(new InstructorRegistrationDto(), e.getStatus());

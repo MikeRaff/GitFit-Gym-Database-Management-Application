@@ -154,7 +154,9 @@ public class TestInstructorRegistrationService {
         } catch (GRSException e) {
             assertEquals(e.getMessage(), "not enough instructors registered");
         }
+
     }
+
 
     @Test
     public void testGetInstructorRegistration() {

@@ -73,7 +73,7 @@ public class InstructorRegistrationService {
         GymUser gymuser = instructorRepository.findInstructorById(gymuserId);
         if(gymuser ==null)
             gymuser = ownerRepository.findOwnerById(gymuserId);
-        
+    
         if( gymuser == null || gymuser instanceof Owner == false || instructorRegistrationRepository.findInstructorRegistrationByInstructor_idAndSession_id(gymuser.getId(), sessionId)==null)
             throw new GRSException(HttpStatus.UNAUTHORIZED, "You don't have permission to remove this instructor");
         for (InstructorRegistration r : instructorRegistrations) {
