@@ -1,3 +1,4 @@
+
 package ca.mcgill.ecse321.gymregistration.controller;
 
 import java.util.List;
@@ -51,8 +52,14 @@ public class InstructorRestController {
      */
     @PostMapping(value = { "/instructors/create", "/instructors/create/" })
     public ResponseEntity<InstructorDto> createInstructor(@RequestBody InstructorDto instructorDto) throws IllegalArgumentException {
+        try {
         Instructor instructor = instructorService.createInstructor(instructorDto.getEmail(), instructorDto.getPassword(), instructorDto.getPerson().getId());
         return new ResponseEntity<InstructorDto>(new InstructorDto(instructor), HttpStatus.CREATED);
+        }
+        catch (GRSException e)
+        {
+            return new ResponseEntity<InstructorDto>(new InstructorDto(), e.getStatus());
+        }
     }
 
     /**
@@ -62,10 +69,11 @@ public class InstructorRestController {
      * @return The updated instructor
      * @throws IllegalArgumentException
      */
-    @PutMapping(value = { "/instructors/{email}", "/instructors/{email}/" })
+    @PutMapping(value = { "/update-instructors-e/{email}", "//update-instructors-e/{email}" })
     public ResponseEntity<InstructorDto> updateInstructor(@PathVariable("email") String email, @RequestBody InstructorDto instructorDto) throws IllegalArgumentException {
-        Instructor toUpdate = instructorService.getInstructorByEmail(email);    
-        Instructor instructor = instructorService.updateEmail(toUpdate.getEmail(), instructorDto.getPassword(), instructorDto.getEmail());
+    
+        Instructor toUpdate = instructorService.getInstructorByEmail(instructorDto.getEmail());  
+        Instructor instructor = instructorService.updateEmail(toUpdate.getEmail(), instructorDto.getPassword(), email);
         instructor = instructorService.updatePassword(instructor.getEmail(), toUpdate.getPassword(), instructorDto.getPassword());
         return new ResponseEntity<InstructorDto>(new InstructorDto(instructor), HttpStatus.OK);
     }
