@@ -19,6 +19,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import ca.mcgill.ecse321.gymregistration.dao.OwnerRepository;
 import ca.mcgill.ecse321.gymregistration.model.Owner;
 import ca.mcgill.ecse321.gymregistration.model.Person;
+import ca.mcgill.ecse321.gymregistration.service.exception.GRSException;
 
 @SpringBootTest
 @ExtendWith(MockitoExtension.class)
@@ -98,6 +99,22 @@ public class TestOwnerService {
     }
 
     @Test
+    public void testUpdateInvalidEmail()
+    {
+        String email = "example@email.com";
+        Owner owner = new Owner();
+        owner.setEmail(email);
+        ownerRepository.save(owner);
+        try{
+            ownerService.updateEmail(email, null);
+        }
+        catch(GRSException e)
+        {
+            assertEquals("Invalid email.", e.getMessage());
+        }
+    }
+
+    @Test
     public void testUpdatePassword()
     {
         String newPassword =  "new password";
@@ -107,6 +124,32 @@ public class TestOwnerService {
         ownerRepository.save(owner);
         owner = ownerService.updatePassword(EMAIL, PASSWORD, newPassword);
         assertEquals(newPassword, owner.getPassword());
+    }
+
+    @Test
+    public void testUpdateInvalidPassword()
+    {
+        
+        Owner owner = new Owner();
+        owner.setEmail(EMAIL);
+        owner.setPassword(PASSWORD);
+        ownerRepository.save(owner);
+        try{
+        owner = ownerService.updatePassword(EMAIL, PASSWORD, null);
+        }
+        catch(GRSException e)
+        {
+        assertEquals("Invalid new password.", e.getMessage());
+        }
+
+        try{
+            owner = ownerService.updatePassword(EMAIL, PASSWORD+" ", PASSWORD);
+            }
+            catch(GRSException e)
+            {
+            assertEquals("Owner not found.", e.getMessage());
+            }
+        
     }
 
     @Test
