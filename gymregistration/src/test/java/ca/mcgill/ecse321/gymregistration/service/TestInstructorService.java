@@ -146,14 +146,14 @@ public class TestInstructorService {
         Instructor instructor = new Instructor();
         instructorRepository.save(instructor);
 
-        Instructor updatedInstructor = instructorService.updateInstructor(instructor.getId(), email, password);
+        Instructor updatedInstructor = instructorService.updateInstructorEmail(instructor.getId(), email);
 
         assertEquals(instructor.getId(), updatedInstructor.getId());
         assertEquals(email, updatedInstructor.getEmail());
-        assertEquals(updatedInstructor.getPassword(), password);
+       ;
 
         try {
-            updatedInstructor = instructorService.updateInstructor(1000, null, null);
+            updatedInstructor = instructorService.updateInstructorEmail(1000, null);
         } catch (GRSException e) {
             assertEquals(e.getMessage(), "Instructor not found");
         }

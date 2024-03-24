@@ -10,7 +10,7 @@ import org.mockito.Mock;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.sql.Time;;
+import java.sql.Time;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
