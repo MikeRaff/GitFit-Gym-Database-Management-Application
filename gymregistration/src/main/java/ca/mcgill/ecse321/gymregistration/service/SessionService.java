@@ -24,9 +24,9 @@ public class SessionService {
     InstructorRegistrationRepository instructorRegistrationRepository;
 
     /**
-     * Create Session: Creates a new session
-     * @param classType: The classtype of the session
-     * @param startTime: The start time of the class
+     * Create Session: creates a new session
+     * @param classType: the classtype of the session
+     * @param startTime: the start time of the class
      * @param endTime: the end time of the class
      * @param date: the day the class takes place
      * @param description: a textual description of the class
@@ -35,33 +35,25 @@ public class SessionService {
      * @param capacity: the maximum number of people that can attend this class
      * @param gymUser: the user creating the session
      * @return the created session
-     * @throws GRSException Invalid creation request
+     * @throws GRSException invalid creation request
      */
     @Transactional
-    public Session createSession(Date date, Time startTime, Time endTime, String description, String name, String location, ClassType classType, int capacity, GymUser gymUser)
-    {
+    public Session createSession(Date date, Time startTime, Time endTime, String description, String name, String location, ClassType classType, int capacity, GymUser gymUser){
         if(gymUser instanceof Customer) {
-            throw new GRSException(HttpStatus.UNAUTHORIZED, "Customers are not allowed to create sessions.");
-        }
+            throw new GRSException(HttpStatus.UNAUTHORIZED, "Customers are not allowed to create sessions.");}
         if(sessionRepository.findSessionByStartTimeAndDate(startTime, date)!=null){
-            throw new GRSException(HttpStatus.BAD_REQUEST, "Time not available.");
-        }
+            throw new GRSException(HttpStatus.BAD_REQUEST, "Time not available.");}
         if(classType == null || startTime == null || endTime == null || date == null || description == null || description.length() == 0 || name == null || name.length() == 0 || location == null || location.length() == 0){
-            throw new GRSException(HttpStatus.BAD_REQUEST, "Missing information.");
-        }
+            throw new GRSException(HttpStatus.BAD_REQUEST, "Missing information.");}
         if(!classType.getIsApproved()) {
-            throw new GRSException(HttpStatus.BAD_REQUEST, "Class must be approved.");
-        }
-        //getting current date and time
-        LocalDateTime currentDateTime = LocalDateTime.now();
-        //converting startTime and date to LocalDateTime
-        LocalDateTime sessionDatetime = LocalDateTime.of(date.toLocalDate(), startTime.toLocalTime());
-        //calculating difference
-        Duration timeDifference = Duration.between(currentDateTime, sessionDatetime);
+            throw new GRSException(HttpStatus.BAD_REQUEST, "Class must be approved.");}
+
+        LocalDateTime currentDateTime = LocalDateTime.now();    //getting current date and time
+        LocalDateTime sessionDatetime = LocalDateTime.of(date.toLocalDate(), startTime.toLocalTime());  //converting startTime and date to LocalDateTime
+        Duration timeDifference = Duration.between(currentDateTime, sessionDatetime);   //calculating difference
         //checking if session is at least 48 hours ahead of current time
         if (timeDifference.toHours() < 48){
-            throw new GRSException(HttpStatus.BAD_REQUEST, "Session must be at least 48 hours ahead of the current time.");
-        }
+            throw new GRSException(HttpStatus.BAD_REQUEST, "Session must be at least 48 hours ahead of the current time.");}
         Session session = new Session(date, startTime, endTime, description, name, location, classType, capacity);
         sessionRepository.save(session);
         return session;
@@ -69,12 +61,12 @@ public class SessionService {
 
 
     /**
-     * Update Existing Session
-     * @param oldSessionId: Session to be updated
-     * @param newSession: New session to be changed to 
+     * UpdateSession: update a session
+     * @param oldSessionId: session to be updated
+     * @param newSession: new session to be changed to 
      * @param gymUser: the user updating the session
      * @return the new updated Session
-     * @throws GRSException Invalid session update request
+     * @throws GRSException invalid session update request
      **/
     @Transactional
      public Session updateSession(int oldSessionId, Session newSession, GymUser gymUser){
@@ -112,10 +104,10 @@ public class SessionService {
     }
 
     /**
-     * GetSessionById: Get a session by its id
-     * @param id: Id of the session to be found
-     * @return The session with the given id
-     * @throws GRSException Session not found
+     * GetSessionById: get a session by its id
+     * @param id: id of the session to be found
+     * @return the session with the given id
+     * @throws GRSException session not found
      */
     @Transactional
      public Session getSessionById(int id){
@@ -127,9 +119,9 @@ public class SessionService {
     }
 
     /**
-     * GetAllSessions: Get all sessions in the system
-     * @return A list of all the sessions
-     * @throws GRSException No sessions found
+     * GetAllSessions: get all sessions in the system
+     * @return list of all the sessions
+     * @throws GRSException no sessions found
      */
     @Transactional
      public List<Session> getAllSessions(){
@@ -141,10 +133,10 @@ public class SessionService {
     }
 
     /**
-     * DeleteSession: Delete a session by its id
-     * @param id: Id of the session to be deleted
-     * @param gymUser: The user deleting the session
-     * @throws GRSException Session not found, Unauthorized user
+     * DeleteSession: delete a session by its id
+     * @param id: id of the session to be deleted
+     * @param gymUser: the user deleting the session
+     * @throws GRSException session not found, unauthorized user
      */
     @Transactional
     public void deleteSession(int id, GymUser gymUser){

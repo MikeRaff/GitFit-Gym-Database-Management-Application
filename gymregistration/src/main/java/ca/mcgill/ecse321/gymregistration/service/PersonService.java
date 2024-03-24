@@ -18,8 +18,8 @@ public class PersonService {
     PersonRepository personRepository;
 
     /**
-     * createPerson: Create a new person
-     * @param name
+     * CreatePerson: create a new person
+     * @param name: name of the person
      * @return the new person
      * @throws GRSException if no name provided
      */
@@ -36,9 +36,9 @@ public class PersonService {
     }
 
     /**
-     * updateName: Allows users to update their name
-     * @param oldName
-     * @param newName
+     * UpdateName: allows users to update their name
+     * @param oldName: the old name
+     * @param newName: the new name
      * @return the person
      * @throws GRSException if invalid update request
      */
@@ -46,10 +46,10 @@ public class PersonService {
     public Person updateName(String oldName, String newName){
         Person person = personRepository.findPersonByName(oldName);
         if(person == null){
-            throw new GRSException(HttpStatus.BAD_REQUEST, "Person not found");
+            throw new GRSException(HttpStatus.BAD_REQUEST, "Person not found.");
         }
         if(newName == null){
-            throw new GRSException(HttpStatus.BAD_REQUEST, "Invalid name");
+            throw new GRSException(HttpStatus.BAD_REQUEST, "Invalid name.");
         }
 
         person.setName(newName);
@@ -57,9 +57,9 @@ public class PersonService {
     }
 
     /**
-     * getPersonById: Get a person by their id
-     * @param id
-     * @return Person
+     * GetPersonById: get a person by their id
+     * @param id: the id of the person
+     * @return the person
      * @throws GRSException if invalid creation request
      */
     @Transactional
@@ -72,8 +72,8 @@ public class PersonService {
     }
 
     /**
-     * getPersonsByName: get all persons by a name
-     * @param name
+     * GetPersonsByName: get all persons by a name
+     * @param name: the name to search for
      * @return list of persons with that name
      * @throws GRSException if invalid creation request
      */
@@ -87,7 +87,7 @@ public class PersonService {
     }
 
     /**
-     * getAllPersons: get list of all persons
+     * GetAllPersons: get list of all persons
      * @return list of all persons
      * @throws GRSException if no persons in the database
      */
@@ -101,8 +101,8 @@ public class PersonService {
     }
 
     /**
-     * deletePerson: deletes a person by id
-     * @param id     
+     * DeletePerson: deletes a person by id
+     * @param id: the id of the person   
      * @throws GRSException if person not in database
      */
     @Transactional

@@ -35,11 +35,11 @@ public class CustomerService {
 
     /**
      * CreateCustomer: creating a customer
-     * @param email: Email of the customer
-     * @param password: Password of the customer
-     * @param person_id: iD of the person
-     * @return The created customer
-     * @throws GRSException Invalid customer creation request
+     * @param email: email of the customer
+     * @param password: password of the customer
+     * @param person_id: id of the person
+     * @return the created customer
+     * @throws GRSException invalid customer creation request
      */
     @Transactional
     public Customer createCustomer(String email, String password, int person_id){
@@ -61,12 +61,12 @@ public class CustomerService {
     }
 
     /**
-     * UpdateCreditCard: Allow users to add or update their credit card information
-     * @param email: Email of customer
-     * @param password: Password of customer
-     * @param creditCardNumber: Credit card number to be added
-     * @return The new customer
-     * @throws GRSException Customer not found, invalid email and password combination
+     * UpdateCreditCard: allow users to add or update their credit card information
+     * @param email: email of customer
+     * @param password: password of customer
+     * @param creditCardNumber: credit card number to be added
+     * @return the new customer
+     * @throws GRSException customer not found, invalid email and password combination
      */
     @Transactional
     public Customer updateCreditCard(String email, String password, int creditCardNumber){
@@ -79,12 +79,12 @@ public class CustomerService {
     }
 
     /**
-     * UpdateEmail: Allow users to edit their email information
-     * @param oldEmail: Old email of customer
-     * @param password: Password of customer
-     * @param newEmail: New email of customer
-     * @return The new customer
-     * @throws GRSException Customer not found, invalid email and password combination, or invalid new email
+     * UpdateEmail: allow users to edit their email information
+     * @param oldEmail: old email of customer
+     * @param password: password of customer
+     * @param newEmail: new email of customer
+     * @return the new customer
+     * @throws GRSException customer not found, invalid email and password combination, or invalid new email
      */
     @Transactional
     public Customer updateEmail(String oldEmail, String password, String newEmail){
@@ -100,12 +100,12 @@ public class CustomerService {
     }
 
     /**
-     * UpdatePassword: Allow users to edit their password information
-     * @param email: Email of customer
-     * @param oldPassword: Old password of customer
-     * @param newPassword: New password of customer
-     * @return The new customer
-     * @throws GRSException Customer not found, invalid email and password combination, or invalid new password
+     * UpdatePassword: 1llow users to edit their password information
+     * @param email: email of customer
+     * @param oldPassword: old password of customer
+     * @param newPassword: new password of customer
+     * @return the new customer
+     * @throws GRSException customer not found, invalid email and password combination, or invalid new password
      */
     @Transactional
     public Customer updatePassword(String email, String oldPassword, String newPassword){
@@ -123,8 +123,8 @@ public class CustomerService {
     /**
      * GetCustomerByEmail: getting a customer by their email
      * @param email: the email to search with
-     * @return The customer
-     * @throws GRSException Customer not found
+     * @return the customer
+     * @throws GRSException customer not found
      */
     @Transactional
     public Customer getCustomerByEmail(String email){
@@ -137,8 +137,8 @@ public class CustomerService {
 
     /**
      * GetAllCustomers: getting all existing customers
-     * @return List of all existing customers
-     * @throws GRSException No customers found
+     * @return list of all existing customers
+     * @throws GRSException no customers found
      */
     @Transactional
     public List<Customer> getAllCustomers(){
@@ -151,9 +151,9 @@ public class CustomerService {
 
     /**
      * DeleteCustomer: delete the customer
-     * @param email: Email of customer to be deleted
-     * @param gymUser: The user trying to delete the customer
-     * @throws GRSException Customer not found or the user is not an owner, an instructor, or the customer
+     * @param email: email of customer to be deleted
+     * @param gymUser: the user trying to delete the customer
+     * @throws GRSException customer not found or the user is not an owner, an instructor, or the customer
      */
     @Transactional
     public void deleteCustomer(String email, GymUser gymUser){
@@ -169,10 +169,10 @@ public class CustomerService {
 
     /**
      * LoginCustomer: allow a customer to log in
-     * @param email: Email of the customer
-     * @param password: Password of the customer
-     * @return The customer
-     * @throws GRSException Invalid customer email or password
+     * @param email: email of the customer
+     * @param password: password of the customer
+     * @return the customer
+     * @throws GRSException invalid customer email or password
      */
     public Customer loginCustomer(String email, String password){
         Customer customer = customerRepository.findCustomerByEmailAndPassword(email, password);
@@ -183,11 +183,11 @@ public class CustomerService {
     }
 
     /**
-     * changeAccountType: allow the owner to change a customer's account type
-     * @param email: Email of the customer
-     * @param gymUser: The user trying to change the account type
-     * @return The new instructor
-     * @throws GRSException Invalid customer email or not an owner
+     * ChangeAccountType: allow the owner to change a customer's account type
+     * @param email: email of the customer
+     * @param gymUser: the user trying to change the account type
+     * @return the new instructor
+     * @throws GRSException invalid customer email or not an owner
      */
     public Instructor changeAccountType(String email, GymUser gymUser) {
         if (gymUser instanceof Owner == false) {

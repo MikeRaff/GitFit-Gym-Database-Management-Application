@@ -32,11 +32,11 @@ public class InstructorService {
 
     /**
      * CreateInstructor: creating an instructor
-     * @param email: Email of the instructor
-     * @param password: Password of the instructor
-     * @param person_id: iD of the person
-     * @return The created instructor
-     * @throws GRSException Invalid instructor creation request
+     * @param email: email of the instructor
+     * @param password: password of the instructor
+     * @param person_id: id of the person
+     * @return the created instructor
+     * @throws GRSException invalid instructor creation request
      */
     @Transactional
     public Instructor createInstructor(String email, String password, int person_id) {
@@ -58,12 +58,12 @@ public class InstructorService {
     }
 
     /**
-     * UpdateEmail: Allow users to edit their email information
-     * @param oldEmail: Old email of instructor
-     * @param password: Password of instructor
-     * @param newEmail: New email of instructor
-     * @return The new instructor
-     * @throws GRSException Instructor not found, invalid email and password combination, or invalid new email
+     * UpdateEmail: allow users to edit their email information
+     * @param oldEmail: old email of instructor
+     * @param password: password of instructor
+     * @param newEmail: new email of instructor
+     * @return the new instructor
+     * @throws GRSException instructor not found, invalid email and password combination, or invalid new email
      */
     @Transactional
     public Instructor updateEmail(String oldEmail, String password, String newEmail) {
@@ -79,13 +79,14 @@ public class InstructorService {
     }
 
     /**
-     * UpdatePassword: Allow users to edit their password information
-     * @param email: Email of instructor
-     * @param oldPassword: Old password of instructor
-     * @param newPassword: New password of instructor
-     * @return The new instructor
-     * @throws GRSException Instructor not found, invalid email and password combination, or invalid new password
+     * UpdatePassword: allow users to edit their password information
+     * @param email: email of instructor
+     * @param oldPassword: old password of instructor
+     * @param newPassword: new password of instructor
+     * @return the new instructor
+     * @throws GRSException instructor not found, invalid email and password combination, or invalid new password
      */
+    @Transactional
     public Instructor updatePassword(String email, String oldPassword, String newPassword) {
         Instructor instructor = instructorRepository.findInstructorByEmailAndPassword(email, oldPassword);
         if (instructor == null)
@@ -100,22 +101,22 @@ public class InstructorService {
     /**
      * GetInstructorByEmail: get an instructor by their email
      * @param email: the email to search with
-     * @return The instructor
-     * @throws GRSException Instructor not found
+     * @return the instructor
+     * @throws GRSException instructor not found
      */
     @Transactional
     public Instructor getInstructorByEmail(String email) {
         Instructor instructor = instructorRepository.findInstructorByEmail(email);
         if (instructor == null){
-            throw new GRSException(HttpStatus.NOT_FOUND, "Instructor not found");
+            throw new GRSException(HttpStatus.NOT_FOUND, "Instructor not found.");
         }
         return instructor;
     }
 
     /**
      * GetAllInstructors: get all existing instructors 
-     * @return List of all existing instructors
-     * @throws GRSException No instructors found
+     * @return list of all existing instructors
+     * @throws GRSException no instructors found
      */
     @Transactional
     public List<Instructor> getAllInstructors() {
@@ -128,9 +129,9 @@ public class InstructorService {
 
     /**
      * DeleteInstructor: delete the instructor
-     * @param email: Email of instructor to be deleted
+     * @param email: email of instructor to be deleted
      * @param gymUser: The user trying to delete the instructor
-     * @throws GRSException Instructor not found or user is not an owner or the instructor
+     * @throws GRSException instructor not found or user is not an owner or the instructor
      */
     @Transactional
     public void deleteIntructor(String email, GymUser gymUser) {
@@ -139,33 +140,33 @@ public class InstructorService {
         }
         Instructor instructor = instructorRepository.findInstructorByEmail(email);
         if (instructor == null){
-            throw new GRSException(HttpStatus.NOT_FOUND, "Instructor not found");
+            throw new GRSException(HttpStatus.NOT_FOUND, "Instructor not found.");
         }
         instructorRepository.deleteInstructorByEmail(email);
     }
 
     /**
      * LoginInstructor: allow an instructor to log in
-     * @param email: Email of the instructor
-     * @param password: Password of the instructor
-     * @return The instructor
-     * @throws GRSException Invalid instructor email or password
+     * @param email: email of the instructor
+     * @param password: password of the instructor
+     * @return the instructor
+     * @throws GRSException invalid instructor email or password
      */
     @Transactional
     public Instructor loginInstructor(String email, String password) {
         Instructor instructor = instructorRepository.findInstructorByEmailAndPassword(email, password);
         if (instructor == null) {
-            throw new GRSException(HttpStatus.UNAUTHORIZED, "Invalid Email or Password");
+            throw new GRSException(HttpStatus.UNAUTHORIZED, "Invalid Email or Password.");
         }
         return instructor;
     }
 
     /**
      * ChangeAccountType: change the account type of a user
-     * @param email: Email of the instructor
-     * @param gymUser: The user trying to change the account type
-     * @return The new customer
-     * @throws GRSException Only owners can change account type, instructor not found
+     * @param email: email of the instructor
+     * @param gymUser: the user trying to change the account type
+     * @return the new customer
+     * @throws GRSException only owners can change account type, instructor not found
      */
     public Customer changeAccountType(String email, GymUser gymUser) {
         if (gymUser instanceof Owner == false) {
