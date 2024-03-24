@@ -2,15 +2,19 @@ package ca.mcgill.ecse321.gymregistration.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.lenient;
+import static org.mockito.Mockito.when;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -19,6 +23,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.core.ReactiveAdapter;
 
 import ca.mcgill.ecse321.gymregistration.dao.CustomerRegistrationRepository;
 import ca.mcgill.ecse321.gymregistration.dao.CustomerRepository;
@@ -43,22 +48,35 @@ public class TestCustomerRegistrationService {
     private CustomerRegistrationService customerRegistrationService;
 
     private static final Customer CUSTOMER = new Customer(); 
-    private static final String CUSTOMER_EMAIL = CUSTOMER.getEmail();
+    private static final String CUSTOMER_EMAIL = "email@mcgill.ca";
+    private static final int CREDIT = 12345;
 
     private static final Session SESSION = new Session();
-    private static final int SESSION_ID = SESSION.getId();
+    private static final int SESSION_ID = 0;
+    private static final Date DATE = new Date(2024, 4, 1);
+    private static final Time START_TIME= new Time(12,0,0);
+    private static final Time END_TIME = new Time(13,0,0);
+    private static final int CAPACITY = 100;
 
-    private static final CustomerRegistration CUSTOMER_REGISTRATION = new CustomerRegistration();
-    private static final int CUSTOMER_REGISTRATION_ID = CUSTOMER_REGISTRATION.getId();
+    //private static final CustomerRegistration CUSTOMER_REGISTRATION = new CustomerRegistration();
+    private static final int CUSTOMER_REGISTRATION_ID = 0;
+    private static final Date CURRENT_DATE = new Date(System.currentTimeMillis());
 
     
     @BeforeEach
     public void setMockOutput(){
 
+        lenient().when(customerRepository.save(any(Customer.class))).thenAnswer((InvocationOnMock invocation) -> invocation.getArgument(0));
+        lenient().when(sessionRepository.save(any(Session.class))).thenAnswer((InvocationOnMock invocation) -> invocation.getArgument(0));
+        lenient().when(customerRegistrationRepository.save(any(CustomerRegistration.class))).thenAnswer((InvocationOnMock invocation) -> invocation.getArgument(0));
+
+
         lenient().when(customerRepository.findCustomerByEmail(anyString())).thenAnswer((InvocationOnMock invocation) ->{
             if( invocation.getArgument(0).equals(CUSTOMER_EMAIL)){
                 Customer customer = new Customer();
                 customer.setEmail(CUSTOMER_EMAIL);
+                customer.setCreditCardNumber(CREDIT);
+
                 return customer;
             }else{
                 return null;
@@ -70,7 +88,29 @@ public class TestCustomerRegistrationService {
             if(id == SESSION_ID){
                 Session session = new Session();
                 session.setId(SESSION_ID);
+                session.setDate(DATE);
+                session.setStartTime(START_TIME);
+                session.setEndTime(END_TIME);
+                session.setCapacity(CAPACITY);
+
                 return session;
+            }else{
+                return null;
+            }
+        });
+
+        lenient().when(customerRegistrationRepository.findCustomerRegistrationsBySession_Id(anyInt())).thenAnswer((InvocationOnMock invocation) -> {
+            int id = invocation.getArgument(0);
+            if(id == SESSION_ID){
+                CustomerRegistration customerRegistration = new CustomerRegistration();
+                customerRegistration.setId(CUSTOMER_REGISTRATION_ID);
+                customerRegistration.setSession(SESSION);
+                customerRegistration.setCustomer(CUSTOMER);
+                customerRegistration.setDate(CURRENT_DATE);
+
+                List<CustomerRegistration> customerRegistrationList= new ArrayList<>();
+                customerRegistrationList.add(customerRegistration);
+                return customerRegistrationList;
             }else{
                 return null;
             }
@@ -81,6 +121,10 @@ public class TestCustomerRegistrationService {
             if(id == CUSTOMER_REGISTRATION_ID){
                 CustomerRegistration customerRegistration = new CustomerRegistration();
                 customerRegistration.setId(CUSTOMER_REGISTRATION_ID);
+                customerRegistration.setSession(SESSION);
+                customerRegistration.setCustomer(CUSTOMER);
+                customerRegistration.setDate(CURRENT_DATE);
+
                 return customerRegistration;
             }else{
                 return null;
@@ -98,10 +142,7 @@ public class TestCustomerRegistrationService {
             }
         });
 
-        lenient().when(customerRepository.save(any(Customer.class))).thenAnswer((InvocationOnMock invocation) -> invocation.getArgument(0));
-        lenient().when(sessionRepository.save(any(Session.class))).thenAnswer((InvocationOnMock invocation) -> invocation.getArgument(0));
-        lenient().when(customerRegistrationRepository.save(any(CustomerRegistration.class))).thenAnswer((InvocationOnMock invocation) -> invocation.getArgument(0));
-
+        
     }
 
 
@@ -111,38 +152,146 @@ public class TestCustomerRegistrationService {
         Date date = new Date(2024, 4, 1);
         Time startTime = new Time(12, 0, 0);
         Time endTime = new Time(13, 0, 0);
-        int capacity = 100;
         session.setDate(date);
         session.setStartTime(startTime);
         session.setEndTime(endTime);
-        session.setCapacity(100);
+        session.setCapacity(CAPACITY);
 
         Customer customer = new Customer();
-        String email = "customer@email.ca";
-        int creditCardNumber = 1234;
-        customer.setEmail(email);
-        customer.setCreditCardNumber(creditCardNumber);
+        customer.setEmail("customer@email.ca");
+        customer.setCreditCardNumber(1234);
 
-        //sessionRepository.save(session);
-        //customerRepository.save(customer);
+        sessionRepository.save(session);
+        customerRepository.save(customer);
+
+        CustomerRegistration customerRegistration = null;
+        try{
+            customerRegistration = customerRegistrationService.registerCustomerToSession(session.getId(), customer.getEmail());
+        }catch (GRSException e){
+            fail(e.getMessage());
+        }
+        assertNotNull(customerRegistration);
+        assertEquals(customer.getId(), customerRegistration.getCustomer().getId());
+        assertEquals(session.getId(), customerRegistration.getSession().getId());
+    }
+
+    @Test
+    public void testRegisterForNonexistentSession(){
+        Session session = null;
+
+        Customer customer = new Customer();
+        customer.setEmail("customer@email.com");
+        customer.setCreditCardNumber(1234);
+
         sessionRepository.save(session);
         customerRepository.save(customer);
 
         CustomerRegistration customerRegistration = null;
         try{
             customerRegistrationService.registerCustomerToSession(session.getId(), customer.getEmail());
+            fail();
         }catch (GRSException e){
-            fail(e.getMessage());
+            assertEquals("Session not found.", e.getMessage());
         }
-        assertNotNull(customer);
-        assertEquals(customer.getId(), customerRegistration.getCustomer().getId());
-        assertEquals(session.getId(), customerRegistration.getSession().getId());
+        assertNull(customerRegistration);
     }
 
     @Test
-    public void testRegisterForNullSession(){
+    public void testRegisterForPastSession(){
         Session session = new Session();
+        Date date = new Date(2023, 4, 1);
+        Time startTime = new Time(12, 0, 0);
+        Time endTime = new Time(13, 0, 0);
+        session.setDate(date);
+        session.setStartTime(startTime);
+        session.setEndTime(endTime);
+        session.setCapacity(CAPACITY);
+
         Customer customer = new Customer();
+        customer.setEmail("customer@email.com");
+        customer.setCreditCardNumber(1234);
+
+        sessionRepository.save(session);
+        customerRepository.save(customer);
+
+        CustomerRegistration customerRegistration = null;
+        try{
+            customerRegistrationService.registerCustomerToSession(session.getId(), customer.getEmail());
+            fail();
+        }catch (GRSException e){
+            assertEquals("Cannot register for in-progress or completed session.", e.getMessage());
+        }
+        assertNull(customerRegistration);
     }
+
+    @Test
+    public void testRegisterForSessionWithoutCreditInformation(){
+        Session session = new Session();
+        Date date = new Date(2024, 4, 1);
+        Time startTime = new Time(12, 0, 0);
+        Time endTime = new Time(13, 0, 0);
+        session.setDate(date);
+        session.setStartTime(startTime);
+        session.setEndTime(endTime);
+        session.setCapacity(CAPACITY);
+
+        Customer customer = new Customer();
+        customer.setEmail("customer@email.com");
+
+        sessionRepository.save(session);
+        customerRepository.save(customer);
+
+        CustomerRegistration customerRegistration = null;
+        try{
+            customerRegistrationService.registerCustomerToSession(session.getId(), customer.getEmail());
+            fail();
+        }catch (GRSException e){
+            assertEquals("Credit card must be entered to register for a class.", e.getMessage());
+        }
+        assertNull(customerRegistration);
+    }
+    
+    @Test
+    public void testRegisterForSessionAtCapacity(){
+        Session session = new Session();
+        Date date = new Date(2024, 4, 1);
+        Time startTime = new Time(12, 0, 0);
+        Time endTime = new Time(13, 0, 0);
+        session.setDate(date);
+        session.setStartTime(startTime);
+        session.setEndTime(endTime);
+        session.setCapacity(CAPACITY);
+    
+        List<CustomerRegistration> registrations = new ArrayList<>();
+        for (int i=0; i<CAPACITY; i++){
+            Customer addedCustomer = new Customer();
+            addedCustomer.setEmail(i+"@email.com");
+            addedCustomer.setCreditCardNumber(1+i);
+            customerRepository.save(addedCustomer);
+
+            CustomerRegistration addedRegistration = new CustomerRegistration();
+            addedRegistration = customerRegistrationService.registerCustomerToSession(session.getId(), addedCustomer.getEmail());
+            registrations.add(addedRegistration);
+        }
+        when(customerRegistrationRepository.findCustomerRegistrationsBySession_Id(session.getId())).thenReturn(registrations);
+
+        Customer customer = new Customer();
+        customer.setEmail("customer@email.com");
+        customer.setCreditCardNumber(1234);
+
+        customerRepository.save(customer);
+        sessionRepository.save(session);
+
+        CustomerRegistration customerRegistration = null;
+        try{
+            customerRegistrationService.registerCustomerToSession(session.getId(), customer.getEmail());
+            fail();
+        }catch (GRSException e){
+            assertEquals("Session is already at capacity.", e.getMessage());
+        }
+        assertNull(customerRegistration);
+    }
+
+    
 
 }

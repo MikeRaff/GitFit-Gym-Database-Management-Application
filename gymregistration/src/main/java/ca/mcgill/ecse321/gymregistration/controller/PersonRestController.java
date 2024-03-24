@@ -82,7 +82,7 @@ public class PersonRestController {
     @PutMapping(value = {"/persons/{id}/", "/persons/{id}/"})
     public ResponseEntity<PersonDto>  updatePerson(@PathVariable("id") int id, @RequestBody PersonDto personDto) throws IllegalArgumentException {
         Person toUpdate = personService.getPersonById(id);
-        Person person = personService.updateName(toUpdate.getName(), personDto.getName());
+        Person person = personService.updateName(id, toUpdate.getName(), personDto.getName());
         return new ResponseEntity<>(new PersonDto(person), HttpStatus.OK);
     }
 

@@ -25,7 +25,7 @@ public class PersonService {
      */
     @Transactional 
     public Person createPerson(String name){
-        if(name == null){
+        if(name == null || name.trim().isEmpty()){
             throw new GRSException(HttpStatus.BAD_REQUEST, "Must include name.");
         }
         
@@ -43,13 +43,13 @@ public class PersonService {
      * @throws GRSException if invalid update request
      */
     @Transactional
-    public Person updateName(String oldName, String newName){
-        Person person = personRepository.findPersonByName(oldName);
+    public Person updateName(int id, String oldName, String newName){
+        Person person = personRepository.findPersonById(id);
         if(person == null){
-            throw new GRSException(HttpStatus.BAD_REQUEST, "Person not found");
+            throw new GRSException(HttpStatus.BAD_REQUEST, "Person not found.");
         }
         if(newName == null){
-            throw new GRSException(HttpStatus.BAD_REQUEST, "Invalid name");
+            throw new GRSException(HttpStatus.BAD_REQUEST, "Invalid name.");
         }
 
         person.setName(newName);
