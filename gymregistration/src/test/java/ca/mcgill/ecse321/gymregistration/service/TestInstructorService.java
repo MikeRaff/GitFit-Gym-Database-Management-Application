@@ -114,7 +114,7 @@ public class TestInstructorService {
 
     }
 
-    @Test
+     @Test
     public void testDeleteInstructor() {
         lenient().doAnswer(invocation -> {
             Instructor instructor = invocation.getArgument(0);
@@ -124,9 +124,9 @@ public class TestInstructorService {
         String password = "password";
         Person person = new Person();
         int person_id = person.getId();
-        Instructor instructor = null;
         personRepository.save(person);
-        instructor = instructorService.createInstructor(email, password, person_id);
+        Instructor instructor = new Instructor(email, password, person);
+        instructorRepository.save(instructor);
         instructorService.deleteIntructor(instructor.getId());
         lenient().doReturn(null).when(instructorRepository).findInstructorById(instructor.getId());
         instructor = instructorRepository.findInstructorById(instructor.getId());
