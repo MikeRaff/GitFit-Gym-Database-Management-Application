@@ -1,9 +1,11 @@
 package ca.mcgill.ecse321.gymregistration.service;
 
-import ca.mcgill.ecse321.gymregistration.dao.CustomerRegistrationRepository;
+import ca.mcgill.ecse321.gymregistration.dao.CustomerRepository;
+import ca.mcgill.ecse321.gymregistration.dao.InstructorRepository;
 import ca.mcgill.ecse321.gymregistration.dao.OwnerRepository;
+import ca.mcgill.ecse321.gymregistration.dao.PersonRepository;
 import ca.mcgill.ecse321.gymregistration.model.Owner;
-import ca.mcgill.ecse321.gymregistration.model.Session;
+import ca.mcgill.ecse321.gymregistration.model.Person;
 import ca.mcgill.ecse321.gymregistration.service.exception.GRSException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,66 +19,77 @@ public class OwnerService {
 
     @Autowired
     OwnerRepository ownerRepository;
+    @Autowired
+    CustomerRepository customerRepository;
+    @Autowired
+    InstructorRepository instructorRepository;
+    @Autowired
+    PersonRepository personRepository;
+
     /**
-     * CreateOwner: creating a owner
+     * CreateOwner: creating an owner
      * @param email: Email of the owner
      * @param password: Password of the owner
+     * @param person_id: iD of the person
      * @return The created owner
-     * @throws GRSException Invalid creation request
+     * @throws GRSException Invalid owner creation request
      */
     @Transactional
-    public Owner createOwner(String email, String password){
-        if (email == null || password == null){
-            throw new GRSException(HttpStatus.BAD_REQUEST, "Must include email and password.");
+    public Owner createOwner(String email, String password, int person_id){
+        if (email == null || password == null || !email.contains("@")) {
+            throw new GRSException(HttpStatus.BAD_REQUEST, "Must include valid email and password.");
         }
-        if(ownerRepository.findOwnerByEmail(email) != null){
+        if(ownerRepository.findOwnerByEmail(email) != null || instructorRepository.findInstructorByEmail(email) != null || customerRepository.findCustomerByEmail(email) != null) {
             throw new GRSException(HttpStatus.CONFLICT, "User with email already exists.");
+        }
+        Person person = personRepository.findPersonById(person_id);
+        if (person == null){
+            throw new GRSException(HttpStatus.NOT_FOUND, "Person not found.");
         }
         Owner owner = new Owner();
         owner.setEmail(email);
         owner.setPassword(password);
+        owner.setPerson(person);
         return ownerRepository.save(owner);
     }
 
     /**
      * UpdateEmail: Allow users to edit their email information
-     * @param oldEmail: old email of customer
-     * @param newEmail: new email of customer
-     * @return The new customer
-     * @throws GRSException Customer not found or invalid email
+     * @param oldEmail: Old email of owner
+     * @param password: Password of owner
+     * @param newEmail: New email of owner
+     * @return The new owner
+     * @throws GRSException Owner not found, invalid email and password combination, or invalid new email
      */
     @Transactional
-    public Owner updateEmail(String oldEmail, String newEmail){
-        Owner owner = ownerRepository.findOwnerByEmail(oldEmail);
-        if (owner == null){
-            throw new GRSException(HttpStatus.NOT_FOUND, "Customer not found.");
+    public Owner updateEmail(String oldEmail, String password, String newEmail){
+        Owner owner = ownerRepository.findOwnerByEmailAndPassword(oldEmail, password);
+        if (owner == null) {
+            throw new GRSException(HttpStatus.NOT_FOUND, "Owner not found, invalid email and password combination.");
         }
-        if (newEmail == null){
-            throw new GRSException(HttpStatus.BAD_REQUEST, "Invalid email.");
+        if (newEmail == null || !newEmail.contains("@")) {
+            throw new GRSException(HttpStatus.BAD_REQUEST, "Invalid new email.");
         }
         owner.setEmail(newEmail);
         return ownerRepository.save(owner);
     }
 
     /**
-     * UpdateEmail: Allow users to edit their email information
-     * @param email: email of owner
-     * @param oldPassword: old password of owner
-     * @param newPassword: new password of owner
+     * UpdatePassword: Allow users to edit their password information
+     * @param email: Email of owner
+     * @param oldPassword: Old password of owner
+     * @param newPassword: New password of owner
      * @return The new owner
-     * @throws GRSException Owner not found or invalid password
+     * @throws GRSException Owner not found, invalid email and password combination, or invalid new password
      */
     @Transactional
     public Owner updatePassword(String email, String oldPassword, String newPassword){
-        Owner owner = ownerRepository.findOwnerByEmail(email);
+        Owner owner = ownerRepository.findOwnerByEmailAndPassword(email, oldPassword);
         if (owner == null){
-            throw new GRSException(HttpStatus.NOT_FOUND, "Owner not found.");
+            throw new GRSException(HttpStatus.NOT_FOUND, "Owner not found, invalid email and password combination.");
         }
         if (newPassword == null){
             throw new GRSException(HttpStatus.BAD_REQUEST, "Invalid new password.");
-        }
-        if (oldPassword != owner.getPassword()){
-            throw new GRSException(HttpStatus.BAD_REQUEST, "Incorrect current password.");
         }
         owner.setPassword(newPassword);
         return ownerRepository.save(owner);
@@ -135,7 +148,7 @@ public class OwnerService {
     public Owner loginOwner(String email, String password){
         Owner owner = ownerRepository.findOwnerByEmailAndPassword(email, password);
         if (owner == null) {
-            throw new GRSException(HttpStatus.UNAUTHORIZED, "Invalid email or password");
+            throw new GRSException(HttpStatus.UNAUTHORIZED, "Invalid email or password.");
         }
         return owner;
     }

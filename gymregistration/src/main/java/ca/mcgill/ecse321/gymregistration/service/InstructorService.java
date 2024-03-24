@@ -1,89 +1,98 @@
 package ca.mcgill.ecse321.gymregistration.service;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Service;
-
+import ca.mcgill.ecse321.gymregistration.dao.CustomerRepository;
 import ca.mcgill.ecse321.gymregistration.dao.InstructorRepository;
+import ca.mcgill.ecse321.gymregistration.dao.OwnerRepository;
 import ca.mcgill.ecse321.gymregistration.dao.PersonRepository;
 import ca.mcgill.ecse321.gymregistration.model.Instructor;
 import ca.mcgill.ecse321.gymregistration.model.Person;
 import ca.mcgill.ecse321.gymregistration.service.exception.GRSException;
 import jakarta.transaction.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class InstructorService {
+
     @Autowired
     InstructorRepository instructorRepository;
+    @Autowired
+    CustomerRepository customerRepository;
+    @Autowired
+    OwnerRepository ownerRepository;
     @Autowired
     PersonRepository personRepository;
 
     /**
-     * 
-     * @param email
-     * @param password
-     * @param person_id
-     * @throws GRSException missing information, instructor already exists, no
-     *                      person found
-     * @return instructor, the created object
+     * CreateInstructor: creating an instructor
+     * @param email: Email of the instructor
+     * @param password: Password of the instructor
+     * @param person_id: iD of the person
+     * @return The created instructor
+     * @throws GRSException Invalid instructor creation request
      */
     @Transactional
     public Instructor createInstructor(String email, String password, int person_id) {
         if (email == null || password == null || !email.contains("@")) {
-            throw new GRSException(HttpStatus.BAD_REQUEST, "Invalid Email or Password");
+            throw new GRSException(HttpStatus.BAD_REQUEST, "Must include valid email and password.");
         }
-        Instructor instructor = instructorRepository.findInstructorByEmail(email);
-        if (instructor != null)
-            throw new GRSException(HttpStatus.BAD_REQUEST, "Email Already in use");
-
+        if (instructorRepository.findInstructorByEmail(email) != null || ownerRepository.findOwnerByEmail(email) != null || customerRepository.findCustomerByEmail(email) != null) {
+            throw new GRSException(HttpStatus.CONFLICT, "User with email already exists.");
+        }
         Person person = personRepository.findPersonById(person_id);
-        if (person == null)
-            throw new GRSException(HttpStatus.NOT_FOUND, "Person not found");
-
-        instructor = new Instructor(email, password, person);
-
-        instructor = instructorRepository.save(instructor);
-
-        return instructor;
+        if (person == null){
+            throw new GRSException(HttpStatus.NOT_FOUND, "Person not found.");
+        }
+        Instructor instructor = new Instructor();
+        instructor.setEmail(email);
+        instructor.setPassword(password);
+        instructor.setPerson(person);
+        return instructorRepository.save(instructor);
     }
 
     /**
-     * update the email or password of an instructor
-     * 
-     * @param id
-     * @param email
-     * @param password
-     * @throws GRSException instructor not found
-     * @return
+     * UpdateEmail: Allow users to edit their email information
+     * @param oldEmail: Old email of instructor
+     * @param password: Password of instructor
+     * @param newEmail: New email of instructor
+     * @return The new instructor
+     * @throws GRSException Instructor not found, invalid email and password combination, or invalid new email
      */
     @Transactional
-    public Instructor updateInstructorEmail(int id, String email) {
-        Instructor instructor = instructorRepository.findInstructorById(id);
-        if (instructor == null)
-            throw new GRSException(HttpStatus.NOT_FOUND, "Instructor not found");
-        if (email == null || !email.contains("@")) {
-            throw new GRSException(HttpStatus.BAD_REQUEST, "Invalid Email");
+    public Instructor updateEmail(String oldEmail, String password, String newEmail) {
+        Instructor instructor = instructorRepository.findInstructorByEmailAndPassword(oldEmail, password);
+        if (instructor == null) {
+            throw new GRSException(HttpStatus.NOT_FOUND, "Instructor not found, invalid email and password combination.");
         }
-        instructor.setEmail(email);
-       
-        instructorRepository.save(instructor);
-        return instructor;
+            if (newEmail == null || !newEmail.contains("@")) {
+            throw new GRSException(HttpStatus.BAD_REQUEST, "Invalid new email.");
+        }
+        instructor.setEmail(newEmail);       
+        return instructorRepository.save(instructor);
     }
 
-    public Instructor updateInstructorPassword(int id, String password) {
-        Instructor instructor = instructorRepository.findInstructorById(id);
+    /**
+     * UpdatePassword: Allow users to edit their password information
+     * @param email: Email of instructor
+     * @param oldPassword: Old password of instructor
+     * @param newPassword: New password of instructor
+     * @return The new instructor
+     * @throws GRSException Instructor not found, invalid email and password combination, or invalid new password
+     */
+    public Instructor updatePassword(String email, String oldPassword, String newPassword) {
+        Instructor instructor = instructorRepository.findInstructorByEmailAndPassword(email, oldPassword);
         if (instructor == null)
-            throw new GRSException(HttpStatus.NOT_FOUND, "Instructor not found");
-        if ( password == null) {
-            throw new GRSException(HttpStatus.BAD_REQUEST, "Invalid Password");
+            throw new GRSException(HttpStatus.NOT_FOUND, "Instructor not found, invalid email and password combination.");
+        if (newPassword == null) {
+            throw new GRSException(HttpStatus.BAD_REQUEST, "Invalid new password.");
         }
-       
-        instructor.setPassword(password);
-        instructorRepository.save(instructor);
-        return instructor;
+        instructor.setPassword(newPassword);
+        return instructorRepository.save(instructor);
     }
+
     /**
      * Finds a desired instructor
      * 
