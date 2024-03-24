@@ -17,6 +17,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import ca.mcgill.ecse321.gymregistration.dao.OwnerRepository;
+import ca.mcgill.ecse321.gymregistration.dao.PersonRepository;
 import ca.mcgill.ecse321.gymregistration.model.Owner;
 import ca.mcgill.ecse321.gymregistration.model.Person;
 import ca.mcgill.ecse321.gymregistration.service.exception.GRSException;
@@ -26,7 +27,10 @@ import ca.mcgill.ecse321.gymregistration.service.exception.GRSException;
 public class TestOwnerService {
 
     @Mock
-    OwnerRepository ownerRepository;
+    private OwnerRepository ownerRepository;
+
+    @Mock
+    private PersonRepository personRepository;
 
     @InjectMocks
     private OwnerService ownerService = new OwnerService();
@@ -70,15 +74,21 @@ public class TestOwnerService {
         lenient().when(ownerRepository.save(any(Owner.class))).thenAnswer((InvocationOnMock invocation) -> {
             return invocation.getArgument(0); // Return the saved object
         });
+        lenient().when(personRepository.save(any(Person.class))).thenAnswer((InvocationOnMock invocation) -> {
+            return invocation.getArgument(0); // Return the saved object
+        });
     }
 
     @Test
     public void testCreateOwner() {
         String email = "Email@email.com";
         String password = "password";
+        Person person = new Person();
+        int person_id = person.getId();
         Owner owner = null;
+        personRepository.save(person);
         try {
-            owner = ownerService.createOwner(email, password);
+            owner = ownerService.createOwner(email, password, person_id);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -90,11 +100,13 @@ public class TestOwnerService {
     @Test
     public void testUpdateEmail() {
         String email = "example@email.com";
+        String password = "password";
         String newEmail = "NewEmail@email.com";
         Owner owner = new Owner();
         owner.setEmail(email);
+        owner.setPassword(password);
         ownerRepository.save(owner);
-        owner = ownerService.updateEmail(email, newEmail);
+        owner = ownerService.updateEmail(email, password, newEmail);
         assertEquals(newEmail, owner.getEmail());
     }
 
@@ -102,15 +114,16 @@ public class TestOwnerService {
     public void testUpdateInvalidEmail()
     {
         String email = "example@email.com";
+        String password = "password";
         Owner owner = new Owner();
         owner.setEmail(email);
         ownerRepository.save(owner);
         try{
-            ownerService.updateEmail(email, null);
+            ownerService.updateEmail(email, password, null);
         }
         catch(GRSException e)
         {
-            assertEquals("Invalid email.", e.getMessage());
+            assertEquals("Invalid new email.", e.getMessage());
         }
     }
 
@@ -147,7 +160,7 @@ public class TestOwnerService {
             }
             catch(GRSException e)
             {
-            assertEquals("Owner not found.", e.getMessage());
+            assertEquals("Owner not found, invalid email and password combination.", e.getMessage());
             }
         
     }
@@ -164,14 +177,14 @@ public class TestOwnerService {
     }
 
     @Test
-    public void testDeleteowner() {
+    public void testDeleteOwner() {
         lenient().doAnswer(invocation -> {
             Owner owner = invocation.getArgument(0);
             return null; // Simulate successful deletion
         }).when(ownerRepository).delete(any(Owner.class));
         Owner owner = new Owner(EMAIL, PASSWORD, new Person());
         ownerRepository.save(owner);
-        ownerService.deleteOwner(owner.getEmail());
+        ownerService.deleteOwner(owner.getEmail(), owner);
         lenient().doReturn(null).when(ownerRepository).findOwnerByEmail(owner.getEmail());
         owner = ownerRepository.findOwnerByEmail(owner.getEmail());
         assertNull(owner);

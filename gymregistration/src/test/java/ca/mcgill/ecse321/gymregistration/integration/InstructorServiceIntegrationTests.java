@@ -1,4 +1,4 @@
-package ca.mcgill.ecse321.gymregistration.Integration;
+package ca.mcgill.ecse321.gymregistration.integration;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -135,7 +135,7 @@ public class InstructorServiceIntegrationTests {
         HttpEntity<InstructorDto> requestEntity = new HttpEntity<>(instructorDto, null);
 
         ResponseEntity<InstructorDto> response = client.exchange(
-                "/update-instructors-e/"+newEmail, // URL with path variables
+                "/instructors/update-instructors-e/"+newEmail, // URL with path variables
                 HttpMethod.PUT, // HTTP method
                 requestEntity,
                 InstructorDto.class);

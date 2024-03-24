@@ -61,7 +61,7 @@ public class OwnerRestController {
      * @return The updated owner
      * @throws IllegalArgumentException
      */
-    @PutMapping(value = {"/owners/{email}", "/owners/{email}/"})
+    @PutMapping(value = {"/owners/update-owners-e/{email}", "/owners/update-owners-e/{email}/"})
     public ResponseEntity<OwnerDto> updateOwner(@PathVariable("email") String email, @RequestBody OwnerDto ownerDto) throws IllegalArgumentException{
         Owner toUpdate = ownerService.getOwnerByEmail(email);
         Owner owner = ownerService.updateEmail(toUpdate.getEmail(), ownerDto.getPassword(), ownerDto.getEmail());
