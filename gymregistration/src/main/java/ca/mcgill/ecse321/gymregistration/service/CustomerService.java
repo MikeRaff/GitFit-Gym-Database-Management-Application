@@ -6,11 +6,13 @@ import ca.mcgill.ecse321.gymregistration.dao.InstructorRepository;
 import ca.mcgill.ecse321.gymregistration.dao.OwnerRepository;
 import ca.mcgill.ecse321.gymregistration.dao.PersonRepository;
 import ca.mcgill.ecse321.gymregistration.model.Customer;
-import ca.mcgill.ecse321.gymregistration.model.CustomerRegistration;
+import ca.mcgill.ecse321.gymregistration.model.GymUser;
+import ca.mcgill.ecse321.gymregistration.model.Instructor;
+import ca.mcgill.ecse321.gymregistration.model.Owner;
 import ca.mcgill.ecse321.gymregistration.model.Person;
-import ca.mcgill.ecse321.gymregistration.model.Session;
 import ca.mcgill.ecse321.gymregistration.service.exception.GRSException;
 import jakarta.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -150,10 +152,14 @@ public class CustomerService {
     /**
      * DeleteCustomer: delete the customer
      * @param email: Email of customer to be deleted
-     * @throws GRSException Customer not found
+     * @param gymUser: The user trying to delete the customer
+     * @throws GRSException Customer not found or the user is not an owner, an instructor, or the customer
      */
     @Transactional
-    public void deleteCustomer(String email){
+    public void deleteCustomer(String email, GymUser gymUser){
+        if((gymUser instanceof Customer) && !gymUser.getEmail().equals(email)){
+            throw new GRSException(HttpStatus.UNAUTHORIZED, "Customers can only be deleted by themselves or by instructors and owners.");
+        }
         Customer customer = customerRepository.findCustomerByEmail(email);
         if(customer == null){
             throw new GRSException(HttpStatus.NOT_FOUND, "Customer not found.");
@@ -164,7 +170,7 @@ public class CustomerService {
     /**
      * LoginCustomer: allow a customer to log in
      * @param email: Email of the customer
-     * @param password: password of the customer
+     * @param password: Password of the customer
      * @return The customer
      * @throws GRSException Invalid customer email or password
      */
@@ -175,27 +181,29 @@ public class CustomerService {
         }
         return customer;
     }
-     /**
-     * registerCustomerForClass: allow a customer to log in
-     * @param session: the session to be reigstered for
+
+    /**
+     * changeAccountType: allow the owner to change a customer's account type
      * @param email: Email of the customer
-     * @param password: password of the customer
-     * @return The customerregistration
-     * @throws GRSException Invalid customer email or password or already registered
+     * @param gymUser: The user trying to change the account type
+     * @return The new instructor
+     * @throws GRSException Invalid customer email or not an owner
      */
-    public  CustomerRegistration registerCustomerForClass(Session session, String email, String password)
-    {
-        Customer customer = customerRepository.findCustomerByEmailAndPassword(email, password);
+    public Instructor changeAccountType(String email, GymUser gymUser) {
+        if (gymUser instanceof Owner == false) {
+            throw new GRSException(HttpStatus.UNAUTHORIZED, "Only owners can change account type.");
+        }
+        Customer customer = customerRepository.findCustomerByEmail(email);
         if (customer == null) {
-            throw new GRSException(HttpStatus.UNAUTHORIZED, "Invalid email or password.");
+            throw new GRSException(HttpStatus.NOT_FOUND, "Customer not found.");
         }
-        CustomerRegistration customerRegistration = customerRegistrationRepository.findCustomerRegistrationByCustomerAndSession(customer, session);
-        if(customerRegistration !=null)
-        {
-            throw new GRSException(HttpStatus.UNAUTHORIZED, "Already registered.");
-        }
-        customerRegistration = new CustomerRegistration(session.getDate(),session, customer);
-        customerRegistrationRepository.save(customerRegistration);
-        return customerRegistration;
+        Person person = customer.getPerson();
+        Instructor instructor = new Instructor();
+        instructor.setEmail(email);
+        instructor.setPassword(customer.getPassword());
+        instructor.setPerson(person);
+        instructorRepository.save(instructor);
+        customerRepository.deleteCustomerByEmail(email);
+        return instructor;
     }
 }

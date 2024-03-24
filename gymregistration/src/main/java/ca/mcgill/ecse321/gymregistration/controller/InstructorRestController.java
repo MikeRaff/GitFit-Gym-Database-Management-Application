@@ -19,26 +19,21 @@ public class InstructorRestController {
     private InstructorService instructorService;
 
     /**
-     * Finds and returns an instructor with a given id
-     * 
-     * @param id
-     * @return Response Entity with the desired Instructor DTO
+     * GetInstructor: getting instructor by email
+     * @param email: Email of instructor
+     * @return Instructor in database
+     * @throws IllegalArgumentException
      */
-    @GetMapping(value = { "/instructors/{id}", "/instructors/{id}/" })
-    public ResponseEntity<InstructorDto> getInstructor(@PathVariable("id") int id) {
-        try {
-            Instructor instructor = instructorService.getInstructorById(id);
-            return new ResponseEntity<InstructorDto>(new InstructorDto(instructor), HttpStatus.OK);
-        } catch (GRSException e) {
-            return new ResponseEntity<InstructorDto>(new InstructorDto(), e.getStatus());
-        }
+    @GetMapping(value = { "/instructors/{email}", "/instructors/{email}/" })
+    public ResponseEntity<InstructorDto> getInstructor(@PathVariable("email") String email) throws IllegalArgumentException {
+        Instructor instructor = instructorService.getInstructorByEmail(email);
+        return new ResponseEntity<InstructorDto>(new InstructorDto(instructor), HttpStatus.OK);
 
     }
 
     /**
-     * Finds and returns all instructors in the databse
-     * 
-     * @return
+     * GetAllInstructors: getting all instructors by email
+     * @return All instructors in database
      */
     @GetMapping(value = { "/instructors", "/instructors/" })
     public List<InstructorDto> getAllInstructors() {
@@ -46,75 +41,47 @@ public class InstructorRestController {
     }
 
     /**
-     * Creates and returns a new instructor
-     * 
-     * @param instructorDto
-     * @return
+     * CreateInstructor: creating an instructor
+     * @param instructorDto : instructor dto to be created
+     * @return Instructor in system
      * @throws IllegalArgumentException
      */
     @PostMapping(value = { "/instructors/create", "/instructors/create/" })
-    public ResponseEntity<InstructorDto> createInstructor(@RequestBody InstructorDto instructorDto)
-            throws IllegalArgumentException {
-        try {
-            Instructor instructor = instructorService.createInstructor(instructorDto.getEmail(),
-                    instructorDto.getPassword(), instructorDto.getPerson().getId());
-            return new ResponseEntity<InstructorDto>(new InstructorDto(instructor), HttpStatus.CREATED);
-        } catch (GRSException e) {
-            return new ResponseEntity<InstructorDto>(new InstructorDto(), e.getStatus());
-        }
+    public ResponseEntity<InstructorDto> createInstructor(@RequestBody InstructorDto instructorDto) throws IllegalArgumentException {
+        Instructor instructor = instructorService.createInstructor(instructorDto.getEmail(), instructorDto.getPassword(), instructorDto.getPerson().getId());
+        return new ResponseEntity<InstructorDto>(new InstructorDto(instructor), HttpStatus.CREATED);
     }
 
     /**
-     * Updates and returns an instructor
-     * 
-     * @param id
-     * @param email
-     * @param password
-     * @return the instructor after it
+     * UpdateInstructor: updating an existing instructor
+     * @param email: name of instructor to update
+     * @param instructorDto : instructor dto to be updated
+     * @return The updated instructor
      * @throws IllegalArgumentException
      */
-    @PutMapping(value = { "/update-instructors-e/{id}/{email}",
-            "/update-instructors-e/{id}/{email}/" })
-    public ResponseEntity<InstructorDto> updateInstructorEmail(@PathVariable("id") int id,
-            @PathVariable("email") String email)
-            throws IllegalArgumentException {
-        try {
-            Instructor instructor = instructorService.updateInstructorEmail(id, email);
-            return new ResponseEntity<InstructorDto>(new InstructorDto(instructor), HttpStatus.OK);
-        } catch (GRSException e) {
-            return new ResponseEntity<InstructorDto>(new InstructorDto(), e.getStatus());
-        }
+    @PutMapping(value = { "/instructors/{email}", "/instructors/{email}/" })
+    public ResponseEntity<InstructorDto> updateInstructor(@PathVariable("email") String email, @RequestBody InstructorDto instructorDto) throws IllegalArgumentException {
+        Instructor toUpdate = instructorService.getInstructorByEmail(email);    
+        Instructor instructor = instructorService.updateEmail(toUpdate.getEmail(), instructorDto.getPassword(), instructorDto.getEmail());
+        instructor = instructorService.updatePassword(instructor.getEmail(), toUpdate.getPassword(), instructorDto.getPassword());
+        return new ResponseEntity<InstructorDto>(new InstructorDto(instructor), HttpStatus.OK);
     }
 
-    @PutMapping(value = { "/update-instructors-p/{id}/{password}",
-            "/update-instructors-p/{id}/{password}/" })
-    public ResponseEntity<InstructorDto> updateInstructorPassword(@PathVariable("id") int id, @PathVariable("password") String password)
-            throws IllegalArgumentException {
-        try {
-            Instructor instructor = instructorService.updateInstructorPassword(id, password);
-            return new ResponseEntity<InstructorDto>(new InstructorDto(instructor), HttpStatus.OK);
-        } catch (GRSException e) {
-            return new ResponseEntity<InstructorDto>(new InstructorDto(), e.getStatus());
-        }
-    }
-
-    @DeleteMapping(value = { "/instructors/delete/{id}", "/instructors/delete/{id}/" })
-    public ResponseEntity<InstructorDto> deleteInstructor(@PathVariable("id") int id) throws IllegalArgumentException {
-        try {
-            instructorService.deleteIntructor(id);
-            return new ResponseEntity<InstructorDto>(new InstructorDto(), HttpStatus.OK);
-        } catch (GRSException e) {
-            return new ResponseEntity<InstructorDto>(new InstructorDto(), e.getStatus());
-        }
-
+    /**
+     * DeleteInstructor: deleting an existing instructor
+     * @param email: email of instructor to delete
+     * @throws IllegalArgumentException
+     */
+    @DeleteMapping(value = { "/instructors/delete/{email}", "/instructors/delete/{email}/" })
+    public void deleteInstructor(@PathVariable("email") String email) throws IllegalArgumentException {
+        instructorService.deleteIntructor(email);
     }
 
     @GetMapping(value = { "/instructor/log-in/{email}/{password}", "/instructor/log-in/{email}/{password}/" })
-    public ResponseEntity<InstructorDto> logInInstructor(@PathVariable("email") String email,
-            @PathVariable("password") String password) throws IllegalArgumentException {
+    public ResponseEntity<InstructorDto> logInInstructor(@PathVariable("email") String email, @PathVariable("password") String password) throws IllegalArgumentException {
         Instructor instructor;
         try {
-            instructor = instructorService.logInInstructor(email, password);
+            instructor = instructorService.loginInstructor(email, password);
             return new ResponseEntity<InstructorDto>(new InstructorDto(instructor), HttpStatus.OK);
         } catch (GRSException e) {
             return new ResponseEntity<InstructorDto>(new InstructorDto(), e.getStatus());

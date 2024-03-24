@@ -32,12 +32,17 @@ public class SessionService {
      * @param description: a textual description of the class
      * @param name: the name of this specific class
      * @param location: where this class is being taught
+     * @param capacity: the maximum number of people that can attend this class
+     * @param gymUser: the user creating the session
      * @return the created session
      * @throws GRSException Invalid creation request
      */
     @Transactional
-    public Session createSession(Date date, Time startTime, Time endTime, String description, String name, String location, ClassType classType, int capacity)
+    public Session createSession(Date date, Time startTime, Time endTime, String description, String name, String location, ClassType classType, int capacity, GymUser gymUser)
     {
+        if(gymUser instanceof Customer) {
+            throw new GRSException(HttpStatus.UNAUTHORIZED, "Customers are not allowed to create sessions.");
+        }
         if(sessionRepository.findSessionByStartTimeAndDate(startTime, date)!=null){
             throw new GRSException(HttpStatus.BAD_REQUEST, "Time not available.");
         }
@@ -62,21 +67,25 @@ public class SessionService {
         return session;
     }
 
-    @Transactional
-    //POSSIBLY NEED TO ADD FUNCTIONALITY TO PREVENT ANYONE FROM ALTERING IT
+
     /**
      * Update Existing Session
      * @param oldSessionId: Session to be updated
      * @param newSession: New session to be changed to 
+     * @param gymUser: the user updating the session
      * @return the new updated Session
-     * @throws GRSException Session Empty
+     * @throws GRSException Invalid session update request
      **/
-    public Session updateSession(int oldSessionId, Session newSession){
+    @Transactional
+     public Session updateSession(int oldSessionId, Session newSession, GymUser gymUser){
         if(sessionRepository.findSessionById(oldSessionId) == null){
             throw new GRSException(HttpStatus.CONFLICT, "Session with id does not exist.");
         }
         if(newSession == null || newSession.getDate() == null || newSession.getStartTime() == null || newSession.getEndTime() == null || newSession.getDescription() == null || newSession.getName() == null || newSession.getLocation() == null || newSession.getClassType() == null){
             throw new GRSException(HttpStatus.BAD_REQUEST, "Missing information.");
+        }
+        if(gymUser instanceof Owner == false && instructorRegistrationRepository.findInstructorRegistrationByInstructor_idAndSession_id(gymUser.getId(), oldSessionId) == null) {
+            throw new GRSException(HttpStatus.UNAUTHORIZED, "User does not have access to update session.");
         }
         if(!newSession.getClassType().getIsApproved()){
             throw new GRSException(HttpStatus.BAD_REQUEST, "Class must be approved.");
@@ -102,14 +111,14 @@ public class SessionService {
         return toUpdate;
     }
 
-    @Transactional
     /**
-     * find session by a specific ID
-     * @param id
-     * @return the found session
-     * @throws GRSException session not found
+     * GetSessionById: Get a session by its id
+     * @param id: Id of the session to be found
+     * @return The session with the given id
+     * @throws GRSException Session not found
      */
-    public Session getSessionById(int id){
+    @Transactional
+     public Session getSessionById(int id){
         Session session = sessionRepository.findSessionById(id);
         if (session == null){
             throw new GRSException(HttpStatus.NOT_FOUND, "Session not found.");
@@ -117,13 +126,13 @@ public class SessionService {
         return session;
     }
 
-    @Transactional
     /**
-     * find all sessions
-     * @return a list of all the sessions
-     *  @throws GRSException session not found
+     * GetAllSessions: Get all sessions in the system
+     * @return A list of all the sessions
+     * @throws GRSException No sessions found
      */
-    public List<Session> getAllSessions(){
+    @Transactional
+     public List<Session> getAllSessions(){
         List<Session> sessions = sessionRepository.findAll();
         if(sessions.size() == 0){
             throw new GRSException(HttpStatus.NOT_FOUND, "No Sessions found in the system.");
@@ -131,13 +140,13 @@ public class SessionService {
         return sessions;
     }
 
-    @Transactional
     /**
-     * Delete a session
-     * @param id
-     * @return none
-     * @throws GRSException session not found
+     * DeleteSession: Delete a session by its id
+     * @param id: Id of the session to be deleted
+     * @param gymUser: The user deleting the session
+     * @throws GRSException Session not found, Unauthorized user
      */
+    @Transactional
     public void deleteSession(int id, GymUser gymUser){
         if(gymUser instanceof Customer){
             throw new GRSException(HttpStatus.UNAUTHORIZED, "Customers can not delete sessions.");

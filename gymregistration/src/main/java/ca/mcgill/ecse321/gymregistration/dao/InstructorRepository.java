@@ -11,4 +11,5 @@ public interface InstructorRepository extends CrudRepository<Instructor, Integer
     Instructor findInstructorByEmail(String email);
     List<Instructor> findAll();
     Instructor findInstructorByEmailAndPassword(String email, String password);
+    void deleteInstructorByEmail(String email);
 }

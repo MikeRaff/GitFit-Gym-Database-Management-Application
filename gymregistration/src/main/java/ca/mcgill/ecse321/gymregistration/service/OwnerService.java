@@ -4,6 +4,7 @@ import ca.mcgill.ecse321.gymregistration.dao.CustomerRepository;
 import ca.mcgill.ecse321.gymregistration.dao.InstructorRepository;
 import ca.mcgill.ecse321.gymregistration.dao.OwnerRepository;
 import ca.mcgill.ecse321.gymregistration.dao.PersonRepository;
+import ca.mcgill.ecse321.gymregistration.model.GymUser;
 import ca.mcgill.ecse321.gymregistration.model.Owner;
 import ca.mcgill.ecse321.gymregistration.model.Person;
 import ca.mcgill.ecse321.gymregistration.service.exception.GRSException;
@@ -127,10 +128,14 @@ public class OwnerService {
     /**
      * DeleteOwner: delete the owner
      * @param email: Email of owner to be deleted
-     * @throws GRSException owner not found
+     * @param gymUser: The user deleting the owner
+     * @throws GRSException owner not found or user is not an owner
      */
     @Transactional
-    public void deleteOwner(String email){
+    public void deleteOwner(String email, GymUser gymUser){
+        if(!(gymUser instanceof Owner)) {
+            throw new GRSException(HttpStatus.UNAUTHORIZED, "User is not an owner.");
+        }
         Owner owner = ownerRepository.findOwnerByEmail(email);
         if(owner == null){
             throw new GRSException(HttpStatus.NOT_FOUND, "Owner not found.");
@@ -141,7 +146,7 @@ public class OwnerService {
     /**
      * LoginOwner: allow an owner to log in
      * @param email: Email of the owner
-     * @param password: password of the owner
+     * @param password: Password of the owner
      * @return The owner
      * @throws GRSException Invalid owner email or password
      */
@@ -152,5 +157,4 @@ public class OwnerService {
         }
         return owner;
     }
-   
 }

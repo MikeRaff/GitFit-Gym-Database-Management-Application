@@ -23,23 +23,27 @@ import jakarta.transaction.Transactional;
 public class InstructorRegistrationService {
 
     @Autowired
-    private InstructorRepository instructorRepository;
+    InstructorRepository instructorRepository;
     @Autowired
-    private SessionRepository sessionRepository;
+    SessionRepository sessionRepository;
     @Autowired
-    private InstructorRegistrationRepository instructorRegistrationRepository;
+    InstructorRegistrationRepository instructorRegistrationRepository;
     @Autowired
-    private OwnerRepository ownerRepository;
+    OwnerRepository ownerRepository;
 
     /**
-     * Create a new instructor registeration to add an instructor to a class
-     * 
-     * @param sessionid
-     * @param instructorid
-     * @return new registration
+     * RegisterInstuctorForClass: Register an instructor for a class
+     * @param sessionId: Id of the session
+     * @param instructorId: Id of the instructor
+     * @param gymUser: The user registering the instructor
+     * @return The new registration
      * @throws GRSException Invalid email or already registered
      */
-    public InstructorRegistration registerInstructorForClass(int sessionId, int instructorId) {
+    @Transactional
+    public InstructorRegistration registerInstructorForClass(int sessionId, int instructorId, GymUser gymUser) {
+        if(!(gymUser instanceof Owner) && gymUser.getId() != instructorId) {
+            throw new GRSException(HttpStatus.UNAUTHORIZED, "Instructors can only be assigned by themselves or by the owner.");
+        }
         Instructor instructor = instructorRepository.findInstructorById(instructorId);
         Session session = sessionRepository.findSessionById(sessionId);
         if (instructor == null) {
@@ -110,6 +114,7 @@ public class InstructorRegistrationService {
 
         return instructorRegistration;
     }
+
 
     public InstructorRegistration getInstructorRegistrationById(int id) {
         InstructorRegistration instructorRegistration = instructorRegistrationRepository
