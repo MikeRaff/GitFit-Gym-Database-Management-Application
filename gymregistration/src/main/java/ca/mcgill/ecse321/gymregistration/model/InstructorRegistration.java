@@ -38,7 +38,13 @@ public class InstructorRegistration
     this.session = session;
   }
 
-  //------------------------
+    public InstructorRegistration(InstructorRegistration instructorRegistration) {
+      this.date = instructorRegistration.getDate();
+      this.instructor = instructorRegistration.getInstructor();
+      this.session = instructorRegistration.getSession();
+    }
+
+    //------------------------
   // INTERFACE
   //------------------------
 

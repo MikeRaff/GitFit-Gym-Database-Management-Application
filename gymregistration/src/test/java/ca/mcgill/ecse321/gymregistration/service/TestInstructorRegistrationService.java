@@ -44,7 +44,7 @@ public class TestInstructorRegistrationService {
 
     private static final Session SESSION = new Session();
 
-    private static final int SESSION_ID = SESSION.getId();
+    private static final int SESSION_ID = 123;
 
     @BeforeEach
     public void setMockOutput() {
@@ -129,7 +129,7 @@ public class TestInstructorRegistrationService {
                         anyInt()))
                 .thenReturn(null);
         InstructorRegistration instructorRegistration = instructorRegistrationService
-                .registerInstructorForClass(session.getId(), instructor.getId());
+                .registerInstructorForClass(session.getId(), instructor.getEmail(), instructor);
         assertNotNull(instructorRegistration);
         assertEquals(session.getId(), instructorRegistration.getSession().getId());
         assertEquals(instructor.getId(), instructorRegistration.getInstructor().getId());
@@ -147,12 +147,12 @@ public class TestInstructorRegistrationService {
                         anyInt()))
                 .thenReturn(null);
         InstructorRegistration instructorRegistration = instructorRegistrationService
-                .registerInstructorForClass(session.getId(), instructor.getId());
+                .registerInstructorForClass(session.getId(), instructor.getEmail(), instructor);
         try {
             instructorRegistrationService.removeInstructorFromClass(instructorRegistration.getSession().getId(),
-                    instructorRegistration.getInstructor().getId().intValue(),instructorRegistration.getInstructor().getId().intValue());
+                    instructorRegistration.getInstructor().getEmail(),instructorRegistration.getInstructor());
         } catch (GRSException e) {
-            assertEquals(e.getMessage(), "not enough instructors registered");
+            assertEquals(e.getMessage(), "Not enough instructors registered.");
         }
 
     }
@@ -165,9 +165,9 @@ public class TestInstructorRegistrationService {
         instructor = instructorRepository.save(instructor);
         session = sessionRepository.save(session);
         InstructorRegistration instructorRegistration = new InstructorRegistration(null, instructor, session);
-        instructorRegistration = instructorRegistrationRepository.save(instructorRegistration);
+        instructorRegistrationRepository.save(instructorRegistration);
         InstructorRegistration newInstructorRegistration = instructorRegistrationService
-                .getInstructorRegistration(instructor.getId(), session.getId());
+                .getInstructorRegistrationByInstructorAndSession(session.getId(), instructor.getEmail());
         assertNotNull(newInstructorRegistration);
 
     };
@@ -178,19 +178,19 @@ public class TestInstructorRegistrationService {
         Instructor instructor = new Instructor();
 
         try {
-            instructorRegistrationService.registerInstructorForClass(1000, 1000);
+            instructorRegistrationService.registerInstructorForClass(123, "invalidemail@gmail.com", instructor);
         } catch (GRSException e) {
             assertEquals("Instructor not found", e.getMessage());
         }
         instructor = instructorRepository.save(instructor);
         try {
-            instructorRegistrationService.registerInstructorForClass(1000, instructor.getId());
+            instructorRegistrationService.registerInstructorForClass(1000, "validemail@gmail.com", instructor);
         } catch (GRSException e) {
             assertEquals("Session not found", e.getMessage());
         }
 
         try {
-            instructorRegistrationService.registerInstructorForClass(session.getId(), instructor.getId());
+            instructorRegistrationService.registerInstructorForClass(session.getId(), instructor.getEmail(), instructor);
         } catch (GRSException e) {
             assertEquals("already registered", e.getMessage());
         }
