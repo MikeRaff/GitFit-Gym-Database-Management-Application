@@ -1,5 +1,6 @@
 package ca.mcgill.ecse321.gymregistration.controller;
 import ca.mcgill.ecse321.gymregistration.dto.SessionDto;
+import ca.mcgill.ecse321.gymregistration.model.GymUser;
 import ca.mcgill.ecse321.gymregistration.model.Session;
 import ca.mcgill.ecse321.gymregistration.service.SessionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,8 +67,8 @@ public class SessionRestController {
      * @throws IllegalArgumentException
      */
     @DeleteMapping(value = {"/sessions/delete/{id}", "/sessions/delete/{id}/"})
-    public void deleteSession(@PathVariable("id") int id) throws IllegalArgumentException{
-        sessionService.deleteSession(id);
+    public void deleteSession(@PathVariable("id") int id, @RequestBody GymUser gymUser) throws IllegalArgumentException{
+        sessionService.deleteSession(id, gymUser);
     }
 }
 
