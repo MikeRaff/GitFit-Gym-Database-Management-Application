@@ -2,6 +2,7 @@ package ca.mcgill.ecse321.gymregistration.service;
 
 import java.util.List;
 
+import ca.mcgill.ecse321.gymregistration.dto.InstructorRegistrationDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 
@@ -160,5 +161,24 @@ public class InstructorRegistrationService {
             throw new GRSException(HttpStatus.BAD_REQUEST, "No registrations found in the system.");
         }
         return registrations;
+    }
+
+    /**
+     * UpdateInstructorRegistration: updating the instructor registration
+     * @param oldId : old id of instructor registration
+     * @param instructorRegistrationDto: new instructor registration
+     * @return updated instructor registration
+     */
+    @Transactional
+    public InstructorRegistration updateInstructorRegistration(int oldId, InstructorRegistrationDto instructorRegistrationDto) {
+        InstructorRegistration instructorRegistration = instructorRegistrationRepository.findInstructorRegistrationById(oldId);
+        if (instructorRegistration == null){
+            throw new GRSException(HttpStatus.NOT_FOUND, "Instructor Registration not found.");
+        }
+        instructorRegistration.setId(instructorRegistrationDto.getId());
+        instructorRegistration.setInstructor(instructorRegistrationDto.getInstructor());
+        instructorRegistration.setSession(instructorRegistrationDto.getSession());
+        instructorRegistration.setDate(instructorRegistrationDto.getDate());
+        return instructorRegistrationRepository.save(instructorRegistration);
     }
 }
