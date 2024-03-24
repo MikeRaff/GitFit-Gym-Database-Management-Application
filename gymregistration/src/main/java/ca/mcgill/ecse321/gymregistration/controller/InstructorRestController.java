@@ -69,7 +69,7 @@ public class InstructorRestController {
      * @return The updated instructor
      * @throws IllegalArgumentException
      */
-    @PutMapping(value = { "/update-instructors-e/{email}", "//update-instructors-e/{email}" })
+    @PutMapping(value = { "/instructors/update-instructors-e/{email}", "/instructors/update-instructors-e/{email}" })
     public ResponseEntity<InstructorDto> updateInstructor(@PathVariable("email") String email, @RequestBody InstructorDto instructorDto) throws IllegalArgumentException {
     
         Instructor toUpdate = instructorService.getInstructorByEmail(instructorDto.getEmail());  
