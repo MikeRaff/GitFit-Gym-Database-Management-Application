@@ -4,8 +4,10 @@ import ca.mcgill.ecse321.gymregistration.dao.CustomerRegistrationRepository;
 import ca.mcgill.ecse321.gymregistration.dao.CustomerRepository;
 import ca.mcgill.ecse321.gymregistration.dao.InstructorRepository;
 import ca.mcgill.ecse321.gymregistration.dao.OwnerRepository;
+import ca.mcgill.ecse321.gymregistration.dao.PersonRepository;
 import ca.mcgill.ecse321.gymregistration.model.Customer;
 import ca.mcgill.ecse321.gymregistration.model.CustomerRegistration;
+import ca.mcgill.ecse321.gymregistration.model.Person;
 import ca.mcgill.ecse321.gymregistration.model.Session;
 import ca.mcgill.ecse321.gymregistration.service.exception.GRSException;
 import jakarta.transaction.Transactional;
@@ -25,41 +27,50 @@ public class CustomerService {
     @Autowired
     InstructorRepository instructorRepository;
     @Autowired
+    PersonRepository personRepository;
+    @Autowired
     CustomerRegistrationRepository customerRegistrationRepository;
 
     /**
      * CreateCustomer: creating a customer
      * @param email: Email of the customer
      * @param password: Password of the customer
+     * @param person_id: iD of the person
      * @return The created customer
-     * @throws GRSException Invalid creation request
+     * @throws GRSException Invalid customer creation request
      */
     @Transactional
-    public Customer createCustomer(String email, String password){
-        if (email == null || password == null){
-            throw new GRSException(HttpStatus.BAD_REQUEST, "Must include email and password.");
+    public Customer createCustomer(String email, String password, int person_id){
+        if (email == null || password == null || !email.contains("@")) {
+            throw new GRSException(HttpStatus.BAD_REQUEST, "Must include valid email and password.");
         }
         if(customerRepository.findCustomerByEmail(email) != null || ownerRepository.findOwnerByEmail(email) != null || instructorRepository.findInstructorByEmail(email) != null){
             throw new GRSException(HttpStatus.CONFLICT, "User with email already exists.");
         }
+        Person person = personRepository.findPersonById(person_id);
+        if (person == null) {
+            throw new GRSException(HttpStatus.NOT_FOUND, "Person not found.");
+        }
         Customer customer = new Customer();
         customer.setEmail(email);
         customer.setPassword(password);
+        customer.setPerson(person);
         return customerRepository.save(customer);
     }
 
     /**
      * UpdateCreditCard: Allow users to add or update their credit card information
-     * @param email: email of customer
-     * @param creditCardNumber: credit card number to be added
-     * @return the new customer
-     * @throws GRSException Customer not found
+     * @param email: Email of customer
+     * @param password: Password of customer
+     * @param creditCardNumber: Credit card number to be added
+     * @return The new customer
+     * @throws GRSException Customer not found, invalid email and password combination
      */
     @Transactional
-    public Customer updateCreditCard(String email, int creditCardNumber){
-        Customer customer = customerRepository.findCustomerByEmail(email);
-        if (customer == null){
-            throw new GRSException(HttpStatus.NOT_FOUND, "Customer not found.");
+    public Customer updateCreditCard(String email, String password, int creditCardNumber){
+        Customer customer = customerRepository.findCustomerByEmailAndPassword(email, password);
+        if (customer == null) {
+            throw new GRSException(HttpStatus.NOT_FOUND, "Customer not found, invalid email and password combination.");
         }
         customer.setCreditCardNumber(creditCardNumber);
         return customerRepository.save(customer);
@@ -67,42 +78,41 @@ public class CustomerService {
 
     /**
      * UpdateEmail: Allow users to edit their email information
-     * @param oldEmail: old email of customer
-     * @param newEmail: new email of customer
+     * @param oldEmail: Old email of customer
+     * @param password: Password of customer
+     * @param newEmail: New email of customer
      * @return The new customer
-     * @throws GRSException Customer not found or invalid email
+     * @throws GRSException Customer not found, invalid email and password combination, or invalid new email
      */
     @Transactional
-    public Customer updateEmail(String oldEmail, String newEmail){
-        Customer customer = customerRepository.findCustomerByEmail(oldEmail);
-        if (customer == null){
-            throw new GRSException(HttpStatus.NOT_FOUND, "Customer not found.");
+    public Customer updateEmail(String oldEmail, String password, String newEmail){
+        Customer customer = customerRepository.findCustomerByEmailAndPassword(oldEmail, password);
+        if (customer == null) {
+            throw new GRSException(HttpStatus.NOT_FOUND, "Customer not found, invalid email and password combination.");
         }
-        if (newEmail == null){
-            throw new GRSException(HttpStatus.BAD_REQUEST, "Invalid email.");
+        if (newEmail == null || !newEmail.contains("@")) {
+            throw new GRSException(HttpStatus.BAD_REQUEST, "Invalid new email.");
         }
         customer.setEmail(newEmail);
         return customerRepository.save(customer);
     }
+
     /**
-     * UpdateEmail: Allow users to edit their email information
-     * @param email: email of customer
-     * @param oldPassword: old password of customer
-     * @param newPassword: new password of customer
+     * UpdatePassword: Allow users to edit their password information
+     * @param email: Email of customer
+     * @param oldPassword: Old password of customer
+     * @param newPassword: New password of customer
      * @return The new customer
-     * @throws GRSException Customer not found or invalid password
+     * @throws GRSException Customer not found, invalid email and password combination, or invalid new password
      */
     @Transactional
     public Customer updatePassword(String email, String oldPassword, String newPassword){
-        Customer customer = customerRepository.findCustomerByEmail(email);
-        if (customer == null){
-            throw new GRSException(HttpStatus.NOT_FOUND, "Customer not found.");
+        Customer customer = customerRepository.findCustomerByEmailAndPassword(email, oldPassword);
+        if (customer == null) {
+            throw new GRSException(HttpStatus.NOT_FOUND, "Customer not found, invalid email and password combination.");
         }
         if (newPassword == null){
             throw new GRSException(HttpStatus.BAD_REQUEST, "Invalid new password.");
-        }
-        if (oldPassword != customer.getPassword()){
-            throw new GRSException(HttpStatus.BAD_REQUEST, "Incorrect current password.");
         }
         customer.setPassword(newPassword);
         return customerRepository.save(customer);
@@ -161,7 +171,7 @@ public class CustomerService {
     public Customer loginCustomer(String email, String password){
         Customer customer = customerRepository.findCustomerByEmailAndPassword(email, password);
         if (customer == null) {
-            throw new GRSException(HttpStatus.UNAUTHORIZED, "Invalid email or password");
+            throw new GRSException(HttpStatus.UNAUTHORIZED, "Invalid email or password.");
         }
         return customer;
     }
@@ -177,12 +187,12 @@ public class CustomerService {
     {
         Customer customer = customerRepository.findCustomerByEmailAndPassword(email, password);
         if (customer == null) {
-            throw new GRSException(HttpStatus.UNAUTHORIZED, "Invalid email or password");
+            throw new GRSException(HttpStatus.UNAUTHORIZED, "Invalid email or password.");
         }
         CustomerRegistration customerRegistration = customerRegistrationRepository.findCustomerRegistrationByCustomerAndSession(customer, session);
         if(customerRegistration !=null)
         {
-            throw new GRSException(HttpStatus.UNAUTHORIZED, "already registered");
+            throw new GRSException(HttpStatus.UNAUTHORIZED, "Already registered.");
         }
         customerRegistration = new CustomerRegistration(session.getDate(),session, customer);
         customerRegistrationRepository.save(customerRegistration);

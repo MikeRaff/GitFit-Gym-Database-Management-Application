@@ -70,7 +70,7 @@ public class CustomerTests {
         // Create customers with the same person.
         createAndPersistCustomer("customer1@emailprovider.ca", "customer1Password", bob);
         createAndPersistCustomerWithCreditCard("customer2@emailprovider.ca", "customer2Password", bob, 456789123);
-        createAndPersistCustomerWithCreditCard("customer2@emailprovider.ca", "customer2Password", bob, 987654321);
+        createAndPersistCustomerWithCreditCard("customer3@emailprovider.ca", "customer3Password", bob, 987654321);
 
         // Find customers by person name.
         List<Customer> customers = customerRepository.findCustomersByPerson_Name(bob.getName());
