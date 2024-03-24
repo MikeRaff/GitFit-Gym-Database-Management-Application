@@ -73,10 +73,20 @@ public class SessionService {
      **/
     public Session updateSession(int oldSessionId, Session newSession){
         if(sessionRepository.findSessionById(oldSessionId) == null){
-            throw new GRSException(HttpStatus.CONFLICT, "Session with id " + oldSessionId + " does not exist.");
+            throw new GRSException(HttpStatus.CONFLICT, "Session with id does not exist.");
         }
-        if(newSession == null){
-            throw new GRSException(HttpStatus.BAD_REQUEST, "Session cannot be empty.");
+        if(newSession == null || newSession.getDate() == null || newSession.getStartTime() == null || newSession.getEndTime() == null || newSession.getDescription() == null || newSession.getName() == null || newSession.getLocation() == null || newSession.getClassType() == null){
+            throw new GRSException(HttpStatus.BAD_REQUEST, "Missing information.");
+        }
+        if(!newSession.getClassType().getIsApproved()){
+            throw new GRSException(HttpStatus.BAD_REQUEST, "Class must be approved.");
+        }
+        LocalDateTime currentDateTime = LocalDateTime.now();
+        LocalDateTime sessionDatetime = LocalDateTime.of(newSession.getDate().toLocalDate(), newSession.getStartTime().toLocalTime());
+        Duration timeDifference = Duration.between(currentDateTime, sessionDatetime);
+        //checking if session is at least 48 hours ahead of current time
+        if (timeDifference.toHours() < 48){
+            throw new GRSException(HttpStatus.BAD_REQUEST, "Session must be at least 48 hours ahead of the current time.");
         }
         Session toUpdate = sessionRepository.findSessionById(oldSessionId);
         toUpdate.setDate(newSession.getDate());
@@ -135,7 +145,7 @@ public class SessionService {
         if(gymUser instanceof Instructor){
             List<InstructorRegistration> instructorRegistrations = instructorRegistrationRepository.findInstructorRegistrationsBySession_id(id);
             for(InstructorRegistration ir: instructorRegistrations){
-                if(ir.getInstructor() == gymUser){
+                if(ir.getInstructor().getEmail() == gymUser.getEmail()){
                     sessionRepository.deleteSessionById(id);
                     return;
                 }
