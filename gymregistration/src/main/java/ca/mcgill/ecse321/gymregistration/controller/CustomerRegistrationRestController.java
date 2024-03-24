@@ -85,8 +85,8 @@ public class CustomerRegistrationRestController {
      * @throws IllegalArgumentException
      */
     @DeleteMapping(value = {"/customer-registrations/remove/{email}/{sessionId}", "/customer-registration/remove/{email}/{sessionId}/"})
-    public void removeCustomerRegistration(@PathVariable("email") String email, @PathVariable("sessionId") int sessionId) throws IllegalArgumentException{
-        customerRegistrationService.removeCustomerFromSession(sessionId, email);
+    public void removeCustomerRegistration(@PathVariable("email") String email, @PathVariable("sessionId") int sessionId, @RequestBody GymUser gymUser) throws IllegalArgumentException{
+        customerRegistrationService.removeCustomerFromSession(sessionId, email, gymUser);
     }
 
     /**
@@ -96,8 +96,8 @@ public class CustomerRegistrationRestController {
      * @throws IllegalArgumentException
      */
     @DeleteMapping(value = {"/customer-registrations/remove/{email}", "/customer-registration/remove/{email}/"})
-    public void removeAllCustomerRegistrations(@PathVariable("email") String email) throws IllegalArgumentException{
-        customerRegistrationService.removeCustomerFromAllSessions(email);
+    public void removeAllCustomerRegistrations(@PathVariable("email") String email, @RequestBody GymUser gymUser) throws IllegalArgumentException{
+        customerRegistrationService.removeCustomerFromAllSessions(email, gymUser);
     }
 
 }
