@@ -21,6 +21,10 @@ public class Customer extends GymUser {
     super();
   }
 
+  public Customer(String aEmail, String aPassword, Person aPerson) {
+    super(aEmail, aPassword, aPerson);
+  }
+  
   public Customer(String aEmail, String aPassword, Person aPerson, int aCreditCardNumber) {
     super(aEmail, aPassword, aPerson);
     creditCardNumber = aCreditCardNumber;
