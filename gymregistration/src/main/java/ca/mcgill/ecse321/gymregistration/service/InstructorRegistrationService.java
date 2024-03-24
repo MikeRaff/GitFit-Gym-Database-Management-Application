@@ -5,7 +5,6 @@ import java.util.List;
 import ca.mcgill.ecse321.gymregistration.dto.InstructorRegistrationDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-
 import org.springframework.stereotype.Service;
 
 import ca.mcgill.ecse321.gymregistration.dao.InstructorRegistrationRepository;
@@ -19,6 +18,7 @@ import ca.mcgill.ecse321.gymregistration.model.Owner;
 import ca.mcgill.ecse321.gymregistration.model.Session;
 import ca.mcgill.ecse321.gymregistration.service.exception.GRSException;
 import jakarta.transaction.Transactional;
+
 
 @Service
 public class InstructorRegistrationService {
@@ -70,6 +70,7 @@ public class InstructorRegistrationService {
      * @throws GRSException not enough instructors registered, Unauthorized user, Instructor not teaching course
      */
     @Transactional
+
     public void removeInstructorFromClass(int sessionId, String email, GymUser gymUser) {
         List<InstructorRegistration> instructorRegistrations = instructorRegistrationRepository
                 .findInstructorRegistrationsBySession_id(sessionId);
@@ -87,6 +88,7 @@ public class InstructorRegistrationService {
             }
             return;
         }
+
         throw new GRSException(HttpStatus.BAD_REQUEST, "Instructor not teaching course.");
     }
 

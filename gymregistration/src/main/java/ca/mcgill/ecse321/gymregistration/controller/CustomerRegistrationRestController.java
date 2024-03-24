@@ -56,6 +56,7 @@ public class CustomerRegistrationRestController {
      * @return customer registration in the system
      * @throws IllegalArgumentException
      */
+
     @GetMapping(value = {"/customer-registration/{email}/{sessionId}", "/customer-registration/{email}/{sessionId}/"})
     public ResponseEntity<CustomerRegistrationDto> getCustomerRegistration(@PathVariable("email") String email, 
             @PathVariable("sessionId") int sessionId) throws IllegalArgumentException{
@@ -70,10 +71,9 @@ public class CustomerRegistrationRestController {
      * @return customer registration in the system
      * @throws IllegalArgumentException
      */
-    @PostMapping(value = {"/customer-registration/register", "/customer-registration/register/"})
-    public ResponseEntity<CustomerRegistrationDto> registerCustomerToSession(@RequestParam(name = "sessionId") int sessionId, 
-            @RequestParam(name="email") String email) throws IllegalArgumentException{
-        CustomerRegistration customerRegistration = customerRegistrationService.registerCustomerToSession(sessionId, email);
+    @PostMapping(value = {"/customer-registrations/register", "/customer-registration/register/"})
+    public ResponseEntity<CustomerRegistrationDto> registerCustomerToSession(@RequestBody CustomerRegistrationDto customerRegistrationDto) throws IllegalArgumentException{
+        CustomerRegistration customerRegistration = customerRegistrationService.registerCustomerToSession(customerRegistrationDto.getSession().getId(), customerRegistrationDto.getCustomer().getEmail());
         return new ResponseEntity<>(new CustomerRegistrationDto(customerRegistration), HttpStatus.OK);
     }
 
@@ -84,9 +84,9 @@ public class CustomerRegistrationRestController {
      * @param gymUser: user removing the registration
      * @throws IllegalArgumentException
      */
-    @DeleteMapping(value = {"/customer-registration/remove/{email}/{sessionId}", "/customer-registration/remove/{email}/{sessionId}/"})
-    public void removeCustomerRegistration(@PathVariable("email") String email, @PathVariable("sessionId") int sessionId, @RequestBody GymUser gymUser) throws IllegalArgumentException{
-        customerRegistrationService.removeCustomerFromSession(sessionId, email, gymUser);
+    @DeleteMapping(value = {"/customer-registrations/remove/{email}/{sessionId}", "/customer-registration/remove/{email}/{sessionId}/"})
+    public void removeCustomerRegistration(@PathVariable("email") String email, @PathVariable("sessionId") int sessionId) throws IllegalArgumentException{
+        customerRegistrationService.removeCustomerFromSession(sessionId, email);
     }
 
     /**
@@ -95,9 +95,9 @@ public class CustomerRegistrationRestController {
      * @param gymUser: user removing the registrations
      * @throws IllegalArgumentException
      */
-    @DeleteMapping(value = {"/customer-registration/remove/{email}", "/customer-registration/remove/{email}/"})
-    public void removeAllCustomerRegistrations(@PathVariable("email") String email, @RequestBody GymUser gymUser) throws IllegalArgumentException{
-        customerRegistrationService.removeCustomerFromAllSessions(email, gymUser);
+    @DeleteMapping(value = {"/customer-registrations/remove/{email}", "/customer-registration/remove/{email}/"})
+    public void removeAllCustomerRegistrations(@PathVariable("email") String email) throws IllegalArgumentException{
+        customerRegistrationService.removeCustomerFromAllSessions(email);
     }
 
 }
