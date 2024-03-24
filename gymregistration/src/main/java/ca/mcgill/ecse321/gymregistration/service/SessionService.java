@@ -6,13 +6,13 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import ca.mcgill.ecse321.gymregistration.dao.InstructorRegistrationRepository;
+import ca.mcgill.ecse321.gymregistration.model.*;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 
 import ca.mcgill.ecse321.gymregistration.dao.SessionRepository;
-import ca.mcgill.ecse321.gymregistration.model.ClassType;
-import ca.mcgill.ecse321.gymregistration.model.Session;
 import ca.mcgill.ecse321.gymregistration.service.exception.GRSException;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +20,8 @@ import org.springframework.stereotype.Service;
 public class SessionService {
     @Autowired
     SessionRepository sessionRepository;
+    @Autowired
+    InstructorRegistrationRepository instructorRegistrationRepository;
 
     /**
      * Create Session: Creates a new session
@@ -55,15 +57,7 @@ public class SessionService {
         if (timeDifference.toHours() < 48){
             throw new GRSException(HttpStatus.BAD_REQUEST, "Session must be at least 48 hours ahead of the current time.");
         }
-        Session session = new Session();
-        session.setDate(date);
-        session.setStartTime(startTime);
-        session.setEndTime(endTime);
-        session.setDescription(description);
-        session.setName(name);
-        session.setLocation(location);
-        session.setClassType(classType);
-        session.setCapacity(capacity);
+        Session session = new Session(date, startTime, endTime, description, name, location, classType, capacity);
         sessionRepository.save(session);
         return session;
     }
@@ -134,7 +128,20 @@ public class SessionService {
      * @return none
      * @throws GRSException session not found
      */
-    public void deleteSession(int id){
+    public void deleteSession(int id, GymUser gymUser){
+        if(gymUser instanceof Customer){
+            throw new GRSException(HttpStatus.UNAUTHORIZED, "Customers can not delete sessions.");
+        }
+        if(gymUser instanceof Instructor){
+            List<InstructorRegistration> instructorRegistrations = instructorRegistrationRepository.findInstructorRegistrationsBySession_id(id);
+            for(InstructorRegistration ir: instructorRegistrations){
+                if(ir.getInstructor() == gymUser){
+                    sessionRepository.deleteSessionById(id);
+                    return;
+                }
+            }
+            throw new GRSException(HttpStatus.UNAUTHORIZED, "Instructor does not have access to delete.");
+        }
         Session session = sessionRepository.findSessionById(id);
         if(session == null){
             throw new GRSException(HttpStatus.NOT_FOUND, "Session not found.");
