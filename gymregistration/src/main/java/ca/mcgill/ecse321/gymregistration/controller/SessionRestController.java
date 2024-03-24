@@ -27,8 +27,8 @@ public class SessionRestController {
         return sessionService.getAllSessions().stream().map(SessionDto::new).collect(Collectors.toList());
     }
     /**
-     * Find session by ID
-     * @param id
+     * GetSessionById: find session by ID
+     * @param id: the id of the session
      * @return the desired session
      * @throws IllegalArgumentException
      */
@@ -38,32 +38,33 @@ public class SessionRestController {
         return new ResponseEntity<>(new SessionDto(session), HttpStatus.OK);
     }
     /**
-     * Creates a new session
-     * @param sessionDto
+     * CreateSession: creates a new session
+     * @param sessionDto: the session to be created
+     * @param gymUser: the user creating the session
      * @return the created session
      * @throws IllegalArgumentException
      */
     @PostMapping(value = { "/sessions/create", "/sessions/create/"})
-    public ResponseEntity<SessionDto> createSession(@RequestBody SessionDto sessionDto) throws IllegalArgumentException{
-        Session session = sessionService.createSession(sessionDto.getDate(), sessionDto.getStartTime(), sessionDto.getEndTime(), sessionDto.getDescription(), sessionDto.getName(), sessionDto.getLocation(), sessionDto.getClassType(), sessionDto.getCapacity());
+    public ResponseEntity<SessionDto> createSession(@RequestBody SessionDto sessionDto, @RequestBody GymUser gymUser) throws IllegalArgumentException{
+        Session session = sessionService.createSession(sessionDto.getDate(), sessionDto.getStartTime(), sessionDto.getEndTime(), sessionDto.getDescription(), sessionDto.getName(), sessionDto.getLocation(), sessionDto.getClassType(), sessionDto.getCapacity(), gymUser);
         return new ResponseEntity<>(new SessionDto(session), HttpStatus.CREATED);
     }
     /**
-     * Updated a session
-     * @param id
-     * @param sessionDto
+     * UpdateSession: updated a session
+     * @param id: the id of the session to be updated
+     * @param sessionDto: the updated session dto
      * @return the updated session
      * @throws IllegalArgumentException
      */
     @PutMapping(value = {"/sessions/{id}", "/sessions/{id}/"})
-    public ResponseEntity<SessionDto> updateSession(@PathVariable("id") int id, @RequestBody SessionDto sessionDto) throws IllegalArgumentException{
-        Session toUpdate = sessionService.getSessionById(id);
-        Session session = sessionService.updateSession(id, sessionService.getSessionById(sessionDto.getId()));
+    public ResponseEntity<SessionDto> updateSession(@PathVariable("id") int id, @RequestBody SessionDto sessionDto, @RequestBody GymUser gymUser) throws IllegalArgumentException{
+        Session session = sessionService.updateSession(id, sessionService.getSessionById(sessionDto.getId()), gymUser);
         return new ResponseEntity<>(new SessionDto(session), HttpStatus.OK);
     }
     /**
-     * Deletes a session
-     * @param id
+     * DeleteSession: deletes a session
+     * @param id: the id of the session to be deleted
+     * @param gymUser: the user deleting the session
      * @throws IllegalArgumentException
      */
     @DeleteMapping(value = {"/sessions/delete/{id}", "/sessions/delete/{id}/"})

@@ -110,9 +110,10 @@ public class TestSessionService {
         String location = "Montreal";
         ClassType classType = new ClassType("Aerobics", true);
         int capacity = 5;
+        Owner owner = new Owner();
         Session session = null;
         try {
-            session = sessionService.createSession(date, startTime, endTime, description, name, location, classType, capacity);
+            session = sessionService.createSession(date, startTime, endTime, description, name, location, classType, capacity, owner);
         } catch (GRSException e){
             fail(e.getMessage());
         }
@@ -152,9 +153,10 @@ public class TestSessionService {
         String location = "Montreal";
         ClassType classType = new ClassType("Aerobics", true);
         int capacity = 5;
+        Owner owner = new Owner();
         Session session = null;
         try {
-            session = sessionService.createSession(date, startTime, endTime, description, name, location, classType, capacity);
+            session = sessionService.createSession(date, startTime, endTime, description, name, location, classType, capacity, owner);
             fail();
         } catch (GRSException e){
             assertNull(session);
@@ -175,9 +177,10 @@ public class TestSessionService {
         String location = "Montreal";
         ClassType classType = new ClassType("Aerobics", true);
         int capacity = 5;
+        Owner owner = new Owner();
         Session session = null;
         try {
-            session = sessionService.createSession(date, startTime, endTime, description, name, location, classType, capacity);
+            session = sessionService.createSession(date, startTime, endTime, description, name, location, classType, capacity, owner);
             fail();
         } catch (GRSException e){
             assertNull(session);
@@ -197,9 +200,10 @@ public class TestSessionService {
         String location = "Montreal";
         ClassType classType = new ClassType("Aerobics", true);
         int capacity = 5;
+        Owner owner = new Owner();
         Session session = null;
         try {
-            session = sessionService.createSession(date, startTime, endTime, description, name, location, classType, capacity);
+            session = sessionService.createSession(date, startTime, endTime, description, name, location, classType, capacity, owner);
             fail();
         } catch (GRSException e){
             assertNull(session);
@@ -220,9 +224,10 @@ public class TestSessionService {
         String location = "Montreal";
         ClassType classType = null;
         int capacity = 5;
+        Owner owner = new Owner();
         Session session = null;
         try {
-            session = sessionService.createSession(date, startTime, endTime, description, name, location, classType, capacity);
+            session = sessionService.createSession(date, startTime, endTime, description, name, location, classType, capacity, owner);
             fail();
         } catch (GRSException e){
             assertNull(session);
@@ -242,9 +247,10 @@ public class TestSessionService {
         String location = "Montreal";
         ClassType classType = new ClassType("Aerobics", true);
         int capacity = 5;
+        Owner owner = new Owner();
         Session session = null;
         try {
-            session = sessionService.createSession(date, startTime, endTime, description, name, location, classType, capacity);
+            session = sessionService.createSession(date, startTime, endTime, description, name, location, classType, capacity, owner);
             fail();
         } catch (GRSException e){
             assertNull(session);
@@ -265,9 +271,10 @@ public class TestSessionService {
         String location = "Montreal";
         ClassType classType = new ClassType("Aerobics", true);
         int capacity = 5;
+        Owner owner = new Owner();
         Session session = null;
         try {
-            session = sessionService.createSession(date, startTime, endTime, description, name, location, classType, capacity);
+            session = sessionService.createSession(date, startTime, endTime, description, name, location, classType, capacity, owner);
             fail();
         } catch (GRSException e){
             assertNull(session);
@@ -287,9 +294,10 @@ public class TestSessionService {
         String location = "Montreal";
         ClassType classType = new ClassType("Aerobics", true);
         int capacity = 5;
+        Owner owner = new Owner();
         Session session = null;
         try {
-            session = sessionService.createSession(date, startTime, endTime, description, name, location, classType, capacity);
+            session = sessionService.createSession(date, startTime, endTime, description, name, location, classType, capacity, owner);
             fail();
         } catch (GRSException e){
             assertNull(session);
@@ -309,9 +317,10 @@ public class TestSessionService {
         String location = "Montreal";
         ClassType classType = new ClassType("Aerobics", true);
         int capacity = 5;
+        Owner owner = new Owner();
         Session session = null;
         try {
-            session = sessionService.createSession(date, startTime, endTime, description, name, location, classType, capacity);
+            session = sessionService.createSession(date, startTime, endTime, description, name, location, classType, capacity, owner);
             fail();
         } catch (GRSException e){
             assertNull(session);
@@ -331,9 +340,10 @@ public class TestSessionService {
         String location = "Montreal";
         ClassType classType = new ClassType("Aerobics", true);
         int capacity = 5;
+        Owner owner = new Owner();
         Session session = null;
         try {
-            session = sessionService.createSession(date, startTime, endTime, description, name, location, classType, capacity);
+            session = sessionService.createSession(date, startTime, endTime, description, name, location, classType, capacity, owner);
             fail();
         } catch (GRSException e){
             assertNull(session);
@@ -353,9 +363,10 @@ public class TestSessionService {
         String location = null;
         ClassType classType = new ClassType("Aerobics", true);
         int capacity = 5;
+        Owner owner = new Owner();
         Session session = null;
         try {
-            session = sessionService.createSession(date, startTime, endTime, description, name, location, classType, capacity);
+            session = sessionService.createSession(date, startTime, endTime, description, name, location, classType, capacity, owner);
             fail();
         } catch (GRSException e){
             assertNull(session);
@@ -376,9 +387,10 @@ public class TestSessionService {
         String location = "";
         ClassType classType = new ClassType("Aerobics", true);
         int capacity = 5;
+        Owner owner = new Owner();
         Session session = null;
         try {
-            session = sessionService.createSession(date, startTime, endTime, description, name, location, classType, capacity);
+            session = sessionService.createSession(date, startTime, endTime, description, name, location, classType, capacity, owner);
             fail();
         } catch (GRSException e){
             assertNull(session);
@@ -399,9 +411,10 @@ public class TestSessionService {
         String location = "Montreal";
         ClassType classType = new ClassType("Aerobics", false);
         int capacity = 5;
+        Owner owner = new Owner();
         Session session = null;
         try {
-            session = sessionService.createSession(date, startTime, endTime, description, name, location, classType, capacity);
+            session = sessionService.createSession(date, startTime, endTime, description, name, location, classType, capacity, owner);
             fail();
         } catch (GRSException e){
             assertNull(session);
@@ -422,13 +435,69 @@ public class TestSessionService {
         String location = "Montreal";
         ClassType classType = new ClassType("Aerobics", true);
         int capacity = 5;
+        Owner owner = new Owner();
         Session session = null;
         try {
-            session = sessionService.createSession(date, startTime, endTime, description, name, location, classType, capacity);
+            session = sessionService.createSession(date, startTime, endTime, description, name, location, classType, capacity, owner);
             fail();
         } catch (GRSException e){
             assertNull(session);
             assertEquals(e.getMessage(), "Session must be at least 48 hours ahead of the current time.");
+        }
+    }
+
+    /**
+     * Creating session with instructor
+     */
+    @Test
+    public void testCreateSessionInstructor(){
+        Date date = new Date(2800014000L * 1000);
+        Time startTime = Time.valueOf("11:00:00");
+        Time endTime = Time.valueOf("13:00:00");
+        String description = "description";
+        String name = "Bob";
+        String location = "Montreal";
+        ClassType classType = new ClassType("Aerobics", true);
+        int capacity = 5;
+        Instructor instructor = new Instructor();
+        Session session = null;
+        try {
+            session = sessionService.createSession(date, startTime, endTime, description, name, location, classType, capacity, instructor);
+        } catch (GRSException e){
+            fail(e.getMessage());
+        }
+        assertNotNull(session);
+        assertEquals(date, session.getDate());
+        assertEquals(startTime, session.getStartTime());
+        assertEquals(endTime, session.getEndTime());
+        assertEquals(description, session.getDescription());
+        assertEquals(name, session.getName());
+        assertEquals(location, session.getLocation());
+        assertEquals(classType, session.getClassType());
+        assertEquals(capacity, session.getCapacity());
+    }
+
+    /**
+     * Creating session with customer
+     */
+    @Test
+    public void testCreateSessionCustomer(){
+        Date date = new Date(2800014000L * 1000);
+        Time startTime = Time.valueOf("11:00:00");
+        Time endTime = Time.valueOf("13:00:00");
+        String description = "description";
+        String name = "Bob";
+        String location = "Montreal";
+        ClassType classType = new ClassType("Aerobics", true);
+        int capacity = 5;
+        Customer customer = new Customer();
+        Session session = null;
+        try {
+            session = sessionService.createSession(date, startTime, endTime, description, name, location, classType, capacity, customer);
+            fail();
+        } catch (GRSException e){
+            assertNull(session);
+            assertEquals(e.getMessage(), "Customers are not allowed to create sessions.");
         }
     }
 
@@ -444,8 +513,9 @@ public class TestSessionService {
         ClassType classType = new ClassType("Aerobics", true);
         Session session = new Session(date, startTime, endTime, "new descr.", "Bob", "Ottawa", classType, 3);
         Session updated = null;
+        Owner owner = new Owner();
         try{
-            updated = sessionService.updateSession(toUpdate.getId(), session);
+            updated = sessionService.updateSession(toUpdate.getId(), session, owner);
         } catch (Exception e){
             fail(e.getMessage());
         }
@@ -472,8 +542,9 @@ public class TestSessionService {
         ClassType classType = new ClassType("Aerobics", true);
         Session session = new Session(date, startTime, endTime, "new descr.", "Bob", "Ottawa", classType, 3);
         Session updated = null;
+        Owner owner = new Owner();
         try{
-            updated = sessionService.updateSession(ID, session);
+            updated = sessionService.updateSession(ID, session, owner);
             fail();
         } catch (Exception e){
             assertEquals(e.getMessage(), "Session with id does not exist.");
@@ -487,8 +558,9 @@ public class TestSessionService {
     public void testUpdateSessionNullSession(){
         Session session = null;
         Session updated = null;
+        Owner owner = new Owner();
         try{
-            updated = sessionService.updateSession(ID, session);
+            updated = sessionService.updateSession(ID, session, owner);
             fail();
         } catch (Exception e){
             assertEquals(e.getMessage(), "Missing information.");
@@ -507,8 +579,9 @@ public class TestSessionService {
         ClassType classType = new ClassType("Aerobics", true);
         Session session = new Session(date, startTime, endTime, "new descr.", "Bob", "Ottawa", classType, 3);
         Session updated = null;
+        Owner owner = new Owner();
         try{
-            updated = sessionService.updateSession(ID, session);
+            updated = sessionService.updateSession(ID, session, owner);
             fail();
         } catch (Exception e){
             assertEquals(e.getMessage(), "Missing information.");
@@ -527,8 +600,9 @@ public class TestSessionService {
         ClassType classType = new ClassType("Aerobics", true);
         Session session = new Session(date, startTime, endTime, "new descr.", "Bob", "Ottawa", classType, 3);
         Session updated = null;
+        Owner owner = new Owner();
         try{
-            updated = sessionService.updateSession(ID, session);
+            updated = sessionService.updateSession(ID, session, owner);
             fail();
         } catch (Exception e){
             assertEquals(e.getMessage(), "Missing information.");
@@ -547,8 +621,9 @@ public class TestSessionService {
         ClassType classType = new ClassType("Aerobics", true);
         Session session = new Session(date, startTime, endTime, "new descr.", "Bob", "Ottawa", classType, 3);
         Session updated = null;
+        Owner owner = new Owner();
         try{
-            updated = sessionService.updateSession(ID, session);
+            updated = sessionService.updateSession(ID, session, owner);
             fail();
         } catch (Exception e){
             assertEquals(e.getMessage(), "Missing information.");
@@ -567,8 +642,9 @@ public class TestSessionService {
         ClassType classType = null;
         Session session = new Session(date, startTime, endTime, "new descr.", "Bob", "Ottawa", classType, 3);
         Session updated = null;
+        Owner owner = new Owner();
         try{
-            updated = sessionService.updateSession(ID, session);
+            updated = sessionService.updateSession(ID, session, owner);
             fail();
         } catch (Exception e){
             assertEquals(e.getMessage(), "Missing information.");
@@ -586,8 +662,9 @@ public class TestSessionService {
         ClassType classType = new ClassType("Aerobics", true);
         Session session = new Session(date, startTime, endTime, null, "Bob", "Ottawa", classType, 3);
         Session updated = null;
+        Owner owner = new Owner();
         try{
-            updated = sessionService.updateSession(ID, session);
+            updated = sessionService.updateSession(ID, session, owner);
             fail();
         } catch (Exception e){
             assertEquals(e.getMessage(), "Missing information.");
@@ -605,8 +682,9 @@ public class TestSessionService {
         ClassType classType = new ClassType("Aerobics", true);
         Session session = new Session(date, startTime, endTime, "new descr.", null, "Ottawa", classType, 3);
         Session updated = null;
+        Owner owner = new Owner();
         try{
-            updated = sessionService.updateSession(ID, session);
+            updated = sessionService.updateSession(ID, session, owner);
             fail();
         } catch (Exception e){
             assertEquals(e.getMessage(), "Missing information.");
@@ -624,8 +702,9 @@ public class TestSessionService {
         ClassType classType = new ClassType("Aerobics", true);
         Session session = new Session(date, startTime, endTime, "new descr.", "Bob", null, classType, 3);
         Session updated = null;
+        Owner owner = new Owner();
         try{
-            updated = sessionService.updateSession(ID, session);
+            updated = sessionService.updateSession(ID, session, owner);
             fail();
         } catch (Exception e){
             assertEquals(e.getMessage(), "Missing information.");
@@ -643,8 +722,9 @@ public class TestSessionService {
         ClassType classType = new ClassType("Aerobics", false);
         Session session = new Session(date, startTime, endTime, "new descr.", "Bob", "Ottawa", classType, 3);
         Session updated = null;
+        Owner owner = new Owner();
         try{
-            updated = sessionService.updateSession(ID, session);
+            updated = sessionService.updateSession(ID, session, owner);
             fail();
         } catch (Exception e){
             assertEquals(e.getMessage(), "Class must be approved.");
@@ -662,11 +742,56 @@ public class TestSessionService {
         ClassType classType = new ClassType("Aerobics", true);
         Session session = new Session(date, startTime, endTime, "new descr.", "Bob", "Ottawa", classType, 3);
         Session updated = null;
+        Owner owner = new Owner();
         try{
-            updated = sessionService.updateSession(ID, session);
+            updated = sessionService.updateSession(ID, session, owner);
             fail();
         } catch (Exception e){
             assertEquals(e.getMessage(), "Session must be at least 48 hours ahead of the current time.");
+            assertNull(updated);
+        }
+    }
+
+    /**
+     * test updating session with instructor
+     */
+    @Test
+    public void testUpdateSessionInstructor(){
+        Session toUpdate = sessionRepository.findSessionById(123);
+        Date date = new Date(2900000000L * 1000);
+        Time startTime = Time.valueOf("15:00:00");
+        Time endTime = Time.valueOf("16:00:00");
+        ClassType classType = new ClassType("Aerobics", true);
+        Session session = new Session(date, startTime, endTime, "new descr.", "Bob", "Ottawa", classType, 3);
+        Session updated = null;
+        Instructor instructor = new Instructor();
+        try{
+            updated = sessionService.updateSession(toUpdate.getId(), session, instructor);
+            fail();
+        } catch (Exception e){
+            assertEquals(e.getMessage(), "User does not have access to update session.");
+            assertNull(updated);
+        }
+    }
+
+    /**
+     * test updating session with customer
+     */
+    @Test
+    public void testUpdateSessionCustomer(){
+        Session toUpdate = sessionRepository.findSessionById(123);
+        Date date = new Date(2900000000L * 1000);
+        Time startTime = Time.valueOf("15:00:00");
+        Time endTime = Time.valueOf("16:00:00");
+        ClassType classType = new ClassType("Aerobics", true);
+        Session session = new Session(date, startTime, endTime, "new descr.", "Bob", "Ottawa", classType, 3);
+        Session updated = null;
+        Customer customer = new Customer();
+        try{
+            updated = sessionService.updateSession(toUpdate.getId(), session, customer);
+            fail();
+        } catch (Exception e){
+            assertEquals(e.getMessage(), "User does not have access to update session.");
             assertNull(updated);
         }
     }

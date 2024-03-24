@@ -4,6 +4,7 @@ import ca.mcgill.ecse321.gymregistration.dao.CustomerRepository;
 import ca.mcgill.ecse321.gymregistration.dao.InstructorRepository;
 import ca.mcgill.ecse321.gymregistration.dao.OwnerRepository;
 import ca.mcgill.ecse321.gymregistration.dao.PersonRepository;
+import ca.mcgill.ecse321.gymregistration.model.GymUser;
 import ca.mcgill.ecse321.gymregistration.model.Owner;
 import ca.mcgill.ecse321.gymregistration.model.Person;
 import ca.mcgill.ecse321.gymregistration.service.exception.GRSException;
@@ -28,11 +29,11 @@ public class OwnerService {
 
     /**
      * CreateOwner: creating an owner
-     * @param email: Email of the owner
-     * @param password: Password of the owner
-     * @param person_id: iD of the person
-     * @return The created owner
-     * @throws GRSException Invalid owner creation request
+     * @param email: email of the owner
+     * @param password: password of the owner
+     * @param person_id: id of the person
+     * @return the created owner
+     * @throws GRSException invalid owner creation request
      */
     @Transactional
     public Owner createOwner(String email, String password, int person_id){
@@ -54,12 +55,12 @@ public class OwnerService {
     }
 
     /**
-     * UpdateEmail: Allow users to edit their email information
-     * @param oldEmail: Old email of owner
-     * @param password: Password of owner
-     * @param newEmail: New email of owner
-     * @return The new owner
-     * @throws GRSException Owner not found, invalid email and password combination, or invalid new email
+     * UpdateEmail: allow users to edit their email information
+     * @param oldEmail: old email of owner
+     * @param password: password of owner
+     * @param newEmail: new email of owner
+     * @return the new owner
+     * @throws GRSException owner not found, invalid email and password combination, or invalid new email
      */
     @Transactional
     public Owner updateEmail(String oldEmail, String password, String newEmail){
@@ -75,12 +76,12 @@ public class OwnerService {
     }
 
     /**
-     * UpdatePassword: Allow users to edit their password information
-     * @param email: Email of owner
-     * @param oldPassword: Old password of owner
-     * @param newPassword: New password of owner
-     * @return The new owner
-     * @throws GRSException Owner not found, invalid email and password combination, or invalid new password
+     * UpdatePassword: allow users to edit their password information
+     * @param email: email of owner
+     * @param oldPassword: old password of owner
+     * @param newPassword: new password of owner
+     * @return the new owner
+     * @throws GRSException owner not found, invalid email and password combination, or invalid new password
      */
     @Transactional
     public Owner updatePassword(String email, String oldPassword, String newPassword){
@@ -96,9 +97,9 @@ public class OwnerService {
     }
 
     /**
-     * getOwnerByEmail: getting a owner by their email
+     * GetOwnerByEmail: getting a owner by their email
      * @param email: the owner to search with
-     * @return The owner
+     * @return the owner
      * @throws GRSException owner not found
      */
     @Transactional
@@ -112,8 +113,8 @@ public class OwnerService {
 
     /**
      * GetAllOwners: getting all existing owners
-     * @return List of all existing owners
-     * @throws GRSException No customers found
+     * @return list of all existing owners
+     * @throws GRSException no customers found
      */
     @Transactional
     public List<Owner> getAllOwners(){
@@ -126,11 +127,15 @@ public class OwnerService {
 
     /**
      * DeleteOwner: delete the owner
-     * @param email: Email of owner to be deleted
-     * @throws GRSException owner not found
+     * @param email: email of owner to be deleted
+     * @param gymUser: the user deleting the owner
+     * @throws GRSException owner not found or user is not an owner
      */
     @Transactional
-    public void deleteOwner(String email){
+    public void deleteOwner(String email, GymUser gymUser){
+        if(!(gymUser instanceof Owner)) {
+            throw new GRSException(HttpStatus.UNAUTHORIZED, "User is not an owner.");
+        }
         Owner owner = ownerRepository.findOwnerByEmail(email);
         if(owner == null){
             throw new GRSException(HttpStatus.NOT_FOUND, "Owner not found.");
@@ -140,10 +145,10 @@ public class OwnerService {
 
     /**
      * LoginOwner: allow an owner to log in
-     * @param email: Email of the owner
+     * @param email: email of the owner
      * @param password: password of the owner
-     * @return The owner
-     * @throws GRSException Invalid owner email or password
+     * @return the owner
+     * @throws GRSException invalid owner email or password
      */
     public Owner loginOwner(String email, String password){
         Owner owner = ownerRepository.findOwnerByEmailAndPassword(email, password);
@@ -152,5 +157,4 @@ public class OwnerService {
         }
         return owner;
     }
-   
 }

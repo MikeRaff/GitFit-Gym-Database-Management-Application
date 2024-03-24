@@ -10,9 +10,13 @@ import jakarta.transaction.Transactional;
 
 import ca.mcgill.ecse321.gymregistration.dao.CustomerRegistrationRepository;
 import ca.mcgill.ecse321.gymregistration.dao.CustomerRepository;
+import ca.mcgill.ecse321.gymregistration.dao.InstructorRegistrationRepository;
 import ca.mcgill.ecse321.gymregistration.dao.SessionRepository;
 import ca.mcgill.ecse321.gymregistration.model.Customer;
 import ca.mcgill.ecse321.gymregistration.model.CustomerRegistration;
+import ca.mcgill.ecse321.gymregistration.model.GymUser;
+import ca.mcgill.ecse321.gymregistration.model.Instructor;
+import ca.mcgill.ecse321.gymregistration.model.Owner;
 import ca.mcgill.ecse321.gymregistration.model.Session;
 
 import ca.mcgill.ecse321.gymregistration.service.exception.GRSException;
@@ -26,14 +30,16 @@ public class CustomerRegistrationService {
     @Autowired
     CustomerRepository customerRepository;
     @Autowired
+    InstructorRegistrationRepository instructorRegistrationRepository;
+    @Autowired
     SessionRepository sessionRepository;
 
      /**
-     * registerCustomerToSession: Create a new customer registration to add a customer to a session
-     * @param sessionId
-     * @param email
+     * RegisterCustomerToSession: Create a new customer registration to add a customer to a session
+     * @param sessionId: id of the session
+     * @param email: email of the customer
      * @return new customer registration
-     * @throws GRSException if attempt to register for session is invalid
+     * @throws GRSException if attempt to register customer to session is invalid
      */
     @Transactional
     public CustomerRegistration registerCustomerToSession(int sessionId, String email){
@@ -83,17 +89,16 @@ public class CustomerRegistrationService {
 
     /**
      * getCustomerRegistrationByCustomerAndSession: fetch an existing registration associated to a customer and a session
-     * @param sessionId
-     * @param email
+     * @param sessionId: id of the session
+     * @param email: email of the customer
      * @return registration of customer for a session
      * @throws GRSException if attempt to find registration is invalid
      */
     @Transactional
-    public CustomerRegistration getCustomerRegistrationByCustomerAndSession( int sessionId, String email ){
+    public CustomerRegistration getCustomerRegistrationByCustomerAndSession(int sessionId, String email){
         if (sessionId == 0 || email == null){
             throw new GRSException(HttpStatus.BAD_REQUEST, "No session or customer entered.");
         }
-
         Customer customer = customerRepository.findCustomerByEmail(email);
         if (customer == null){
             throw new GRSException(HttpStatus.NOT_FOUND, "Customer not found.");
@@ -102,7 +107,6 @@ public class CustomerRegistrationService {
         if(session == null){
             throw new GRSException(HttpStatus.NOT_FOUND, "Session not found.");
         }
-
         CustomerRegistration customerRegistration = customerRegistrationRepository.findCustomerRegistrationByCustomerAndSession(customer, session);
         if (customerRegistration == null){
             throw new GRSException(HttpStatus.NOT_FOUND, "The registration does not exist.");
@@ -111,8 +115,8 @@ public class CustomerRegistrationService {
     }
 
     /**
-     * getCustomerRegistrationsByCustomer: gets all registrations for a customer
-     * @param email
+     * GetCustomerRegistrationsByCustomer: gets all registrations for a customer
+     * @param email: email of the customer to search with
      * @return list of all customer registrations for a customer
      * @throws GRSException if attempt to get all registrations from customer is invalid
      */
@@ -134,8 +138,8 @@ public class CustomerRegistrationService {
     }
 
     /**
-     * getCustomerRegistrationsBySession: gets all registrations for a session
-     * @param sessionId
+     * GetCustomerRegistrationsBySession: gets all registrations for a session
+     * @param sessionId: id of the session to search with
      * @return list of all customer registrations for a session
      * @throws GRSException if attempt to get all registrations from session is invalid
      */
@@ -157,17 +161,20 @@ public class CustomerRegistrationService {
     }
 
     /**
-     * removeCustomerFromSession: Remove customer from a session 
-     * @param sessionId
-     * @param email
+     * RemoveCustomerFromSession: remove customer from a session 
+     * @param sessionId: id of the session
+     * @param email: email of the customer
+     * @param gymUser: gymUser trying to remove customer from session
      * @throws GRSException if attempt to remove customer from session is invalid
      */
     @Transactional
-    public void removeCustomerFromSession(int sessionId , String email) {
+    public void removeCustomerFromSession(int sessionId, String email, GymUser gymUser) {
         if (sessionId == 0 || email == null){
             throw new GRSException(HttpStatus.NOT_FOUND, "No session or customer entered.");
         }
-
+        if((gymUser instanceof Customer && !gymUser.getEmail().equals(email)) || (gymUser instanceof Instructor && instructorRegistrationRepository.findInstructorRegistrationByInstructor_idAndSession_id(gymUser.getId().intValue(), sessionId) == null)){
+            throw new GRSException(HttpStatus.UNAUTHORIZED, "Customers can only be removed from sessions by the owner, instructor or themselves.");
+        }
         Customer customer = customerRepository.findCustomerByEmail(email);
         Session session = sessionRepository.findSessionById(sessionId);
 
@@ -197,19 +204,21 @@ public class CustomerRegistrationService {
     }
 
     /**
-     * removeCustomerFromAllSessions: remove a customer from all sessions in which he is registered
-     * @param id
-     * @throws GRSException if customer is invalid
+     * RemoveCustomerFromAllSessions: remove a customer from all sessions in which he is registered
+     * @param email: email of the customer
+     * @param gymUser: gymUser trying to remove customer from all sessions
+     * @throws GRSException if attempt to remove customer from all sessions is invalid
      */
     @Transactional 
-    public void removeCustomerFromAllSessions(String email){
+    public void removeCustomerFromAllSessions(String email, GymUser gymUser) {
+        if(!(gymUser instanceof Owner) || gymUser instanceof Customer && !gymUser.getEmail().equals(email)){
+            throw new GRSException(HttpStatus.UNAUTHORIZED, "Customers can only remove themselves from sessions.");
+        }
         Customer customer = customerRepository.findCustomerByEmail(email);
 
         if (customer == null){
             throw new GRSException(HttpStatus.NOT_FOUND, "Customer not found.");
         }
-
         customerRegistrationRepository.deleteCustomerRegistrationsByCustomer_Email(email);
     }
-
 }

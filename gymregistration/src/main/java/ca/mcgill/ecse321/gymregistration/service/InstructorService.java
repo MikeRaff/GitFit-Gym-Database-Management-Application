@@ -4,10 +4,14 @@ import ca.mcgill.ecse321.gymregistration.dao.CustomerRepository;
 import ca.mcgill.ecse321.gymregistration.dao.InstructorRepository;
 import ca.mcgill.ecse321.gymregistration.dao.OwnerRepository;
 import ca.mcgill.ecse321.gymregistration.dao.PersonRepository;
+import ca.mcgill.ecse321.gymregistration.model.Customer;
+import ca.mcgill.ecse321.gymregistration.model.GymUser;
 import ca.mcgill.ecse321.gymregistration.model.Instructor;
+import ca.mcgill.ecse321.gymregistration.model.Owner;
 import ca.mcgill.ecse321.gymregistration.model.Person;
 import ca.mcgill.ecse321.gymregistration.service.exception.GRSException;
 import jakarta.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -28,11 +32,11 @@ public class InstructorService {
 
     /**
      * CreateInstructor: creating an instructor
-     * @param email: Email of the instructor
-     * @param password: Password of the instructor
-     * @param person_id: iD of the person
-     * @return The created instructor
-     * @throws GRSException Invalid instructor creation request
+     * @param email: email of the instructor
+     * @param password: password of the instructor
+     * @param person_id: id of the person
+     * @return the created instructor
+     * @throws GRSException invalid instructor creation request
      */
     @Transactional
     public Instructor createInstructor(String email, String password, int person_id) {
@@ -54,12 +58,12 @@ public class InstructorService {
     }
 
     /**
-     * UpdateEmail: Allow users to edit their email information
-     * @param oldEmail: Old email of instructor
-     * @param password: Password of instructor
-     * @param newEmail: New email of instructor
-     * @return The new instructor
-     * @throws GRSException Instructor not found, invalid email and password combination, or invalid new email
+     * UpdateEmail: allow users to edit their email information
+     * @param oldEmail: old email of instructor
+     * @param password: password of instructor
+     * @param newEmail: new email of instructor
+     * @return the new instructor
+     * @throws GRSException instructor not found, invalid email and password combination, or invalid new email
      */
     @Transactional
     public Instructor updateEmail(String oldEmail, String password, String newEmail) {
@@ -75,13 +79,14 @@ public class InstructorService {
     }
 
     /**
-     * UpdatePassword: Allow users to edit their password information
-     * @param email: Email of instructor
-     * @param oldPassword: Old password of instructor
-     * @param newPassword: New password of instructor
-     * @return The new instructor
-     * @throws GRSException Instructor not found, invalid email and password combination, or invalid new password
+     * UpdatePassword: allow users to edit their password information
+     * @param email: email of instructor
+     * @param oldPassword: old password of instructor
+     * @param newPassword: new password of instructor
+     * @return the new instructor
+     * @throws GRSException instructor not found, invalid email and password combination, or invalid new password
      */
+    @Transactional
     public Instructor updatePassword(String email, String oldPassword, String newPassword) {
         Instructor instructor = instructorRepository.findInstructorByEmailAndPassword(email, oldPassword);
         if (instructor == null)
@@ -94,39 +99,24 @@ public class InstructorService {
     }
 
     /**
-     * Finds a desired instructor
-     * 
-     * @param id
-     * @return instructor with matching id
-     * @throws GRSException instructor not in the database
+     * GetInstructorByEmail: get an instructor by their email
+     * @param email: the email to search with
+     * @return the instructor
+     * @throws GRSException instructor not found
      */
     @Transactional
-    public Instructor getInstructorById(int id) {
-        Instructor instructor = instructorRepository.findInstructorById(id);
-        if (instructor == null)
-            throw new GRSException(HttpStatus.NOT_FOUND, "Instructor not found");
+    public Instructor getInstructorByEmail(String email) {
+        Instructor instructor = instructorRepository.findInstructorByEmail(email);
+        if (instructor == null){
+            throw new GRSException(HttpStatus.NOT_FOUND, "Instructor not found.");
+        }
         return instructor;
     }
 
     /**
-     * delete an instructor with an id
-     * 
-     * @param id
-     * @throws GRSException instructor not in the database
-     */
-    @Transactional
-    public void deleteIntructor(int id) {
-        Instructor instructor = instructorRepository.findInstructorById(id);
-        if (instructor == null)
-            throw new GRSException(HttpStatus.NOT_FOUND, "Instructor not found");
-        instructorRepository.delete(instructor);
-    }
-
-    /**
-     * Get all the instructors in the database
-     * 
-     * @return a list of the instructors
-     * @throws GRSException no instructors in the database
+     * GetAllInstructors: get all existing instructors 
+     * @return list of all existing instructors
+     * @throws GRSException no instructors found
      */
     @Transactional
     public List<Instructor> getAllInstructors() {
@@ -134,16 +124,65 @@ public class InstructorService {
         if (instructors.size() == 0) {
             throw new GRSException(HttpStatus.NOT_FOUND, "No Instructors found in the system.");
         }
-
         return instructors;
     }
 
+    /**
+     * DeleteInstructor: delete the instructor
+     * @param email: email of instructor to be deleted
+     * @param gymUser: The user trying to delete the instructor
+     * @throws GRSException instructor not found or user is not an owner or the instructor
+     */
     @Transactional
-    public Instructor logInInstructor(String email, String password) {
+    public void deleteIntructor(String email, GymUser gymUser) {
+        if(!(gymUser instanceof Owner) && !gymUser.getEmail().equals(email)){
+            throw new GRSException(HttpStatus.UNAUTHORIZED, "Instructors can only be deleted by themselves or the owners.");
+        }
+        Instructor instructor = instructorRepository.findInstructorByEmail(email);
+        if (instructor == null){
+            throw new GRSException(HttpStatus.NOT_FOUND, "Instructor not found.");
+        }
+        instructorRepository.deleteInstructorByEmail(email);
+    }
+
+    /**
+     * LoginInstructor: allow an instructor to log in
+     * @param email: email of the instructor
+     * @param password: password of the instructor
+     * @return the instructor
+     * @throws GRSException invalid instructor email or password
+     */
+    @Transactional
+    public Instructor loginInstructor(String email, String password) {
         Instructor instructor = instructorRepository.findInstructorByEmailAndPassword(email, password);
         if (instructor == null) {
-            throw new GRSException(HttpStatus.UNAUTHORIZED, "Invalid Email or Password");
+            throw new GRSException(HttpStatus.UNAUTHORIZED, "Invalid Email or Password.");
         }
         return instructor;
+    }
+
+    /**
+     * ChangeAccountType: change the account type of a user
+     * @param email: email of the instructor
+     * @param gymUser: the user trying to change the account type
+     * @return the new customer
+     * @throws GRSException only owners can change account type, instructor not found
+     */
+    public Customer changeAccountType(String email, GymUser gymUser) {
+        if (gymUser instanceof Owner == false) {
+            throw new GRSException(HttpStatus.UNAUTHORIZED, "Only owners can change account type.");
+        }
+        Instructor instructor = instructorRepository.findInstructorByEmail(email);
+        if (instructor == null) {
+            throw new GRSException(HttpStatus.NOT_FOUND, "Instructor not found.");
+        }
+        Person person = instructor.getPerson();
+        Customer customer = new Customer();
+        customer.setEmail(email);
+        customer.setPassword(instructor.getPassword());
+        customer.setPerson(person);
+        customerRepository.save(customer);
+        instructorRepository.deleteInstructorByEmail(email);
+        return customer;
     }
 }

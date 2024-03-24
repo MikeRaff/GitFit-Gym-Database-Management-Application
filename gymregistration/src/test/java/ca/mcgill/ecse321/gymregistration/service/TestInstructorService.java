@@ -6,6 +6,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import ca.mcgill.ecse321.gymregistration.dao.InstructorRepository;
 import ca.mcgill.ecse321.gymregistration.dao.PersonRepository;
 import ca.mcgill.ecse321.gymregistration.model.Instructor;
+import ca.mcgill.ecse321.gymregistration.model.Owner;
 import ca.mcgill.ecse321.gymregistration.model.Person;
 import ca.mcgill.ecse321.gymregistration.service.exception.GRSException;
 
@@ -125,14 +126,15 @@ public class TestInstructorService {
         Person person = new Person();
         int person_id = person.getId();
         personRepository.save(person);
+        Owner owner = new Owner();
         Instructor instructor = new Instructor(email, password, person);
         instructorRepository.save(instructor);
-        instructorService.deleteIntructor(instructor.getId());
+        instructorService.deleteIntructor(instructor.getEmail(), owner);
         lenient().doReturn(null).when(instructorRepository).findInstructorById(instructor.getId());
         instructor = instructorRepository.findInstructorById(instructor.getId());
         assertNull(instructor);
         try {
-           instructorService.deleteIntructor(1000);
+           instructorService.deleteIntructor("invalid@email.net", owner);
         } catch (GRSException e) {
             assertEquals(e.getMessage(), "Instructor not found");
         }
@@ -146,14 +148,14 @@ public class TestInstructorService {
         Instructor instructor = new Instructor();
         instructorRepository.save(instructor);
 
-        Instructor updatedInstructor = instructorService.updateInstructorEmail(instructor.getId(), email);
+        Instructor updatedInstructor = instructorService.updateEmail(instructor.getEmail(), password, email);
 
         assertEquals(instructor.getId(), updatedInstructor.getId());
         assertEquals(email, updatedInstructor.getEmail());
        ;
 
         try {
-            updatedInstructor = instructorService.updateInstructorEmail(1000, null);
+            updatedInstructor = instructorService.updateEmail("invalid@email.net", "wrongPassword", "newWrongEmail@google.com");
         } catch (GRSException e) {
             assertEquals(e.getMessage(), "Instructor not found");
         }
@@ -164,17 +166,17 @@ public class TestInstructorService {
     public void testGetInstructor() {
         Instructor instructor = new Instructor();
         instructorRepository.save(instructor);
-        Instructor newInstructor = instructorService.getInstructorById(instructor.getId());
+        Instructor newInstructor = instructorService.getInstructorByEmail(instructor.getEmail());
         assertEquals(instructor.getId(), newInstructor.getId());
         try {
-            newInstructor = instructorService.getInstructorById(1000);
+            newInstructor = instructorService.getInstructorByEmail("invalid@email.net");
         } catch (GRSException e) {
             assertEquals(e.getMessage(), "Instructor not found");
         }
     }
 
     @Test
-    public void testLogInInstructor()
+    public void testLoginInstructor()
     {
         Instructor instructor = new Instructor(EMAIL, PASSWORD, null);
         Instructor logInInstructor;

@@ -3,6 +3,9 @@ package ca.mcgill.ecse321.gymregistration.service;
 import ca.mcgill.ecse321.gymregistration.dao.ClassTypeRepository;
 import ca.mcgill.ecse321.gymregistration.service.exception.GRSException;
 import ca.mcgill.ecse321.gymregistration.model.ClassType;
+import ca.mcgill.ecse321.gymregistration.model.GymUser;
+import ca.mcgill.ecse321.gymregistration.model.Instructor;
+import ca.mcgill.ecse321.gymregistration.model.Owner;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,11 +25,14 @@ public class ClassTypeService {
      * CreateClassType: service method to create and store a class type in the database
      * @param name: name of class type
      * @param isApproved: approval of class type
+     * @param gymUser: user creating the class type
      * @return created class type
      * @throws GRSException if attempt to create class type is invalid
      */
     @Transactional
-    public ClassType createClassType(String name, boolean isApproved){
+    public ClassType createClassType(String name, boolean isApproved, GymUser gymUser){
+        if(!(gymUser instanceof Owner)){
+            throw new GRSException(HttpStatus.UNAUTHORIZED, "Only owners can create class types.");}
         if(name == null || name.trim().isEmpty()){
             throw new GRSException(HttpStatus.BAD_REQUEST, "Name cannot be empty.");
         }
@@ -50,10 +56,15 @@ public class ClassTypeService {
      * @param oldName: name of old class type
      * @param newName: name of new class type
      * @param isApproved: is approved of new class type
+     * @param gymUser: user updating the class type
      * @return Updated ClassType
+     * @throws GRSException if attempt to update class type is invalid
      */
     @Transactional
-    public ClassType updateClassType(String oldName, String newName, boolean isApproved){
+    public ClassType updateClassType(String oldName, String newName, boolean isApproved, GymUser gymUser){
+        if(!(gymUser instanceof Owner)){
+            throw new GRSException(HttpStatus.UNAUTHORIZED, "Only owners can update class types.");
+        }
         if(newName == null || newName.trim().isEmpty()){
             throw new GRSException(HttpStatus.BAD_REQUEST, "Name cannot be empty.");
         }
@@ -63,7 +74,6 @@ public class ClassTypeService {
         if(classTypeRepository.findClassTypeByName(oldName) == null){
             throw new GRSException(HttpStatus.CONFLICT, "Class Type " + oldName + " does not exist.");
         }
-
         ClassType toUpdate = classTypeRepository.findClassTypeByName(oldName);
         toUpdate.setName(newName);
         toUpdate.setApproved(isApproved);
@@ -72,7 +82,7 @@ public class ClassTypeService {
 
     /**
      * GetClassTypeByName: fetch an existing class type with a name
-     * @param name: Name used to fetch class type
+     * @param name: name used to fetch class type
      * @return class type that is found
      * @throws GRSException class type not found
      */
@@ -87,8 +97,8 @@ public class ClassTypeService {
 
     /**
      * GetAllClassTypes: getting all existing class types
-     * @return List of all existing class types
-     * @throws GRSException No class types found
+     * @return list of all existing class types
+     * @throws GRSException no class types found
      */
     @Transactional
     public List<ClassType> getAllClassTypes(){
@@ -102,10 +112,14 @@ public class ClassTypeService {
     /**
      * DeleteClassType: delete the class type
      * @param name: class type to be deleted
-     * @throws GRSException Class type not found
+     * @param gymUser: user deleting the class type
+     * @throws GRSException class type not found
      */
     @Transactional
-    public void deleteClassType(String name){
+    public void deleteClassType(String name, GymUser gymUser){
+        if(!(gymUser instanceof Owner)){
+            throw new GRSException(HttpStatus.UNAUTHORIZED, "Only owners can delete class types.");
+        }
         ClassType classType = classTypeRepository.findClassTypeByName(name);
         if(classType == null){
             throw new GRSException(HttpStatus.NOT_FOUND, "Class Type not found.");
@@ -116,11 +130,15 @@ public class ClassTypeService {
     /**
      * ProposeClassType: proposing a new class type
      * @param name: name of class type
+     * @param gymUser: user proposing the class type
      * @return the class type
-     * @throws GRSException Invalid request for class type
+     * @throws GRSException invalid request for class type
      */
     @Transactional
-    public ClassType proposeClassType(String name) {
+    public ClassType proposeClassType(String name, GymUser gymUser) {
+        if (!(gymUser instanceof Owner) && !(gymUser instanceof Instructor)) {
+            throw new GRSException(HttpStatus.UNAUTHORIZED, "Only owners and instructors can propose class types.");
+        }
         if (name == null || name.trim().isEmpty()){
             throw new GRSException(HttpStatus.BAD_REQUEST, "Name cannot be empty.");
         }
@@ -140,10 +158,15 @@ public class ClassTypeService {
     /**
      * ApproveProposedClassType: approving a proposed class type
      * @param name: class type to be approved
-     * @throws GRSException Class type not found
+     * @param gymUser: user approving the class type
+     * @return the approved class type
+     * @throws GRSException invalid request for class type approval
      */
     @Transactional
-    public ClassType approveProposedClassType(String name){
+    public ClassType approveProposedClassType(String name, GymUser gymUser){
+        if(!(gymUser instanceof Owner)){
+            throw new GRSException(HttpStatus.UNAUTHORIZED, "Only owners can approve class types.");
+        }
         ClassType classType = classTypeRepository.findClassTypeByName(name);
         if(classType == null){
             throw new GRSException(HttpStatus.NOT_FOUND, "Class Type not found.");
