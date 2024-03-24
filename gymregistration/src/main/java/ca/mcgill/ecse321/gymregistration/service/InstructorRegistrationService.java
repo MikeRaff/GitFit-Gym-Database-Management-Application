@@ -42,7 +42,7 @@ public class InstructorRegistrationService {
      */
     @Transactional
     public InstructorRegistration registerInstructorForClass(int sessionId, String email, GymUser gymUser) {
-        if(!(gymUser instanceof Owner) && gymUser.getEmail() != email) {
+        if(!(gymUser instanceof Owner) && !gymUser.getEmail().equals(email)) {
             throw new GRSException(HttpStatus.UNAUTHORIZED, "Instructors can only be assigned by themselves or by the owner.");
         }
         Instructor instructor = instructorRepository.findInstructorByEmail(email);
@@ -52,8 +52,9 @@ public class InstructorRegistrationService {
         }
         if (session == null)
             throw new GRSException(HttpStatus.NOT_FOUND, "Session not found.");
+        
         InstructorRegistration instructorRegistration = instructorRegistrationRepository
-                .findInstructorRegistrationByInstructor_idAndSession_id(instructor.getId().intValue(), sessionId);
+                .findInstructorRegistrationByInstructor_idAndSession_id(instructor.getId().intValue(), session.getId());
         if (instructorRegistration != null)
             throw new GRSException(HttpStatus.BAD_REQUEST, "Already registered.");
 
@@ -76,12 +77,14 @@ public class InstructorRegistrationService {
                 .findInstructorRegistrationsBySession_id(sessionId);
         if (instructorRegistrations.size() < 2)
             throw new GRSException(HttpStatus.BAD_REQUEST, "Not enough instructors registered.");
+        if (instructorRegistrations.size()<1)
+            throw new GRSException(HttpStatus.BAD_REQUEST, "Sessions not found.");
         GymUser gymuser = instructorRepository.findInstructorById(gymUser.getId().intValue());
         if(gymuser ==null)
             gymuser = ownerRepository.findOwnerById(gymUser.getId().intValue());
     
         if( gymuser == null || gymuser instanceof Owner == false || instructorRegistrationRepository.findInstructorRegistrationByInstructor_idAndSession_id(gymuser.getId(), sessionId)==null)
-            throw new GRSException(HttpStatus.UNAUTHORIZED, "You don't have permission to remove this instructor.");
+            throw new GRSException(HttpStatus.UNAUTHORIZED, "Cannot remove Instructor.");
         for (InstructorRegistration r : instructorRegistrations) {
             if (r.getInstructor().getId() == instructorRepository.findInstructorByEmail(email).getId()){
                 instructorRegistrationRepository.delete(r);
@@ -113,7 +116,7 @@ public class InstructorRegistrationService {
             throw new GRSException(HttpStatus.NOT_FOUND, "Session not found.");
 
         InstructorRegistration instructorRegistration = instructorRegistrationRepository
-                .findInstructorRegistrationByInstructorAndSession(instructor, session);
+                .findInstructorRegistrationByInstructor_idAndSession_id(instructor.getId(), session.getId());
         if (instructorRegistration == null)
             throw new GRSException(HttpStatus.BAD_REQUEST, "Instructor not registered for this session.");
         return instructorRegistration;
