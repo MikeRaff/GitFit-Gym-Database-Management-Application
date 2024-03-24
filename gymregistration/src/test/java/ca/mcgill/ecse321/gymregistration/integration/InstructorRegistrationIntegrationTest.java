@@ -9,8 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import java.util.List;
 
 import ca.mcgill.ecse321.gymregistration.dao.InstructorRegistrationRepository;
 import ca.mcgill.ecse321.gymregistration.dao.InstructorRepository;
@@ -18,6 +21,7 @@ import ca.mcgill.ecse321.gymregistration.dao.OwnerRepository;
 import ca.mcgill.ecse321.gymregistration.dao.SessionRepository;
 import ca.mcgill.ecse321.gymregistration.dto.InstructorRegistrationDto;
 import ca.mcgill.ecse321.gymregistration.model.Instructor;
+import ca.mcgill.ecse321.gymregistration.model.InstructorRegistration;
 import ca.mcgill.ecse321.gymregistration.model.Owner;
 import ca.mcgill.ecse321.gymregistration.model.Session;
 import ca.mcgill.ecse321.gymregistration.service.exception.GRSException;
@@ -46,43 +50,88 @@ public class InstructorRegistrationIntegrationTest {
 
     @Test
     public void testCreateandGetInstructorRegistration() {
-        int id = testCreateInstructorRegistration();
+        int id = testCreateInstructorRegistration("example@Email.com");
         testgetInstructorRegistration(id);
     }
 
     @Test
     public void testCreateandDeleteInstructorRegistrationOneInstructor() {
-        int id = testCreateInstructorRegistration();
+        int id = testCreateInstructorRegistration("example@Email.com");
         testDeleteInstructorRegistration(id, 1, id);
     }
 
     @Test
     public void testCreateandDeleteInstructorRegistrationTwoInstructors() {
-        int id = testCreateInstructorRegistration();
-        id = testCreateInstructorRegistration();
+        int id = testCreateInstructorRegistration("example@Email.com");
+        id = testCreateInstructorRegistration("example1@Email.com");
         testDeleteInstructorRegistration(id, 2, id);
     }
 
     @Test
     public void testCreateandDeleteInstructorRegistrationTwoInstructorsWithoutPermission() {
-        int id = testCreateInstructorRegistration();
-        testCreateInstructorRegistration();
+        int id = testCreateInstructorRegistration("example@Email.com");
+        testCreateInstructorRegistration("example1@Email.com");
         testDeleteInstructorRegistration(id, 2, 1000);
     }
 
     @Test
     public void testCreateandDeleteInstructorRegistrationTwoInstructorsAsOwner() {
-        int id = testCreateInstructorRegistration();
-        testCreateInstructorRegistration();
+        int id = testCreateInstructorRegistration("example@Email.com");
+        testCreateInstructorRegistration("example1@Email.com");
         Owner owner = new Owner();
         ownerRepository.save(owner);
         testDeleteInstructorRegistration(id, 2, owner.getId());
     }
 
-    public int testCreateInstructorRegistration() {
+    @Test 
+    public void testCreateInvalidInstructorRegistrationBadEmail()
+    {
+        try{
+            testCreateInstructorRegistration("fakeEmail");
+        }
+        catch(GRSException e)
+        {
+            assertEquals("Instructor not found.", e.getMessage());
+        }
+    }
 
+    @Test
+    public void testCreateInvalidInstructorRegistrationBadSession()
+    {
         Instructor instructor = new Instructor();
         Session session = new Session();
+        instructor.setEmail("example@Email.com");
+        instructorRepository.save(instructor);
+        sessionRepository.save(session);
+        InstructorRegistrationDto instructorRegistrationDto = new InstructorRegistrationDto(null, instructor, new Session());
+        String url = "/instructor-registration/create";
+        ResponseEntity<InstructorRegistrationDto> response = client.postForEntity(url, instructorRegistrationDto,
+                InstructorRegistrationDto.class);
+        
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode(), "response has correct status"); 
+    }
+
+    @Test
+    public void testCreateandGetInstructorRegistrationBySessionId()
+    {
+        int id = testCreateInstructorRegistration("example@Email.com");
+
+        testgetInstructorRegistrationsBySessionId(id);
+    }
+
+    @Test
+    public void testCreateandGetInstructorRegistrationByEmail()
+    {
+        int id = testCreateInstructorRegistration("example@Email.com");
+
+        testgetInstructorRegistrationsByEmail(id);
+    }
+
+
+    public int testCreateInstructorRegistration(String email) {
+        Instructor instructor = new Instructor();
+        Session session = new Session();
+        instructor.setEmail(email);
         instructorRepository.save(instructor);
         sessionRepository.save(session);
         InstructorRegistrationDto instructorRegistrationDto = new InstructorRegistrationDto(null, instructor, session);
@@ -97,12 +146,41 @@ public class InstructorRegistrationIntegrationTest {
     }
 
     public void testgetInstructorRegistration(int id) {
-        String url = "/instructor-registration/" + id;
+        InstructorRegistration instructorRegistration = instructorRegistrationRepository.findInstructorRegistrationById(id);
+        String url = "/instructor-registration/" + instructorRegistration.getSession().getId() + "/" + instructorRegistration.getInstructor().getEmail();
         ResponseEntity<InstructorRegistrationDto> response = client.getForEntity(url,
                 InstructorRegistrationDto.class);
         assertNotNull(response);
         assertEquals(id, response.getBody().getId());
         assertEquals(HttpStatus.OK, response.getStatusCode(), "Response has correct status");
+    }
+
+    public void testgetInstructorRegistrationsBySessionId(int id)
+    {
+        InstructorRegistration instructorRegistration = instructorRegistrationRepository.findInstructorRegistrationById(id);
+        String url = "/instructor-registration-s/" + instructorRegistration.getSession().getId();
+
+        ResponseEntity<List<InstructorRegistration>> response = client.exchange(url,
+        HttpMethod.GET,
+        null,
+        new ParameterizedTypeReference<List<InstructorRegistration>>() {});
+
+        assertNotNull(response);
+        assertEquals(response.getBody().size(),1);        
+    }
+
+    public void testgetInstructorRegistrationsByEmail(int id)
+    {
+        InstructorRegistration instructorRegistration = instructorRegistrationRepository.findInstructorRegistrationById(id);
+        String url = "/instructor-registration-i/" + instructorRegistration.getInstructor().getEmail();
+
+        ResponseEntity<List<InstructorRegistration>> response = client.exchange(url,
+        HttpMethod.GET,
+        null,
+        new ParameterizedTypeReference<List<InstructorRegistration>>() {});
+
+        assertNotNull(response);
+        assertEquals(response.getBody().size(),1);
     }
 
     public void testDeleteInstructorRegistration(int id, int numInstructors, int gid) {
