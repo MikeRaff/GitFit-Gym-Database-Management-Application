@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.List;
 
+import org.hibernate.service.internal.SessionFactoryServiceRegistryImpl;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,10 +14,15 @@ import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import ca.mcgill.ecse321.gymregistration.dao.InstructorRegistrationRepository;
 import ca.mcgill.ecse321.gymregistration.dao.InstructorRepository;
 import ca.mcgill.ecse321.gymregistration.dao.PersonRepository;
+import ca.mcgill.ecse321.gymregistration.dao.SessionRepository;
 import ca.mcgill.ecse321.gymregistration.dto.InstructorDto;
+import ca.mcgill.ecse321.gymregistration.model.Instructor;
+import ca.mcgill.ecse321.gymregistration.model.InstructorRegistration;
 import ca.mcgill.ecse321.gymregistration.model.Person;
+import ca.mcgill.ecse321.gymregistration.service.exception.GRSException;
 
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
@@ -36,35 +42,68 @@ public class InstructorServiceIntegrationTests {
     @AfterEach
     public void clearDatabase() {
         instructorRepository.deleteAll();
-        ;
     }
 
     @Test
     public void testCreateAndGetInstructor() {
-        int id = testCreateInstructor("example@email.com");
+        int id = testCreateInstructor("example@email.com", "password");
         testGetinstructor(id);
     }
 
     @Test // multiple
     // Verify the different emails
     public void testCreateAndGetInstructors() {
-        testCreateInstructor("example@email.com");
-        testCreateInstructor("example2@email.com");
+        testCreateInstructor("example@email.com", "password");
+        testCreateInstructor("example2@email.com", "password");
 
         testGetinstructors(2);
     }
 
     @Test
+    public void testCreateAndDeleteInstructor() {
+        int id = testCreateInstructor("example@email.com", "password");
+        testDeleteInstructor(id);
+    }
+
+    @Test
     public void testCreateandUpdateInstructor() {
-        int id = testCreateInstructor("example@email.com");
+        int id = testCreateInstructor("example@email.com", "password");
         testUpdateInstructor(id, "newemail@email.com", "newpassword");
     }
 
-    private int testCreateInstructor(String email) {
+    @Test
+    public void testCreateInvalidInstructor() {
+        testCreateInstructorInvalidEmailOrPassword("email", "password");
+        testCreateInstructorInvalidEmailOrPassword(null, "password");
+        testCreateInstructorInvalidEmailOrPassword("email@exmaple.com", null);
+        testCreateInstructorInvalidPerson();
+    }
+
+    public void testCreateInstructorInvalidEmailOrPassword(String email, String password) {
+        Person person = new Person();
+        personRepository.save(person);
+
+        ResponseEntity<InstructorDto> response = client.postForEntity("/instructors/create",
+                new InstructorDto(email, password, person), InstructorDto.class);
+        assertNotNull(response);
+
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode(), "Response has correct status");
+    }
+
+    public void testCreateInstructorInvalidPerson()
+    {
+        ResponseEntity<InstructorDto> response = client.postForEntity("/instructors/create",
+                new InstructorDto("email@email.com", "password",  new Person()), InstructorDto.class);
+        assertNotNull(response);
+
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode(), "Response has correct status");
+    }
+
+    private int testCreateInstructor(String email, String password) {
         Person person = new Person();
         personRepository.save(person);
         ResponseEntity<InstructorDto> response = client.postForEntity("/instructors/create",
-                new InstructorDto(email, "password", person), InstructorDto.class);
+                new InstructorDto(email, password, person), InstructorDto.class);
         assertNotNull(response);
         assertEquals(HttpStatus.CREATED, response.getStatusCode(), "Response has correct status");
 
@@ -95,16 +134,26 @@ public class InstructorServiceIntegrationTests {
     }
 
     private void testUpdateInstructor(int id, String email, String password) {
-        
+
         ResponseEntity<InstructorDto> response = client.exchange(
-                "/update-instructors/" + id + "/" + email + "/" + password, // URL with path variables
+                "/update-instructors-e/" + id + "/" + email, // URL with path variables
                 HttpMethod.PUT, // HTTP method
                 null,
                 InstructorDto.class);
-       ;
+        ;
         assertNotNull(response.getBody());
         assertEquals(email, response.getBody().getEmail());
         assertEquals(id, response.getBody().getId());
-        assertEquals(password, response.getBody().getPassword());
+
+    }
+
+    private void testDeleteInstructor(int id) {
+        try {
+            String url = "/instructors/delete/" + id;
+            client.delete(url);
+        } catch (GRSException e) {
+            fail();
+        }
+        assertEquals(1, 1);
     }
 }

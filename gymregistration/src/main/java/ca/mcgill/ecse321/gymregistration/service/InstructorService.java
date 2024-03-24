@@ -19,32 +19,31 @@ public class InstructorService {
     InstructorRepository instructorRepository;
     @Autowired
     PersonRepository personRepository;
-    
-    
+
     /**
      * 
      * @param email
      * @param password
      * @param person_id
-     * @throws GRSException missing information, instructor already exists, no person found
+     * @throws GRSException missing information, instructor already exists, no
+     *                      person found
      * @return instructor, the created object
      */
     @Transactional
-    public Instructor createInstructor(String email, String password, int person_id){
-        if (email == null || password == null || !email.contains("@")){
+    public Instructor createInstructor(String email, String password, int person_id) {
+        if (email == null || password == null || !email.contains("@")) {
             throw new GRSException(HttpStatus.BAD_REQUEST, "Invalid Email or Password");
         }
         Instructor instructor = instructorRepository.findInstructorByEmail(email);
-        if(instructor != null)
+        if (instructor != null)
             throw new GRSException(HttpStatus.BAD_REQUEST, "Email Already in use");
-        
+
         Person person = personRepository.findPersonById(person_id);
-        if(person == null)
+        if (person == null)
             throw new GRSException(HttpStatus.NOT_FOUND, "Person not found");
-        
-        
+
         instructor = new Instructor(email, password, person);
-        
+
         instructor = instructorRepository.save(instructor);
 
         return instructor;
@@ -52,6 +51,7 @@ public class InstructorService {
 
     /**
      * update the email or password of an instructor
+     * 
      * @param id
      * @param email
      * @param password
@@ -59,66 +59,81 @@ public class InstructorService {
      * @return
      */
     @Transactional
-    public Instructor updateInstructor(int id, String email, String password)
-    {
+    public Instructor updateInstructorEmail(int id, String email) {
         Instructor instructor = instructorRepository.findInstructorById(id);
-        if(instructor == null)
+        if (instructor == null)
             throw new GRSException(HttpStatus.NOT_FOUND, "Instructor not found");
+        if (email == null || !email.contains("@")) {
+            throw new GRSException(HttpStatus.BAD_REQUEST, "Invalid Email");
+        }
         instructor.setEmail(email);
+       
+        instructorRepository.save(instructor);
+        return instructor;
+    }
+
+    public Instructor updateInstructorPassword(int id, String password) {
+        Instructor instructor = instructorRepository.findInstructorById(id);
+        if (instructor == null)
+            throw new GRSException(HttpStatus.NOT_FOUND, "Instructor not found");
+        if ( password == null) {
+            throw new GRSException(HttpStatus.BAD_REQUEST, "Invalid Password");
+        }
+       
         instructor.setPassword(password);
-        instructor.setId(id);
         instructorRepository.save(instructor);
         return instructor;
     }
     /**
      * Finds a desired instructor
+     * 
      * @param id
      * @return instructor with matching id
      * @throws GRSException instructor not in the database
      */
     @Transactional
-    public Instructor getInstructorById(int id)
-    {
+    public Instructor getInstructorById(int id) {
         Instructor instructor = instructorRepository.findInstructorById(id);
-        if(instructor == null)
+        if (instructor == null)
             throw new GRSException(HttpStatus.NOT_FOUND, "Instructor not found");
         return instructor;
     }
+
     /**
      * delete an instructor with an id
+     * 
      * @param id
      * @throws GRSException instructor not in the database
      */
     @Transactional
-    public void deleteIntructor(int id)
-    {
+    public void deleteIntructor(int id) {
         Instructor instructor = instructorRepository.findInstructorById(id);
-        if(instructor == null)
+        if (instructor == null)
             throw new GRSException(HttpStatus.NOT_FOUND, "Instructor not found");
         instructorRepository.delete(instructor);
     }
+
     /**
      * Get all the instructors in the database
+     * 
      * @return a list of the instructors
      * @throws GRSException no instructors in the database
      */
     @Transactional
-    public List<Instructor> getAllInstructors()
-    {
-         List<Instructor> instructors = instructorRepository.findAll();
-        if(instructors.size() == 0){
+    public List<Instructor> getAllInstructors() {
+        List<Instructor> instructors = instructorRepository.findAll();
+        if (instructors.size() == 0) {
             throw new GRSException(HttpStatus.NOT_FOUND, "No Instructors found in the system.");
         }
-        
+
         return instructors;
     }
 
     @Transactional
-    public Instructor logInInstructor(String email, String password)
-    {
+    public Instructor logInInstructor(String email, String password) {
         Instructor instructor = instructorRepository.findInstructorByEmailAndPassword(email, password);
         if (instructor == null) {
-            throw new GRSException(HttpStatus.UNAUTHORIZED, "Invalid email or password");
+            throw new GRSException(HttpStatus.UNAUTHORIZED, "Invalid Email or Password");
         }
         return instructor;
     }
