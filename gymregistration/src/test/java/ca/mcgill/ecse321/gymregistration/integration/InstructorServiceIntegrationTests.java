@@ -1,4 +1,4 @@
-package ca.mcgill.ecse321.gymregistration.integration;
+package ca.mcgill.ecse321.gymregistration.Integration;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -19,6 +19,7 @@ import ca.mcgill.ecse321.gymregistration.dto.InstructorDto;
 import ca.mcgill.ecse321.gymregistration.model.Person;
 import ca.mcgill.ecse321.gymregistration.service.exception.GRSException;
 
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -41,7 +42,7 @@ public class InstructorServiceIntegrationTests {
     @Test
     public void testCreateAndGetInstructor() {
         int id = testCreateInstructor("example@email.com", "password");
-        testGetinstructor(id);
+        testGetinstructor("example@email.com");
     }
 
     @Test // multiple
@@ -49,7 +50,6 @@ public class InstructorServiceIntegrationTests {
     public void testCreateAndGetInstructors() {
         testCreateInstructor("example@email.com", "password");
         testCreateInstructor("example2@email.com", "password");
-
         testGetinstructors(2);
     }
 
@@ -60,9 +60,9 @@ public class InstructorServiceIntegrationTests {
     }
 
     @Test
-    public void testCreateandUpdateInstructor() {
+    public void testCreateandUpdateInstructorEmail() {
         int id = testCreateInstructor("example@email.com", "password");
-        testUpdateInstructor(id, "newemail@email.com", "newpassword");
+        testUpdateInstructorEmail(id,"example@email.com", "newemail@email.com","password");
     }
 
     @Test
@@ -104,13 +104,13 @@ public class InstructorServiceIntegrationTests {
         return response.getBody().getId();
     }
 
-    private void testGetinstructor(int id) {
-        ResponseEntity<InstructorDto> response = client.getForEntity("/instructors/" + id, InstructorDto.class);
+    private void testGetinstructor(String email) {
+        ResponseEntity<InstructorDto> response = client.getForEntity("/instructors/" + email, InstructorDto.class);
 
         assertNotNull(response);
         assertEquals(HttpStatus.OK, response.getStatusCode(), "Response has correct status");
         assertNotNull(response.getBody(), "Response has body");
-        assertEquals(response.getBody().getId(), id);
+        assertEquals(response.getBody().getEmail(), email);
     }
 
     private void testGetinstructors(int size) {
@@ -127,16 +127,21 @@ public class InstructorServiceIntegrationTests {
         }
     }
 
-    private void testUpdateInstructor(int id, String email, String password) {
+    private void testUpdateInstructorEmail(int id, String email, String newEmail,String password ) {
+
+        InstructorDto instructorDto = new InstructorDto(email, password, null);
+        instructorDto.setId(id);
+
+        HttpEntity<InstructorDto> requestEntity = new HttpEntity<>(instructorDto, null);
 
         ResponseEntity<InstructorDto> response = client.exchange(
-                "/update-instructors-e/" + id + "/" + email, // URL with path variables
+                "/update-instructors-e/"+newEmail, // URL with path variables
                 HttpMethod.PUT, // HTTP method
-                null,
+                requestEntity,
                 InstructorDto.class);
-        ;
+        
         assertNotNull(response.getBody());
-        assertEquals(email, response.getBody().getEmail());
+        assertEquals(newEmail, response.getBody().getEmail());
         assertEquals(id, response.getBody().getId());
 
     }
