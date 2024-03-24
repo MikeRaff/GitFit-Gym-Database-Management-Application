@@ -25,8 +25,8 @@ public class InstructorRegistrationRestController {
     private InstructorRegistrationService instructorRegistrationService;
     
     /**
-     * Create a new instructor registration
-     * @param instructorRegistrationDto
+     * RegisterInstructorForClass: register an instructor for a class
+     * @param instructorRegistrationDto: the instructor registration dto
      * @return the response entity of the result
      */
     @PostMapping(value = { "/instructor-registration/create", "/instructor-registration/create/" })
@@ -42,8 +42,8 @@ public class InstructorRegistrationRestController {
         }
     }
     /**
-     * Delete an instructor Registration
-     * @param id
+     * RemoveInstructorFromClass: remove an instructor from a class
+     * @param id: the id of the instructor registration
      * @return A response entity containing the success of the method
      * @throws IllegalArgumentException
      * 
@@ -55,9 +55,9 @@ public class InstructorRegistrationRestController {
 
     /**
      * UpdateInstructorRegistration: update instructor registration
-     * @param id
-     * @param instructorRegistrationDto
-     * @return
+     * @param id: the id of the instructor registration
+     * @param instructorRegistrationDto: the instructor registration dto
+     * @return A response entity containing the updated Dto and the status
      * @throws IllegalArgumentException
      */
     @PutMapping(value = {"/instructor-registration/{id}", "/instructor-registration/{id}/"})
@@ -67,8 +67,8 @@ public class InstructorRegistrationRestController {
     }
 
     /**
-     * Getting all instructor registrations for a session id
-     * @param id
+     * GetInstructorRegistration: get instructor registration by id
+     * @param id: the id of the instructor registration
      * @return a response entity containing the Dto and the status
      */
     @GetMapping(value = { "/instructor-registration/{id}", "/instructor-registration/{id}" })
@@ -76,4 +76,25 @@ public class InstructorRegistrationRestController {
         return instructorRegistrationService.getInstructorRegistrationBySession(id).stream().map(InstructorRegistration::new).collect(Collectors.toList());
     }
 
+    /**
+     * GetInstructorRegistrationsByInstructor: get instructor registrations by instructor
+     * @param email: the email of the instructor
+     * @return a list of instructor registrations
+     */
+    @GetMapping(value = { "/instructor-registration/{email}", "/instructor-registration/{email}/" })
+    public List<InstructorRegistration> getInstructorRegistrationsByInstructor(@PathVariable("email") String email) {
+        return instructorRegistrationService.getInstructorRegistrationsByInstructor(email).stream().map(InstructorRegistration::new).collect(Collectors.toList());
+    }
+
+    /**
+     * GetInstructorRegistrationByInstructorAndSession: get instructor registration by instructor and session
+     * @param sessionId: the id of the session
+     * @param email: the email of the instructor
+     * @return a response entity containing the Dto and the status
+     */
+    @GetMapping(value = { "/instructor-registration/{sessionId}/{email}", "/instructor-registration/{sessionId}/{email}/" })
+    public ResponseEntity<InstructorRegistrationDto> getInstructorRegistrationByInstructorAndSession(@PathVariable("sessionId") int sessionId, @PathVariable("email") String email) {
+        InstructorRegistration instructorRegistration = instructorRegistrationService.getInstructorRegistrationByInstructorAndSession(sessionId, email);
+        return new ResponseEntity<>(new InstructorRegistrationDto(instructorRegistration), HttpStatus.OK);
+    }
 }
