@@ -6,6 +6,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import ca.mcgill.ecse321.gymregistration.dao.InstructorRepository;
 import ca.mcgill.ecse321.gymregistration.dao.PersonRepository;
 import ca.mcgill.ecse321.gymregistration.model.Instructor;
+import ca.mcgill.ecse321.gymregistration.model.Owner;
 import ca.mcgill.ecse321.gymregistration.model.Person;
 import ca.mcgill.ecse321.gymregistration.service.exception.GRSException;
 
@@ -125,14 +126,15 @@ public class TestInstructorService {
         Person person = new Person();
         int person_id = person.getId();
         personRepository.save(person);
+        Owner owner = new Owner();
         Instructor instructor = new Instructor(email, password, person);
         instructorRepository.save(instructor);
-        instructorService.deleteIntructor(instructor.getEmail());
+        instructorService.deleteIntructor(instructor.getEmail(), owner);
         lenient().doReturn(null).when(instructorRepository).findInstructorById(instructor.getId());
         instructor = instructorRepository.findInstructorById(instructor.getId());
         assertNull(instructor);
         try {
-           instructorService.deleteIntructor("invalid@email.net");
+           instructorService.deleteIntructor("invalid@email.net", owner);
         } catch (GRSException e) {
             assertEquals(e.getMessage(), "Instructor not found");
         }

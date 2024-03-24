@@ -9,8 +9,10 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface InstructorRegistrationRepository extends CrudRepository<InstructorRegistration, Integer> {
     InstructorRegistration findInstructorRegistrationById(int id);
-
-    InstructorRegistration findInstructorRegistrationByInstructor_idAndSession_id(int instructorid, int sessionid);
+    InstructorRegistration findInstructorRegistrationByInstructorAndSession(Instructor instructor, Session session);
+    InstructorRegistration findInstructorRegistrationByInstructor_idAndSession_id(int instructorId, int sessionId);
     List<InstructorRegistration> findInstructorRegistrationsBySession_id(int sessionid);
+    List<InstructorRegistration> findInstructorRegistrationsByInstructor_Email(String email);
+    
     List<InstructorRegistration> findAll();
 }

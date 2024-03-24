@@ -8,10 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import ca.mcgill.ecse321.gymregistration.dto.ClassTypeDto;
 import ca.mcgill.ecse321.gymregistration.dto.OwnerDto;
-import ca.mcgill.ecse321.gymregistration.model.ClassType;
-import ca.mcgill.ecse321.gymregistration.model.Instructor;
+import ca.mcgill.ecse321.gymregistration.model.GymUser;
 import ca.mcgill.ecse321.gymregistration.model.Owner;
 import ca.mcgill.ecse321.gymregistration.service.OwnerService;
 import ca.mcgill.ecse321.gymregistration.service.exception.GRSException;
@@ -74,11 +72,12 @@ public class OwnerRestController {
     /**
      * DeleteOwner: deleting an owner from the system
      * @param email: Email of owner to be deleted
+     * @param gymUser: the user trying to delete the owner
      * @throws IllegalArgumentException
      */
     @DeleteMapping(value = {"/owners/delete/{email}", "/owners/delete/{email}/"})
-    public void deleteInstructor(@PathVariable("email") String email) throws IllegalArgumentException{
-        ownerService.deleteOwner(email);
+    public void deleteInstructor(@PathVariable("email") String email, @RequestBody GymUser gymUser) throws IllegalArgumentException{
+        ownerService.deleteOwner(email, gymUser);
     }
 
     /**
