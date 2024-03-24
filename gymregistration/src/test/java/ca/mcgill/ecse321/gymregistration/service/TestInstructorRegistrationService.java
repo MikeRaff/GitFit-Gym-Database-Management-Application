@@ -150,7 +150,7 @@ public class TestInstructorRegistrationService {
                 .registerInstructorForClass(session.getId(), instructor.getId());
         try {
             instructorRegistrationService.removeInstructorFromClass(instructorRegistration.getSession().getId(),
-                    instructorRegistration.getInstructor().getId().intValue());
+                    instructorRegistration.getInstructor().getId().intValue(),instructorRegistration.getInstructor().getId().intValue());
         } catch (GRSException e) {
             assertEquals(e.getMessage(), "not enough instructors registered");
         }
