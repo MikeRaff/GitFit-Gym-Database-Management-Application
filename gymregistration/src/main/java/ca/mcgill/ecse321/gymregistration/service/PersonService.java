@@ -48,7 +48,7 @@ public class PersonService {
         if(person == null){
             throw new GRSException(HttpStatus.BAD_REQUEST, "Person not found.");
         }
-        if(newName == null){
+        if(newName == null || newName.trim().isEmpty()){
             throw new GRSException(HttpStatus.BAD_REQUEST, "Invalid name.");
         }
 
@@ -79,6 +79,9 @@ public class PersonService {
      */
     @Transactional
     public List<Person> getPersonsByName(String name){
+        if(name == null || name.trim().isEmpty()){
+            throw new GRSException(HttpStatus.BAD_REQUEST, "Must include name.");
+        }
         List<Person> persons = personRepository.findPersonsByName(name);
         if(persons.size() == 0){
             throw new GRSException(HttpStatus.NOT_FOUND, "No persons with this name found in the system.");
