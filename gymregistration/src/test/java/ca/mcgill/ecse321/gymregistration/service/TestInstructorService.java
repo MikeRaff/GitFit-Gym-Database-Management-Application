@@ -3,8 +3,11 @@ package ca.mcgill.ecse321.gymregistration.service;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import ca.mcgill.ecse321.gymregistration.dao.CustomerRepository;
 import ca.mcgill.ecse321.gymregistration.dao.InstructorRepository;
+import ca.mcgill.ecse321.gymregistration.dao.OwnerRepository;
 import ca.mcgill.ecse321.gymregistration.dao.PersonRepository;
+import ca.mcgill.ecse321.gymregistration.model.Customer;
 import ca.mcgill.ecse321.gymregistration.model.Instructor;
 import ca.mcgill.ecse321.gymregistration.model.Owner;
 import ca.mcgill.ecse321.gymregistration.model.Person;
@@ -32,6 +35,11 @@ public class TestInstructorService {
 
     @Mock
     private PersonRepository personRepository;
+
+    @Mock
+    private OwnerRepository ownerRepository;
+    @Mock
+    private CustomerRepository customerRepository;
 
     @InjectMocks
     private InstructorService instructorService = new InstructorService();
@@ -75,6 +83,45 @@ public class TestInstructorService {
             }
         });
 
+        lenient().when(instructorRepository.findInstructorByEmail(anyString())).thenAnswer((InvocationOnMock invocation) -> {
+            String email = invocation.getArgument(0);
+
+            if (EMAIL.equals(email)) {
+                Instructor instructor = new Instructor();
+                instructor.setId(ID);
+                instructor.setEmail(EMAIL);
+                return instructor;
+            } else {
+                return null;
+            }
+        });
+
+        lenient().when(ownerRepository.findOwnerByEmail(anyString())).thenAnswer((InvocationOnMock invocation) -> {
+            String email = invocation.getArgument(0);
+
+            if (EMAIL.equals(email)) {
+                Owner owner = new Owner();
+                owner.setId(ID);
+                owner.setEmail(EMAIL);
+                return owner;
+            } else {
+                return null;
+            }
+        });
+
+        lenient().when(customerRepository.findCustomerByEmail(anyString())).thenAnswer((InvocationOnMock invocation) -> {
+            String email = invocation.getArgument(0);
+
+            if (EMAIL.equals(email)) {
+                Customer customer = new Customer();
+                customer.setId(ID);
+                customer.setEmail(EMAIL);
+                return customer;
+            } else {
+                return null;
+            }
+        });
+
         lenient().when(personRepository.findPersonById(anyInt())).thenAnswer((InvocationOnMock invocation) -> {
             int id = invocation.getArgument(0);
             if (id == PERSON_ID) { // Replace INSTRUCTOR_ID with your expected instructor ID
@@ -86,6 +133,7 @@ public class TestInstructorService {
             }
         });
 
+        
         lenient().when(instructorRepository.save(any(Instructor.class))).thenAnswer((InvocationOnMock invocation) -> {
             return invocation.getArgument(0); // Return the saved object
         });
@@ -121,13 +169,10 @@ public class TestInstructorService {
             Instructor instructor = invocation.getArgument(0);
             return null; // Simulate successful deletion
         }).when(instructorRepository).delete(any(Instructor.class));
-        String email = "Email@email.com";
-        String password = "password";
         Person person = new Person();
-        int person_id = person.getId();
         personRepository.save(person);
         Owner owner = new Owner();
-        Instructor instructor = new Instructor(email, password, person);
+        Instructor instructor = new Instructor(EMAIL, PASSWORD, person);
         instructorRepository.save(instructor);
         instructorService.deleteIntructor(instructor.getEmail(), owner);
         lenient().doReturn(null).when(instructorRepository).findInstructorById(instructor.getId());
@@ -136,28 +181,29 @@ public class TestInstructorService {
         try {
            instructorService.deleteIntructor("invalid@email.net", owner);
         } catch (GRSException e) {
-            assertEquals(e.getMessage(), "Instructor not found");
+            assertEquals(e.getMessage(), "Instructor not found.");
         }
     }
 
     @Test
     public void testUpdateInstuctor() {
-        String email = "email@example.com";
+        String newemail = "newemail@example.com";
         String password = "password";
 
-        Instructor instructor = new Instructor();
+        Instructor instructor = new Instructor(EMAIL, PASSWORD, null);
         instructorRepository.save(instructor);
 
-        Instructor updatedInstructor = instructorService.updateEmail(instructor.getEmail(), password, email);
+
+        Instructor updatedInstructor = instructorService.updateEmail(instructor.getEmail(), password, newemail);
 
         assertEquals(instructor.getId(), updatedInstructor.getId());
-        assertEquals(email, updatedInstructor.getEmail());
+        assertEquals(newemail, updatedInstructor.getEmail());
        ;
 
         try {
             updatedInstructor = instructorService.updateEmail("invalid@email.net", "wrongPassword", "newWrongEmail@google.com");
         } catch (GRSException e) {
-            assertEquals(e.getMessage(), "Instructor not found");
+            assertEquals("Instructor not found, invalid email and password combination.",e.getMessage());
         }
 
     }
@@ -165,13 +211,14 @@ public class TestInstructorService {
     @Test
     public void testGetInstructor() {
         Instructor instructor = new Instructor();
+        instructor.setEmail(EMAIL);
         instructorRepository.save(instructor);
         Instructor newInstructor = instructorService.getInstructorByEmail(instructor.getEmail());
         assertEquals(instructor.getId(), newInstructor.getId());
         try {
             newInstructor = instructorService.getInstructorByEmail("invalid@email.net");
         } catch (GRSException e) {
-            assertEquals(e.getMessage(), "Instructor not found");
+            assertEquals(e.getMessage(), "Instructor not found.");
         }
     }
 
@@ -179,10 +226,10 @@ public class TestInstructorService {
     public void testLoginInstructor()
     {
         Instructor instructor = new Instructor(EMAIL, PASSWORD, null);
-        Instructor logInInstructor;
+        
         instructorRepository.save(instructor);
 
-        logInInstructor = instructorRepository.findInstructorByEmailAndPassword(EMAIL, PASSWORD);
+        Instructor logInInstructor = instructorService.loginInstructor(instructor.getEmail(), instructor.getPassword());
 
         assertNotNull(logInInstructor);
         assertEquals(EMAIL, logInInstructor.getEmail());
