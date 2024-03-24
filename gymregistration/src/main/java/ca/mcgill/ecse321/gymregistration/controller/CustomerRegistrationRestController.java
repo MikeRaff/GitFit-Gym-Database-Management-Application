@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ca.mcgill.ecse321.gymregistration.dto.CustomerRegistrationDto;
 import ca.mcgill.ecse321.gymregistration.model.CustomerRegistration;
+import ca.mcgill.ecse321.gymregistration.model.GymUser;
 import ca.mcgill.ecse321.gymregistration.service.CustomerRegistrationService;
 
 @CrossOrigin( origins = "*")
@@ -27,8 +28,8 @@ public class CustomerRegistrationRestController {
     private CustomerRegistrationService customerRegistrationService;
 
     /**
-     * getCustomerRegistrationsOfCustomer: gets all registrations for a customer
-     * @param email
+     * GetCustomerRegistrationsOfCustomer: gets all registrations for a customer
+     * @param email: email of customer
      * @return all registrations in database of customer
      * @throws IllegalArgumentException
      */
@@ -38,8 +39,8 @@ public class CustomerRegistrationRestController {
     }
 
     /**
-     * getCustomerRegistrationOfSession: gets all registrations for a session
-     * @param sessionId
+     * GetCustomerRegistrationOfSession: gets all registrations for a session
+     * @param sessionId: id of session
      * @return all registrations in database of session
      * @throws IllegalArgumentException
      */
@@ -49,13 +50,14 @@ public class CustomerRegistrationRestController {
     }
 
     /**
-     * getCustomerRegistration: returns registration to a session for a customer
-     * @param email
-     * @param id
+     * GetCustomerRegistration: returns registration to a session for a customer
+     * @param email: email of customer
+     * @param sessionId: id of session
      * @return customer registration in the system
      * @throws IllegalArgumentException
      */
-    @GetMapping(value = {"/customer-registrations/{email}/{id}", "/customer-registration/{email}/{sessionId}/"})
+
+    @GetMapping(value = {"/customer-registration/{email}/{sessionId}", "/customer-registration/{email}/{sessionId}/"})
     public ResponseEntity<CustomerRegistrationDto> getCustomerRegistration(@PathVariable("email") String email, 
             @PathVariable("sessionId") int sessionId) throws IllegalArgumentException{
         CustomerRegistration customerRegistration = customerRegistrationService.getCustomerRegistrationByCustomerAndSession(sessionId, email);
@@ -63,9 +65,9 @@ public class CustomerRegistrationRestController {
     }
 
     /**
-     * registerCustomerToSession: creates a new registration to register a customer to an event
-     * @param sessionId
-     * @param email
+     * RegisterCustomerToSession: creates a new registration to register a customer to an event
+     * @param sessionId: id of session
+     * @param email: email of customer
      * @return customer registration in the system
      * @throws IllegalArgumentException
      */
@@ -76,9 +78,10 @@ public class CustomerRegistrationRestController {
     }
 
     /**
-     * removeCustomerRegistration: deletes registration to a session for a customer
-     * @param email
-     * @param sessionId
+     * RemoveCustomerRegistration: deletes registration to a session for a customer
+     * @param email: email of customer
+     * @param sessionId: id of session
+     * @param gymUser: user removing the registration
      * @throws IllegalArgumentException
      */
     @DeleteMapping(value = {"/customer-registrations/remove/{email}/{sessionId}", "/customer-registration/remove/{email}/{sessionId}/"})
@@ -87,8 +90,9 @@ public class CustomerRegistrationRestController {
     }
 
     /**
-     * removeAllCustomerRegistrations: deletes registrations to all sessions for a customer
-     * @param email
+     * RemoveAllCustomerRegistrations: deletes registrations to all sessions for a customer
+     * @param email: email of customer
+     * @param gymUser: user removing the registrations
      * @throws IllegalArgumentException
      */
     @DeleteMapping(value = {"/customer-registrations/remove/{email}", "/customer-registration/remove/{email}/"})

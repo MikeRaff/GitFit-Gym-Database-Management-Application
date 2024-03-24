@@ -29,13 +29,30 @@ public class CustomerTests {
         customerRepository.deleteAll();
         personRepository.deleteAll();
     }
+
     @Test
-    public void testCreateAndReadCustomer() {
+    public void testCreateAndReadCustomerWithoutCreditCard() {
+        // Create and persist person.
+        Person alice = createAndPersistPerson("Alice");
+
+        // Create customer.
+        Customer customer = createAndPersistCustomer("customeremail@emailprovider.net", "password", alice);
+        
+        // Read customer from the database.
+        Customer customerFromDB = customerRepository.findCustomerById(customer.getId());
+
+        // Assertions
+        assertCustomerAttributes(customer, customerFromDB);
+        assertPersonAttributes(alice, customerFromDB.getPerson());
+    }
+
+    @Test
+    public void testCreateAndReadCustomerWithCreditCard() {
         // Create and persist person.
         Person jim = createAndPersistPerson("Jim");
 
         // Create customer.
-        Customer customer = createAndPersistCustomer("customeremail@emailprovider.net", "password", jim, 123456789);
+        Customer customer = createAndPersistCustomerWithCreditCard("customeremail@emailprovider.net", "password", jim, 123456789);
 
         // Read customer from the database.
         Customer customerFromDB = customerRepository.findCustomerById(customer.getId());
@@ -46,20 +63,21 @@ public class CustomerTests {
     }
 
     @Test
-    public void testFindCustomersByPersonName() {
+    public void testFindCustomersByPersonNameWithAndWithoutCreditCard() {
         // Create and persist person.
         Person bob = createAndPersistPerson("Bob Johnson");
 
         // Create customers with the same person.
-        createAndPersistCustomer("customer1@emailprovider.ca", "customer1Password", bob, 987654321);
-        createAndPersistCustomer("customer2@emailprovider.ca", "customer2Password", bob, 456789123);
+        createAndPersistCustomer("customer1@emailprovider.ca", "customer1Password", bob);
+        createAndPersistCustomerWithCreditCard("customer2@emailprovider.ca", "customer2Password", bob, 456789123);
+        createAndPersistCustomerWithCreditCard("customer3@emailprovider.ca", "customer3Password", bob, 987654321);
 
         // Find customers by person name.
         List<Customer> customers = customerRepository.findCustomersByPerson_Name(bob.getName());
 
         // Assertions
         assertNotNull(customers);
-        assertEquals(2, customers.size());
+        assertEquals(3, customers.size());
     }
 
     private Person createAndPersistPerson(String name) {
@@ -67,7 +85,12 @@ public class CustomerTests {
         return personRepository.save(person);
     }
 
-    private Customer createAndPersistCustomer(String email, String password, Person person, int creditCardNumber) {
+    private Customer createAndPersistCustomer(String email, String password, Person person) {
+        Customer customer = new Customer(email, password, person);
+        return customerRepository.save(customer);
+    }
+
+    private Customer createAndPersistCustomerWithCreditCard(String email, String password, Person person, int creditCardNumber) {
         Customer customer = new Customer(email, password, person, creditCardNumber);
         return customerRepository.save(customer);
     }

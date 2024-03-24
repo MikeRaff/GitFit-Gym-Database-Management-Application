@@ -6,14 +6,13 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import ca.mcgill.ecse321.gymregistration.dao.InstructorRegistrationRepository;
+import ca.mcgill.ecse321.gymregistration.model.*;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 
-import ca.mcgill.ecse321.gymregistration.dao.InstructorRegistrationRepository;
 import ca.mcgill.ecse321.gymregistration.dao.SessionRepository;
-import ca.mcgill.ecse321.gymregistration.model.ClassType;
-import ca.mcgill.ecse321.gymregistration.model.Session;
 import ca.mcgill.ecse321.gymregistration.service.exception.GRSException;
 import org.springframework.stereotype.Service;
 
@@ -21,71 +20,74 @@ import org.springframework.stereotype.Service;
 public class SessionService {
     @Autowired
     SessionRepository sessionRepository;
-    @Autowired 
+    @Autowired
     InstructorRegistrationRepository instructorRegistrationRepository;
 
     /**
-     * Create Session: Creates a new session
-     * @param classType: The classtype of the session
-     * @param startTime: The start time of the class
+     * Create Session: creates a new session
+     * @param classType: the classtype of the session
+     * @param startTime: the start time of the class
      * @param endTime: the end time of the class
      * @param date: the day the class takes place
      * @param description: a textual description of the class
      * @param name: the name of this specific class
      * @param location: where this class is being taught
+     * @param capacity: the maximum number of people that can attend this class
+     * @param gymUser: the user creating the session
      * @return the created session
-     * @throws GRSException Invalid creation request
+     * @throws GRSException invalid creation request
      */
     @Transactional
-    public Session createSession(Date date, Time startTime, Time endTime, String description, String name, String location, ClassType classType, int capacity)
-    {
+    public Session createSession(Date date, Time startTime, Time endTime, String description, String name, String location, ClassType classType, int capacity, GymUser gymUser){
+        if(gymUser instanceof Customer) {
+            throw new GRSException(HttpStatus.UNAUTHORIZED, "Customers are not allowed to create sessions.");}
         if(sessionRepository.findSessionByStartTimeAndDate(startTime, date)!=null){
-            throw new GRSException(HttpStatus.BAD_REQUEST, "Time not available.");
-        }
+            throw new GRSException(HttpStatus.BAD_REQUEST, "Time not available.");}
         if(classType == null || startTime == null || endTime == null || date == null || description == null || description.length() == 0 || name == null || name.length() == 0 || location == null || location.length() == 0){
-            throw new GRSException(HttpStatus.BAD_REQUEST, "Missing information.");
-        }
+            throw new GRSException(HttpStatus.BAD_REQUEST, "Missing information.");}
         if(!classType.getIsApproved()) {
-            throw new GRSException(HttpStatus.BAD_REQUEST, "Class must be approved.");
-        }
-        //getting current date and time
-        LocalDateTime currentDateTime = LocalDateTime.now();
-        //converting startTime and date to LocalDateTime
-        LocalDateTime sessionDatetime = LocalDateTime.of(date.toLocalDate(), startTime.toLocalTime());
-        //calculating difference
-        Duration timeDifference = Duration.between(currentDateTime, sessionDatetime);
+            throw new GRSException(HttpStatus.BAD_REQUEST, "Class must be approved.");}
+
+        LocalDateTime currentDateTime = LocalDateTime.now();    //getting current date and time
+        LocalDateTime sessionDatetime = LocalDateTime.of(date.toLocalDate(), startTime.toLocalTime());  //converting startTime and date to LocalDateTime
+        Duration timeDifference = Duration.between(currentDateTime, sessionDatetime);   //calculating difference
         //checking if session is at least 48 hours ahead of current time
         if (timeDifference.toHours() < 48){
-            throw new GRSException(HttpStatus.BAD_REQUEST, "Session must be at least 48 hours ahead of the current time.");
-        }
-        Session session = new Session();
-        session.setDate(date);
-        session.setStartTime(startTime);
-        session.setEndTime(endTime);
-        session.setDescription(description);
-        session.setName(name);
-        session.setLocation(location);
-        session.setClassType(classType);
-        session.setCapacity(capacity);
+            throw new GRSException(HttpStatus.BAD_REQUEST, "Session must be at least 48 hours ahead of the current time.");}
+        Session session = new Session(date, startTime, endTime, description, name, location, classType, capacity);
         sessionRepository.save(session);
         return session;
     }
 
-    @Transactional
-    //POSSIBLY NEED TO ADD FUNCTIONALITY TO PREVENT ANYONE FROM ALTERING IT
+
     /**
-     * Update Existing Session
-     * @param oldSessionId: Session to be updated
-     * @param newSession: New session to be changed to 
+     * UpdateSession: update a session
+     * @param oldSessionId: session to be updated
+     * @param newSession: new session to be changed to 
+     * @param gymUser: the user updating the session
      * @return the new updated Session
-     * @throws GRSException Session Empty
+     * @throws GRSException invalid session update request
      **/
-    public Session updateSession(int oldSessionId, Session newSession){
+    @Transactional
+     public Session updateSession(int oldSessionId, Session newSession, GymUser gymUser){
         if(sessionRepository.findSessionById(oldSessionId) == null){
-            throw new GRSException(HttpStatus.CONFLICT, "Session with id " + oldSessionId + " does not exist.");
+            throw new GRSException(HttpStatus.CONFLICT, "Session with id does not exist.");
         }
-        if(newSession == null){
-            throw new GRSException(HttpStatus.BAD_REQUEST, "Session cannot be empty.");
+        if(newSession == null || newSession.getDate() == null || newSession.getStartTime() == null || newSession.getEndTime() == null || newSession.getDescription() == null || newSession.getName() == null || newSession.getLocation() == null || newSession.getClassType() == null){
+            throw new GRSException(HttpStatus.BAD_REQUEST, "Missing information.");
+        }
+        if(gymUser instanceof Owner == false && instructorRegistrationRepository.findInstructorRegistrationByInstructor_idAndSession_id(gymUser.getId(), oldSessionId) == null) {
+            throw new GRSException(HttpStatus.UNAUTHORIZED, "User does not have access to update session.");
+        }
+        if(!newSession.getClassType().getIsApproved()){
+            throw new GRSException(HttpStatus.BAD_REQUEST, "Class must be approved.");
+        }
+        LocalDateTime currentDateTime = LocalDateTime.now();
+        LocalDateTime sessionDatetime = LocalDateTime.of(newSession.getDate().toLocalDate(), newSession.getStartTime().toLocalTime());
+        Duration timeDifference = Duration.between(currentDateTime, sessionDatetime);
+        //checking if session is at least 48 hours ahead of current time
+        if (timeDifference.toHours() < 48){
+            throw new GRSException(HttpStatus.BAD_REQUEST, "Session must be at least 48 hours ahead of the current time.");
         }
         Session toUpdate = sessionRepository.findSessionById(oldSessionId);
         toUpdate.setDate(newSession.getDate());
@@ -101,14 +103,14 @@ public class SessionService {
         return toUpdate;
     }
 
-    @Transactional
     /**
-     * find session by a specific ID
-     * @param id
-     * @return the found session
+     * GetSessionById: get a session by its id
+     * @param id: id of the session to be found
+     * @return the session with the given id
      * @throws GRSException session not found
      */
-    public Session getSessionById(int id){
+    @Transactional
+     public Session getSessionById(int id){
         Session session = sessionRepository.findSessionById(id);
         if (session == null){
             throw new GRSException(HttpStatus.NOT_FOUND, "Session not found.");
@@ -116,13 +118,13 @@ public class SessionService {
         return session;
     }
 
-    @Transactional
     /**
-     * find all sessions
-     * @return a list of all the sessions
-     *  @throws GRSException session not found
+     * GetAllSessions: get all sessions in the system
+     * @return list of all the sessions
+     * @throws GRSException no sessions found
      */
-    public List<Session> getAllSessions(){
+    @Transactional
+     public List<Session> getAllSessions(){
         List<Session> sessions = sessionRepository.findAll();
         if(sessions.size() == 0){
             throw new GRSException(HttpStatus.NOT_FOUND, "No Sessions found in the system.");
@@ -130,34 +132,27 @@ public class SessionService {
         return sessions;
     }
 
-    // @Transactional
-    // //Current idea for implementation
-    // //Not great, open to better ideas
-    // public List<Session> filterSessions(ClassType classType, Time earliestStartTime, Time latestStartTime, Instructor instructor, int capacity)
-    // {
-    //     List<Session> sessions = getAllSessions();
-    //     List<Session> filteredSesssions = getAllSessions();
-        
-    //     for(Session s: sessions)
-    //     {
-    //             InstructorRegistration instructorRegistration = instructorRegistrationRepository.findInstructorRegistrationByInstructorAndSession(instructor,s )
-    //            if(classType !=null && !s.getClassType().getName().equals(classType.getName()) || earliestStartTime !=null && s.getStartTime().before(earliestStartTime) || latestStartTime !=null && s.getStartTime().after(latestStartTime) || instructor !=null && instructor.getEmail().equals(instructorRegistration.getInstructor().getEmail()))
-    //            {
-    //             filteredSesssions.remove(s);
-    //            }
-        
-    //     }
-    //     return filteredSesssions;
-    // }
-
-    @Transactional
     /**
-     * Delete a session
-     * @param id
-     * @return none
-     * @throws GRSException session not found
+     * DeleteSession: delete a session by its id
+     * @param id: id of the session to be deleted
+     * @param gymUser: the user deleting the session
+     * @throws GRSException session not found, unauthorized user
      */
-    public void deleteSession(int id){
+    @Transactional
+    public void deleteSession(int id, GymUser gymUser){
+        if(gymUser instanceof Customer){
+            throw new GRSException(HttpStatus.UNAUTHORIZED, "Customers can not delete sessions.");
+        }
+        if(gymUser instanceof Instructor){
+            List<InstructorRegistration> instructorRegistrations = instructorRegistrationRepository.findInstructorRegistrationsBySession_id(id);
+            for(InstructorRegistration ir: instructorRegistrations){
+                if(ir.getInstructor().getEmail() == gymUser.getEmail()){
+                    sessionRepository.deleteSessionById(id);
+                    return;
+                }
+            }
+            throw new GRSException(HttpStatus.UNAUTHORIZED, "Instructor does not have access to delete.");
+        }
         Session session = sessionRepository.findSessionById(id);
         if(session == null){
             throw new GRSException(HttpStatus.NOT_FOUND, "Session not found.");

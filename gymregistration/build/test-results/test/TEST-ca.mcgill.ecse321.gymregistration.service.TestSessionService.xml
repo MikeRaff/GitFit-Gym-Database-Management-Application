@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ca.mcgill.ecse321.gymregistration.service.TestSessionService" tests="36" skipped="0" failures="0" errors="0" timestamp="2024-03-24T02:02:15" hostname="Eriks-MacBook-Air-2.local" time="4.479">
+  <properties/>
+  <testcase name="testUpdateSessionNullClassType()" classname="ca.mcgill.ecse321.gymregistration.service.TestSessionService" time="3.877"/>
+  <testcase name="testUpdateSessionNoName()" classname="ca.mcgill.ecse321.gymregistration.service.TestSessionService" time="0.031"/>
+  <testcase name="testCreateSessionTakenTime()" classname="ca.mcgill.ecse321.gymregistration.service.TestSessionService" time="0.029"/>
+  <testcase name="testGetSession()" classname="ca.mcgill.ecse321.gymregistration.service.TestSessionService" time="0.021"/>
+  <testcase name="testGetSessionNone()" classname="ca.mcgill.ecse321.gymregistration.service.TestSessionService" time="0.016"/>
+  <testcase name="testUpdateSession()" classname="ca.mcgill.ecse321.gymregistration.service.TestSessionService" time="0.016"/>
+  <testcase name="testUpdateSessionNullDate()" classname="ca.mcgill.ecse321.gymregistration.service.TestSessionService" time="0.01"/>
+  <testcase name="testDeleteNoSession()" classname="ca.mcgill.ecse321.gymregistration.service.TestSessionService" time="0.027"/>
+  <testcase name="testCreateSessionNotApproved()" classname="ca.mcgill.ecse321.gymregistration.service.TestSessionService" time="0.011"/>
+  <testcase name="testUpdateSessionInvalidTime()" classname="ca.mcgill.ecse321.gymregistration.service.TestSessionService" time="0.015"/>
+  <testcase name="testCreateSessionEmptyDescription()" classname="ca.mcgill.ecse321.gymregistration.service.TestSessionService" time="0.014"/>
+  <testcase name="testCreateSessionEmptyLocation()" classname="ca.mcgill.ecse321.gymregistration.service.TestSessionService" time="0.008"/>
+  <testcase name="testCreateSessionNullDescription()" classname="ca.mcgill.ecse321.gymregistration.service.TestSessionService" time="0.009"/>
+  <testcase name="testCreateSessionEmptyName()" classname="ca.mcgill.ecse321.gymregistration.service.TestSessionService" time="0.013"/>
+  <testcase name="testUpdateSessionNullSession()" classname="ca.mcgill.ecse321.gymregistration.service.TestSessionService" time="0.009"/>
+  <testcase name="testGetAllSessionsMultiple()" classname="ca.mcgill.ecse321.gymregistration.service.TestSessionService" time="0.032"/>
+  <testcase name="testDeleteSessionInstructorValid()" classname="ca.mcgill.ecse321.gymregistration.service.TestSessionService" time="0.014"/>
+  <testcase name="testCreateSessionNullStartTime()" classname="ca.mcgill.ecse321.gymregistration.service.TestSessionService" time="0.01"/>
+  <testcase name="testUpdateSessionNoDescription()" classname="ca.mcgill.ecse321.gymregistration.service.TestSessionService" time="0.014"/>
+  <testcase name="testCreateSessionNullLocation()" classname="ca.mcgill.ecse321.gymregistration.service.TestSessionService" time="0.01"/>
+  <testcase name="testUpdateSessionNullStartTime()" classname="ca.mcgill.ecse321.gymregistration.service.TestSessionService" time="0.014"/>
+  <testcase name="testUpdateSessionNullEndTime()" classname="ca.mcgill.ecse321.gymregistration.service.TestSessionService" time="0.011"/>
+  <testcase name="testDeleteSessionOwner()" classname="ca.mcgill.ecse321.gymregistration.service.TestSessionService" time="0.019"/>
+  <testcase name="testCreateSessionInvalidDate()" classname="ca.mcgill.ecse321.gymregistration.service.TestSessionService" time="0.015"/>
+  <testcase name="testGetAllSessionsOne()" classname="ca.mcgill.ecse321.gymregistration.service.TestSessionService" time="0.01"/>
+  <testcase name="testUpdateSessionNoSession()" classname="ca.mcgill.ecse321.gymregistration.service.TestSessionService" time="0.014"/>
+  <testcase name="testGetAllSessionsNone()" classname="ca.mcgill.ecse321.gymregistration.service.TestSessionService" time="0.007"/>
+  <testcase name="testCreateSessionNullDate()" classname="ca.mcgill.ecse321.gymregistration.service.TestSessionService" time="0.009"/>
+  <testcase name="testCreateSessionNullName()" classname="ca.mcgill.ecse321.gymregistration.service.TestSessionService" time="0.006"/>
+  <testcase name="testDeleteCustomer()" classname="ca.mcgill.ecse321.gymregistration.service.TestSessionService" time="0.025"/>
+  <testcase name="testUpdateSessionNotApproved()" classname="ca.mcgill.ecse321.gymregistration.service.TestSessionService" time="0.011"/>
+  <testcase name="testCreateSessionNullClassType()" classname="ca.mcgill.ecse321.gymregistration.service.TestSessionService" time="0.006"/>
+  <testcase name="testDeleteSessionInstructorInvalid()" classname="ca.mcgill.ecse321.gymregistration.service.TestSessionService" time="0.005"/>
+  <testcase name="testCreateSessionNullEndTime()" classname="ca.mcgill.ecse321.gymregistration.service.TestSessionService" time="0.004"/>
+  <testcase name="testCreateSession()" classname="ca.mcgill.ecse321.gymregistration.service.TestSessionService" time="0.01"/>
+  <testcase name="testUpdateSessionNoLocation()" classname="ca.mcgill.ecse321.gymregistration.service.TestSessionService" time="0.005"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[WARNING: A Java agent has been loaded dynamically (/Users/erikcupsa/.gradle/caches/modules-2/files-2.1/net.bytebuddy/byte-buddy-agent/1.14.11/f9cb566608fbac6bc7bf54901a7aa11543a989ee/byte-buddy-agent-1.14.11.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+]]></system-err>
+</testsuite>

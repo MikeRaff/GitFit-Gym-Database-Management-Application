@@ -2,6 +2,9 @@ package ca.mcgill.ecse321.gymregistration.service;
 
 import ca.mcgill.ecse321.gymregistration.dao.ClassTypeRepository;
 import ca.mcgill.ecse321.gymregistration.model.ClassType;
+import ca.mcgill.ecse321.gymregistration.model.Customer;
+import ca.mcgill.ecse321.gymregistration.model.Instructor;
+import ca.mcgill.ecse321.gymregistration.model.Owner;
 import ca.mcgill.ecse321.gymregistration.service.exception.GRSException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -69,11 +72,12 @@ public class TestClassTypeService {
     public void testCreateClasstype(){
         String classtypeName = "Aerobics";
         boolean classtypeIsApproved = true;
+        Owner owner = new Owner();
 
         ClassType classType = null;
 
         try {
-            classType = classTypeService.createClassType(classtypeName, classtypeIsApproved);
+            classType = classTypeService.createClassType(classtypeName, classtypeIsApproved, owner);
         } catch (GRSException e){
             fail(e.getMessage());
         }
@@ -89,11 +93,12 @@ public class TestClassTypeService {
     public void testCreateClasstypeNameNull() {
         String classtypeName = null;
         boolean classtypeIsApproved = true;
+        Owner owner = new Owner();
 
         ClassType classType = null;
 
         try {
-            classType = classTypeService.createClassType(classtypeName, classtypeIsApproved);
+            classType = classTypeService.createClassType(classtypeName, classtypeIsApproved, owner);
             fail();
         } catch (GRSException e) {
             // an error should occur as name is null
@@ -108,11 +113,12 @@ public class TestClassTypeService {
     public void testCreateClasstypeNameEmpty() {
         String classtypeName = "";
         boolean classtypeIsApproved = true;
+        Owner owner = new Owner();
 
         ClassType classType = null;
 
         try {
-            classType = classTypeService.createClassType(classtypeName, classtypeIsApproved);
+            classType = classTypeService.createClassType(classtypeName, classtypeIsApproved, owner);
             fail();
         } catch (GRSException e) {
             // an error should occur as name is null
@@ -128,11 +134,12 @@ public class TestClassTypeService {
     public void testCreateClasstypeNotApproved() {
         String classtypeName = "Aerobics";
         boolean classtypeIsApproved = false;
+        Owner owner = new Owner();
 
         ClassType classType = null;
 
         try {
-            classType = classTypeService.createClassType(classtypeName, classtypeIsApproved);
+            classType = classTypeService.createClassType(classtypeName, classtypeIsApproved, owner);
             fail();
         } catch (GRSException e) {
             // an error should occur as class type is not approved
@@ -158,11 +165,12 @@ public class TestClassTypeService {
 
         String classtypeName = "Aerobics";
         boolean classtypeIsApproved = true;
+        Owner owner = new Owner();
 
         ClassType classType = null;
 
         try {
-            classType = classTypeService.createClassType(classtypeName, classtypeIsApproved);
+            classType = classTypeService.createClassType(classtypeName, classtypeIsApproved, owner);
             fail();
         } catch (GRSException e) {
             // an error should occur as there are 100 class types in the database
@@ -181,11 +189,12 @@ public class TestClassTypeService {
     public void testCreateClasstypeAlreadyExists() {
         String classtypeName = "Pilates";
         boolean classtypeIsApproved = true;
+        Owner owner = new Owner();
 
         ClassType classType = null;
 
         try {
-            classType = classTypeService.createClassType(classtypeName, classtypeIsApproved);
+            classType = classTypeService.createClassType(classtypeName, classtypeIsApproved, owner);
             fail();
         } catch (GRSException e) {
             // an error should occur as class type already exists
@@ -201,15 +210,56 @@ public class TestClassTypeService {
     public void testCreateClasstypeEmpty() {
         String classtypeName = "";
         boolean classtypeIsApproved = true;
+        Owner owner = new Owner();
 
         ClassType classType = null;
 
         try {
-            classType = classTypeService.createClassType(classtypeName, classtypeIsApproved);
+            classType = classTypeService.createClassType(classtypeName, classtypeIsApproved, owner);
             fail();
         } catch (GRSException e) {
             // an error should occur as class type is empty
             assertEquals(e.getMessage(), "Name cannot be empty.");
+        }
+        assertNull(classType);
+    }
+
+    /**
+     * creating class type with customer gym user
+     */
+    @Test
+    public void testCreateClasstypeCustomer() {
+        String classtypeName = "Aerobics";
+        boolean classtypeIsApproved = true;
+        Customer customer = new Customer();
+
+        ClassType classType = null;
+
+        try {
+            classType = classTypeService.createClassType(classtypeName, classtypeIsApproved, customer);
+            fail();
+        } catch (GRSException e){
+            assertEquals(e.getMessage(), "Only owners can create class types.");
+        }
+        assertNull(classType);
+    }
+
+    /**
+     * creating class type with instructor gym user
+     */
+    @Test
+    public void testCreateClasstypeInstructor() {
+        String classtypeName = "Aerobics";
+        boolean classtypeIsApproved = true;
+        Instructor instructor = new Instructor();
+
+        ClassType classType = null;
+
+        try {
+            classType = classTypeService.createClassType(classtypeName, classtypeIsApproved, instructor);
+            fail();
+        } catch (GRSException e){
+            assertEquals(e.getMessage(), "Only owners can create class types.");
         }
         assertNull(classType);
     }
@@ -222,11 +272,12 @@ public class TestClassTypeService {
         String classtypeOldName = "Pilates";
         String classtypeNewName = "Gym";
         boolean classtypeIsApproved = true;
+        Owner owner = new Owner();
 
         ClassType classType = null;
 
         try {
-            classType = classTypeService.updateClassType(classtypeOldName, classtypeNewName, classtypeIsApproved);
+            classType = classTypeService.updateClassType(classtypeOldName, classtypeNewName, classtypeIsApproved, owner);
         } catch (GRSException e) {
             fail(e.getMessage());
         }
@@ -243,11 +294,12 @@ public class TestClassTypeService {
         String classtypeOldName = "Pilates";
         String classtypeNewName = null;
         boolean classtypeIsApproved = true;
+        Owner owner = new Owner();
 
         ClassType classType = null;
 
         try {
-            classType = classTypeService.updateClassType(classtypeOldName, classtypeNewName, classtypeIsApproved);
+            classType = classTypeService.updateClassType(classtypeOldName, classtypeNewName, classtypeIsApproved, owner);
             fail();
         } catch (GRSException e) {
             assertEquals(e.getMessage(), "Name cannot be empty.");
@@ -264,11 +316,12 @@ public class TestClassTypeService {
         String classtypeOldName = "Pilates";
         String classtypeNewName = "";
         boolean classtypeIsApproved = true;
+        Owner owner = new Owner();
 
         ClassType classType = null;
 
         try {
-            classType = classTypeService.updateClassType(classtypeOldName, classtypeNewName, classtypeIsApproved);
+            classType = classTypeService.updateClassType(classtypeOldName, classtypeNewName, classtypeIsApproved, owner);
             fail();
         } catch (GRSException e) {
             assertEquals(e.getMessage(), "Name cannot be empty.");
@@ -285,11 +338,12 @@ public class TestClassTypeService {
         String classtypeOldName = "Pilates";
         String classtypeNewName = "Gym";
         boolean classtypeIsApproved = false;
+        Owner owner = new Owner();
 
         ClassType classType = null;
 
         try {
-            classType = classTypeService.updateClassType(classtypeOldName, classtypeNewName, classtypeIsApproved);
+            classType = classTypeService.updateClassType(classtypeOldName, classtypeNewName, classtypeIsApproved, owner);
             fail();
         } catch (GRSException e) {
             assertEquals(e.getMessage(), "Class Type must be approved.");
@@ -306,14 +360,59 @@ public class TestClassTypeService {
         String classtypeOldName = "Aerobics";
         String classtypeNewName = "Gym";
         boolean classtypeIsApproved = true;
+        Owner owner = new Owner();
 
         ClassType classType = null;
 
         try {
-            classType = classTypeService.updateClassType(classtypeOldName, classtypeNewName, classtypeIsApproved);
+            classType = classTypeService.updateClassType(classtypeOldName, classtypeNewName, classtypeIsApproved, owner);
             fail();
         } catch (GRSException e) {
             assertEquals(e.getMessage(), "Class Type " + classtypeOldName + " does not exist.");
+        }
+
+        assertNull(classType);
+    }
+
+    /**
+     * updating class type with customer gym user
+     */
+    @Test
+    public void testUpdateClasstypeCustomer() {
+        String classtypeOldName = "Pilates";
+        String classtypeNewName = "Gym";
+        boolean classtypeIsApproved = true;
+        Customer customer = new Customer();
+
+        ClassType classType = null;
+
+        try {
+            classType = classTypeService.updateClassType(classtypeOldName, classtypeNewName, classtypeIsApproved, customer);
+            fail();
+        } catch (GRSException e) {
+            assertEquals(e.getMessage(), "Only owners can update class types.");
+        }
+
+        assertNull(classType);
+    }
+
+    /**
+     * updating class type with instructor gym user
+     */
+    @Test
+    public void testUpdateClasstypeInstructor() {
+        String classtypeOldName = "Pilates";
+        String classtypeNewName = "Gym";
+        boolean classtypeIsApproved = true;
+        Instructor instructor = new Instructor();
+
+        ClassType classType = null;
+
+        try {
+            classType = classTypeService.updateClassType(classtypeOldName, classtypeNewName, classtypeIsApproved, instructor);
+            fail();
+        } catch (GRSException e) {
+            assertEquals(e.getMessage(), "Only owners can update class types.");;
         }
 
         assertNull(classType);
@@ -430,8 +529,9 @@ public class TestClassTypeService {
     @Test
     public void testDeleteClassType() {
         String classTypeName = "Pilates";
+        Owner owner = new Owner();
         try {
-            classTypeService.deleteClassType(classTypeName);
+            classTypeService.deleteClassType(classTypeName, owner);
         } catch (Exception e) {
             fail(e.getMessage());
         }
@@ -444,12 +544,47 @@ public class TestClassTypeService {
     @Test
     public void testDeleteClassTypeDoesNotExist() {
         String classTypeName = "Gym";
+        Owner owner = new Owner();
         try {
-            classTypeService.deleteClassType(classTypeName);
+            classTypeService.deleteClassType(classTypeName, owner);
             fail();
         } catch (GRSException e) {
             assertEquals(HttpStatus.NOT_FOUND, e.getStatus());
             assertEquals("Class Type not found.", e.getMessage());
+            verify(classTypeRepository, times(0)).deleteClassTypeByName(classTypeName);
+        }
+    }
+
+    /**
+     * deleting class type with customer gym user
+     */
+    @Test
+    public void testDeleteClassTypeCustomer() {
+        String classTypeName = "Pilates";
+        Customer customer = new Customer();
+        try {
+            classTypeService.deleteClassType(classTypeName, customer);
+            fail();
+        } catch (GRSException e) {
+            assertEquals(HttpStatus.UNAUTHORIZED, e.getStatus());
+            assertEquals("Only owners can delete class types.", e.getMessage());
+            verify(classTypeRepository, times(0)).deleteClassTypeByName(classTypeName);
+        }
+    }
+    
+    /**
+     * deleting class type with instructor gym user
+     */
+    @Test
+    public void testDeleteClassTypeInstructor() {
+        String classTypeName = "Pilates";
+        Instructor instructor = new Instructor();
+        try {
+            classTypeService.deleteClassType(classTypeName, instructor);
+            fail();
+        } catch (GRSException e) {
+            assertEquals(HttpStatus.UNAUTHORIZED, e.getStatus());
+            assertEquals("Only owners can delete class types.", e.getMessage());
             verify(classTypeRepository, times(0)).deleteClassTypeByName(classTypeName);
         }
     }
@@ -461,8 +596,9 @@ public class TestClassTypeService {
     public void testProposeClassType(){
         String proposedName = "Aerobics";
         ClassType classType = null;
+        Instructor instructor = new Instructor();
         try {
-            classType = classTypeService.proposeClassType(proposedName);
+            classType = classTypeService.proposeClassType(proposedName, instructor);
         } catch (Exception e) {
             fail(e.getMessage());
         }
@@ -478,8 +614,9 @@ public class TestClassTypeService {
     public void testProposeClassTypeNoName(){
         String proposedName = null;
         ClassType classType = null;
+        Instructor instructor = new Instructor();
         try {
-            classType = classTypeService.proposeClassType(proposedName);
+            classType = classTypeService.proposeClassType(proposedName, instructor);
             fail();
         } catch (Exception e) {
             assertEquals(e.getMessage(), "Name cannot be empty.");
@@ -494,8 +631,9 @@ public class TestClassTypeService {
     public void testProposeClassTypeEmptyName(){
         String proposedName = "";
         ClassType classType = null;
+        Instructor instructor = new Instructor();
         try {
-            classType = classTypeService.proposeClassType(proposedName);
+            classType = classTypeService.proposeClassType(proposedName, instructor);
             fail();
         } catch (Exception e) {
             assertEquals(e.getMessage(), "Name cannot be empty.");
@@ -510,8 +648,9 @@ public class TestClassTypeService {
     public void testProposeClassTypeExists(){
         String proposedName = NAME;
         ClassType classType = null;
+        Instructor instructor = new Instructor();
         try {
-            classType = classTypeService.proposeClassType(proposedName);
+            classType = classTypeService.proposeClassType(proposedName, instructor);
             fail();
         } catch (Exception e) {
             assertEquals(e.getMessage(), "Class Type " + NAME + " already exists.");
@@ -535,11 +674,47 @@ public class TestClassTypeService {
 
         String proposedName = NAME;
         ClassType classType = null;
+        Instructor instructor = new Instructor();
         try {
-            classType = classTypeService.proposeClassType(proposedName);
+            classType = classTypeService.proposeClassType(proposedName, instructor);
             fail();
         } catch (Exception e) {
             assertEquals(e.getMessage(), "Maximum number of class types reached.");
+            assertNull(classType);
+        }
+    }
+
+    /**
+     * proposing a class type with owner gym user
+     */
+    @Test
+    public void testProposeClassTypeOwner(){
+        String proposedName = "Aerobics";
+        ClassType classType = null;
+        Owner owner = new Owner();
+        try {
+            classType = classTypeService.proposeClassType(proposedName, owner);
+        } catch (Exception e) {
+            fail(e.getMessage());
+        }
+        assertNotNull(classType);
+        assertEquals("Aerobics", classType.getName());
+        assertEquals(false, classType.getIsApproved());
+    }
+
+    /**
+     * proposing a class type with customer gym user
+     */
+    @Test
+    public void testProposeClassTypeCustomer(){
+        String proposedName = "Aerobics";
+        ClassType classType = null;
+        Customer customer = new Customer();
+        try {
+            classType = classTypeService.proposeClassType(proposedName, customer);
+            fail();
+        } catch (Exception e) {
+            assertEquals(e.getMessage(), "Only owners and instructors can propose class types.");
             assertNull(classType);
         }
     }
@@ -551,8 +726,9 @@ public class TestClassTypeService {
     public void testApproveProposedClassType() {
         String classTypeName = NAME;
         ClassType classType = null;
+        Owner owner = new Owner();
         try {
-            classType = classTypeService.approveProposedClassType(classTypeName);
+            classType = classTypeService.approveProposedClassType(classTypeName, owner);
         } catch (Exception e){
             fail();
         }
@@ -568,12 +744,47 @@ public class TestClassTypeService {
     public void testApproveProposedClassTypeNoExist() {
         String classTypeName = "Gym";
         ClassType classType = null;
+        Owner owner = new Owner();
         try {
-            classType = classTypeService.approveProposedClassType(classTypeName);
+            classType = classTypeService.approveProposedClassType(classTypeName, owner);
             fail();
         } catch (Exception e){
             assertNull(classType);
             assertEquals(e.getMessage(), "Class Type not found.");
+        }
+    }
+
+    /**
+     * approve proposed class type with customer gym user
+     */
+    @Test
+    public void testApproveProposedClassTypeCustomer() {
+        String classTypeName = NAME;
+        ClassType classType = null;
+        Customer customer = new Customer();
+        try {
+            classType = classTypeService.approveProposedClassType(classTypeName, customer);
+            fail();
+        } catch (Exception e){
+            assertNull(classType);
+            assertEquals(e.getMessage(), "Only owners can approve class types.");
+        }
+    }
+
+    /**
+     * approve proposed class type with instructor gym user
+     */
+    @Test
+    public void testApproveProposedClassTypeInstructor() {
+        String classTypeName = NAME;
+        ClassType classType = null;
+        Instructor instructor = new Instructor();
+        try {
+            classType = classTypeService.approveProposedClassType(classTypeName, instructor);
+            fail();
+        } catch (Exception e){
+            assertNull(classType);
+            assertEquals(e.getMessage(), "Only owners can approve class types.");
         }
     }
 }

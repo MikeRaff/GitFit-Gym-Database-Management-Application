@@ -39,6 +39,7 @@ public class InstructorRegistrationDto{
   this.date = instructorRegistration.getDate();
   this.instructor = instructorRegistration.getInstructor();
   this.session = instructorRegistration.getSession();
+  this.id = instructorRegistration.getId();
  }
 
   public int getId() {
