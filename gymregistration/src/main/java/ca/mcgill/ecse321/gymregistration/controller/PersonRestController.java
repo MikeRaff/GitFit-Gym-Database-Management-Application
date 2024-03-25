@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import ca.mcgill.ecse321.gymregistration.dto.PersonDto;
 import ca.mcgill.ecse321.gymregistration.model.Person;
 import ca.mcgill.ecse321.gymregistration.service.PersonService;
+import ca.mcgill.ecse321.gymregistration.service.exception.GRSException;
 
 
 @CrossOrigin(origins="*")
@@ -43,7 +44,7 @@ public class PersonRestController {
      * @return Persons with passed name in the system
      * @throws IllegalArgumentException
      */
-    @GetMapping(value = {"/persons/{name}", "/persons/{name}/"})
+    @GetMapping(value = {"/persons/byname/{name}", "/persons/byname/{name}/"})
     public List<PersonDto> getPersonsByName(@PathVariable("name") String name) throws IllegalArgumentException {
         return personService.getPersonsByName(name).stream().map(PersonDto::new).collect(Collectors.toList());
     }
@@ -54,10 +55,11 @@ public class PersonRestController {
      * @return Person in the system
      * @throws IllegalArgumentException
      */
-    @GetMapping(value = {"/persons/{id}", "/person/{id}/"})
+    @GetMapping(value = {"/persons/{id}", "/persons/{id}/"})
     public ResponseEntity<PersonDto> getPersonById(@PathVariable("id") int id) throws IllegalArgumentException {
         Person person = personService.getPersonById(id);
-        return new ResponseEntity<>(new PersonDto(person), HttpStatus.OK);
+        
+        return new ResponseEntity<PersonDto>(new PersonDto(person), HttpStatus.OK);
     }
 
     /**
@@ -67,9 +69,13 @@ public class PersonRestController {
      * @throws IllegalArgumentException
      */
     @PostMapping(value = {"/persons/create", "persons/create/"})
-    public ResponseEntity<PersonDto> createPerson(String name) throws IllegalArgumentException {
-        Person person = personService.createPerson(name);
-        return new ResponseEntity<>(new PersonDto(person), HttpStatus.OK);
+    public ResponseEntity<PersonDto> createPerson(@RequestBody PersonDto personDto) throws IllegalArgumentException {
+        try{
+        Person person = personService.createPerson(personDto.getName());
+        return new ResponseEntity<>(new PersonDto(person), HttpStatus.CREATED);
+        } catch (GRSException e){
+            return new ResponseEntity<>(new PersonDto(), HttpStatus.BAD_REQUEST);
+        }
     }
 
     /**
@@ -79,11 +85,11 @@ public class PersonRestController {
      * @return The updated person
      * @throws IllegalArgumentException
      */
-    @PutMapping(value = {"/persons/{id}/", "/persons/{id}/"})
+    @PutMapping(value = {"/persons-update/{id}", "/persons-update/{id}/"})
     public ResponseEntity<PersonDto>  updatePerson(@PathVariable("id") int id, @RequestBody PersonDto personDto) throws IllegalArgumentException {
         Person toUpdate = personService.getPersonById(id);
         Person person = personService.updateName(id, toUpdate.getName(), personDto.getName());
-        return new ResponseEntity<>(new PersonDto(person), HttpStatus.OK);
+        return new ResponseEntity<PersonDto>(new PersonDto(person), HttpStatus.OK);
     }
 
     /**

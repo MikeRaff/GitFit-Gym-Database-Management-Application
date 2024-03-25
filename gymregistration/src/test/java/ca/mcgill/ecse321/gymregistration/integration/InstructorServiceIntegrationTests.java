@@ -42,7 +42,6 @@ public class InstructorServiceIntegrationTests {
     @Test
     public void testCreateAndGetInstructor() {
         int id = testCreateInstructor("example@email.com", "password");
-        System.out.println("created");
         testGetinstructor("example@email.com");
     }
 

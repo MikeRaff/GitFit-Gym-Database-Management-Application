@@ -89,7 +89,6 @@ public class PersonServiceIntegrationTest {
 
     private void testGetPersonById(int id) {
         ResponseEntity<PersonDto> response = client.getForEntity("/persons/" + id, PersonDto.class);
-        
         assertNotNull(response);
         assertEquals(HttpStatus.OK, response.getStatusCode(), "Response has correct status");
         assertNotNull(response.getBody(), "Response has body");
@@ -97,7 +96,7 @@ public class PersonServiceIntegrationTest {
     }
 
     private void testGetPersonByName(String name) {
-        ResponseEntity<PersonDto[]> response = client.getForEntity("/persons/" + name, PersonDto[].class);
+        ResponseEntity<PersonDto[]> response = client.getForEntity("/persons/byname/" + name, PersonDto[].class);
         
         assertNotNull(response);
         assertEquals(HttpStatus.OK, response.getStatusCode(), "Response has correct status");
@@ -119,12 +118,12 @@ public class PersonServiceIntegrationTest {
         
         PersonDto personDto = new PersonDto(newName);
         personDto.setId(id);
-
         HttpEntity<PersonDto> requestEntity = new HttpEntity<>(personDto, null);
 
-        ResponseEntity<PersonDto> response = client.exchange("/persons/" + id, HttpMethod.PUT, requestEntity, PersonDto.class);
+        ResponseEntity<PersonDto> response = client.exchange("/persons-update/" + id, HttpMethod.PUT, requestEntity, PersonDto.class);
         
         assertNotNull(response.getBody());
+        assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(newName, response.getBody().getName());
         assertEquals(id, response.getBody().getId());
     }
