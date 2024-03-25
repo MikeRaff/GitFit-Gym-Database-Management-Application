@@ -50,8 +50,14 @@ public class OwnerRestController {
      */
     @PostMapping(value = { "/owners/create", "/owners/create/"})
     public ResponseEntity<OwnerDto> createOwner(@RequestBody OwnerDto ownerDto) throws IllegalArgumentException{
+        try{
         Owner owner = ownerService.createOwner(ownerDto.getEmail(), ownerDto.getPassword(), ownerDto.getPerson().getId());
         return new ResponseEntity<OwnerDto>(new OwnerDto(owner), HttpStatus.CREATED);
+        }
+        catch(GRSException e)
+        {
+            return new ResponseEntity<OwnerDto>(new OwnerDto(), e.getStatus());
+        }
     }
 
     /**
@@ -63,9 +69,11 @@ public class OwnerRestController {
      */
     @PutMapping(value = {"/owners/update-owners-e/{email}", "/owners/update-owners-e/{email}/"})
     public ResponseEntity<OwnerDto> updateOwner(@PathVariable("email") String email, @RequestBody OwnerDto ownerDto) throws IllegalArgumentException{
-        Owner toUpdate = ownerService.getOwnerByEmail(email);
-        Owner owner = ownerService.updateEmail(toUpdate.getEmail(), ownerDto.getPassword(), ownerDto.getEmail());
+       
+        Owner toUpdate = ownerService.getOwnerByEmail(ownerDto.getEmail());
+        Owner owner = ownerService.updateEmail(toUpdate.getEmail(), ownerDto.getPassword(), email);
         owner = ownerService.updatePassword(owner.getEmail(), toUpdate.getPassword(), ownerDto.getPassword());
+
         return new ResponseEntity<OwnerDto>(new OwnerDto(owner), HttpStatus.OK);
     }
 
