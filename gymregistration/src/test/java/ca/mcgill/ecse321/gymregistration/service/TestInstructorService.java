@@ -163,7 +163,59 @@ public class TestInstructorService {
 
     }
 
-     @Test
+    @Test 
+    public void testCreateInstructorNullEmail()
+    {
+        String email = null;
+        String password = "password";
+        Person person = new Person();
+        int person_id = person.getId();
+        Instructor instructor = null;
+        personRepository.save(person);
+        try {
+            instructor = instructorService.createInstructor(email, password, person_id);
+        } catch (GRSException e) {
+            assertEquals("Must include valid email and password.", e.getMessage());
+            return;
+        }
+        fail();
+    }
+
+    public void testCreateInstructorNullPassword()
+    {
+        String email = "Email@Example.com";
+        String password = null;
+        Person person = new Person();
+        int person_id = person.getId();
+        Instructor instructor = null;
+        personRepository.save(person);
+        try {
+            instructor = instructorService.createInstructor(email, password, person_id);
+        } catch (GRSException e) {
+            assertEquals("Must include valid email and password.", e.getMessage());
+            return;
+        }
+        fail();
+    }
+
+    public void testCreateInstructorInvalidEmail()
+    {
+        String email = "EmailExample.com";
+        String password = null;
+        Person person = new Person();
+        int person_id = person.getId();
+        Instructor instructor = null;
+        personRepository.save(person);
+        try {
+            instructor = instructorService.createInstructor(email, password, person_id);
+        } catch (GRSException e) {
+            assertEquals("Must include valid email and password.", e.getMessage());
+            return;
+        }
+        fail();
+    }
+
+    @Test
     public void testDeleteInstructor() {
         lenient().doAnswer(invocation -> {
             Instructor instructor = invocation.getArgument(0);
@@ -178,15 +230,33 @@ public class TestInstructorService {
         lenient().doReturn(null).when(instructorRepository).findInstructorById(instructor.getId());
         instructor = instructorRepository.findInstructorById(instructor.getId());
         assertNull(instructor);
+    }
+
+    @Test
+    public void testDeleteInvalidInstructor() {
+        Owner owner = new Owner();
         try {
            instructorService.deleteIntructor("invalid@email.net", owner);
         } catch (GRSException e) {
             assertEquals(e.getMessage(), "Instructor not found.");
+            return;
         }
+        fail();
     }
 
     @Test
-    public void testUpdateInstuctor() {
+    public void testDeleteInstructorInvalidPermissions() {
+        try {
+           instructorService.deleteIntructor("invalid@email.net", new Instructor( "fakeemail", "password",null));
+        } catch (GRSException e) {
+            assertEquals("Instructors can only be deleted by themselves or the owners.", e.getMessage());
+            return;
+        }
+        fail();
+    }
+
+    @Test
+    public void testUpdateEmailInstuctor() {
         String newemail = "newemail@example.com";
         String password = "password";
 
@@ -198,28 +268,67 @@ public class TestInstructorService {
 
         assertEquals(instructor.getId(), updatedInstructor.getId());
         assertEquals(newemail, updatedInstructor.getEmail());
-       ;
+    }
+    @Test
+    public void updateEmailInvalidInstructor(){
+
+        Instructor instructor = new Instructor(EMAIL, PASSWORD, null);
+        instructorRepository.save(instructor);
 
         try {
-            updatedInstructor = instructorService.updateEmail("invalid@email.net", "wrongPassword", "newWrongEmail@google.com");
+            Instructor updatedInstructor = instructorService.updateEmail("invalid@email.net", "wrongPassword", "newWrongEmail@google.com");
         } catch (GRSException e) {
             assertEquals("Instructor not found, invalid email and password combination.",e.getMessage());
+            return;
         }
+        fail();
+    }
 
+    public void updateEmailNonExistantInstructor(){
+        try {
+            Instructor updatedInstructor = instructorService.updateEmail("invalid@email.net", "wrongPassword", "newWrongEmail@google.com");
+        } catch (GRSException e) {
+            assertEquals("Instructor not found, invalid email and password combination.",e.getMessage());
+            return;
+        }
+        fail();
     }
 
     @Test
-    public void testGetInstructor() {
+    public void testGetInstructorByEmail() {
         Instructor instructor = new Instructor();
         instructor.setEmail(EMAIL);
         instructorRepository.save(instructor);
         Instructor newInstructor = instructorService.getInstructorByEmail(instructor.getEmail());
         assertEquals(instructor.getId(), newInstructor.getId());
+    }
+    @Test
+    public void testGetInstructorByInvalidEmail()
+    {
+        Instructor instructor = new Instructor();
+        instructor.setEmail(EMAIL);
+        instructorRepository.save(instructor);
+        Instructor newInstructor = instructorService.getInstructorByEmail(instructor.getEmail());
         try {
             newInstructor = instructorService.getInstructorByEmail("invalid@email.net");
         } catch (GRSException e) {
             assertEquals(e.getMessage(), "Instructor not found.");
+            return;
         }
+        fail();
+    }
+
+    @Test
+    public void testNonExistantInstructor()
+    {
+        ;
+        try {
+             instructorService.getInstructorByEmail("invalid@email.net");
+        } catch (GRSException e) {
+            assertEquals(e.getMessage(), "Instructor not found.");
+            return;
+        }
+        fail();
     }
 
     @Test
@@ -234,5 +343,61 @@ public class TestInstructorService {
         assertNotNull(logInInstructor);
         assertEquals(EMAIL, logInInstructor.getEmail());
         assertEquals(PASSWORD, logInInstructor.getPassword());
+    }
+
+    @Test
+    public void testLoginInstructorInvalidEmail()
+    {
+        Instructor instructor = new Instructor(EMAIL, PASSWORD, null);
+        
+        instructorRepository.save(instructor);
+
+        try{
+        Instructor logInInstructor = instructorService.loginInstructor(instructor.getEmail()+" ", instructor.getPassword());
+        }
+        catch(GRSException e)
+        {
+            assertEquals("Invalid Email or Password.", e.getMessage());
+            return;
+        }
+        fail();
+    }
+
+    @Test
+    public void ChangeAccountType()
+    {
+        Instructor instructor = new Instructor();
+        instructor.setEmail(EMAIL);
+        instructorRepository.save(instructor);
+        Customer customer = instructorService.changeAccountType(EMAIL, new Owner());
+        assertNotNull(customer);
+        assertEquals(EMAIL, customer.getEmail());
+    }
+
+    @Test
+    public void ChangeAccountTypeInvalidPermissions()
+    {
+        Instructor instructor = new Instructor();
+        instructor.setEmail(EMAIL);
+        instructorRepository.save(instructor);
+        try {
+            Customer customer = instructorService.changeAccountType(EMAIL, new Instructor());
+        } catch (GRSException e) {
+          assertEquals("Only owners can change account type.", e.getMessage());
+          return;
+        }
+        fail();
+    }
+
+    public void ChangeAccountTypeNonExistantInstructor()
+    {
+        
+        try {
+            Customer customer = instructorService.changeAccountType(EMAIL+" ", new Owner());
+        } catch (GRSException e) {
+          assertEquals("Instructor not found.", e.getMessage());
+          return;
+        }
+        fail();
     }
 }
