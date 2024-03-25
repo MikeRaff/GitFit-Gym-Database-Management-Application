@@ -6,7 +6,6 @@ import ca.mcgill.ecse321.gymregistration.dto.PersonDto;
 import ca.mcgill.ecse321.gymregistration.model.Customer;
 import ca.mcgill.ecse321.gymregistration.model.GymUser;
 import ca.mcgill.ecse321.gymregistration.model.Instructor;
-import ca.mcgill.ecse321.gymregistration.model.Person;
 import ca.mcgill.ecse321.gymregistration.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -87,7 +86,7 @@ public class CustomerRestController {
      * @param oldEmail: old email of customer
      * @param password: password of customer
      * @param newEmail: new email of customer
-     * @return
+     * @return Edited customer
      * @throws IllegalArgumentException
      */
     @PutMapping(value = {"/customers/updateEmail", "/customers/updateEmail/"})

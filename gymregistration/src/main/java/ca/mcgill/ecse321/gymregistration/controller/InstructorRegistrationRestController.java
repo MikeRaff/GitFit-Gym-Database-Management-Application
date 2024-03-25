@@ -33,11 +33,11 @@ public class InstructorRegistrationRestController {
                 InstructorRegistration instructorRegistration = instructorRegistrationService.registerInstructorForClass(
                     instructorRegistrationDto.getSession().getId(),
                     instructorRegistrationDto.getInstructor().getEmail(), instructorRegistrationDto.getInstructor());
-            return new ResponseEntity<InstructorRegistrationDto>(new InstructorRegistrationDto(instructorRegistration),
+            return new ResponseEntity<>(new InstructorRegistrationDto(instructorRegistration),
                     HttpStatus.CREATED);
         } catch (GRSException e) {
             System.out.println(e.getMessage());
-            return new ResponseEntity<InstructorRegistrationDto>(new InstructorRegistrationDto(), e.getStatus());
+            return new ResponseEntity<>(new InstructorRegistrationDto(), e.getStatus());
         }
     }
 
@@ -45,7 +45,6 @@ public class InstructorRegistrationRestController {
      * RemoveInstructorFromClass: remove an instructor from a class
      * 
      * @param id: the id of the instructor registration
-     * @return A response entity containing the success of the method
      * @throws IllegalArgumentException
      * 
      */
@@ -68,7 +67,7 @@ public class InstructorRegistrationRestController {
             @RequestBody InstructorRegistrationDto instructorRegistrationDto) throws IllegalArgumentException {
         InstructorRegistration instructorRegistration = instructorRegistrationService.updateInstructorRegistration(id,
                 instructorRegistrationDto);
-        return new ResponseEntity<InstructorRegistrationDto>(new InstructorRegistrationDto(instructorRegistration),
+        return new ResponseEntity<>(new InstructorRegistrationDto(instructorRegistration),
                 HttpStatus.OK);
     }
 
