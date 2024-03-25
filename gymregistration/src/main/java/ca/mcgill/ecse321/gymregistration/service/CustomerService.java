@@ -43,7 +43,7 @@ public class CustomerService {
      */
     @Transactional
     public Customer createCustomer(String email, String password, int person_id){
-        if (email == null || password == null || !email.contains("@")) {
+        if (email == null || password == null || password.trim().isEmpty() || !email.contains("@")) {
             throw new GRSException(HttpStatus.BAD_REQUEST, "Must include valid email and password.");
         }
         if(customerRepository.findCustomerByEmail(email) != null || ownerRepository.findOwnerByEmail(email) != null || instructorRepository.findInstructorByEmail(email) != null){
@@ -57,7 +57,8 @@ public class CustomerService {
         customer.setEmail(email);
         customer.setPassword(password);
         customer.setPerson(person);
-        return customerRepository.save(customer);
+        customerRepository.save(customer);
+        return customer;
     }
 
     /**
@@ -74,8 +75,12 @@ public class CustomerService {
         if (customer == null) {
             throw new GRSException(HttpStatus.NOT_FOUND, "Customer not found, invalid email and password combination.");
         }
+        if(customer.getCreditCardNumber() == creditCardNumber){
+            throw new GRSException(HttpStatus.CONFLICT, "New credit card number is same as old one.");
+        }
         customer.setCreditCardNumber(creditCardNumber);
-        return customerRepository.save(customer);
+        customerRepository.save(customer);
+        return customer;
     }
 
     /**
@@ -92,11 +97,15 @@ public class CustomerService {
         if (customer == null) {
             throw new GRSException(HttpStatus.NOT_FOUND, "Customer not found, invalid email and password combination.");
         }
+        if(oldEmail.equals(newEmail)){
+            throw new GRSException(HttpStatus.CONFLICT, "New email is same as old one.");
+        }
         if (newEmail == null || !newEmail.contains("@")) {
             throw new GRSException(HttpStatus.BAD_REQUEST, "Invalid new email.");
         }
         customer.setEmail(newEmail);
-        return customerRepository.save(customer);
+        customerRepository.save(customer);
+        return customer;
     }
 
     /**
@@ -113,11 +122,15 @@ public class CustomerService {
         if (customer == null) {
             throw new GRSException(HttpStatus.NOT_FOUND, "Customer not found, invalid email and password combination.");
         }
+        if(oldPassword.equals(newPassword)){
+            throw new GRSException(HttpStatus.CONFLICT, "New password is same as old one.");
+        }
         if (newPassword == null){
             throw new GRSException(HttpStatus.BAD_REQUEST, "Invalid new password.");
         }
         customer.setPassword(newPassword);
-        return customerRepository.save(customer);
+        customerRepository.save(customer);
+        return customer;
     }
 
     /**
@@ -129,7 +142,7 @@ public class CustomerService {
     @Transactional
     public Customer getCustomerByEmail(String email){
         Customer customer = customerRepository.findCustomerByEmail(email);
-        if (customer == null){
+        if (customer == null || email.trim().isEmpty()){
             throw new GRSException(HttpStatus.NOT_FOUND, "Customer not found.");
         }
         return customer;
