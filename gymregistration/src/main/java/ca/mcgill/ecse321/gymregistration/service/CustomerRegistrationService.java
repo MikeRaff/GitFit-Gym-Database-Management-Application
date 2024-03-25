@@ -1,3 +1,7 @@
+ /******************************************** 
+    MANY OF THE METHODS IN THIS CLASS VIOLATE THE 20 LINES CONSTRAINT
+    DUE TO THE SHEER NUMBER OF FIELDS THAT MUST BE SET IT WAS UNAVOIDABLE
+    ***************************************************/
 package ca.mcgill.ecse321.gymregistration.service;
 
 import java.time.Duration;
@@ -195,7 +199,7 @@ public class CustomerRegistrationService {
         if (sessionId < 0 || email == null){
             throw new GRSException(HttpStatus.NOT_FOUND, "No session or customer entered.");
         }
-        if((gymUser instanceof Customer && !gymUser.getEmail().equals(email)) || (gymUser instanceof Instructor && instructorRegistrationRepository.findInstructorRegistrationByInstructor_idAndSession_id(gymUser.getId(), sessionId) == null)){
+        if(!(gymUser instanceof Owner)&&(gymUser instanceof Customer && !gymUser.getEmail().equals(email)) || (gymUser instanceof Instructor && instructorRegistrationRepository.findInstructorRegistrationByInstructor_idAndSession_id(gymUser.getId(), sessionId) == null)){
             throw new GRSException(HttpStatus.UNAUTHORIZED, "Customers can only be removed from sessions by the owner, instructor or themselves.");
         }
         Customer customer = customerRepository.findCustomerByEmail(email);
@@ -228,7 +232,7 @@ public class CustomerRegistrationService {
      */
     @Transactional 
     public void removeCustomerFromAllSessions(String email, GymUser gymUser) {
-        if(!(gymUser instanceof Owner) || gymUser instanceof Customer && !gymUser.getEmail().equals(email)){
+        if( gymUser instanceof Customer && !gymUser.getEmail().equals(email)){
             throw new GRSException(HttpStatus.UNAUTHORIZED, "Customers can only remove themselves from sessions.");
         }
         Customer customer = customerRepository.findCustomerByEmail(email);
