@@ -48,7 +48,7 @@ public class CustomerRestController {
      * @return The customer
      * @throws IllegalArgumentException
      */
-    @GetMapping(value = { "/customers/{email", "/customers/{email}/"})
+    @GetMapping(value = { "/customers/{email}", "/customers/{email}/"})
     public ResponseEntity<CustomerDto> getCustomer(@PathVariable("email") String email) throws IllegalArgumentException {
         Customer customer = customerService.getCustomerByEmail(email);
         return new ResponseEntity<>(new CustomerDto(customer), HttpStatus.OK);
