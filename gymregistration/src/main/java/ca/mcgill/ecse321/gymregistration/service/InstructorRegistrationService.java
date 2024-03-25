@@ -75,10 +75,11 @@ public class InstructorRegistrationService {
     public void removeInstructorFromClass(int sessionId, String email, GymUser gymUser) {
         List<InstructorRegistration> instructorRegistrations = instructorRegistrationRepository
                 .findInstructorRegistrationsBySession_id(sessionId);
+
+        if (instructorRegistrations.size()==0)
+            throw new GRSException(HttpStatus.BAD_REQUEST, "Sessions not found.");
         if (instructorRegistrations.size() < 2)
             throw new GRSException(HttpStatus.BAD_REQUEST, "Not enough instructors registered.");
-        if (instructorRegistrations.size()<1)
-            throw new GRSException(HttpStatus.BAD_REQUEST, "Sessions not found.");
         GymUser gymuser = instructorRepository.findInstructorById(gymUser.getId().intValue());
         if(gymuser ==null)
             gymuser = ownerRepository.findOwnerById(gymUser.getId().intValue());
@@ -104,7 +105,7 @@ public class InstructorRegistrationService {
      */
     @Transactional
     public InstructorRegistration getInstructorRegistrationByInstructorAndSession(int sessionId, String email) {
-        if (sessionId == 0 || email == null) {
+        if (sessionId == -1 || email == null) {
             throw new GRSException(HttpStatus.BAD_REQUEST, "No instructor or session entered.");
         }
 
