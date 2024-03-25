@@ -31,7 +31,7 @@ public class InstructorRestController {
     @GetMapping(value = { "/instructors/{email}", "/instructors/{email}/" })
     public ResponseEntity<InstructorDto> getInstructor(@PathVariable("email") String email) throws IllegalArgumentException {
         Instructor instructor = instructorService.getInstructorByEmail(email);
-        return new ResponseEntity<InstructorDto>(new InstructorDto(instructor), HttpStatus.OK);
+        return new ResponseEntity<>(new InstructorDto(instructor), HttpStatus.OK);
 
     }
 
@@ -54,11 +54,11 @@ public class InstructorRestController {
     public ResponseEntity<InstructorDto> createInstructor(@RequestBody InstructorDto instructorDto) throws IllegalArgumentException {
         try {
         Instructor instructor = instructorService.createInstructor(instructorDto.getEmail(), instructorDto.getPassword(), instructorDto.getPerson().getId());
-        return new ResponseEntity<InstructorDto>(new InstructorDto(instructor), HttpStatus.CREATED);
+        return new ResponseEntity<>(new InstructorDto(instructor), HttpStatus.CREATED);
         }
         catch (GRSException e)
         {
-            return new ResponseEntity<InstructorDto>(new InstructorDto(), e.getStatus());
+            return new ResponseEntity<>(new InstructorDto(), e.getStatus());
         }
     }
 
@@ -75,7 +75,7 @@ public class InstructorRestController {
         Instructor toUpdate = instructorService.getInstructorByEmail(instructorDto.getEmail());  
         Instructor instructor = instructorService.updateEmail(toUpdate.getEmail(), instructorDto.getPassword(), email);
         instructor = instructorService.updatePassword(instructor.getEmail(), toUpdate.getPassword(), instructorDto.getPassword());
-        return new ResponseEntity<InstructorDto>(new InstructorDto(instructor), HttpStatus.OK);
+        return new ResponseEntity<>(new InstructorDto(instructor), HttpStatus.OK);
     }
 
     /**
@@ -101,9 +101,9 @@ public class InstructorRestController {
         Instructor instructor;
         try {
             instructor = instructorService.loginInstructor(email, password);
-            return new ResponseEntity<InstructorDto>(new InstructorDto(instructor), HttpStatus.OK);
+            return new ResponseEntity<>(new InstructorDto(instructor), HttpStatus.OK);
         } catch (GRSException e) {
-            return new ResponseEntity<InstructorDto>(new InstructorDto(), e.getStatus());
+            return new ResponseEntity<>(new InstructorDto(), e.getStatus());
         }
     }
 
@@ -119,9 +119,9 @@ public class InstructorRestController {
         Customer customer;
         try {
             customer = instructorService.changeAccountType(email, gymUser);
-            return new ResponseEntity<CustomerDto>(new CustomerDto(customer), HttpStatus.OK);
+            return new ResponseEntity<>(new CustomerDto(customer), HttpStatus.OK);
         } catch (GRSException e) {
-            return new ResponseEntity<CustomerDto>(new CustomerDto(), e.getStatus());
+            return new ResponseEntity<>(new CustomerDto(), e.getStatus());
         }
     }
 
