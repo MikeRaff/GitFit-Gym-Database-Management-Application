@@ -2,7 +2,6 @@ package ca.mcgill.ecse321.gymregistration.integration;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.List;
@@ -16,7 +15,6 @@ import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -65,22 +63,16 @@ public class OwnerServiceIntegrationTests {
 
     @Test
     public void testCreateAndUpdateOwnerEmail() {
-        String email = "example@email.com";
-        int id = testCreateOwner(email, "password");
-        testUpdateOwnerEmail(id, email, "newemail@email.com", "password");
+        int id = testCreateOwner("example@email.com", "password");
+        testUpdateOwnerEmail(id, "example@email.com", "newemail@email.com", "password");
     }
 
     @Test
     public void testCreateInvalidOwner() {
         testCreateOwnerInvalidEmailOrPassword("email", "password");
-        System.out.println("1");
         testCreateOwnerInvalidEmailOrPassword(null, "password");
-        System.out.println("2");
         testCreateOwnerInvalidEmailOrPassword("email@example.com", null);
-        System.out.println("3");
         testCreateOwnerInvalidPerson();
-        System.out.println("4");
-
     }
 
     public void testCreateOwnerInvalidEmailOrPassword(String email, String password) {
@@ -90,14 +82,14 @@ public class OwnerServiceIntegrationTests {
         ResponseEntity<OwnerDto> response = client.postForEntity("/owners/create", new OwnerDto(email, password, person), OwnerDto.class);
         assertNotNull(response);
         
-        assertTrue(HttpStatus.BAD_REQUEST.equals(response.getStatusCode()) || HttpStatus.NOT_FOUND.equals( response.getStatusCode()), "Response has correct status");
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode(), "Response has correct status");
     }
 
     public void testCreateOwnerInvalidPerson() {
         ResponseEntity<OwnerDto> response = client.postForEntity("/owners/create", new OwnerDto("email@email.com", "password", new Person()), OwnerDto.class);
         assertNotNull(response);
         
-        assertTrue(HttpStatus.BAD_REQUEST.equals(response.getStatusCode()) || HttpStatus.NOT_FOUND.equals( response.getStatusCode()), "Response has correct status");
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode(), "Response has correct status");
     }
 
     private int testCreateOwner(String email, String password) {
@@ -112,7 +104,7 @@ public class OwnerServiceIntegrationTests {
     }
 
     private void testGetOwner(String email) {
-        ResponseEntity<OwnerDto> response = client.getForEntity("/owner/" + email, OwnerDto.class);
+        ResponseEntity<OwnerDto> response = client.getForEntity("/owners/" + email, OwnerDto.class);
         assertNotNull(response);
         
         assertEquals(HttpStatus.OK, response.getStatusCode(), "Response has correct status");
@@ -134,9 +126,9 @@ public class OwnerServiceIntegrationTests {
         OwnerDto ownerDto = new OwnerDto(oldEmail, password, null);
         ownerDto.setId(id);
 
-        
+        HttpEntity<OwnerDto> requestEntity = new HttpEntity<>(ownerDto, null);
 
-        ResponseEntity<OwnerDto> response = client.exchange("/owners/update-owners-e/" +newEmail, HttpMethod.PUT, new HttpEntity<>(ownerDto), OwnerDto.class);
+        ResponseEntity<OwnerDto> response = client.exchange("/owners/update-owners-e/" +newEmail, HttpMethod.PUT, requestEntity, OwnerDto.class);
    
         assertNotNull(response.getBody());
         assertEquals(newEmail, response.getBody().getEmail());

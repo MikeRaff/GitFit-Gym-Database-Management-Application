@@ -49,7 +49,8 @@ public class OwnerService {
         owner.setEmail(email);
         owner.setPassword(password);
         owner.setPerson(person);
-        return ownerRepository.save(owner);
+        ownerRepository.save(owner);
+        return owner;
     }
 
     /**
@@ -104,7 +105,6 @@ public class OwnerService {
     public Owner getOwnerByEmail(String email){
         Owner owner = ownerRepository.findOwnerByEmail(email);
         if (owner == null){
-
             throw new GRSException(HttpStatus.NOT_FOUND, "Owner not found.");
         }
         return owner;
