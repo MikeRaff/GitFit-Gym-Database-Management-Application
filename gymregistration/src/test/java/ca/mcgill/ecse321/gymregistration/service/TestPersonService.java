@@ -153,6 +153,22 @@ public class TestPersonService {
         }
         assertNull(person);
     }
+    @Test
+    public void updatePersonInvalidName(){
+        int id = 0;
+        String oldName = "Joe";
+        String newName = "SpongeBob SquarePants";
+
+        Person person = null;
+        try{
+            person = personService.updateName(id, oldName, newName);
+            fail();
+        }catch (GRSException e){
+            assertEquals("Invalid old name.", e.getMessage());
+        }
+        assertNull(person);
+    }
+
 
     @Test 
     public void updatePersonToNullName(){
