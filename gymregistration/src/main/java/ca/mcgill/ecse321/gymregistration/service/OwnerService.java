@@ -49,7 +49,8 @@ public class OwnerService {
         owner.setEmail(email);
         owner.setPassword(password);
         owner.setPerson(person);
-        return ownerRepository.save(owner);
+        ownerRepository.save(owner);
+        return owner;
     }
 
     /**
