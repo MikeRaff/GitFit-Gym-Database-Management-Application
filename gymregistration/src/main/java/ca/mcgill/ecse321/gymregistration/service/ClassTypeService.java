@@ -164,11 +164,13 @@ public class ClassTypeService {
      */
     @Transactional
     public ClassType approveProposedClassType(String name, GymUser gymUser){
+        
         if(!(gymUser instanceof Owner)){
             throw new GRSException(HttpStatus.UNAUTHORIZED, "Only owners can approve class types.");
         }
         ClassType classType = classTypeRepository.findClassTypeByName(name);
         if(classType == null){
+            System.out.println("here");
             throw new GRSException(HttpStatus.NOT_FOUND, "Class Type not found.");
         }
         classType.setApproved(true);
