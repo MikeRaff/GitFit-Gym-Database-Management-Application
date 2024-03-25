@@ -3,6 +3,7 @@ package ca.mcgill.ecse321.gymregistration.service;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.sql.Date;
 
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,8 +43,8 @@ public class CustomerRegistrationService {
      * @throws GRSException if attempt to register customer to session is invalid
      */
     @Transactional
-    public CustomerRegistration registerCustomerToSession(int sessionId, String email){ //note: method can not be reduced to 20 lines do to multiple error checks
-        if (sessionId == 0 || email == null){
+    public CustomerRegistration registerCustomerToSession(int sessionId, String email){ //note: method cannot be reduced to 20 lines do to multiple error checks
+        if (sessionId < 0 || email == null){
             throw new GRSException(HttpStatus.NOT_FOUND, "No session or customer entered.");
         }
         Customer customer = customerRepository.findCustomerByEmail(email);
@@ -67,12 +68,14 @@ public class CustomerRegistrationService {
         }
         //getting current date and time, converting startTime and date to LocalDateTime, and calculating difference
         LocalDateTime currentDateTime = LocalDateTime.now();
-        LocalDateTime sessionDatetime = LocalDateTime.of(session.getDate().toLocalDate(), session.getStartTime().toLocalTime());
-        Duration timeDifference = Duration.between(currentDateTime, sessionDatetime);
-        if (timeDifference.toHours() < 0){         //checking if registration time (current) is before the start of the session
-            throw new GRSException(HttpStatus.BAD_REQUEST, "Cannot register for in-progress or completed session.");
+        LocalDateTime sessionStartDateTime = LocalDateTime.of(session.getDate().toLocalDate(), session.getStartTime().toLocalTime());
+        LocalDateTime sessionEndDateTime = LocalDateTime.of(session.getDate().toLocalDate(), session.getEndTime().toLocalTime());
+        if (sessionEndDateTime.isBefore(currentDateTime)){         //checking if end of session was before the registration time (current date-time) 
+            throw new GRSException(HttpStatus.BAD_REQUEST, "Cannot register for completed session.");
+        }else if (sessionStartDateTime.isBefore(currentDateTime) && sessionEndDateTime.isAfter(currentDateTime)){         //checking if the registration (current date-time) is during the session
+            throw new GRSException(HttpStatus.BAD_REQUEST, "Cannot register for in-progress session.");
         }
-        customerRegistration = new CustomerRegistration(session.getDate(), session, customer);     
+        customerRegistration = new CustomerRegistration(Date.valueOf(currentDateTime.toLocalDate()), session, customer);     
         customerRegistrationRepository.save(customerRegistration);
         return customerRegistration;
     }
@@ -86,7 +89,7 @@ public class CustomerRegistrationService {
      */
     @Transactional
     public CustomerRegistration getCustomerRegistrationByCustomerAndSession(int sessionId, String email){
-        if (sessionId == 0 || email == null){
+        if (sessionId < 0 || email == null){
             throw new GRSException(HttpStatus.BAD_REQUEST, "No session or customer entered.");
         }
         Customer customer = customerRepository.findCustomerByEmail(email);
@@ -125,12 +128,13 @@ public class CustomerRegistrationService {
             throw new GRSException(HttpStatus.NOT_FOUND, "Old session not found.");
         }
         Session session = sessionRepository.findSessionById(newSessionId);
-        CustomerRegistration customerRegistration = customerRegistrationRepository.findCustomerRegistrationByCustomerAndSession(customer, toUpdate);
+        CustomerRegistration customerRegistration = customerRegistrationRepository.findCustomerRegistrationByCustomerAndSession(customer, session);
         if (customerRegistration == null){
             throw new GRSException(HttpStatus.NOT_FOUND, "The registration does not exist.");
         }
-        CustomerRegistration updated = new CustomerRegistration(session.getDate(), session, customerRepository.findCustomerByEmail(email));
-        return customerRegistrationRepository.save(updated);
+        CustomerRegistration updated = new CustomerRegistration(Date.valueOf(LocalDateTime.now().toLocalDate()), session, customerRepository.findCustomerByEmail(email));
+        customerRegistrationRepository.save(updated);
+        return customerRegistration;
     }
 
     /**
@@ -164,7 +168,7 @@ public class CustomerRegistrationService {
      */
     @Transactional
     public List<CustomerRegistration> getCustomerRegistrationsBySession(int sessionId){
-        if (sessionId == 0){
+        if (sessionId < 0){
             throw new GRSException(HttpStatus.BAD_REQUEST, "No customer entered.");
         }
 
@@ -188,7 +192,7 @@ public class CustomerRegistrationService {
      */
     @Transactional
     public void removeCustomerFromSession(int sessionId, String email, GymUser gymUser) { //note: can not reduce to 20 lines do to multiple error checks
-        if (sessionId == 0 || email == null){
+        if (sessionId < 0 || email == null){
             throw new GRSException(HttpStatus.NOT_FOUND, "No session or customer entered.");
         }
         if((gymUser instanceof Customer && !gymUser.getEmail().equals(email)) || (gymUser instanceof Instructor && instructorRegistrationRepository.findInstructorRegistrationByInstructor_idAndSession_id(gymUser.getId(), sessionId) == null)){
