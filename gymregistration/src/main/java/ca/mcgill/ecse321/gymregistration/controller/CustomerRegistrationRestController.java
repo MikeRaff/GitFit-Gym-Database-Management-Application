@@ -6,14 +6,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import ca.mcgill.ecse321.gymregistration.dto.CustomerRegistrationDto;
 import ca.mcgill.ecse321.gymregistration.model.CustomerRegistration;
@@ -65,10 +58,22 @@ public class CustomerRegistrationRestController {
     }
 
     /**
-     * RegisterCustomerToSession: creates a new registration to register a customer to an event
-     * @param sessionId: id of session
+     * UpdateCustomerRegistration: updating a customer registration
+     * @param oldSessionId: old session id
+     * @param newSessionId: new session id
      * @param email: email of customer
-     * @return customer registration in the system
+     * @return : email of customer
+     * @throws IllegalArgumentException
+     */
+    @PutMapping(value = {"/customer-registration/update", "/customer-registration/update/"})
+    public ResponseEntity<CustomerRegistrationDto> updateCustomerRegistration(@RequestBody int oldSessionId, @RequestBody int newSessionId, @RequestBody String email) throws IllegalArgumentException{
+        CustomerRegistration customerRegistration = customerRegistrationService.updateCustomerRegistration(oldSessionId, newSessionId, email);
+        return new ResponseEntity<>(new CustomerRegistrationDto(customerRegistration), HttpStatus.OK);
+    }
+    /**
+     * RegisterCustomerToSession: creates a new registration to register a customer to an event
+     * @param customerRegistrationDto: customer registration
+     * @return Customer registration in the system
      * @throws IllegalArgumentException
      */
     @PostMapping(value = {"/customer-registrations/register", "/customer-registration/register/"})
