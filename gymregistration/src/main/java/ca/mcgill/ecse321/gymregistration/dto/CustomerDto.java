@@ -13,6 +13,11 @@ public class CustomerDto extends GymUserDto{
         super(email, password, person); // Call constructor of superclass
         this.creditCardNumber = creditCardNumber;
     }
+
+    public CustomerDto(String email, String password, Person person) {
+        super(email, password, person); // Call constructor of superclass
+    }
+
     public CustomerDto(Customer customer){
         super(customer.getId(), customer.getEmail(), customer.getPassword(), customer.getPerson());
         this.creditCardNumber = customer.getCreditCardNumber();
