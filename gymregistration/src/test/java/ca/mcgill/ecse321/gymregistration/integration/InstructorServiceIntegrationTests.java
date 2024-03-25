@@ -74,6 +74,13 @@ public class InstructorServiceIntegrationTests {
         testCreateInstructorInvalidPerson();
     }
 
+    @Test
+    public void testcreateAndLogInInstructor()
+    {
+        int id = testCreateInstructor("example@email.com","password");
+        testLogInInstructor("example@email.com", "password");
+    }
+
 
 
     public void testCreateInstructorInvalidEmailOrPassword(String email, String password) {
@@ -157,5 +164,17 @@ public class InstructorServiceIntegrationTests {
             fail();
         }
         assertEquals(1, 1);
+    }
+
+    public void testLogInInstructor(String email, String password)
+    {
+       String url= "/instructor/log-in/"+email+"/"+password;
+       ResponseEntity<InstructorDto> response = client.getForEntity(url, InstructorDto.class);
+
+       assertNotNull(response);
+       assertNotNull(response.getBody());
+       assertEquals(email, response.getBody().getEmail());
+       assertEquals(password,response.getBody().getPassword());
+       assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 }
