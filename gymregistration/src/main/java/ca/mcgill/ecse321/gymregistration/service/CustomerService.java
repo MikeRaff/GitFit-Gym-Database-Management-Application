@@ -100,7 +100,7 @@ public class CustomerService {
     }
 
     /**
-     * UpdatePassword: 1llow users to edit their password information
+     * UpdatePassword: allow users to edit their password information
      * @param email: email of customer
      * @param oldPassword: old password of customer
      * @param newPassword: new password of customer
