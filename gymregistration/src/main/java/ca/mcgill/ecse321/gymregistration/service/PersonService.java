@@ -48,13 +48,16 @@ public class PersonService {
         if(person == null){
             throw new GRSException(HttpStatus.BAD_REQUEST, "Person not found.");
         }
+        if(!(oldName.equals(person.getName()))){
+            throw new GRSException(HttpStatus.BAD_REQUEST, "Invalid old name.");
+        }
         if(newName == null || newName.trim().isEmpty()){
             throw new GRSException(HttpStatus.BAD_REQUEST, "Invalid name.");
         }
-
         person.setName(newName);
         return person;
     }
+
 
     /**
      * GetPersonById: get a person by their id
