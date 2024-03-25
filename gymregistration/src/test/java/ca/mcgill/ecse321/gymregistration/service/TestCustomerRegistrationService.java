@@ -27,15 +27,12 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mock.Strictness;
 import org.mockito.invocation.InvocationOnMock;
-import org.mockito.junit.MockitoJUnitRunner.Silent;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import ca.mcgill.ecse321.gymregistration.dao.CustomerRegistrationRepository;
 import ca.mcgill.ecse321.gymregistration.dao.CustomerRepository;
 import ca.mcgill.ecse321.gymregistration.dao.SessionRepository;
-import ca.mcgill.ecse321.gymregistration.model.ClassType;
 import ca.mcgill.ecse321.gymregistration.model.Customer;
 import ca.mcgill.ecse321.gymregistration.model.CustomerRegistration;
 import ca.mcgill.ecse321.gymregistration.model.Session;
@@ -188,7 +185,9 @@ public class TestCustomerRegistrationService {
 
         //might need to go
         lenient().when(customerRegistrationRepository.findCustomerRegistrationByCustomerAndSession(any(Customer.class),  any(Session.class))).thenAnswer((InvocationOnMock invocation) -> {
-            if(invocation.getArgument(0).equals(CUSTOMER) && invocation.getArgument(1).equals(SESSION)){
+            Session session = invocation.getArgument(1);
+            Customer customer = invocation.getArgument(0);
+            if(customer.getEmail().equals(CUSTOMER.getEmail()) && session.getId() == SESSION.getId()){
                 CustomerRegistration customerRegistration = new CustomerRegistration();
                 customerRegistration.setCustomer(CUSTOMER);
                 customerRegistration.setSession(SESSION);
@@ -212,11 +211,12 @@ public class TestCustomerRegistrationService {
         session.setEndTime(END_TIME);
 
         Customer customer = CUSTOMER;
-        customer.setEmail(CUSTOMER_EMAIL);
+        customer.setEmail(CUSTOMER_EMAIL);//make sure it's not the value we are expecting
         customer.setCreditCardNumber(CREDIT);
 
         CustomerRegistration customerRegistration = null;
         try{
+            when(customerRegistrationRepository.findCustomerRegistrationByCustomerAndSession(any(Customer.class),  any(Session.class))).thenReturn(null);//mock adding for first time
             customerRegistration = customerRegistrationService.registerCustomerToSession(session.getId(), customer.getEmail());
         }catch (GRSException e){
             fail(e.getMessage());
@@ -277,6 +277,7 @@ public class TestCustomerRegistrationService {
 
         CustomerRegistration customerRegistration = null;
         try{
+            when(customerRegistrationRepository.findCustomerRegistrationByCustomerAndSession(any(Customer.class),  any(Session.class))).thenReturn(null);//mock adding for first time
             customerRegistrationService.registerCustomerToSession(SESSION_ID, CUSTOMER_EMAIL);
             fail();
         }catch (GRSException e){
@@ -308,6 +309,7 @@ public class TestCustomerRegistrationService {
 
         CustomerRegistration customerRegistration = null;
         try{
+            when(customerRegistrationRepository.findCustomerRegistrationByCustomerAndSession(any(Customer.class),  any(Session.class))).thenReturn(null);//mock adding for first time
             customerRegistrationService.registerCustomerToSession(session.getId(), CUSTOMER_EMAIL);
             fail();
         }catch (GRSException e){
@@ -390,6 +392,7 @@ public class TestCustomerRegistrationService {
         customer.setEmail(CUSTOMER_EMAIL);
         customer.setCreditCardNumber(CREDIT);
 
+        when(customerRegistrationRepository.findCustomerRegistrationByCustomerAndSession(any(Customer.class),  any(Session.class))).thenReturn(null);//mock adding for first time
         CustomerRegistration firstCustomerRegistration = customerRegistrationService.registerCustomerToSession(session.getId(), customer.getEmail());
         
         when(customerRegistrationRepository.findCustomerRegistrationByCustomerAndSession(any(Customer.class),  any(Session.class))).thenReturn(firstCustomerRegistration);
@@ -446,7 +449,7 @@ public class TestCustomerRegistrationService {
         Customer customer = CUSTOMER;
         customer.setEmail(CUSTOMER_EMAIL);
         customer.setCreditCardNumber(CREDIT);
-
+        when(customerRegistrationRepository.findCustomerRegistrationByCustomerAndSession(any(Customer.class),  any(Session.class))).thenReturn(null);//mock adding for first time
         CustomerRegistration customerRegistration = customerRegistrationService.registerCustomerToSession(oldSession.getId(), customer.getEmail());
         lenient().when(customerRegistrationRepository.findCustomerRegistrationByCustomerAndSession(any(Customer.class),  any(Session.class))).thenReturn(customerRegistration);
         try{
@@ -479,8 +482,11 @@ public class TestCustomerRegistrationService {
         customer.setCreditCardNumber(CREDIT);
 
         List<CustomerRegistration> addedRegistrations = new ArrayList<>();
+        when(customerRegistrationRepository.findCustomerRegistrationByCustomerAndSession(any(Customer.class),  any(Session.class))).thenReturn(null);//mock adding for first time
         CustomerRegistration registrationToFirstSession = customerRegistrationService.registerCustomerToSession(firstSession.getId(), customer.getEmail());
+        when(customerRegistrationRepository.findCustomerRegistrationByCustomerAndSession(any(Customer.class),  any(Session.class))).thenReturn(null);//mock adding new
         CustomerRegistration registrationToSecondSession = customerRegistrationService.registerCustomerToSession(secondSession.getId(), customer.getEmail());
+        registrationToSecondSession.setId(1);//set proper id value
         addedRegistrations.add(registrationToFirstSession);
         addedRegistrations.add(registrationToSecondSession);
 
@@ -513,12 +519,17 @@ public class TestCustomerRegistrationService {
         customer1.setCreditCardNumber(CREDIT);
 
         Customer customer2 = CUSTOMER;
-        customer2.setEmail(CUSTOMER_EMAIL);
+        customer2.setEmail(CUSTOMER_EMAIL); //Same customers here have to mock solution
         customer2.setCreditCardNumber(CREDIT);
 
         List<CustomerRegistration> addedRegistrations = new ArrayList<>();
+        lenient().when(customerRegistrationRepository.findCustomerRegistrationByCustomerAndSession(any(Customer.class), any(Session.class))).thenReturn(null);//mock first addition
         CustomerRegistration registrationToFirstSession = customerRegistrationService.registerCustomerToSession(session.getId(), customer1.getEmail());
+        lenient().when(customerRegistrationRepository.findCustomerRegistrationByCustomerAndSession(any(Customer.class), any(Session.class))).thenReturn(null);//mock first addition
         CustomerRegistration registrationToSecondSession = customerRegistrationService.registerCustomerToSession(session.getId(), customer2.getEmail());
+        registrationToSecondSession.setId(1);//mock sets to zero incorrectly 
+        registrationToSecondSession.setCustomer(customer2);
+        registrationToSecondSession.setCustomer(customer1);
         addedRegistrations.add(registrationToFirstSession);
         addedRegistrations.add(registrationToSecondSession);
 
