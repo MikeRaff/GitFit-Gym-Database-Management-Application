@@ -36,9 +36,14 @@ In this project, our team of software developers was tasked with creating a web 
 cd gymregistration 
 ./gradelw clean build or ./gradelw build
 
-### Effort Distrubtion For Code
+### Effort Distrubtion For Code Pre Deadline
 |Erik|Billy|Paul|Jerome|Mike|
 |----|-----|----|------|----|
-|~40%| ~20%|~20|~15|5%|
+|~50%| ~15%|~15|~15|5%|
+
+### Effort Distrubtion For Code Post Deadline
+|Erik|Billy|Paul|Jerome|Mike|
+|----|-----|----|------|----|
+|~30%| ~25%|~20|~15|10%|
 
 # ⚠️ NOTE: PLEASE USE JAVA 21; THE TESTS WILL FAIL IF YOU DON'T
