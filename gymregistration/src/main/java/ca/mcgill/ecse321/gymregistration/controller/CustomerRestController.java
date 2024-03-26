@@ -7,6 +7,8 @@ import ca.mcgill.ecse321.gymregistration.model.Customer;
 import ca.mcgill.ecse321.gymregistration.model.GymUser;
 import ca.mcgill.ecse321.gymregistration.model.Instructor;
 import ca.mcgill.ecse321.gymregistration.service.CustomerService;
+import ca.mcgill.ecse321.gymregistration.service.exception.GRSException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -37,11 +39,12 @@ public class CustomerRestController {
      * @return The customer
      * @throws IllegalArgumentException
      */
-    @GetMapping(value = { "/customers/login", "/customers/login/"})
-    public ResponseEntity<CustomerDto> loginCustomer(@RequestBody String email, @RequestBody String password) throws IllegalArgumentException {
+    @GetMapping(value = { "/customers/login/{email}/{password}", "/customers/login/{email}/{password}/"})
+    public ResponseEntity<CustomerDto> loginCustomer(@PathVariable("email") String email, @PathVariable("password") String password) throws IllegalArgumentException {
         Customer customer = customerService.loginCustomer(email, password);
         return new ResponseEntity<>(new CustomerDto(customer), HttpStatus.OK);
     }
+
     /**
      * GetCustomer: getting customer by email
      * @param email: email to search with
@@ -62,11 +65,14 @@ public class CustomerRestController {
      * @return Created customer
      */
     @PostMapping(value= { "/customers/create", "/customers/create/"})
-    public ResponseEntity<CustomerDto> createCustomer(@RequestBody String email, @RequestBody String password, @RequestBody PersonDto person){
-        Customer customer = customerService.createCustomer(email, password, person.getId());
-        return new ResponseEntity<>(new CustomerDto(customer), HttpStatus.CREATED);
+    public ResponseEntity<CustomerDto> createCustomer(@RequestBody CustomerDto customerDto)throws IllegalArgumentException{
+        try{
+            Customer customer = customerService.createCustomer(customerDto.getEmail(), customerDto.getPassword(), customerDto.getPerson().getId());
+            return new ResponseEntity<>(new CustomerDto(customer), HttpStatus.CREATED);
+        }catch(GRSException e){
+            return new ResponseEntity<>(new CustomerDto(), e.getStatus());
+        }
     }
-
     /**
      * UpdateCustomerCreditCard: updating customer credit card
      * @param email: email of customer
@@ -75,9 +81,9 @@ public class CustomerRestController {
      * @return Updated customer
      * @throws IllegalArgumentException
      */
-    @PutMapping(value = {"/customers/updateCreditCard", "/customers/updateCreditCard/"})
-    public ResponseEntity<CustomerDto> updateCustomerCreditCard(@RequestBody String email, @RequestBody String password, @RequestBody int creditCardNumber) throws IllegalArgumentException{
-        Customer customer = customerService.updateCreditCard(email, password, creditCardNumber);
+    @PutMapping(value = {"/customers/updateCreditCard/{newCreditCard}", "/customers/updateCreditCard/{newCreditCard}/"})
+    public ResponseEntity<CustomerDto> updateCustomerCreditCard(@PathVariable("newCreditCard") int newCreditCard, @RequestBody CustomerDto customerDto) throws IllegalArgumentException{
+        Customer customer = customerService.updateCreditCard(customerDto.getEmail(), customerDto.getPassword(), newCreditCard);
         return new ResponseEntity<>(new CustomerDto(customer), HttpStatus.OK);
     }
 
@@ -89,9 +95,9 @@ public class CustomerRestController {
      * @return Edited customer
      * @throws IllegalArgumentException
      */
-    @PutMapping(value = {"/customers/updateEmail", "/customers/updateEmail/"})
-    public ResponseEntity<CustomerDto> updateCustomerEmail(@RequestBody String oldEmail, @RequestBody String password, @RequestBody String newEmail) throws IllegalArgumentException{
-        Customer customer = customerService.updateEmail(oldEmail, password, newEmail);
+    @PutMapping(value = {"/customers/updateEmail/{newEmail}", "/customers/updateEmail/{newEmail}/"})
+    public ResponseEntity<CustomerDto> updateCustomerEmail(@RequestBody CustomerDto customerDto, @PathVariable String newEmail) throws IllegalArgumentException{
+        Customer customer = customerService.updateEmail(customerDto.getEmail(), customerDto.getPassword(), newEmail);
         return new ResponseEntity<>(new CustomerDto(customer), HttpStatus.OK);
     }
 
@@ -103,9 +109,9 @@ public class CustomerRestController {
      * @return Updated customer
      * @throws IllegalArgumentException
      */
-    @PutMapping(value = {"/customers/updatePassword", "/customers/updatedPassword/"})
-    public ResponseEntity<CustomerDto> updateCustomerPassword(@RequestBody String email, @RequestBody String oldPassword, @RequestBody String newPassword) throws IllegalArgumentException{
-        Customer customer = customerService.updatePassword(email, oldPassword, newPassword);
+    @PutMapping(value = {"/customers/updatePassword/{newPassword}", "/customers/updatedPassword/{newPassword}/"})
+    public ResponseEntity<CustomerDto> updateCustomerPassword(@RequestBody CustomerDto customerDto, @PathVariable String newPassword) throws IllegalArgumentException{
+        Customer customer = customerService.updatePassword(customerDto.getEmail(), customerDto.getPassword(), newPassword);
         return new ResponseEntity<>(new CustomerDto(customer), HttpStatus.OK);
     }
 
@@ -116,8 +122,8 @@ public class CustomerRestController {
      * @return Instructor
      * @throws IllegalArgumentException
      */
-    @PutMapping(value = {"/customers/updateType", "/customers/updateType/"})
-    public ResponseEntity<InstructorDto> updateCustomerType(@RequestBody String email, @RequestBody GymUser gymUser) throws IllegalArgumentException{
+    @PutMapping(value = {"/customers/updateToInstructor/{customerEmail}", "/customers/updateToInstructor/{customerEmail}/"})
+    public ResponseEntity<InstructorDto> updateCustomerType(@PathVariable String email, @RequestBody GymUser gymUser) throws IllegalArgumentException{
         Instructor instructor = customerService.changeAccountType(email, gymUser);
         return new ResponseEntity<>(new InstructorDto(instructor), HttpStatus.OK);
     }
@@ -129,7 +135,8 @@ public class CustomerRestController {
      * @throws IllegalArgumentException
      */
     @DeleteMapping(value = {"/customers/delete/{email}", "/customers/delete/{email}/"})
-    public void deleteCustomer(@PathVariable("email") String email, @RequestBody GymUser gymUser) throws IllegalArgumentException{
+    public ResponseEntity<String> deleteCustomer(@PathVariable("email") String email, @RequestBody GymUser gymUser) throws IllegalArgumentException{
         customerService.deleteCustomer(email, gymUser);
+        return new ResponseEntity<>(email, HttpStatus.OK);
     }
 }
