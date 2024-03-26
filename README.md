@@ -39,11 +39,11 @@ cd gymregistration
 ### Effort Distrubtion For Code Pre Deadline
 |Erik|Billy|Paul|Jerome|Mike|
 |----|-----|----|------|----|
-|~50%| ~15%|~15|~15|5%|
+|~50%| ~15%|~15|~15|~5%|
 
 ### Effort Distrubtion For Code Post Deadline
 |Erik|Billy|Paul|Jerome|Mike|
 |----|-----|----|------|----|
-|~30%| ~25%|~20|~15|10%|
+|~30%| ~25%|~20|~15|~10%|
 
 # ⚠️ NOTE: PLEASE USE JAVA 21; THE TESTS WILL FAIL IF YOU DON'T
