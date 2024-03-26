@@ -36,7 +36,7 @@ In this project, our team of software developers was tasked with creating a web 
 cd gymregistration 
 ./gradelw clean build or ./gradelw build
 
-### Effort Distrubtion
+### Effort Distrubtion for Waving Penalty
 |Erik|Billy|Paul|Jerome|Mike|
 |----|-----|----|------|----|
 |~40%| ~25%|~15|~15|5%|
