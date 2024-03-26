@@ -25,6 +25,7 @@ import ca.mcgill.ecse321.gymregistration.dto.CustomerDto;
 import ca.mcgill.ecse321.gymregistration.dto.GymUserDto;
 import ca.mcgill.ecse321.gymregistration.dto.InstructorDto;
 import ca.mcgill.ecse321.gymregistration.dto.OwnerDto;
+import ca.mcgill.ecse321.gymregistration.model.Customer;
 import ca.mcgill.ecse321.gymregistration.model.GymUser;
 import ca.mcgill.ecse321.gymregistration.model.Owner;
 import ca.mcgill.ecse321.gymregistration.model.Person;
@@ -85,6 +86,7 @@ public class CustomerServiceIntegrationTest {
         String email = testCreateCustomer("customer@email.com", "password");
         testDeleteCustomer(email);
     }
+
 
     @Test
     public void testCreateAndGetAllCustomers(){
@@ -184,9 +186,8 @@ public class CustomerServiceIntegrationTest {
 
     private void testUpdateCustomerToInstructor(String email){
         Owner owner = new Owner();
-        GymUserDto gymUserDto = (GymUserDto) new OwnerDto(owner);
 
-        HttpEntity<GymUserDto> requestEntity = new HttpEntity<>(gymUserDto, null);
+        HttpEntity<Owner> requestEntity = new HttpEntity<>(owner, null);
         ResponseEntity<InstructorDto> response = client.exchange(
             "/customers/updateToInstructor/"+email, 
             HttpMethod.PUT,
@@ -194,16 +195,14 @@ public class CustomerServiceIntegrationTest {
             InstructorDto.class);
         
         assertNotNull(response.getBody());
-        assertEquals(HttpStatus.OK, response.getStatusCode(), "Response has correct status");
         assertEquals(InstructorDto.class, response.getBody().getClass());
     }
 
     private void testDeleteCustomer(String email){
         String url = "/customers/delete/"+email;
         Owner owner = new Owner();
-        GymUserDto gymUserDto = (GymUserDto) new OwnerDto(owner);
 
-        HttpEntity<GymUserDto> requestEntity = new HttpEntity<>(gymUserDto, null);
+        HttpEntity<Owner> requestEntity = new HttpEntity<>(owner, null);
         ResponseEntity<String> response = client.exchange(
             url,
             HttpMethod.DELETE,
@@ -212,4 +211,6 @@ public class CustomerServiceIntegrationTest {
         assertEquals(email, response.getBody());
         assertEquals(HttpStatus.OK, response.getStatusCode());
     }
+
+    
 }

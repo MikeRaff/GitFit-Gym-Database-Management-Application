@@ -1,11 +1,13 @@
 package ca.mcgill.ecse321.gymregistration.controller;
 
 import ca.mcgill.ecse321.gymregistration.dto.CustomerDto;
+import ca.mcgill.ecse321.gymregistration.dto.GymUserDto;
 import ca.mcgill.ecse321.gymregistration.dto.InstructorDto;
 import ca.mcgill.ecse321.gymregistration.dto.PersonDto;
 import ca.mcgill.ecse321.gymregistration.model.Customer;
 import ca.mcgill.ecse321.gymregistration.model.GymUser;
 import ca.mcgill.ecse321.gymregistration.model.Instructor;
+import ca.mcgill.ecse321.gymregistration.model.Owner;
 import ca.mcgill.ecse321.gymregistration.service.CustomerService;
 import ca.mcgill.ecse321.gymregistration.service.exception.GRSException;
 
@@ -123,8 +125,8 @@ public class CustomerRestController {
      * @throws IllegalArgumentException
      */
     @PutMapping(value = {"/customers/updateToInstructor/{customerEmail}", "/customers/updateToInstructor/{customerEmail}/"})
-    public ResponseEntity<InstructorDto> updateCustomerType(@PathVariable String email, @RequestBody GymUser gymUser) throws IllegalArgumentException{
-        Instructor instructor = customerService.changeAccountType(email, gymUser);
+    public ResponseEntity<InstructorDto> updateCustomerType(@PathVariable String email, @RequestBody Owner owner) throws IllegalArgumentException{
+        Instructor instructor = customerService.changeAccountType(email, owner);
         return new ResponseEntity<>(new InstructorDto(instructor), HttpStatus.OK);
     }
 
@@ -135,8 +137,8 @@ public class CustomerRestController {
      * @throws IllegalArgumentException
      */
     @DeleteMapping(value = {"/customers/delete/{email}", "/customers/delete/{email}/"})
-    public ResponseEntity<String> deleteCustomer(@PathVariable("email") String email, @RequestBody GymUser gymUser) throws IllegalArgumentException{
-        customerService.deleteCustomer(email, gymUser);
+    public ResponseEntity<String> deleteCustomer(@PathVariable("email") String email, @RequestBody Owner owner) throws IllegalArgumentException{
+        customerService.deleteCustomer(email, owner);
         return new ResponseEntity<>(email, HttpStatus.OK);
     }
 }
