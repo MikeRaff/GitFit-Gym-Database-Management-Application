@@ -27,13 +27,16 @@ In this project, our team of software developers was tasked with creating a web 
 ## 📈 Deliverable 2 🤩:
 [Backend Services (API Documentation)](https://github.com/McGill-ECSE321-Winter2024/project-group-3/wiki/%F0%9F%96%A5%EF%B8%8F-Backend-Services#api-documentation-)   
 [Software Quality Assurance Plan & Unit Test Suite](https://github.com/McGill-ECSE321-Winter2024/project-group-3/wiki/%F0%9F%94%8E-Quality-Assurance-Report)  
-[Integration for RESTful services]()  
-[Build System]()  
+[Integration for RESTful services](https://github.com/McGill-ECSE321-Winter2024/project-group-3/wiki/%F0%9F%98%AE%E2%80%8D%F0%9F%92%A8Restful-Service-Integration-Tests#tests-performed)  
 [Project Board](https://github.com/orgs/McGill-ECSE321-Winter2024/projects/36/views/1)  
 [Project Management and Project Report](https://github.com/McGill-ECSE321-Winter2024/project-group-3/wiki/%F0%9F%93%93-Project-Management-and-Project-Report#-project-board)  
 [Meeting Minutes Sprint 2](https://github.com/McGill-ECSE321-Winter2024/project-group-3/wiki/%E2%9C%8F%EF%B8%8F-Meetings-Minutes#-meeting-notes-for-deliverable-two)  
 
-### Effort Distrubtion
+### To Build System and Run Tests 
+cd gymregistration 
+./gradelw clean build or ./gradelw build
+
+### Effort Distrubtion for Waving Penalty
 |Erik|Billy|Paul|Jerome|Mike|
 |----|-----|----|------|----|
 |~40%| ~25%|~15|~15|5%|
