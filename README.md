@@ -32,7 +32,7 @@ In this project, our team of software developers was tasked with creating a web 
 [Project Management and Project Report](https://github.com/McGill-ECSE321-Winter2024/project-group-3/wiki/%F0%9F%93%93-Project-Management-and-Project-Report#-project-board)  
 [Meeting Minutes Sprint 2](https://github.com/McGill-ECSE321-Winter2024/project-group-3/wiki/%E2%9C%8F%EF%B8%8F-Meetings-Minutes#-meeting-notes-for-deliverable-two)  
 
-### To Run Tests 
+### To Build System and Run Tests 
 cd gymregistration 
 ./gradelw clean build or ./gradelw build
 
