@@ -79,7 +79,7 @@ public class CustomerRegistrationRestController {
     @PostMapping(value = {"/customer-registrations/register", "/customer-registration/register/"})
     public ResponseEntity<CustomerRegistrationDto> registerCustomerToSession(@RequestBody CustomerRegistrationDto customerRegistrationDto) throws IllegalArgumentException{
         CustomerRegistration customerRegistration = customerRegistrationService.registerCustomerToSession(customerRegistrationDto.getSession().getId(), customerRegistrationDto.getCustomer().getEmail());
-        return new ResponseEntity<>(new CustomerRegistrationDto(customerRegistration), HttpStatus.OK);
+        return new ResponseEntity<>(new CustomerRegistrationDto(customerRegistration), HttpStatus.CREATED);
     }
 
     /**
