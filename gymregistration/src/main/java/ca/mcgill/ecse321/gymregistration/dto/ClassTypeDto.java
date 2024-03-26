@@ -24,6 +24,8 @@ public class ClassTypeDto {
         this.isApproved = isApproved;
     }
 
+
+
     /**
      * ClassTypeDto: constructor no id
      * @param name

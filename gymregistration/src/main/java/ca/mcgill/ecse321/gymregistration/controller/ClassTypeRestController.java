@@ -1,8 +1,12 @@
 package ca.mcgill.ecse321.gymregistration.controller;
 
+import ca.mcgill.ecse321.gymregistration.dao.ClassTypeRepository;
+import ca.mcgill.ecse321.gymregistration.dao.OwnerRepository;
 import ca.mcgill.ecse321.gymregistration.dto.ClassTypeDto;
+import ca.mcgill.ecse321.gymregistration.dto.GymUserDto;
 import ca.mcgill.ecse321.gymregistration.model.ClassType;
 import ca.mcgill.ecse321.gymregistration.model.GymUser;
+import ca.mcgill.ecse321.gymregistration.model.Owner;
 import ca.mcgill.ecse321.gymregistration.service.ClassTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,6 +21,10 @@ import java.util.stream.Collectors;
 public class ClassTypeRestController {
     @Autowired
     private ClassTypeService classTypeService;
+    @Autowired 
+    private ClassTypeRepository classTypeRepository;
+    @Autowired
+    private OwnerRepository ownerRepository;
 
     /**
      * GetAllClassTypes: getting all class types
@@ -42,15 +50,16 @@ public class ClassTypeRestController {
     /**
      * CreateClassType: creating a class type
      * @param classTypeDto : class type dto to be created
-     * @param gymUser: user creating the class type
+     * @param Email: email of user creating the class type
      * @return Class type in system
      * @throws IllegalArgumentException
      */
 
-    @PostMapping(value = { "/class-types/create", "/class-types/create/"})
-    public ResponseEntity<ClassTypeDto> createClassType(@RequestBody ClassTypeDto classTypeDto, @RequestBody GymUser gymUser) throws IllegalArgumentException{
-        ClassType classType = classTypeService.createClassType(classTypeDto.getName(), classTypeDto.isApproved(), gymUser);
-        return new ResponseEntity<>(new ClassTypeDto(classType), HttpStatus.CREATED);
+    @PostMapping(value = { "/class-types/create/{email}", "/class-types/create/{email}/"})
+    public ResponseEntity<ClassTypeDto> createClassType(@PathVariable("email") String email, @RequestBody ClassTypeDto classTypeDto) throws IllegalArgumentException{
+        Owner owner = ownerRepository.findOwnerByEmail(email);
+        ClassType classType = classTypeService.createClassType(classTypeDto.getName(), classTypeDto.isApproved(), owner);
+        return new ResponseEntity<ClassTypeDto>(new ClassTypeDto(classType), HttpStatus.CREATED);
     }
 
     /**
@@ -60,9 +69,10 @@ public class ClassTypeRestController {
      * @return Proposed class type
      * @throws IllegalArgumentException
      */
-    @PostMapping(value = { "/class-types/propose", "/class-types/propose/"})
-    public ResponseEntity<ClassTypeDto> proposeClassType(@RequestBody String name, @RequestBody GymUser gymUser) throws IllegalArgumentException{
-        ClassType classType = classTypeService.proposeClassType(name, gymUser);
+    @PostMapping(value = { "/class-types/propose/{name}", "/class-types/propose/{name}/"})
+    public ResponseEntity<ClassTypeDto> proposeClassType(@PathVariable("name") String name, @RequestBody GymUserDto gymUserdto) throws IllegalArgumentException{
+        Owner owner = new Owner(gymUserdto.getEmail(), gymUserdto.getPassword(), gymUserdto.getPerson());
+        ClassType classType = classTypeService.proposeClassType(name, owner);
         return new ResponseEntity<>(new ClassTypeDto(classType), HttpStatus.CREATED);
     }
 
@@ -84,12 +94,13 @@ public class ClassTypeRestController {
     /**
      * ApproveProposedClassType: approving the proposed class type
      * @param name: name of class type
-     * @param gymUser: user approving the class type
+     * @param gymUserDto: user approving the class type
      * @return Approved class type
      * @throws IllegalArgumentException
      */
     @PutMapping(value = {"/class-types/approve/{name}", "/class-types/approve/{name}/"})
-    public ResponseEntity<ClassTypeDto> approveProposedClassType(@PathVariable("name") String name, @RequestBody GymUser gymUser) throws IllegalArgumentException{
+    public ResponseEntity<ClassTypeDto> approveProposedClassType(@PathVariable("name") String name, @RequestBody GymUserDto gymUserDto) throws IllegalArgumentException{
+        GymUser gymUser = ownerRepository.findOwnerByEmail(gymUserDto.getEmail());
         ClassType classType = classTypeService.approveProposedClassType(name, gymUser);
         return new ResponseEntity<>(new ClassTypeDto(classType), HttpStatus.OK);
     }
