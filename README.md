@@ -32,7 +32,10 @@ In this project, our team of software developers was tasked with creating a web 
 [Project Board](https://github.com/orgs/McGill-ECSE321-Winter2024/projects/36/views/1)  
 [Project Management and Project Report](https://github.com/McGill-ECSE321-Winter2024/project-group-3/wiki/%F0%9F%93%93-Project-Management-and-Project-Report#-project-board)  
 [Meeting Minutes Sprint 2](https://github.com/McGill-ECSE321-Winter2024/project-group-3/wiki/%E2%9C%8F%EF%B8%8F-Meetings-Minutes#-meeting-notes-for-deliverable-two)  
- 
 
+### Effort Distrubtion
+|Erik|Billy|Paul|Jerome|Mike|
+|----|-----|----|------|----|
+|~40%| ~25%|~15|~15|5%|
 
 # ⚠️ NOTE: PLEASE USE JAVA 21; THE TESTS WILL FAIL IF YOU DON'T
