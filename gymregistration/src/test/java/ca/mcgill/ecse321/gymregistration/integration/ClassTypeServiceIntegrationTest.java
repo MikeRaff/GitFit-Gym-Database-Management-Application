@@ -5,7 +5,6 @@ import ca.mcgill.ecse321.gymregistration.dao.OwnerRepository;
 import ca.mcgill.ecse321.gymregistration.dto.ClassTypeDto;
 import ca.mcgill.ecse321.gymregistration.dto.GymUserDto;
 import ca.mcgill.ecse321.gymregistration.model.ClassType;
-import ca.mcgill.ecse321.gymregistration.model.GymUser;
 import ca.mcgill.ecse321.gymregistration.model.Owner;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -62,6 +61,15 @@ public class ClassTypeServiceIntegrationTest {
        testGetAllClassTypes(2);
    }
 
+   @Test
+   public void testProposeAndApproveClassType()
+   {
+    int id = testProposeClassType("Yoga");
+    System.out.println("Moving on");
+    testApproveProposedClassType("Yoga", id);
+    }
+   
+
     public ClassTypeDto testCreateClassType(String name, boolean isApproved) {
         ClassType classType = new ClassType();
         Owner owner = ownerRepository.findOwnerByEmail("Example@email.com");
@@ -109,4 +117,23 @@ public class ClassTypeServiceIntegrationTest {
        assertNotNull(response.getBody(), "Response has body");
        assertEquals(size, response.getBody().size());
    }
+
+   public int testProposeClassType(String name) {
+    // Mock data
+   
+    Owner owner = new Owner(); // Provide appropriate gym user object
+    owner.setEmail("Example@email.com");
+    ownerRepository.save(owner);
+    // Make a POST request to the endpoint
+    ResponseEntity<ClassTypeDto> response = client.postForEntity(
+            "/class-types/propose/"+name,
+            new GymUserDto(owner), // Assuming ClassTypeDto constructor accepts name and gymUser
+            ClassTypeDto.class);
+
+    // Verify response
+    assertEquals(HttpStatus.CREATED, response.getStatusCode());
+    assertEquals(name, response.getBody().getName());
+    // Optionally, you can verify the returned ClassTypeDto content or other aspects of the response
+    return response.getBody().getId();
+}
 }

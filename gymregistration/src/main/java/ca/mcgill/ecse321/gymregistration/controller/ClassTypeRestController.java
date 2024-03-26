@@ -59,7 +59,6 @@ public class ClassTypeRestController {
     public ResponseEntity<ClassTypeDto> createClassType(@PathVariable("email") String email, @RequestBody ClassTypeDto classTypeDto) throws IllegalArgumentException{
         Owner owner = ownerRepository.findOwnerByEmail(email);
         ClassType classType = classTypeService.createClassType(classTypeDto.getName(), classTypeDto.isApproved(), owner);
-        System.out.println("classtype created");
         return new ResponseEntity<ClassTypeDto>(new ClassTypeDto(classType), HttpStatus.CREATED);
     }
 
@@ -70,10 +69,10 @@ public class ClassTypeRestController {
      * @return Proposed class type
      * @throws IllegalArgumentException
      */
-    @PostMapping(value = { "/class-types/propose", "/class-types/propose/"})
-    public ResponseEntity<ClassTypeDto> proposeClassType(@RequestBody String name, @RequestBody GymUser gymUser) throws IllegalArgumentException{
-        System.out.println("post");
-        ClassType classType = classTypeService.proposeClassType(name, gymUser);
+    @PostMapping(value = { "/class-types/propose/{name}", "/class-types/propose/{name}/"})
+    public ResponseEntity<ClassTypeDto> proposeClassType(@PathVariable("name") String name, @RequestBody GymUserDto gymUserdto) throws IllegalArgumentException{
+        Owner owner = new Owner(gymUserdto.getEmail(), gymUserdto.getPassword(), gymUserdto.getPerson());
+        ClassType classType = classTypeService.proposeClassType(name, owner);
         return new ResponseEntity<>(new ClassTypeDto(classType), HttpStatus.CREATED);
     }
 
@@ -101,11 +100,8 @@ public class ClassTypeRestController {
      */
     @PutMapping(value = {"/class-types/approve/{name}", "/class-types/approve/{name}/"})
     public ResponseEntity<ClassTypeDto> approveProposedClassType(@PathVariable("name") String name, @RequestBody GymUserDto gymUserDto) throws IllegalArgumentException{
-        System.out.println("here1");
         GymUser gymUser = ownerRepository.findOwnerByEmail(gymUserDto.getEmail());
-        System.out.println("here 2");
         ClassType classType = classTypeService.approveProposedClassType(name, gymUser);
-        System.out.println("here 3");
         return new ResponseEntity<>(new ClassTypeDto(classType), HttpStatus.OK);
     }
 

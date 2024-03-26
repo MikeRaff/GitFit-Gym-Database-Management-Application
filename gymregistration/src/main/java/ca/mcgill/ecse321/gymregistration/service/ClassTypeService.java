@@ -164,7 +164,6 @@ public class ClassTypeService {
      */
     @Transactional
     public ClassType approveProposedClassType(String name, GymUser gymUser){
-        
         if(!(gymUser instanceof Owner)){
             throw new GRSException(HttpStatus.UNAUTHORIZED, "Only owners can approve class types.");
         }
