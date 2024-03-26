@@ -15,19 +15,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import java.util.List;
 
-import ca.mcgill.ecse321.gymregistration.dao.InstructorRegistrationRepository;
 import ca.mcgill.ecse321.gymregistration.dao.InstructorRepository;
-import ca.mcgill.ecse321.gymregistration.dao.OwnerRepository;
 import ca.mcgill.ecse321.gymregistration.dao.SessionRepository;
 import ca.mcgill.ecse321.gymregistration.model.Session;
 import ca.mcgill.ecse321.gymregistration.dto.SessionDto;
-import ca.mcgill.ecse321.gymregistration.dto.InstructorRegistrationDto;
-import ca.mcgill.ecse321.gymregistration.model.Instructor;
-import ca.mcgill.ecse321.gymregistration.model.InstructorRegistration;
 import ca.mcgill.ecse321.gymregistration.model.ClassType;
-import ca.mcgill.ecse321.gymregistration.dao.ClassTypeRepository;
-import ca.mcgill.ecse321.gymregistration.dto.ClassTypeDto;
-import ca.mcgill.ecse321.gymregistration.model.Owner;
 import ca.mcgill.ecse321.gymregistration.service.exception.GRSException;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
@@ -57,20 +49,6 @@ public class SessionServiceIntegrationTest {
         int id = testCreateSession();
         testDeleteSession(id);
     }
-
-    // @Test
-    // public void testCreateInvalidSessionBadClassType() {
-    //     Session session = new Session();
-    //     ClassType classType = new ClassType();
-    //     session.setClassType(classType);
-    //     sessionRepository.save(session);
-    //     classTypeRepository.save(classType); // why doesn't this work.
-    //     SessionDto sessionDto = new SessionDto(null, classType, new ClassType());
-    //     String url = "/session/create";
-    //     ResponseEntity<SessionDto> response = client.postForEntity(url, sessionDto,
-    //             SessionDto.class);
-    //     assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode(), "response has correct status"); 
-    // }
 
     @Test
     public void testCreateandGetSessionByClassTypeId() {
