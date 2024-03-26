@@ -39,6 +39,6 @@ cd gymregistration
 ### Effort Distrubtion For Code
 |Erik|Billy|Paul|Jerome|Mike|
 |----|-----|----|------|----|
-|~40%| ~25%|~15|~15|5%|
+|~40%| ~20%|~20|~15|5%|
 
 # ⚠️ NOTE: PLEASE USE JAVA 21; THE TESTS WILL FAIL IF YOU DON'T
