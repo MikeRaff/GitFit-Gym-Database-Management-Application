@@ -10,7 +10,7 @@ public class Customer extends GymUser {
   //------------------------
 
   //Customer Attributes
-  private int creditCardNumber;
+  private String creditCardNumber;
 
   //------------------------
   // CONSTRUCTOR
@@ -23,9 +23,10 @@ public class Customer extends GymUser {
 
   public Customer(String aEmail, String aPassword, Person aPerson) {
     super(aEmail, aPassword, aPerson);
+    creditCardNumber = "";
   }
   
-  public Customer(String aEmail, String aPassword, Person aPerson, int aCreditCardNumber) {
+  public Customer(String aEmail, String aPassword, Person aPerson, String aCreditCardNumber) {
     super(aEmail, aPassword, aPerson);
     creditCardNumber = aCreditCardNumber;
   }
@@ -35,11 +36,11 @@ public class Customer extends GymUser {
   //------------------------
 
 
-  public int getCreditCardNumber() {
+  public String getCreditCardNumber() {
     return creditCardNumber;
   }
 
-  public void setCreditCardNumber(int creditCardNumber) {
+  public void setCreditCardNumber(String creditCardNumber) {
     this.creditCardNumber = creditCardNumber;
 
   }
