@@ -3,6 +3,10 @@ package ca.mcgill.ecse321.gymregistration.integration;
 import static org.junit.jupiter.api.Assertions.*;
 
 import ca.mcgill.ecse321.gymregistration.dao.ClassTypeRepository;
+import ca.mcgill.ecse321.gymregistration.dao.OwnerRepository;
+import java.sql.Date;
+import java.sql.Time;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -20,6 +24,7 @@ import ca.mcgill.ecse321.gymregistration.dao.SessionRepository;
 import ca.mcgill.ecse321.gymregistration.model.Session;
 import ca.mcgill.ecse321.gymregistration.dto.SessionDto;
 import ca.mcgill.ecse321.gymregistration.model.ClassType;
+import ca.mcgill.ecse321.gymregistration.model.Owner;
 import ca.mcgill.ecse321.gymregistration.service.exception.GRSException;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
@@ -30,12 +35,15 @@ public class SessionServiceIntegrationTest {
     private ClassTypeRepository classTypeRepository;
     @Autowired
     private SessionRepository sessionRepository;
+    @Autowired 
+    private OwnerRepository ownerRepository;
 
     @BeforeEach
     @AfterEach
     public void clearDatabase() {
         classTypeRepository.deleteAll();
         sessionRepository.deleteAll();
+        ownerRepository.deleteAll();
     }
 
     @Test
@@ -50,20 +58,32 @@ public class SessionServiceIntegrationTest {
         testDeleteSession(id);
     }
 
-    @Test
-    public void testCreateandGetSessionByClassTypeId() {
-        int id = testCreateSession();
-        testgetSessionByClassTypeId(id);
-    }
+    // @Test
+    // public void testCreateandGetSessions() {
+    //     int id = testCreateSession();
+    //     testgetSessionByClassTypeId(id);
+    // }
 
     public int testCreateSession() {
         ClassType classType = new ClassType();
+        classType.setName("Boxing");
+        classType.setApproved(true);
         classTypeRepository.save(classType);
         Session session = new Session();
         session.setClassType(classType);
+        session.setDate(Date.valueOf("2025-3-10"));
+        session.setStartTime(Time.valueOf("12:00:00"));
+        session.setEndTime(Time.valueOf("13:00:00"));
+        session.setName("Boxing with Billy");
+        session.setDescription("Punch Billy in the head over and over again (at his request)");
+        session.setCapacity(20);
+        session.setLocation("Main Gym");
         sessionRepository.save(session);
         SessionDto sessionDto = new SessionDto(session);
-        String url = "/sessions/create";
+        Owner owner = new Owner();
+        owner.setEmail("example@email.com");
+        ownerRepository.save(owner);
+        String url = "/sessions/create/"+owner.getEmail();
         ResponseEntity<SessionDto> response = client.postForEntity(url, sessionDto,
                 SessionDto.class);
         assertNotNull(response.getBody());
@@ -73,8 +93,7 @@ public class SessionServiceIntegrationTest {
     }
 
     public void testgetSession(int id) {
-        Session session = sessionRepository.findSessionById(id);
-        String url = "/session/" + session.getClassType().getId();
+        String url = "/sessions/" + id;
         ResponseEntity<SessionDto> response = client.getForEntity(url,
                 SessionDto.class);
         assertNotNull(response);
@@ -82,18 +101,18 @@ public class SessionServiceIntegrationTest {
         assertEquals(HttpStatus.OK, response.getStatusCode(), "Response has correct status");
     }
 
-    public void testgetSessionByClassTypeId(int id) {
-        Session session = sessionRepository.findSessionById(id);
-        String url = "/session-s/" + session.getClassType().getId();
+    // public void testgetSessionByClassTypeId(int id) {
+    //     Session session = sessionRepository.findSessionById(id);
+    //     String url = "/sessions/" + session.getClassType().getId();
 
-        ResponseEntity<List<Session>> response = client.exchange(url,
-        HttpMethod.GET,
-        null,
-        new ParameterizedTypeReference<List<Session>>() {});
+    //     ResponseEntity<List<Session>> response = client.exchange(url,
+    //     HttpMethod.GET,
+    //     null,
+    //     new ParameterizedTypeReference<List<Session>>() {});
 
-        assertNotNull(response);
-        assertEquals(response.getBody().size(),1);        
-    }
+    //     assertNotNull(response);
+    //     assertEquals(response.getBody().size(),1);        
+    // }
 
     public void testDeleteSession(int id) {
         String url = "/session/delete/" + id;

@@ -1,10 +1,8 @@
 package ca.mcgill.ecse321.gymregistration.controller;
 
 import ca.mcgill.ecse321.gymregistration.dto.CustomerDto;
-import ca.mcgill.ecse321.gymregistration.dto.GymUserDto;
 import ca.mcgill.ecse321.gymregistration.dto.InstructorDto;
 import ca.mcgill.ecse321.gymregistration.model.Customer;
-import ca.mcgill.ecse321.gymregistration.model.GymUser;
 import ca.mcgill.ecse321.gymregistration.model.Instructor;
 import ca.mcgill.ecse321.gymregistration.model.Owner;
 import ca.mcgill.ecse321.gymregistration.service.CustomerService;

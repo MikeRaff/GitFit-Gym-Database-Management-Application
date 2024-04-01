@@ -2,6 +2,9 @@ package ca.mcgill.ecse321.gymregistration.controller;
 import ca.mcgill.ecse321.gymregistration.dto.SessionDto;
 import ca.mcgill.ecse321.gymregistration.model.GymUser;
 import ca.mcgill.ecse321.gymregistration.model.Session;
+import ca.mcgill.ecse321.gymregistration.service.CustomerService;
+import ca.mcgill.ecse321.gymregistration.service.InstructorService;
+import ca.mcgill.ecse321.gymregistration.service.OwnerService;
 import ca.mcgill.ecse321.gymregistration.service.SessionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,7 +19,12 @@ import java.util.stream.Collectors;
 public class SessionRestController {
     @Autowired
     private SessionService sessionService;
-
+    @Autowired
+    private OwnerService ownerService; 
+    @Autowired 
+    private InstructorService instructorService;
+    @Autowired 
+    private CustomerService customerService;
 
     /**
      * GetAllClassTypes: getting all class types
@@ -35,17 +43,24 @@ public class SessionRestController {
     @GetMapping(value = {"/sessions/{id}", "/sessions/{id}/"})
     public ResponseEntity<SessionDto> getSession(@PathVariable("id") int id) throws IllegalArgumentException {
         Session session = sessionService.getSessionById(id);
+        System.out.println(session==null);
         return new ResponseEntity<>(new SessionDto(session), HttpStatus.OK);
     }
     /**
      * CreateSession: creates a new session
      * @param sessionDto: the session to be created
-     * @param gymUser: the user creating the session
+     * @param email: the email of the user creating the session
      * @return the created session
      * @throws IllegalArgumentException
      */
-    @PostMapping(value = { "/sessions/create", "/sessions/create/"})
-    public ResponseEntity<SessionDto> createSession(@RequestBody SessionDto sessionDto, @RequestBody GymUser gymUser) throws IllegalArgumentException{
+    @PostMapping(value = { "/sessions/create/{email}", "/sessions/create/{email}/"})
+    public ResponseEntity<SessionDto> createSession(@PathVariable("email") String email, @RequestBody SessionDto sessionDto) throws IllegalArgumentException{
+       
+        GymUser gymUser = ownerService.getOwnerByEmail(email);
+        if(gymUser == null)
+            gymUser = instructorService.getInstructorByEmail(email);
+        if(gymUser == null) //if still
+            gymUser = customerService.getCustomerByEmail(email);
         Session session = sessionService.createSession(sessionDto.getDate(), sessionDto.getStartTime(), sessionDto.getEndTime(), sessionDto.getDescription(), sessionDto.getName(), sessionDto.getLocation(), sessionDto.getClassType(), sessionDto.getCapacity(), gymUser);
         return new ResponseEntity<>(new SessionDto(session), HttpStatus.CREATED);
     }
