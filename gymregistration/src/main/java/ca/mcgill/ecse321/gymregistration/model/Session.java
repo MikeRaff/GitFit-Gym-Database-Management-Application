@@ -29,6 +29,7 @@ public class Session
   //Session Associations
   
   @ManyToOne
+  @JoinColumn(name = "class_type_id")
   private ClassType classType;
 
   //------------------------

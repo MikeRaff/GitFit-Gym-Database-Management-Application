@@ -1,9 +1,8 @@
 package ca.mcgill.ecse321.gymregistration.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 public class ClassType
@@ -20,7 +19,10 @@ public class ClassType
   private String name;
   private boolean isApproved;
 
-  //------------------------
+  @OneToMany(mappedBy = "classType", cascade = CascadeType.ALL)
+  private List<Session> sessions;
+
+//------------------------
   // CONSTRUCTOR
   //------------------------
 

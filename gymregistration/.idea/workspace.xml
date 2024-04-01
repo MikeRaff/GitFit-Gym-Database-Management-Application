@@ -5,9 +5,60 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8b559f4f-1cbf-4215-8cfa-543b8af52d7a" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.gradle/8.5/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.5/executionHistory/executionHistory.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.5/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.5/executionHistory/executionHistory.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.5/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.5/fileHashes/fileHashes.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.5/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.5/fileHashes/fileHashes.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.5/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.5/fileHashes/resourceHashesCache.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/file-system.probe" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ca/mcgill/ecse321/gymregistration/service/PersonService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ca/mcgill/ecse321/gymregistration/service/PersonService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/ca/mcgill/ecse321/gymregistration/service/TestPersonService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/ca/mcgill/ecse321/gymregistration/service/TestPersonService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/test/ca/mcgill/ecse321/gymregistration/Integration/ClassTypeServiceIntegrationTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/test/ca/mcgill/ecse321/gymregistration/Integration/ClassTypeServiceIntegrationTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/test/ca/mcgill/ecse321/gymregistration/Integration/InstructorServiceIntegrationTests$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/test/ca/mcgill/ecse321/gymregistration/Integration/InstructorServiceIntegrationTests$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/test/ca/mcgill/ecse321/gymregistration/Integration/InstructorServiceIntegrationTests.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/test/ca/mcgill/ecse321/gymregistration/Integration/InstructorServiceIntegrationTests.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/test/ca/mcgill/ecse321/gymregistration/Integration/OwnerServiceIntegrationTests$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/test/ca/mcgill/ecse321/gymregistration/Integration/OwnerServiceIntegrationTests$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/test/ca/mcgill/ecse321/gymregistration/Integration/OwnerServiceIntegrationTests.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/test/ca/mcgill/ecse321/gymregistration/Integration/OwnerServiceIntegrationTests.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/test/ca/mcgill/ecse321/gymregistration/Integration/SessionServiceIntegrationTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/test/ca/mcgill/ecse321/gymregistration/Integration/SessionServiceIntegrationTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/test/ca/mcgill/ecse321/gymregistration/integration/CustomerRegistrationIntegrationTest$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/test/ca/mcgill/ecse321/gymregistration/integration/CustomerRegistrationIntegrationTest$2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/test/ca/mcgill/ecse321/gymregistration/integration/CustomerRegistrationIntegrationTest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/test/ca/mcgill/ecse321/gymregistration/integration/CustomerServiceIntegrationTest$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/test/ca/mcgill/ecse321/gymregistration/integration/CustomerServiceIntegrationTest$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/test/ca/mcgill/ecse321/gymregistration/integration/CustomerServiceIntegrationTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/test/ca/mcgill/ecse321/gymregistration/integration/CustomerServiceIntegrationTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/test/ca/mcgill/ecse321/gymregistration/service/TestCustomerRegistrationService.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/test/ca/mcgill/ecse321/gymregistration/service/TestCustomerRegistrationService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/test/ca/mcgill/ecse321/gymregistration/service/TestInstructorRegistrationService.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/test/ca/mcgill/ecse321/gymregistration/service/TestInstructorRegistrationService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/test/ca/mcgill/ecse321/gymregistration/service/TestInstructorService.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/test/ca/mcgill/ecse321/gymregistration/service/TestInstructorService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/test/ca/mcgill/ecse321/gymregistration/service/TestPersonService.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/test/ca/mcgill/ecse321/gymregistration/service/TestPersonService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/jacoco/test.exec" beforeDir="false" afterPath="$PROJECT_DIR$/build/jacoco/test.exec" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/reports/tests/test/classes/ca.mcgill.ecse321.gymregistration.integration.CustomerRegistrationIntegrationTest.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/reports/tests/test/classes/ca.mcgill.ecse321.gymregistration.integration.CustomerServiceIntegrationTest.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/reports/tests/test/classes/ca.mcgill.ecse321.gymregistration.service.TestPersonService.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/reports/tests/test/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/reports/tests/test/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/reports/tests/test/packages/ca.mcgill.ecse321.gymregistration.service.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/test-results/test/TEST-ca.mcgill.ecse321.gymregistration.integration.CustomerRegistrationIntegrationTest.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/test-results/test/TEST-ca.mcgill.ecse321.gymregistration.integration.CustomerServiceIntegrationTest.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/test-results/test/TEST-ca.mcgill.ecse321.gymregistration.service.TestPersonService.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/test-results/test/binary/output.bin" beforeDir="false" afterPath="$PROJECT_DIR$/build/test-results/test/binary/output.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/test-results/test/binary/output.bin.idx" beforeDir="false" afterPath="$PROJECT_DIR$/build/test-results/test/binary/output.bin.idx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/test-results/test/binary/results.bin" beforeDir="false" afterPath="$PROJECT_DIR$/build/test-results/test/binary/results.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/CustomerRegistrationRestController.class.uniqueId4" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/CustomerRegistrationService.class.uniqueId0" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/CustomerRestController.class.uniqueId5" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/InstructorRegistrationRestController.class.uniqueId3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/InstructorRestController.class.uniqueId2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/OwnerRestController.class.uniqueId1" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/OwnerService.class.uniqueId7" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/PersonRestController.class.uniqueId8" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/PersonService.class.uniqueId6" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/compileTestJava/compileTransaction/stash-dir/OwnerServiceIntegrationTests$1.class.uniqueId3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/compileTestJava/compileTransaction/stash-dir/OwnerServiceIntegrationTests.class.uniqueId0" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/compileTestJava/compileTransaction/stash-dir/TestCustomerRegistrationService.class.uniqueId1" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/compileTestJava/compileTransaction/stash-dir/TestOwnerService.class.uniqueId4" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/compileTestJava/compileTransaction/stash-dir/TestPersonService.class.uniqueId2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/compileTestJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/build/tmp/compileTestJava/previous-compilation-data.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ca/mcgill/ecse321/gymregistration/model/ClassType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ca/mcgill/ecse321/gymregistration/model/ClassType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ca/mcgill/ecse321/gymregistration/model/Session.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ca/mcgill/ecse321/gymregistration/model/Session.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/ca/mcgill/ecse321/gymregistration/integration/SessionServiceIntegrationTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/ca/mcgill/ecse321/gymregistration/integration/SessionServiceIntegrationTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,53 +103,31 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
-    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
-    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
-    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/erikcupsa/Desktop/Coding/ECSE 321/project-group-3/gymregistration&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
-    &quot;spring.configuration.checksum&quot;: &quot;f5538cd6b407d293acfcf37a0785c63c&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "/Users/erikcupsa/Desktop/ECSE 321/project-group-3/gymregistration",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "preferences.lookFeel",
+    "spring.configuration.checksum": "f5538cd6b407d293acfcf37a0785c63c",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
-  <component name="RunManager" selected="Gradle.OwnerServiceIntegrationTests">
-    <configuration name="InstructorRegistrationIntegrationTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value=":test" />
-            <option value="--tests" />
-            <option value="&quot;ca.mcgill.ecse321.gymregistration.integration.InstructorRegistrationIntegrationTest&quot;" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <method v="2" />
-    </configuration>
+}]]></component>
+  <component name="RunManager" selected="Gradle.SessionServiceIntegrationTest.testCreateandGetSession">
     <configuration name="InstructorServiceIntegrationTests" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -145,7 +174,7 @@
       <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
-    <configuration name="TestInstructorService" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="SessionServiceIntegrationTest.testCreateandGetSession" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -158,7 +187,7 @@
           <list>
             <option value=":test" />
             <option value="--tests" />
-            <option value="&quot;ca.mcgill.ecse321.gymregistration.service.TestInstructorService&quot;" />
+            <option value="&quot;ca.mcgill.ecse321.gymregistration.integration.SessionServiceIntegrationTest.testCreateandGetSession&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -191,6 +220,27 @@
       <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
+    <configuration name="Tests in 'gymregistration'" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
     <configuration name="GymregistrationApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <module name="gymregistration.main" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="ca.mcgill.ecse321.gymregistration.GymregistrationApplication" />
@@ -200,11 +250,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.SessionServiceIntegrationTest.testCreateandGetSession" />
+        <item itemvalue="Gradle.Tests in 'gymregistration'" />
         <item itemvalue="Gradle.OwnerServiceIntegrationTests" />
         <item itemvalue="Gradle.InstructorServiceIntegrationTests" />
         <item itemvalue="Gradle.TestOwnerServiceIntegration" />
-        <item itemvalue="Gradle.InstructorRegistrationIntegrationTest" />
-        <item itemvalue="Gradle.TestInstructorService" />
       </list>
     </recent_temporary>
   </component>
@@ -221,6 +271,7 @@
       <workItem from="1710614287818" duration="38985000" />
       <workItem from="1711046008712" duration="6056000" />
       <workItem from="1711056621029" duration="11978000" />
+      <workItem from="1711935335947" duration="2603000" />
     </task>
     <servers />
   </component>
