@@ -64,7 +64,6 @@ public class PersonRestController {
 
     /**
      * createPerson: creating a person
-     * @param name : Name of person to create
      * @return Person in the system
      * @throws IllegalArgumentException
      */
