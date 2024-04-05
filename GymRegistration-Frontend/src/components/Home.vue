@@ -7,8 +7,8 @@
         <AnimatedLetters :letterClass="letterClass" :strArray="welcomeArray2" :idx="14" />
       </h1>
       <br />
-      <h2>Add your exams to your calendar with ease! <br /> Just search, click add, and export...
-        <br /><br /><br /><router-link to="/search" class="flat-button">GET STARTED</router-link>
+      <h2>Register for Gym Classes Effortlessly! <br /> Simply browse, select your desired classes, and sign up...
+        <br /><br /><br /><router-link to="/app" class="flat-button">GET STARTED</router-link>
       </h2>
     </div>
     <Logo class="Home"/>
@@ -60,7 +60,7 @@ export default {
 }
 
 .home-page h1::before {
-    color: #ffd700;
+    color: #00b3ff;
     position: absolute;
     margin-top: -40px;
     left: 15px;
@@ -68,7 +68,7 @@ export default {
 }
 
 .home-page h1::after {
-    color: #ffd700;
+    color: #00b3ff;
     position: absolute;
     margin-top: 18px;
     left: 20px;
@@ -88,7 +88,7 @@ export default {
 .home-page .flat-button {
     border: none;
     color: #fff;
-    background-image: linear-gradient(30deg, #ff4000, #fd9815);
+    background-image: linear-gradient(30deg, #0040ff, #15fd98);
     border-radius: 10px;
     background-size: 100% auto;
     font-family: inherit;
@@ -112,15 +112,15 @@ export default {
 
 @keyframes pulse512 {
     0% {
-        box-shadow: 0 0 0 0 rgba(255, 165, 0, 0.6);
+        box-shadow: 0 0 0 0 rgba(0, 64, 255, 0.6);
     }
 
     70% {
-        box-shadow: 0 0 0 10px rgba(255, 165, 0, 0%);
+        box-shadow: 0 0 0 10px rgba(0, 64, 255, 0%);
     }
 
     100% {
-        box-shadow: 0 0 0 0 rgba(255, 165, 0, 0%);
+        box-shadow: 0 0 0 0 rgba(0, 64, 255, 0%);
     }
 }
 
@@ -136,7 +136,7 @@ export default {
     }
 }
 
-@media screen and (max-width: 1150px) {
+@media screen and (max-width: 1050px) {
     .home-page h1 {
         font-size: 29px;
         justify-content: center;

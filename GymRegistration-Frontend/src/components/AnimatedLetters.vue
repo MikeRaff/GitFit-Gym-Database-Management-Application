@@ -24,7 +24,7 @@
   }
   
   .animated-letter:hover {
-    color: #ffd700;
+    color: #00b3ff;
   }
   
   @keyframes fadeInLetter {

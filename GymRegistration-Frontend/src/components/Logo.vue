@@ -1,6 +1,6 @@
 <template>
     <div class="logo-container">
-      <img class="solid-logo animate" src="@/assets/logo.png" alt="Student Studying" />
+      <img class="solid-logo animate" src="@/assets/GymLogo.png" alt="Gym Logo" />
     </div>
   </template>
   
@@ -33,14 +33,22 @@
       top: auto;
       right: auto;
       bottom: auto;
-      left: 0;
+      left: 200px;
       margin: auto;
-      width: 100%;
+      width: 80%;
       opacity: 0;
       z-index: 1;
   
       &.animate {
         opacity: 1;
+      }
+    }
+  }
+  @media screen and (max-width: 1150px) {
+    .logo-container{
+      .solid-logo{
+        left: 0;
+        top: 80px;
       }
     }
   }
