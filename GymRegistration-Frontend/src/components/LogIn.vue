@@ -3,16 +3,29 @@
     <Navbar /> <!-- Added navbar component here -->
     <div class="text-zone">
       <h1>
-
-        <AnimatedLetters :letterClass="letterClass" :strArray="welcomeArray1" :idx="12" />
-        <br />
         <AnimatedLetters :letterClass="letterClass" :strArray="welcomeArray2" :idx="14" />
       </h1>
       <br />
-      <h2>Register for Gym Classes Effortlessly! <br /> Simply browse, select your desired classes, and sign up...
-        <br /><br /><br /><router-link to="/app" class="flat-button">GET STARTED</router-link>
-      </h2>
-    
+      <h2>Enter your login credentials</h2>
+      <form action="">
+        <label for="emailaddress">
+          Email address:
+        </label>
+        <input type="text" id="emailaddress" name="emailaddress" placeholder="Enter your Email" required/>
+        <label for="password">
+          Password:
+        </label>
+        <input type="password" id="password" name="password" placeholder="Enter your Password" required/>
+        <div class="wrap">
+          <button type="submit" @click="login()" v-bind:disabled="isLoginButtonDisabled">
+            login
+          </button>
+        </div>
+      </form>
+      <p>Not registered?
+        <a href="#" style="text-decoration: none;">Create an account
+        </a>
+      </p>
     </div>
     <Logo class="Home"/>
   </div>
