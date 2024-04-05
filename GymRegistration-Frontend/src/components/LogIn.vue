@@ -76,8 +76,8 @@ export default {
   },
   methods: {
     login(type, email, password) {  // not sure at all + need to rework all logins to use this method
-      AXIOS.post(`/login/${type}`, {}, {
-        params: {
+      AXIOS.post(`${type}/login/`, {}, {
+          params: {
           email: email,
           password: password
         }
