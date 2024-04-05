@@ -3,15 +3,14 @@
     <Navbar /> <!-- Added navbar component here -->
     <div class="text-zone">
       <h1>
-        <AnimatedLetters :letterClass="letterClass" :strArray="welcomeArray2" :idx="14" />
+        <AnimatedLetters :letterClass="letterClass" :strArray="welcomeArray" :idx="14" />
       </h1>
-      <br />
       <h2>Enter your login credentials</h2>
       <form action="">
         <label for="emailaddress">
           Email address:
         </label>
-        <input type="text" id="emailaddress" name="emailaddress" placeholder="Enter your Email" required/>
+        <input type="email" id="emailaddress" name="emailaddress" placeholder="Enter your Email" required/>
         <label for="password">
           Password:
         </label>
@@ -27,7 +26,6 @@
         </a>
       </p>
     </div>
-    <Logo class="Home"/>
   </div>
   
 </template>
@@ -41,8 +39,7 @@ export default {
   data() {
     return {
       letterClass: "text-animate",
-      welcomeArray1: "Welcome To".split(""),
-      welcomeArray2: "Gym Registration!".split("")
+      welcomeArray: "LogIn"
     };
   },
   mounted() {
@@ -52,7 +49,6 @@ export default {
   },
   components: {
     AnimatedLetters,
-    Logo,
     Navbar // Add your navbar component to the components object
   }
 };
@@ -62,7 +58,7 @@ export default {
 .login-page .text-zone {
     position: absolute;
     align-content: center;
-    left: 10%;
+    left: 50%;
     top: 50%;
     transform: translateY(-50%);
     width: 40%;
@@ -76,6 +72,7 @@ export default {
     margin: 0;
     font-weight: 600;
     cursor: pointer;
+    text-align: center;
 }
 
 .login-page h1::before {
@@ -102,6 +99,7 @@ export default {
     font-size: 14px;
     letter-spacing: 2px;
     animation: fadeIn 1s 1.8s backwards;
+    text-align: center;
 }
 
 .login-page .flat-button {
@@ -127,6 +125,38 @@ export default {
     background-size: 200% auto;
     -webkit-animation: pulse 2s infinite;
     animation: pulse512 1.5s infinite;
+}
+
+.login-page label {
+  display: block;
+  width: 100%;
+  margin-top: 10px;
+  margin-bottom: 5px;
+  text-align: left;
+  color: #fff;
+  font-weight: bold;
+}
+
+.login-page input {
+  display: block;
+  width: 100%;
+  margin-bottom: 15px;
+  padding: 10px;
+  box-sizing: border-box;
+  border: 1px solid #fff;
+  border-radius: 5px;
+}
+
+.login-page button {
+  padding: 15px;
+  border-radius: 10px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  border: none;
+  color: #fff;
+  background-color: #4CAF50;
+  width: 100%;
+  font-size: 16px;
 }
 
 @keyframes pulse512 {
