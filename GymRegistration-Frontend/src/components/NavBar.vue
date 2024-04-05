@@ -1,21 +1,21 @@
 <template>
     <div class="nav-bar">
         <nav :class="{ 'mobile-show': showNav }">
-            <router-link exact to="/" @click="closeNav">
+            <a href="/" target="_self" rel="noopener noreferrer" @click="closeNav" data-text="Home">
                 <img class="icon" src="@/assets/Home.png" alt="Home Logo" />
-            </router-link>
-            <router-link exact to="/class-types" class="classtypes-link" @click="closeNav">
+            </a>
+            <a class="classtypes-link" href="/class-types" target="_self" rel="noopener noreferrer" @click="closeNav" data-text="ClassTypes">
                 <img src="@/assets/ClassTypes.png" class="icon" alt="ClassTypes Logo" />
-            </router-link>
-            <router-link exact to="/session" class="session-link" @click="closeNav">
+            </a>
+            <a class="session-link" href="/session" target="_self" rel="noopener noreferrer" @click="closeNav" data-text="Sessions">
                 <img src="@/assets/Session.png" class="icon" alt="Session Logo" />
-            </router-link>
-            <router-link exact to="/accounts" class="account-link" @click="closeNav">
+            </a>
+            <a class="account-link" href="/accounts" target="_self" rel="noopener noreferrer" @click="closeNav" data-text="Accounts">
                 <img src="@/assets/Account.png" class="icon" alt="Account Logo" />
-            </router-link>
-            <router-link exact to="/login" class="button-link" @click="closeNav">
+            </a>
+            <a class="button-link" href="/login" target="_self" rel="noopener noreferrer" @click="closeNav">
                 SIGN IN / LOG OUT
-            </router-link>
+            </a>
             <img src="@/assets/Closed.png" width="40px" alt="Gym Logo" class="close-icon" @click="closeNav" />
         </nav>
         <img @click="toggleNav" src="@/assets/Hamburger.png" width="60px" alt="Gym Logo" class="hamburger-icon" />
