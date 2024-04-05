@@ -1,8 +1,9 @@
 <template>
-  <div class="container home-page">
+  <div class="container login-page">
     <Navbar /> <!-- Added navbar component here -->
     <div class="text-zone">
       <h1>
+
         <AnimatedLetters :letterClass="letterClass" :strArray="welcomeArray1" :idx="12" />
         <br />
         <AnimatedLetters :letterClass="letterClass" :strArray="welcomeArray2" :idx="14" />
@@ -11,13 +12,15 @@
       <h2>Register for Gym Classes Effortlessly! <br /> Simply browse, select your desired classes, and sign up...
         <br /><br /><br /><router-link to="/app" class="flat-button">GET STARTED</router-link>
       </h2>
+    
     </div>
     <Logo class="Home"/>
   </div>
+  
 </template>
 
 <script>
-import AnimatedLetters from  "./AnimatedLetters";
+import AnimatedLetters from "./AnimatedLetters";
 import Logo from "./Logo";
 import Navbar from "./Navbar"; // Import your navbar component
 
@@ -43,7 +46,7 @@ export default {
 </script>
 
 <style scoped>
-.home-page .text-zone {
+.login-page .text-zone {
     position: absolute;
     align-content: center;
     left: 10%;
@@ -54,7 +57,7 @@ export default {
     display: absolute;
 }
 
-.home-page h1 {
+.login-page h1 {
     color: #fff;
     font-size: 60px;
     margin: 0;
@@ -62,7 +65,7 @@ export default {
     cursor: pointer;
 }
 
-.home-page h1::before {
+.login-page h1::before {
     color: #00b3ff;
     position: absolute;
     margin-top: -40px;
@@ -70,7 +73,7 @@ export default {
     opacity: 0.6;
 }
 
-.home-page h1::after {
+.login-page h1::after {
     color: #00b3ff;
     position: absolute;
     margin-top: 18px;
@@ -79,7 +82,7 @@ export default {
     opacity: 0.6;
 }
 
-.home-page h2 {
+.login-page h2 {
     color: #fff;
     margin-top: 20px;
     font-weight: 400;
@@ -88,7 +91,7 @@ export default {
     animation: fadeIn 1s 1.8s backwards;
 }
 
-.home-page .flat-button {
+.login-page .flat-button {
     border: none;
     color: #fff;
     background-image: linear-gradient(30deg, #0040ff, #15fd98);
@@ -106,7 +109,7 @@ export default {
     width: 200px;
 }
 
-.home-page .flat-button:hover {
+.login-page .flat-button:hover {
     background-position: right center;
     background-size: 200% auto;
     -webkit-animation: pulse 2s infinite;
@@ -128,25 +131,25 @@ export default {
 }
 
 @media screen and (max-width: 1580px) {
-    .home-page h1 {
+    .login-page h1 {
         font-size: 50px;
     }
 }
 
 @media screen and (max-width: 1320px) {
-    .home-page h1 {
+    .login-page h1 {
         font-size: 40px;
     }
 }
 
 @media screen and (max-width: 1050px) {
-    .home-page h1 {
+    .login-page h1 {
         font-size: 29px;
         justify-content: center;
         letter-spacing: 0.5px;
     }
 
-    .home-page .text-zone {
+    .login-page .text-zone {
         position: initial;
         width: 100%;
         transform: none;
@@ -157,11 +160,11 @@ export default {
         margin-left: 20px;
     }
 
-    .home-page h2 {
+    .login-page h2 {
         font-size: 12px;
     }
 
-    .home-page .logo-container {
+    .login-page .logo-container {
         position: relative;
         width: 200px;
         height: auto;
@@ -171,7 +174,7 @@ export default {
         left: 0;
     }
 
-    .home-page .flat-button {
+    .login-page .flat-button {
         float: none;
         display: block;
     }
