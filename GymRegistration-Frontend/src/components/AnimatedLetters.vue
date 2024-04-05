@@ -19,7 +19,7 @@
   .animated-letter {
     display: inline-block;
     opacity: 0;
-    animation: fadeInLetter 1s forwards;
+    animation: fadeInLetter 5s forwards;
     transition: color 0.3s ease; 
   }
   

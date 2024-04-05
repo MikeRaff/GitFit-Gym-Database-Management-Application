@@ -1,24 +1,20 @@
 <template>
     <div class="nav-bar">
-      <router-link class="logo" to="/">
-        <img src="@/assets/GymLogo.png" alt="logo" />
-        <!-- <img class="sub-logo" src="@/assets/exam-sub-logo.png" alt="Exam Scheduler" /> -->
-      </router-link>
       <nav :class="{ 'mobile-show': showNav }">
         <router-link exact to="/" @click="closeNav">
-          <img src="@/assets/GymLogo.png" width="10px" alt="Gym Logo" />
+          <img class = "icon" src="@/assets/Home.png" alt="Home Logo" />
         </router-link>
-        <router-link exact to="/search" class="search-link" @click="closeNav">
-          <img src="@/assets/GymLogo.png" width="10px" alt="Gym Logo" />
+        <router-link exact to="/class-types" class="classtypes-link" @click="closeNav">
+          <img src="@/assets/ClassTypes.png" class = "icon" alt="ClassTypes Logo" />
         </router-link>
-        <router-link exact to="/calendar" class="calendar-link" @click="closeNav">
-          <img src="@/assets/GymLogo.png" width="10px" alt="Gym Logo" />
+        <router-link exact to="/session" class="session-link" @click="closeNav">
+          <img src="@/assets/Session.png" class = "icon" alt="Session Logo" />
         </router-link>
-        <router-link exact to="/contact" class="contact-link" @click="closeNav">
-          <img src="@/assets/GymLogo.png" width="10px" alt="Gym Logo" />
+        <router-link exact to="/accounts" class="account-link" @click="closeNav">
+          <img src="@/assets/Account.png" class = "icon" alt="Account Logo" />
         </router-link>
-        <a href="https://www.mcgill.ca/exams/dates" class="button-link" target="_blank" rel="noopener noreferrer" @click="closeNav">
-          VIEW EXAMS
+        <a class="button-link" target="_blank" rel="noopener noreferrer" @click="closeNav">
+          SIGN IN / LOG OUT
         </a>
         <img src="@/assets/GymLogo.png" width="10px" alt="Gym Logo" class="close-icon" @click="closeNav" />
       </nav>
@@ -27,8 +23,6 @@
   </template>
   
   <script>
-//   import LogoMcGill from "@/assets/McGillLogo.png"
-//   import LogoSubtitle from '@/assets/exam-sub-logo.png'
   
   export default {
     data() {
@@ -118,29 +112,33 @@
   
               &:first-child { 
                   &::after { 
-                      content: 'HOME'; 
-                      margin-left: -12px;
+                      content: 'Home'; 
+                      left: 23px;
+                      top: -2px;
                   }
               }
           }
   
-          a.search-link { 
+          a.classtypes-link { 
               &:after { 
-                  content: "SEARCH";
-                  margin-left: -20px;
+                  content: "ClassTypes";
+                  left: 5px;
+                  top: -2px;
               }
           }
   
-          a.calendar-link { 
+          a.session-link { 
               &:after { 
-                  content: "CALENDAR"; 
-                  margin-left: -28px;
+                  content: "Sessions"; 
+                  left: 15px;
+                  top: -2px;
               }
           }
-          a.contact-link {
+          a.account-link {
               &:after {
-                  content: "CONTACT";
-                  margin-left: -25px;
+                  content: "Accounts";
+                  left: 12px;
+                  top: -2px;
               }
           }
   
@@ -152,7 +150,7 @@
           .button-link {
               border: none;
               color: #fff;
-              background-image: linear-gradient(30deg, #ff4000, #fd9815);
+              background-image: linear-gradient(30deg, #0040ff, #15fd98);
               border-radius: 10px;
               background-size: 100% auto;
               font-family: inherit;
@@ -168,29 +166,23 @@
           }
   
           @keyframes pulse512 {
-              0% {
-                  box-shadow: 0 0 0 0 rgba(255, 165, 0, 0.6);
-              }
-              
-              70% {
-                  box-shadow: 0 0 0 10px rgba(255, 165, 0, 0%);
-              }
-              
-              100% {
-                  box-shadow: 0 0 0 0 rgba(255, 165, 0, 0%);
-              }
-              
-             }
+            0% {
+                box-shadow: 0 0 0 0 rgba(0, 64, 255, 0.6);
+            }
+
+            70% {
+                box-shadow: 0 0 0 10px rgba(0, 64, 255, 0%);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(0, 64, 255, 0%);
+            }
+        }
       }
       .icon{
           width: 50px;
           margin: 30px;
           opacity: 0.8;
-          color: #ff4000; 
-  
-          &:hover { 
-              opacity: 1;
-          }
       }
   }
   
