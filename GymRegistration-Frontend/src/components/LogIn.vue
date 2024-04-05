@@ -7,24 +7,20 @@
       </h1>
       <h2>Enter your login credentials</h2>
       <form action="">
-        <label for="emailaddress">
-          Email address:
-        </label>
-        <input type="email" id="emailaddress" name="emailaddress" placeholder="Enter your Email" required/>
-        <label for="password">
-          Password:
-        </label>
-        <input type="password" id="password" name="password" placeholder="Enter your Password" required/>
+        <label for="email">Email address:</label>
+        <input type="email" v-model="email" placeholder="Enter your Email" required/>
+        <label for="password">Password:</label>
+        <input type="password" v-model="password" placeholder="Enter your Password" required/>
         <label for="accounttype">
           Select your account type:
-          <select>
-            <option value="Customer">Customer</option>
-            <option value="Instructor">Instructor</option>
-            <option value="Owner">Owner</option>
+          <select type="type" v-model="accountType" required>
+            <option value="customer">Customer</option>
+            <option value="instructor">Instructor</option>
+            <option value="owner">Owner</option>
           </select>
         </label>
         <div class="wrap">
-          <button type="submit" @click="login()" v-bind:disabled="isLoginButtonDisabled"> <!-- Add the login method and isLoginButtonDisabled data property -->
+          <button type="submit" @click="login(type, email, password)" v-bind:disabled="isLoginButtonDisabled">
             login
           </button>
         </div>
@@ -42,11 +38,31 @@
 import AnimatedLetters from "./AnimatedLetters";
 import Navbar from "./Navbar";
 
+
+
+
+import axios from "axios";
+import config from "../../config";
+
+const frontEndUrl = 'http://' + config.dev.host + ':' + config.dev.port;
+const backendUrl = 'http://' + config.dev.backendHost + ':' + config.dev.backendPort;
+
+const AXIOS = axios.create({
+  baseURL: backendUrl,
+  headers: { 'Access-Control-Allow-Origin': frontEndUrl }
+});
+
+
+
+
 export default {
   data() {
     return {
       letterClass: "text-animate",
-      welcomeArray: "LogIn"
+      welcomeArray: "LogIn",
+      email: "",
+      password: "",
+      accountType: ""
     };
   },
   mounted() {
@@ -57,6 +73,34 @@ export default {
   components: {
     AnimatedLetters,
     Navbar
+  },
+  methods: {
+    login(type, email, password) {  // not sure at all + need to rework all logins to use this method
+      AXIOS.post(`/login/${type}`, {}, {
+        params: {
+          email: email,
+          password: password
+        }
+      })
+        .then(response => {
+          console.log(response);
+          if (response.status === 200) {
+            this.$router.push("/app");
+          }
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    }
+  },
+  computed: {
+    isLoginButtonDisabled() {
+      return (
+        !this.email 
+        || !this.password 
+        || !this.accountType
+      );
+    }
   }
 };
 </script>
