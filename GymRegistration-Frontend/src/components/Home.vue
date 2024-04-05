@@ -1,5 +1,6 @@
 <template>
   <div class="container home-page">
+    <Navbar /> <!-- Added navbar component here -->
     <div class="text-zone">
       <h1>
         <AnimatedLetters :letterClass="letterClass" :strArray="welcomeArray1" :idx="12" />
@@ -18,6 +19,7 @@
 <script>
 import AnimatedLetters from "./AnimatedLetters";
 import Logo from "./Logo";
+import Navbar from "./Navbar"; // Import your navbar component
 
 export default {
   data() {
@@ -34,7 +36,8 @@ export default {
   },
   components: {
     AnimatedLetters,
-    Logo
+    Logo,
+    Navbar // Add your navbar component to the components object
   }
 };
 </script>
