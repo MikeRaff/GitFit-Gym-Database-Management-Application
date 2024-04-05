@@ -1,6 +1,6 @@
 <template>
   <div class="container login-page">
-    <Navbar /> <!-- Added navbar component here -->
+    <Navbar />
     <div class="text-zone">
       <h1>
         <AnimatedLetters :letterClass="letterClass" :strArray="welcomeArray" :idx="14" />
@@ -15,14 +15,22 @@
           Password:
         </label>
         <input type="password" id="password" name="password" placeholder="Enter your Password" required/>
+        <label for="accounttype">
+          Select your account type:
+          <select>
+            <option value="Customer">Customer</option>
+            <option value="Instructor">Instructor</option>
+            <option value="Owner">Owner</option>
+          </select>
+        </label>
         <div class="wrap">
-          <button type="submit" @click="login()" v-bind:disabled="isLoginButtonDisabled">
+          <button type="submit" @click="login()" v-bind:disabled="isLoginButtonDisabled"> <!-- Add the login method and isLoginButtonDisabled data property -->
             login
           </button>
         </div>
       </form>
       <p>Not registered?
-        <a href="#" style="text-decoration: none;">Create an account
+        <a href="#/register" style="text-decoration: none;">Create an account <!-- Add a link to the registration page -->
         </a>
       </p>
     </div>
@@ -32,8 +40,7 @@
 
 <script>
 import AnimatedLetters from "./AnimatedLetters";
-import Logo from "./Logo";
-import Navbar from "./Navbar"; // Import your navbar component
+import Navbar from "./Navbar";
 
 export default {
   data() {
@@ -49,7 +56,7 @@ export default {
   },
   components: {
     AnimatedLetters,
-    Navbar // Add your navbar component to the components object
+    Navbar
   }
 };
 </script>
@@ -155,6 +162,17 @@ export default {
   border: none;
   color: #fff;
   background-color: #4CAF50;
+  width: 100%;
+  font-size: 16px;
+}
+
+.login-page select {
+  padding: 15px;
+  border-radius: 10px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  border: none;
+  color: #fff;
   width: 100%;
   font-size: 16px;
 }
