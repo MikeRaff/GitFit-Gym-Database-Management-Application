@@ -96,7 +96,7 @@ public class InstructorRestController {
      * @return The logged in instructor
      * @throws IllegalArgumentException
      */
-    @GetMapping(value = { "/instructor/log-in/{email}/{password}", "/instructor/log-in/{email}/{password}/" })
+    @GetMapping(value = { "/instructor/login/{email}/{password}", "/instructor/login/{email}/{password}/" })
     public ResponseEntity<InstructorDto> logInInstructor(@PathVariable("email") String email, @PathVariable("password") String password) throws IllegalArgumentException {
         Instructor instructor;
         try {
