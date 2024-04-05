@@ -24,7 +24,7 @@ export default {
     return {
       letterClass: "text-animate",
       welcomeArray1: "Welcome To".split(""),
-      welcomeArray2: "McGill Exam Scheduler!".split("")
+      welcomeArray2: "Gym Registration!".split("")
     };
   },
   mounted() {
