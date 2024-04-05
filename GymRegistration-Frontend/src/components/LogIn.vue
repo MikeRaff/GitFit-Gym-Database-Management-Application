@@ -1,28 +1,32 @@
 <template>
   <div class="container login-page">
-    <Navbar /> <!-- Added navbar component here -->
+    <Navbar />
     <div class="text-zone">
       <h1>
         <AnimatedLetters :letterClass="letterClass" :strArray="welcomeArray" :idx="14" />
       </h1>
       <h2>Enter your login credentials</h2>
       <form action="">
-        <label for="emailaddress">
-          Email address:
+        <label for="email">Email address:</label>
+        <input type="email" v-model="email" placeholder="Enter your Email" required/>
+        <label for="password">Password:</label>
+        <input type="password" v-model="password" placeholder="Enter your Password" required/>
+        <label for="accounttype">
+          Select your account type:
+          <select type="type" v-model="accountType" required>
+            <option value="customer">Customer</option>
+            <option value="instructor">Instructor</option>
+            <option value="owner">Owner</option>
+          </select>
         </label>
-        <input type="email" id="emailaddress" name="emailaddress" placeholder="Enter your Email" required/>
-        <label for="password">
-          Password:
-        </label>
-        <input type="password" id="password" name="password" placeholder="Enter your Password" required/>
         <div class="wrap">
-          <button type="submit" @click="login()" v-bind:disabled="isLoginButtonDisabled">
+          <button type="submit" @click="login(type, email, password)" v-bind:disabled="isLoginButtonDisabled">
             login
           </button>
         </div>
       </form>
       <p>Not registered?
-        <a href="#" style="text-decoration: none;">Create an account
+        <a href="#/register" style="text-decoration: none;">Create an account <!-- Add a link to the registration page -->
         </a>
       </p>
     </div>
@@ -32,14 +36,33 @@
 
 <script>
 import AnimatedLetters from "./AnimatedLetters";
-import Logo from "./Logo";
-import Navbar from "./Navbar"; // Import your navbar component
+import Navbar from "./Navbar";
+
+
+
+
+import axios from "axios";
+import config from "../../config";
+
+const frontEndUrl = 'http://' + config.dev.host + ':' + config.dev.port;
+const backendUrl = 'http://' + config.dev.backendHost + ':' + config.dev.backendPort;
+
+const AXIOS = axios.create({
+  baseURL: backendUrl,
+  headers: { 'Access-Control-Allow-Origin': frontEndUrl }
+});
+
+
+
 
 export default {
   data() {
     return {
       letterClass: "text-animate",
-      welcomeArray: "LogIn"
+      welcomeArray: "LogIn",
+      email: "",
+      password: "",
+      accountType: ""
     };
   },
   mounted() {
@@ -49,7 +72,35 @@ export default {
   },
   components: {
     AnimatedLetters,
-    Navbar // Add your navbar component to the components object
+    Navbar
+  },
+  methods: {
+    login(type, email, password) {  // not sure at all + need to rework all logins to use this method
+      AXIOS.post(`/login/${type}`, {}, {
+        params: {
+          email: email,
+          password: password
+        }
+      })
+        .then(response => {
+          console.log(response);
+          if (response.status === 200) {
+            this.$router.push("/app");
+          }
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    }
+  },
+  computed: {
+    isLoginButtonDisabled() {
+      return (
+        !this.email 
+        || !this.password 
+        || !this.accountType
+      );
+    }
   }
 };
 </script>
@@ -155,6 +206,17 @@ export default {
   border: none;
   color: #fff;
   background-color: #4CAF50;
+  width: 100%;
+  font-size: 16px;
+}
+
+.login-page select {
+  padding: 15px;
+  border-radius: 10px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  border: none;
+  color: #fff;
   width: 100%;
   font-size: 16px;
 }
