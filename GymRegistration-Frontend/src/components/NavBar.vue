@@ -16,9 +16,9 @@
             <a class="button-link" href="/login" target="_self" rel="noopener noreferrer" @click="closeNav">
                 SIGN IN / LOG OUT
             </a>
-            <img src="@/assets/GymLogo.png" width="10px" alt="Gym Logo" class="close-icon" @click="closeNav" />
+            <img src="@/assets/Closed.png" width="40px" alt="Gym Logo" class="close-icon" @click="closeNav" />
         </nav>
-        <img @click="toggleNav" src="@/assets/GymLogo.png" width="10px" alt="Gym Logo" class="hamburger-icon" />
+        <img @click="toggleNav" src="@/assets/Hamburger.png" width="60px" alt="Gym Logo" class="hamburger-icon" />
     </div>
 </template>
 
@@ -148,7 +148,7 @@ export default {
         display: none;
         width: 100%;
         height: 100%;
-        background: #1a0408;
+        background: #030712;
         top: 0;
         left: 0;
         position: fixed;
