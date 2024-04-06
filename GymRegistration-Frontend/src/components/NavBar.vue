@@ -7,7 +7,7 @@
             <a class="classtypes-link" href="#/class-types" target="_self" rel="noopener noreferrer" @click="closeNav" data-text="ClassTypes">
                 <img src="@/assets/ClassTypes.png" class="icon" alt="ClassTypes Logo" />
             </a>
-            <a class="session-link" href="#/session" target="_self" rel="noopener noreferrer" @click="closeNav" data-text="Sessions">
+            <a class="session-link" href="#/view-session-client" target="_self" rel="noopener noreferrer" @click="closeNav" data-text="Sessions">
                 <img src="@/assets/Session.png" class="icon" alt="Session Logo" />
             </a>
             <a class="account-link" href="#/accounts" target="_self" rel="noopener noreferrer" @click="closeNav" data-text="Accounts">
