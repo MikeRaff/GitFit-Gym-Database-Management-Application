@@ -2,46 +2,53 @@
   <div class="container login-page">
     <Navbar />
     <div class="text-zone">
-      <h1>
-        <AnimatedLetters :letterClass="letterClass" :strArray="welcomeArray" :idx="14" />
+      <h1>Login
+        <!-- AnimatedLetters :letterClass="letterClass" :strArray="welcomeArray" :idx="14" -->
       </h1>
+
       <h2>Enter your login credentials</h2>
-      <form action="">
+      <form @submit.prevent="login">
+
         <label for="email">Email address:</label>
-        <input type="email" v-model="email" placeholder="Enter your Email" required/>
+        <input type="email" id="email" v-model="email" placeholder="Enter your Email" required/>
+        
         <label for="password">Password:</label>
-        <input type="password" v-model="password" placeholder="Enter your Password" required/>
+        <input type="password" id="password" v-model="password" placeholder="Enter your Password" required/>
+        
         <label for="accounttype">
           Select your account type:
-          <select type="type" v-model="accountType" required>
-            <option value="customer">Customer</option>
-            <option value="instructor">Instructor</option>
-            <option value="owner">Owner</option>
+          <select type="type" id="accountType" v-model="accountType" required>
+
+            <option value="" disabled selected>Select your account type</option>
+            <option value="customers">Customer</option>
+            <option value="instructors">Instructor</option>
+            <option value="owners">Owner</option>
+
           </select>
         </label>
+
         <div class="wrap">
-          <button type="submit" @click="login(type, email, password)" v-bind:disabled="isLoginButtonDisabled">
+          <button type="submit" @click="login">
             login
           </button>
         </div>
+
       </form>
+
       <p>Not registered?
-        <a href="#/register" style="text-decoration: none;">Create an account <!-- Add a link to the registration page -->
+        <a href="#/register" style="text-decoration: none;">Create an account
         </a>
       </p>
+
     </div>
   </div>
   
 </template>
 
 <script>
-import AnimatedLetters from "./AnimatedLetters";
+//import AnimatedLetters from "./AnimatedLetters";
 import Navbar from "./Navbar";
-
-
-
-
-import axios from "axios";
+/*import axios from "axios";
 import config from "../../config";
 
 const frontEndUrl = 'http://' + config.dev.host + ':' + config.dev.port;
@@ -51,46 +58,68 @@ const AXIOS = axios.create({
   baseURL: backendUrl,
   headers: { 'Access-Control-Allow-Origin': frontEndUrl }
 });
-
-
-
+*/
 
 export default {
+  name: "LogIn",
   data() {
     return {
-      letterClass: "text-animate",
-      welcomeArray: "LogIn",
-      email: "",
-      password: "",
-      accountType: ""
+      //letterClass: "text-animate",
+      //welcomeArray: "LogIn",
+      email: '',
+      password: '',
+      accountType: ''
     };
   },
   mounted() {
-    setTimeout(() => {
-      this.letterClass = "text-animate-hover";
-    }, 4000);
+  //  setTimeout(() => {
+  //    this.letterClass = "text-animate-hover";
+  //  }, 4000);
+  
+
+
+  let user = localStorage.getItem('user-info');
+    if (user) {
+      this.$router.push({name:'Home'});
+    }
+  
+
+    
   },
   components: {
-    AnimatedLetters,
+    //AnimatedLetters,
     Navbar
   },
   methods: {
-    login(type, email, password) {  // not sure at all + need to rework all logins to use this method
-      AXIOS.post(`${type}/login/`, {}, {
-          params: {
-          email: email,
-          password: password
+    async login() {
+      try{
+        // Construct the URL with the account type parameter
+        const url = `/${this.accountType}/login/${this.email}/${this.password}`;
+
+        // Make the GET request to the backend
+        const response = await AXIOS.get(url);
+
+        // Handle the response here (e.g., show a success message, redirect, etc.)
+        console.log('Login successfull', response.data);
+
+
+
+
+        if (response.status === 200 && response.data.length > 0) {
+          localStorage.setItem('user-info', JSON.stringify(response.data[0]));
+          this.$router.push({name:'Home'});
         }
-      })
-        .then(response => {
-          console.log(response);
-          if (response.status === 200) {
-            this.$router.push("/app");
-          }
-        })
-        .catch(e => {
-          console.log(e);
-        });
+
+       
+
+
+        // Optionally, return the response for further processing
+        return response.data;
+      }
+      catch (error) {
+        // Handle the error here (e.g., show an error message, etc.)
+        console.error('An error occurred while logging in:', error.response);
+      }
     }
   },
   computed: {
@@ -150,6 +179,11 @@ export default {
     font-size: 14px;
     letter-spacing: 2px;
     animation: fadeIn 1s 1.8s backwards;
+    text-align: center;
+}
+
+.login-page p {
+    color: #fff;
     text-align: center;
 }
 
@@ -216,7 +250,6 @@ export default {
   margin-top: 15px;
   margin-bottom: 15px;
   border: none;
-  color: #fff;
   width: 100%;
   font-size: 16px;
 }

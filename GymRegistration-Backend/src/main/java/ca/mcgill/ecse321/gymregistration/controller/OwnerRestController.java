@@ -95,7 +95,7 @@ public class OwnerRestController {
      * @return The owner
      * @throws GRSException Invalid owner email or password
      */
-    @GetMapping(value = {"/owner/login/{email}/{password}","/owner/login/{email}/{password}/"})
+    @GetMapping(value = {"/owners/login/{email}/{password}","/owners/login/{email}/{password}/"})
     public ResponseEntity<OwnerDto> logInOwner(@PathVariable("email") String email,@PathVariable("password") String password ) throws IllegalArgumentException{
         Owner owner;
         try {
