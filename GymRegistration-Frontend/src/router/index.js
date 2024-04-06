@@ -3,6 +3,9 @@ import Router from 'vue-router'
 import Home from '@/components/Home'
 import GymRegistration from '@/components/GymRegistration'
 import Login from '@/components/Login'
+import CreateSession from '@/components/CreateSession'
+import SessionsStaffView from '@/components/SessionsStaffView'
+import SessionsClientView from '@/components/SessionsClientView'
 
 Vue.use(Router)
 
@@ -22,6 +25,21 @@ export default new Router({
       path: '/login',
       name: 'LogIn',
       component: Login
+    },
+    {
+      path: '/create-session', 
+      name: 'CreateSession',
+      component: CreateSession
+    },
+    {
+      path: '/view-session-staff', 
+      name: 'SessionsStaffview',
+      component: SessionsStaffView
+    },
+    {
+      path: '/view-session-client', 
+      name: 'SessionsClientview',
+      component: SessionsClientView
     }
   ]
 })
