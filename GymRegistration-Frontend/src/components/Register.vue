@@ -53,7 +53,7 @@
   <script>
   
   //import AnimatedLetters from "./AnimatedLetters";
-  //import Navbar from "./Navbar";
+  import Navbar from "./Navbar";
   /*import axios from "axios";
   import config from "../../config";
   
