@@ -7,6 +7,7 @@ import CreateSession from '@/components/CreateSession'
 import SessionsStaffView from '@/components/SessionsStaffView'
 import SessionsClientView from '@/components/SessionsClientView'
 import Accounts from '@/components/Accounts'
+import ClassTypes from '@/components/ClassTypes'
 
 
 Vue.use(Router)
@@ -25,8 +26,8 @@ export default new Router({
     },
     {
       path: '/class-types',
-      name: 'GymRegistration',
-      component: GymRegistration
+      name: 'ClassTypes',
+      component: ClassTypes
     },
     {
       path: '/login',
