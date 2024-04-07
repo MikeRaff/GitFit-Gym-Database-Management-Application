@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ca.mcgill.ecse321.gymregistration.service.TestClassTypeService" tests="37" skipped="0" failures="0" errors="0" timestamp="2024-04-07T21:28:53" hostname="Eriks-MacBook-Air-2.local" time="2.857">
+  <properties/>
+  <testcase name="testUpdateClasstypeCustomer()" classname="ca.mcgill.ecse321.gymregistration.service.TestClassTypeService" time="1.933"/>
+  <testcase name="testUpdateClasstypeNewNameEmpty()" classname="ca.mcgill.ecse321.gymregistration.service.TestClassTypeService" time="0.042"/>
+  <testcase name="testApproveProposedClassTypeInstructor()" classname="ca.mcgill.ecse321.gymregistration.service.TestClassTypeService" time="0.029"/>
+  <testcase name="testCreateClasstype()" classname="ca.mcgill.ecse321.gymregistration.service.TestClassTypeService" time="0.052"/>
+  <testcase name="testGetClassTypeNameEmpty()" classname="ca.mcgill.ecse321.gymregistration.service.TestClassTypeService" time="0.013"/>
+  <testcase name="testCreateClasstypeNotApproved()" classname="ca.mcgill.ecse321.gymregistration.service.TestClassTypeService" time="0.016"/>
+  <testcase name="createClassTypeMaxReached()" classname="ca.mcgill.ecse321.gymregistration.service.TestClassTypeService" time="0.07"/>
+  <testcase name="testCreateClasstypeNameNull()" classname="ca.mcgill.ecse321.gymregistration.service.TestClassTypeService" time="0.031"/>
+  <testcase name="testGetClassTypeNameNull()" classname="ca.mcgill.ecse321.gymregistration.service.TestClassTypeService" time="0.014"/>
+  <testcase name="testUpdateClasstypeNotApproved()" classname="ca.mcgill.ecse321.gymregistration.service.TestClassTypeService" time="0.017"/>
+  <testcase name="testProposeClassType()" classname="ca.mcgill.ecse321.gymregistration.service.TestClassTypeService" time="0.015"/>
+  <testcase name="testProposeClassTypeCustomer()" classname="ca.mcgill.ecse321.gymregistration.service.TestClassTypeService" time="0.011"/>
+  <testcase name="testProposeClassTypeEmptyName()" classname="ca.mcgill.ecse321.gymregistration.service.TestClassTypeService" time="0.013"/>
+  <testcase name="testDeleteClassTypeCustomer()" classname="ca.mcgill.ecse321.gymregistration.service.TestClassTypeService" time="0.012"/>
+  <testcase name="testProposeClassTypeExists()" classname="ca.mcgill.ecse321.gymregistration.service.TestClassTypeService" time="0.014"/>
+  <testcase name="testProposeClassTypeNoName()" classname="ca.mcgill.ecse321.gymregistration.service.TestClassTypeService" time="0.012"/>
+  <testcase name="testCreateClasstypeEmpty()" classname="ca.mcgill.ecse321.gymregistration.service.TestClassTypeService" time="0.007"/>
+  <testcase name="testApproveProposedClassTypeCustomer()" classname="ca.mcgill.ecse321.gymregistration.service.TestClassTypeService" time="0.007"/>
+  <testcase name="testDeleteClassTypeInstructor()" classname="ca.mcgill.ecse321.gymregistration.service.TestClassTypeService" time="0.014"/>
+  <testcase name="testUpdateClasstypeNewNameNull()" classname="ca.mcgill.ecse321.gymregistration.service.TestClassTypeService" time="0.015"/>
+  <testcase name="testApproveProposedClassType()" classname="ca.mcgill.ecse321.gymregistration.service.TestClassTypeService" time="0.015"/>
+  <testcase name="testDeleteClassTypeDoesNotExist()" classname="ca.mcgill.ecse321.gymregistration.service.TestClassTypeService" time="0.02"/>
+  <testcase name="testCreateClasstypeAlreadyExists()" classname="ca.mcgill.ecse321.gymregistration.service.TestClassTypeService" time="0.017"/>
+  <testcase name="testUpdateClasstypeDoesNotExist()" classname="ca.mcgill.ecse321.gymregistration.service.TestClassTypeService" time="0.009"/>
+  <testcase name="testDeleteClassType()" classname="ca.mcgill.ecse321.gymregistration.service.TestClassTypeService" time="0.041"/>
+  <testcase name="testProposeClassTypeMax()" classname="ca.mcgill.ecse321.gymregistration.service.TestClassTypeService" time="0.014"/>
+  <testcase name="testCreateClasstypeNameEmpty()" classname="ca.mcgill.ecse321.gymregistration.service.TestClassTypeService" time="0.014"/>
+  <testcase name="testGetAllClassTypeNone()" classname="ca.mcgill.ecse321.gymregistration.service.TestClassTypeService" time="0.014"/>
+  <testcase name="testGetAllClassTypesOne()" classname="ca.mcgill.ecse321.gymregistration.service.TestClassTypeService" time="0.028"/>
+  <testcase name="testGetAllClassTypesMultiple()" classname="ca.mcgill.ecse321.gymregistration.service.TestClassTypeService" time="0.022"/>
+  <testcase name="testGetClassType()" classname="ca.mcgill.ecse321.gymregistration.service.TestClassTypeService" time="0.019"/>
+  <testcase name="testUpdateClasstype()" classname="ca.mcgill.ecse321.gymregistration.service.TestClassTypeService" time="0.014"/>
+  <testcase name="testCreateClasstypeCustomer()" classname="ca.mcgill.ecse321.gymregistration.service.TestClassTypeService" time="0.008"/>
+  <testcase name="testApproveProposedClassTypeNoExist()" classname="ca.mcgill.ecse321.gymregistration.service.TestClassTypeService" time="0.019"/>
+  <testcase name="testCreateClasstypeInstructor()" classname="ca.mcgill.ecse321.gymregistration.service.TestClassTypeService" time="0.013"/>
+  <testcase name="testProposeClassTypeOwner()" classname="ca.mcgill.ecse321.gymregistration.service.TestClassTypeService" time="0.008"/>
+  <testcase name="testUpdateClasstypeInstructor()" classname="ca.mcgill.ecse321.gymregistration.service.TestClassTypeService" time="0.008"/>
+  <system-out><![CDATA[here
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

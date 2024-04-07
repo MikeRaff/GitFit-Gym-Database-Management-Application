@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ca.mcgill.ecse321.gymregistration.integration.CustomerServiceIntegrationTest" tests="8" skipped="0" failures="0" errors="0" timestamp="2024-04-07T21:28:46" hostname="Eriks-MacBook-Air-2.local" time="1.578">
+  <properties/>
+  <testcase name="testCreateAndLogInCustomer()" classname="ca.mcgill.ecse321.gymregistration.integration.CustomerServiceIntegrationTest" time="0.13"/>
+  <testcase name="testCreateCustomerAndUpdatePassword()" classname="ca.mcgill.ecse321.gymregistration.integration.CustomerServiceIntegrationTest" time="0.078"/>
+  <testcase name="testCreateCustomerAndUpdateEmail()" classname="ca.mcgill.ecse321.gymregistration.integration.CustomerServiceIntegrationTest" time="0.08"/>
+  <testcase name="testCreateAndGetAllCustomers()" classname="ca.mcgill.ecse321.gymregistration.integration.CustomerServiceIntegrationTest" time="0.139"/>
+  <testcase name="testCreateAndDeleteCustomer()" classname="ca.mcgill.ecse321.gymregistration.integration.CustomerServiceIntegrationTest" time="0.094"/>
+  <testcase name="testCreateCustomerAndUpdateCreditCard()" classname="ca.mcgill.ecse321.gymregistration.integration.CustomerServiceIntegrationTest" time="0.074"/>
+  <testcase name="testCreateAndGetCustomer()" classname="ca.mcgill.ecse321.gymregistration.integration.CustomerServiceIntegrationTest" time="0.096"/>
+  <testcase name="testCreateCustomerAndUpdateToInstructor()" classname="ca.mcgill.ecse321.gymregistration.integration.CustomerServiceIntegrationTest" time="0.866"/>
+  <system-out><![CDATA[2024-04-07T17:28:46.915-04:00  INFO 85027 --- [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [ca.mcgill.ecse321.gymregistration.integration.CustomerServiceIntegrationTest]: CustomerServiceIntegrationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2024-04-07T17:28:46.927-04:00  INFO 85027 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration ca.mcgill.ecse321.gymregistration.GymregistrationApplication for test class ca.mcgill.ecse321.gymregistration.integration.CustomerServiceIntegrationTest
+2024-04-07T17:28:47.716-04:00  WARN 85027 --- [o-auto-1-exec-7] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.bind.MissingPathVariableException: Required URI template variable 'email' for method parameter type String is not present]
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
