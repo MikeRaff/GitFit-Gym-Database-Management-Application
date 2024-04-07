@@ -4,14 +4,13 @@ import ca.mcgill.ecse321.gymregistration.model.ClassType;
 import ca.mcgill.ecse321.gymregistration.model.Session;
 
 import java.sql.Date;
-import java.sql.Time;
 
 public class SessionDto {
 
-    private int id;
+  private int id;
   private Date date;
-  private Time startTime;
-  private Time endTime;
+  private String startTime;
+  private String endTime;
   private String description;
   private String name;
   
@@ -24,8 +23,8 @@ public class SessionDto {
   public SessionDto(Session sessionDto){
     this.id = sessionDto.getId();
     this.date = sessionDto.getDate();
-    this.startTime = sessionDto.getStartTime();
-    this.endTime = sessionDto.getEndTime();
+    this.startTime = sessionDto.getStartTime().toString();
+    this.endTime = sessionDto.getEndTime().toString();
     this.description = sessionDto.getDescription();
     this.name = sessionDto.getName();
     this.location = sessionDto.getLocation();
@@ -33,7 +32,7 @@ public class SessionDto {
     this.capacity = sessionDto.getCapacity();
   }
 
-  public SessionDto(Date date, Time startTime, Time endTime, String description, String name, String location, ClassType classType, int capacity) {
+  public SessionDto(Date date, String startTime, String endTime, String description, String name, String location, ClassType classType, int capacity) {
     this.date = date;
     this.startTime = startTime;
     this.endTime = endTime;
@@ -65,19 +64,19 @@ public class SessionDto {
     this.date = date;
   }
 
-  public Time getStartTime() {
+  public String getStartTime() {
     return startTime;
   }
 
-  public void setStartTime(Time startTime) {
+  public void setStartTime(String startTime) {
     this.startTime = startTime;
   }
 
-  public Time getEndTime() {
+  public String getEndTime() {
     return endTime;
   }
 
-  public void setEndTime(Time endTime) {
+  public void setEndTime(String endTime) {
     this.endTime = endTime;
   }
 
