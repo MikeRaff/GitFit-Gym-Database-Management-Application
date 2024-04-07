@@ -6,6 +6,8 @@ import Login from '@/components/Login'
 import CreateSession from '@/components/CreateSession'
 import SessionsStaffView from '@/components/SessionsStaffView'
 import SessionsClientView from '@/components/SessionsClientView'
+import Accounts from '@/components/Accounts'
+
 
 Vue.use(Router)
 
@@ -40,6 +42,11 @@ export default new Router({
       path: '/view-session-client', 
       name: 'SessionsClientview',
       component: SessionsClientView
+    },
+    {
+      path: '/accounts', 
+      name: 'Accounts',
+      component: Accounts
     }
   ]
 })

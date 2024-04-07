@@ -65,9 +65,9 @@
         // Here you can fetch the sessions data from the database using API calls or other methods
         // For now, let's simulate some sample sessions data
         this.sessions = [
-          { id: 1, classType: "Yoga", startTime: "10:00 AM", endTime: "11:00 AM" },
-          { id: 2, classType: "Pilates", startTime: "11:30 AM", endTime: "12:30 PM" },
-          // Add more sessions as needed
+        { id: 1, classType: "Yoga", capacity: 20, duration: "1 hour", instructor: "John Doe", time: "10:00 AM", date: "2024-04-06" },
+        { id: 2, classType: "Pilates", capacity: 15, duration: "1 hour", instructor: "Jane Smith", time: "11:30 AM", date: "2024-04-07" },
+        // Add more sessions as needed
         ];
       },
       addSession() {
@@ -134,7 +134,8 @@
   th {
     background-color: #f0f0f0;
     color: #444;
-    /* padding: 10px; */
+    font-size: 20px; /* Adjust the font size here */
+  padding: 5px;
   }
 
   tbody tr:hover {
@@ -149,6 +150,9 @@
   
   tr:nth-child(even) {
     background-color: #f2f2f27f;
+  }
+  tr:nth-child(odd) {
+    background-color: #f2f2f2c8;
   }
   
   .pagination {
