@@ -24,6 +24,11 @@ export default new Router({
       component: GymRegistration
     },
     {
+      path: '/class-types',
+      name: 'GymRegistration',
+      component: GymRegistration
+    },
+    {
       path: '/login',
       name: 'LogIn',
       component: Login
