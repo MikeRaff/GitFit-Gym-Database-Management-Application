@@ -80,7 +80,7 @@ public class CustomerRegistrationTests {
     private Customer createAndPersistCustomer(Person person) {
         String email = "customeremailaddress@emailprovider.org";
         String password = "password";
-        int creditCardNumber = 987654321;
+        String creditCardNumber = "1234 5678 1234 5678";
         Customer customer = new Customer(email, password, person, creditCardNumber);
         return customerRepository.save(customer);
     }

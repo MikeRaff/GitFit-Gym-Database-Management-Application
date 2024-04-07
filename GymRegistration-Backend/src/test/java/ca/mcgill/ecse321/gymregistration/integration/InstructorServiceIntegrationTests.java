@@ -167,7 +167,7 @@ public class InstructorServiceIntegrationTests {
 
     public void testLogInInstructor(String email, String password)
     {
-       String url= "/instructor/log-in/"+email+"/"+password;
+       String url= "/instructors/login/"+email+"/"+password;
        ResponseEntity<InstructorDto> response = client.getForEntity(url, InstructorDto.class);
 
        assertNotNull(response);

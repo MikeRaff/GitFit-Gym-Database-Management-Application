@@ -63,7 +63,7 @@ public class TestCustomerRegistrationService {
 
     private static final Customer CUSTOMER = new Customer(); 
     private static final String CUSTOMER_EMAIL = "customer@email.com";
-    private static final int CREDIT = 12345;
+    private static final String CREDIT = "1234 5678 1234 5678";
 
     private static final Customer CUSTOMER_OTHER = new Customer(); 
     private static final String CUSTOMER_EMAIL_OTHER = "otherCustomer@email.com";
@@ -326,10 +326,33 @@ public class TestCustomerRegistrationService {
     }
 
     @Test
-    public void testRegisterForSessionWithoutCreditInformation(){
+    public void testRegisterForSessionNullCreditInformation(){
         Customer customer = CUSTOMER;
         customer.setEmail(CUSTOMER_EMAIL);
-        customer.setCreditCardNumber(0);
+        customer.setCreditCardNumber(null);
+
+        Session session = SESSION;
+        session.setId(SESSION_ID);
+        session.setCapacity(CAPACITY);
+        session.setDate(SESSION_DATE);
+        session.setStartTime(START_TIME);
+        session.setEndTime(END_TIME);
+
+        CustomerRegistration customerRegistration = null;
+        try{
+            customerRegistrationService.registerCustomerToSession(session.getId(), customer.getEmail());
+            fail();
+        }catch (GRSException e){
+            assertEquals("Credit card must be entered to register for a class.", e.getMessage());
+        }
+        assertNull(customerRegistration);
+    }
+
+    @Test
+    public void testRegisterForSessionEmptyCreditInformation(){
+        Customer customer = CUSTOMER;
+        customer.setEmail(CUSTOMER_EMAIL);
+        customer.setCreditCardNumber("");
 
         Session session = SESSION;
         session.setId(SESSION_ID);
@@ -361,7 +384,24 @@ public class TestCustomerRegistrationService {
         for (int i=0; i<session.getCapacity(); i++){
             Customer addedCustomer = new Customer();
             addedCustomer.setEmail(i+"@email.com");
-            addedCustomer.setCreditCardNumber(1+i);
+            
+            // assign credit card number for each customer
+            switch (String.valueOf(i).length()) {
+                case 1:
+                    addedCustomer.setCreditCardNumber(String.valueOf(i) + "000 5678 1234 5678");
+                    break;
+            
+                case 2:
+                    addedCustomer.setCreditCardNumber(String.valueOf(i) + "00 5678 1234 5678");
+                    break;
+
+                case 3:
+                    addedCustomer.setCreditCardNumber(String.valueOf(i) + "0 5678 1234 5678");
+                    break;
+
+                default:
+                    break;
+            }
 
             when(customerRepository.findCustomerByEmail(anyString())).thenReturn(addedCustomer);
 

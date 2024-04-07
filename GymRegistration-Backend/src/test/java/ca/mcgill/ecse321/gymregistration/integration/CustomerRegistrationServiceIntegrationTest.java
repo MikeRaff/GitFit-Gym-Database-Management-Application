@@ -64,7 +64,7 @@ public class CustomerRegistrationServiceIntegrationTest {
     public CustomerRegistrationDto testCreateCustomerRegistration(String email){
         Customer customer = new Customer();
         customer.setEmail(email);
-        customer.setCreditCardNumber(1234);
+        customer.setCreditCardNumber("1234 5678 1234 5678");
         customerRepository.save(customer);
 
         Session session = new Session();

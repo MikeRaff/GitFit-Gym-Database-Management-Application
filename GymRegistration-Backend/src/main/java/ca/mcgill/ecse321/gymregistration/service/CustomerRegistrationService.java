@@ -55,7 +55,7 @@ public class CustomerRegistrationService {
         if (customer == null){
             throw new GRSException(HttpStatus.NOT_FOUND, "Customer not found.");
         } 
-        if (customer.getCreditCardNumber() == 0){
+        if (customer.getCreditCardNumber() == null || customer.getCreditCardNumber().trim().isEmpty()){
             throw new GRSException(HttpStatus.UNAUTHORIZED, "Credit card must be entered to register for a class.");
         }
         Session session = sessionRepository.findSessionById(sessionId);
