@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Home from '@/components/Home'
 import GymRegistration from '@/components/GymRegistration'
 import Login from '@/components/Login'
+import Register from '@/components/Register'
 import CreateSession from '@/components/CreateSession'
 import SessionsStaffView from '@/components/SessionsStaffView'
 import SessionsClientView from '@/components/SessionsClientView'
@@ -27,6 +28,11 @@ export default new Router({
       path: '/login',
       name: 'LogIn',
       component: Login
+    },
+    {
+      path: '/register',
+      name: 'Register',
+      component: Register
     },
     {
       path: '/create-session', 

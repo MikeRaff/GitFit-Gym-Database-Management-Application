@@ -2,15 +2,15 @@
     <div class="container register-page">
       <Navbar />
       <div class="text-zone">
-        <h1>Register
-          <!-- AnimatedLetters :letterClass="letterClass" :strArray="welcomeArray" :idx="14" -->
+        <h1>
+        <AnimatedLetters :letterClass="letterClass" :strArray="welcomeArray" :idx="14"/>
         </h1>
         
         <h2>Enter your credentials</h2>
         <form @submit.prevent="register">
 
-          <label for="name">Name:</label>
-          <input type="name" id="name" v-model="name" placeholder="Enter your Name" required/>
+          <label for="personName">Name:</label>
+          <input type="name" id="personName" v-model="personName" placeholder="Enter your Name" required/>
 
           <label for="email">Email address:</label>
           <input type="email" id="email" v-model="email" placeholder="Enter your Email" @change="checkEmails" required/>
@@ -33,7 +33,7 @@
           </label>
           
           <div class="wrap">
-            <button type="submit" @click="register">
+            <button type="submit" @click="register()">
               register
             </button>
           </div>
@@ -51,50 +51,52 @@
   </template>
   
   <script>
-  
-  //import AnimatedLetters from "./AnimatedLetters";
+  //import AXIOS from './axiosConfig.js';
+  import AnimatedLetters from "./AnimatedLetters";
   import Navbar from "./Navbar";
-  /*import axios from "axios";
-  import config from "../../config";
-  
-  const frontEndUrl = 'http://' + config.dev.host + ':' + config.dev.port;
-  const backendUrl = 'http://' + config.dev.backendHost + ':' + config.dev.backendPort;
-  
-  const AXIOS = axios.create({
-    baseURL: backendUrl,
-    headers: { 'Access-Control-Allow-Origin': frontEndUrl }
-  });
-  */
 
   export default {
-    name: "Register",
     data() {
       return {
-        //letterClass: "text-animate",
-        //welcomeArray: "Register",
-        name: '',
+        letterClass: "text-animate",
+        welcomeArray: "Register",
+
+
+
+
+
+        personName: '',
         email: '',
         password: '',
-        accountType: ''
+        accountType: '',
+        persons: [],
+        person: '',
+        errorPerson: '',
+        errorAccount: '',
+        response: []
+
+
+
       };
     },
     mounted() {
-      //setTimeout(() => {
-      //  this.letterClass = "text-animate-hover";
-      //}, 4000);
+      setTimeout(() => {
+        this.letterClass = "text-animate-hover";
+      }, 4000);
 
 
-
+      // no idea if its good or necessary
+      // makes it so that if you are logged in you cannot register
       let user = localStorage.getItem('user-info');
       if (user) {
         this.$router.push({name:'Home'});
       }
-    
+
 
       
     },
     components: {
-      //AnimatedLetters,
+      AnimatedLetters,
       Navbar
     },
     methods: {
@@ -118,18 +120,56 @@
         }
       },
 
+      getPersonByName() {
+        // The URL should be the endpoint from your PersonRestController that returns the person found by name
+        const url = `/persons/byname/${this.personName}`;
+
+        AXIOS.get(url)
+        .then(response => {
+          this.persons = response.data;
+        })
+        .catch(e => {
+          this.errorPerson = e;
+        });
+      },
+
+      createPerson() {
+        AXIOS.post('/persons/create', { name: this.personName})
+        .then(response => {
+          this.persons.push(response.data);
+          this.errorPerson = '';
+          this.personName = '';
+        })
+        .catch(e => {
+          const errorMsg = e.response.data.message;
+          console.log(errorMsg);
+          this.errorPerson = errorMsg;
+        });
+      },
+
+      // This probably needs to be reworked the most
+      // based on billy's work
       async register() {
         try {
+          // Try finding the person
+          this.getPersonByName();
+
+          if(this.persons.length < 1) {
+            this.createPerson();
+          }
+
+          // set the person in the data
+          this.person = this.persons[0];
+
+
+          // THIS IS SO FUCKED I HAVE NO CLUE WHAT IM DOING
+
+
           // Construct the URL with the account type parameter
           const url = `/${this.accountType}/create`;
         
           // Make the POST request with the registerData as the request body
-          const response = await AXIOS.post(url,registerData);
-
-          
-          // NEED TO CREATE A NEW PERSON IN ORDER TO CREATE A NEW ACCOUNT
-          // USE THE NAME TO DO SO
-
+          const response = await AXIOS.post(url, register.Data);
 
           // Handle the response here (e.g., show a success message, redirect, etc.)
           console.log('Account created successfully', response.data);
@@ -137,25 +177,28 @@
 
 
 
-
+          // no clue if its good or even necessary
           if(response.status == 201) {
             localStorage.setItem('user-info', JSON.stringify(response.data));
             this.$router.push({name:'Home'});
           }
 
           
+          // Reinitialize the fields??
           
           
           // Optionally, return the response for further processing
           return response.data;
         }
-        catch (error) {
-          // Handle the error here (e.g., show an error message)
-          console.error('An error occurred while creating the account:', error.response);
+        catch(e) {
+          const errorMsg = e.response.data.message;
+          console.log(errorMsg);
+          this.errorAccount = errorMsg;
         }
-      },
-    },
+      }
+    }
   };
+  
   </script>
   
   <style scoped>
