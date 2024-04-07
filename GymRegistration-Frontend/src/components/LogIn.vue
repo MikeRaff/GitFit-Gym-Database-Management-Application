@@ -2,30 +2,37 @@
   <div class="container login-page">
     <Navbar />
     <div class="text-zone">
+
       <h1>
-        <AnimatedLetters :letterClass="letterClass" :strArray="welcomeArray" :idx="14"/>
+      <AnimatedLetters :letterClass="letterClass" :strArray="welcomeArray" :idx="14"/>
       </h1>
 
       <h2>Enter your login credentials</h2>
       <form @submit.prevent="login">
 
-        <label for="email">Email address:</label>
-        <input type="email" id="email" v-model="email" placeholder="Enter your Email" required/>
-        
-        <label for="password">Password:</label>
-        <input type="password" id="password" v-model="password" placeholder="Enter your Password" required/>
-        
-        <label for="accounttype">
-          Select your account type:
-          <select type="type" id="accountType" v-model="accountType" required>
+        <div class="form-group">
+          <label for="email">Email address:</label>
+          <input type="email" id="email" v-model="email" placeholder="Enter your Email" required/>
+        </div>
 
-            <option value="" disabled selected>Select your account type</option>
-            <option value="customers">Customer</option>
-            <option value="instructors">Instructor</option>
-            <option value="owners">Owner</option>
+        <div class="form-group">
+          <label for="password">Password:</label>
+          <input type="password" id="password" v-model="password" placeholder="Enter your Password" required/>
+        </div>
 
-          </select>
-        </label>
+        <div class="form-group">
+          <label for="accounttype">
+            Select your account type:
+            <select type="type" id="accountType" v-model="accountType" required>
+
+              <option value="" disabled selected>Select your account type</option>
+              <option value="customers">Customer</option>
+              <option value="instructors">Instructor</option>
+              <option value="owners">Owner</option>
+
+            </select>
+          </label>
+        </div>
 
         <div class="wrap">
           <button type="submit" @click="login()">
@@ -49,6 +56,8 @@ import AXIOS from './axiosConfig.js';
 import AnimatedLetters from "./AnimatedLetters";
 import Navbar from "./Navbar";
 
+console.log(AXIOS.defaults.baseURL);
+
 export default {
   name: "LogIn",
   data() {
@@ -60,12 +69,12 @@ export default {
       accountType: ''
     };
   },
+
   mounted() {
   setTimeout(() => {
     this.letterClass = "text-animate-hover";
   }, 4000);
   
-  // no idea if its good or necessary
   // makes it so that if you are logged in you cannot login
   let user = localStorage.getItem('user-info');
     if (user) {
@@ -79,35 +88,32 @@ export default {
   },
 
   methods: {
-    // probably needs a lot of work
-    // based on billys work
     async login() {
-      try{
-        // Construct the URL with the account type parameter
-        const url = `/${this.accountType}/login/${this.email}/${this.password}`;
+      // Create url for the GET request
+      const url = `/${this.accountType}/login/${this.email}/${this.password}`;
 
-        // Make the GET request to the backend
-        const response = await AXIOS.get(url);
+      // Make the GET request with the url
+      const response = await AXIOS.get(url)
+        .then(response => {
+          console.log('Getting a response');
+          console.log('Login successfull', response.data);
 
-        // Handle the response here (e.g., show a success message, redirect, etc.)
-        console.log('Login successfull', response.data);
-
-        // no clue if its good or even necessary
-        // remembers that user is logged in & send them home
-        if (response.status === 200 && response.data.length > 0) {
-          localStorage.setItem('user-info', JSON.stringify(response.data[0]));
-          this.$router.push({name:'Home'});
-        }
+          // remembers (stores) that user is logged in & send them home
+          if (response.status === 200) {
+            localStorage.setItem('user-info', JSON.stringify(response.data[0]));
+            this.$router.push({name:'Home'});
+          }
+        })
+        .catch(error => {
+          alert(error.response);
+          console.log(this.email);
+          console.log('Desired account type:', this.accountType);
+          console.error('Response dara:', error.response.data);
+          console.error('Response status:', error.response.status);
+          console.error('Response headers:', error.response.headers);
+        })
 
         // reinitialize fields??
-
-        // Optionally, return the response for further processing
-        return response.data;
-      }
-      catch (error) {
-        // Handle the error here (e.g., show an error message, etc.)
-        console.error('An error occurred while logging in:', error.response);
-      }
     }
   }
 };
@@ -191,6 +197,10 @@ export default {
   animation: pulse512 1.5s infinite;
 }
 
+.login-page .form-group {
+  margin-bottom: 15px;
+}
+
 .login-page label {
   display: block;
   width: 100%;
@@ -204,8 +214,8 @@ export default {
 .login-page input {
   display: block;
   width: 100%;
-  margin-bottom: 15px;
-  padding: 10px;
+  margin-bottom: 10px;
+  padding: 5px;
   box-sizing: border-box;
   border: 1px solid #fff;
   border-radius: 5px;
@@ -214,7 +224,7 @@ export default {
 .login-page button {
   padding: 15px;
   border-radius: 10px;
-  margin-top: 15px;
+  margin-top: 10px;
   margin-bottom: 15px;
   border: none;
   color: #fff;
@@ -224,13 +234,15 @@ export default {
 }
 
 .login-page select {
-  padding: 15px;
-  border-radius: 10px;
-  margin-top: 15px;
-  margin-bottom: 15px;
-  border: none;
+  display: block;
   width: 100%;
-  font-size: 16px;
+  margin-bottom: 15px;
+  padding: 15px;
+  box-sizing: border-box;
+  border: 1px solid #fff;
+  border-radius: 5px;  
+  font-size: inherit;
+  line-height: inherit;
 }
 
 @keyframes pulse512 {

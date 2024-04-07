@@ -14,7 +14,10 @@
                 <img src="@/assets/Account.png" class="icon" alt="Account Logo" />
             </a>
             <a class="button-link" href="#/login" target="_self" rel="noopener noreferrer" @click="closeNav">
-                SIGN IN / LOG OUT
+                SIGN IN
+            </a>
+            <a class="button-link" href="#/" target="_self" rel="noopener noreferrer" @click="logout">
+                LOG OUT
             </a>
             <img src="@/assets/Closed.png" width="40px" alt="Gym Logo" class="close-icon" @click="closeNav" />
         </nav>
@@ -35,6 +38,11 @@ export default {
         },
         toggleNav() {
             this.showNav = !this.showNav;
+        },
+        logout() {
+            this.closeNav();
+            localStorage.clear();
+            this.$router.push({ name: 'Home' });
         }
     }
 }

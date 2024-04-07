@@ -9,21 +9,27 @@
       
       <h2>Enter your credentials</h2>
       <form @submit.prevent="register">
-
-        <label for="personName">Name:</label>
-        <input type="name" id="personName" v-model="personName" placeholder="Enter your Name" required/>
-
-        <label for="email">Email address:</label>
-        <input type="email" id="email" v-model="email" placeholder="Enter your Email" @change="checkEmails" required/>
-        <input type="email" id="reemail" placeholder="Re-enter your Email" @keyup="checkEmails" required/>
         
-        <label for="password">Password:</label>
-        <input type="password" id="password" v-model="password" placeholder="Enter your Password" @change="checkPasswords" required/>
-        <input type="password" id="repassword" placeholder="Re-enter your Password" @keyup="checkPasswords" required/>
-        
-        <label for="accounttype">
-          Select your account type:
-          <select type="type" id="accountType" v-model="accountType" required>
+        <div class="form-group">
+          <label for="personName">Name:</label>
+          <input type="name" id="personName" v-model="associatedPersonName" placeholder="Enter your Name" required/>
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email address:</label>
+          <input type="email" id="email" v-model="AccountDto.email" placeholder="Enter your Email" @change="checkEmails" required/>
+          <input type="email" id="reemail" placeholder="Re-enter your Email" @keyup="checkEmails" required/>
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password:</label>
+          <input type="password" id="password" v-model="AccountDto.password" placeholder="Enter your Password" @change="checkPasswords" required/>
+          <input type="password" id="repassword" placeholder="Re-enter your Password" @keyup="checkPasswords" required/>
+        </div>
+
+        <div class="form-group">
+          <label for="accounttype">Select your account type:</label>
+          <select type="type" id="accountType" v-model="selectedAccountType" required>
         
             <option value="" disabled selected>Select your account type</option>
             <option value="customers">Customer</option>
@@ -31,11 +37,11 @@
             <option value="owners">Owner</option>
         
           </select>
-        </label>
+        </div>
         
         <div class="wrap">
-          <button type="submit" @click="register()">
-            register
+          <button type="submit">
+            Register
           </button>
         </div>
       
@@ -55,20 +61,25 @@
   import AnimatedLetters from "./AnimatedLetters";
   import Navbar from "./Navbar";
 
+  console.log(AXIOS.defaults.baseURL);
+
   export default {
+    name: "RegisterAccount",
     data() {
       return {
         letterClass: "text-animate",
         welcomeArray: "Register",
-        personName: '',
-        email: '',
-        password: '',
-        accountType: '',
-        persons: [],
-        person: '',
-        errorPerson: '',
-        errorAccount: '',
-        response: []
+        associatedPersonName: '',
+        selectedAccountType: '',
+        AccountDto: {
+          email: '',
+          password: '',
+          person: null
+        },
+        personsDto: {
+          name: '',
+          id: ''
+        },
       };
     },
 
@@ -76,13 +87,12 @@
       setTimeout(() => {
         this.letterClass = "text-animate-hover";
       }, 4000);
-
-      // no idea if its good or necessary
+      
       // makes it so that if you are logged in you cannot register
       let user = localStorage.getItem('user-info');
       if (user) {
         this.$router.push({name:'Home'});
-      }      
+      }
     },
 
     components: {
@@ -111,75 +121,88 @@
         }
       },
 
-      getPersonByName() {
-        // The URL should be the endpoint from your PersonRestController that returns the person found by name
-        const url = `/persons/byname/${this.personName}`;
+      /*
+      // Based on billy's work
+      async getPersonByName() {
+        const url = `/persons/byname/${this.associatedPersonName}`;
 
-        AXIOS.get(url)
-        .then(response => {
-          this.persons = response.data;
-        })
-        .catch(e => {
-          this.errorPerson = e;
-        });
+        const response = await AXIOS.get(url)
+          .then(response => {
+            this.personsDto = response.data;
+            console.log('Found persons', this.personsDto);
+          })
+          .catch(error => {
+            alert(error.response);
+            console.log(this.associatedPersonName);
+            console.error('There was an error getting the persons:', error);
+          });
+      },
+*/
+
+      // Based on billy's work
+      async createPerson() {
+        const personUrl = '/persons/create';
+        
+        var localPerson = {
+          name: this.associatedPersonName
+        };
+
+        const response = await AXIOS.post(personUrl, localPerson)
+          .then(response => {
+            this.personsDto = response.data;
+            console.log('Getting a response');
+            console.log('Person created successfully', response.data);
+            
+            /*  Reinitialize fields??
+            this.persons.push(response.data);
+            this.errorPerson = '';
+            this.personName = '';
+            */
+          })
+          .catch(error => {
+            alert(error.response);
+            console.log(this.associatedPersonName);
+            console.log('There was an error creating the person');
+            console.error('Response data:', error.response.data);
+            console.error('Status:', error.response.status);
+            console.error('Headers:', error.response.headers);
+          });
       },
 
-      createPerson() {
-        AXIOS.post('/persons/create', { name: this.personName})
-        .then(response => {
-          this.persons.push(response.data);
-          this.errorPerson = '';
-          this.personName = '';
-        })
-        .catch(e => {
-          const errorMsg = e.response.data.message;
-          console.log(errorMsg);
-          this.errorPerson = errorMsg;
-        });
-      },
-
-      // This probably needs to be reworked the most
       // based on billy's work
       async register() {
-        try {
-          // Try finding the person
-          this.getPersonByName();
+        // Try creating the person 
+        await this.createPerson();
 
-          if(this.persons.length < 1) {
-            this.createPerson();
-          }
+        // Assign the person to the AccountDto
+        this.AccountDto.person = this.personsDto;
 
-          // set the person in the data
-          this.person = this.persons[0];
+        // Create url for the POST request
+        const url = `/${this.selectedAccountType}/create`;
+        console.log(url);
 
-          // THIS IS SO FUCKED I HAVE NO CLUE WHAT IM DOING
+        // Make the POST request with the AccountData as the request body
+        const response = await AXIOS.post(url, this.AccountDto)
+          .then(response => {
+            console.log('Getting a response');
+            console.log('Account created successfully', response.data);
 
-          // Construct the URL with the account type parameter
-          const url = `/${this.accountType}/create`;
-        
-          // Make the POST request with the registerData as the request body
-          const response = await AXIOS.post(url, register.Data);
-
-          // Handle the response here (e.g., show a success message, redirect, etc.)
-          console.log('Account created successfully', response.data);
-
-          // no clue if its good or even necessary
-          // remembers that account is created and sends them home
-          if(response.status == 201) {
-            localStorage.setItem('user-info', JSON.stringify(response.data));
-            this.$router.push({name:'Home'});
-          }
+            // remembers that account is created and sends them home
+            if(response.status == 201) {
+              localStorage.setItem('user-info', JSON.stringify(response.data));
+              this.$router.push({name:'Home'});
+            }
+          })
+          .catch(error => {
+            alert(error.response);
+            console.log(this.selectedAccountType);
+            console.log('Associated person', this.AccountDto.person);
+            console.error('Response data:', error.response.data);
+            console.error('Status:', error.response.status);
+            console.error('Headers:', error.response.headers);
+          })
 
           // Reinitialize the fields??
-                    
-          // Optionally, return the response for further processing
-          return response.data;
-        }
-        catch(e) {
-          const errorMsg = e.response.data.message;
-          console.log(errorMsg);
-          this.errorAccount = errorMsg;
-        }
       }
     }
   };
@@ -264,6 +287,10 @@
     -webkit-animation: pulse 2s infinite;
     animation: pulse512 1.5s infinite;
   }
+
+  .register-page .form-group {
+    margin-bottom: 15px;
+  }
   
   .register-page label {
     display: block;
@@ -278,8 +305,8 @@
   .register-page input {
     display: block;
     width: 100%;
-    margin-bottom: 15px;
-    padding: 10px;
+    margin-bottom: 10px;
+    padding: 5px;
     box-sizing: border-box;
     border: 1px solid #fff;
     border-radius: 5px;
@@ -288,7 +315,7 @@
   .register-page button {
     padding: 15px;
     border-radius: 10px;
-    margin-top: 15px;
+    margin-top: 10px;
     margin-bottom: 15px;
     border: none;
     color: #fff;
@@ -298,13 +325,15 @@
   }
   
   .register-page select {
-    padding: 15px;
-    border-radius: 10px;
-    margin-top: 15px;
-    margin-bottom: 15px;
-    border: none;
+    display: block;
     width: 100%;
-    font-size: 16px;
+    margin-bottom: 10px;
+    padding: 6.5px;
+    box-sizing: border-box;
+    border: 1px solid #fff;
+    border-radius: 5px;
+    font-size: inherit;
+    line-height: inherit;
   }
   
   @keyframes pulse512 {
