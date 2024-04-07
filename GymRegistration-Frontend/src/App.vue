@@ -17,7 +17,7 @@ export default {
   position: absolute; 
   background: linear-gradient(to bottom right, #000000 30%, #040a1a 80%);
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-  overflow-y: hidden;
+  overflow: auto;
 }
 
 .container { 
