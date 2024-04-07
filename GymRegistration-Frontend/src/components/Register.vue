@@ -189,7 +189,7 @@
 
             // remembers that account is created and sends them home
             if(response.status == 201) {
-              localStorage.setItem('email', this.email);
+              localStorage.setItem('email', this.AccountDto.email);
               this.$router.push({name:'Home'});
             }
           })
