@@ -1,6 +1,10 @@
 <template>
     <div class="sessions-client-view">
+      <Navbar /> <!-- Added navbar component here -->
       <div class="table-container">
+        <h1>
+          <AnimatedLetters :letterClass="letterClass" :strArray="welcomeArray" :idx="14" />
+        </h1>
         <table>
           <thead>
             <tr>
@@ -29,59 +33,126 @@
       </div>
       <div class="register-button">
         <button>Register</button>
-      </div>
+    </div>
     </div>
   </template>
   
   <script>
+  import AnimatedLetters from "./AnimatedLetters";
+  import Navbar from "./Navbar"; 
+
   export default {
     name: 'SessionsClientView',
     data() {
       return {
-        // Placeholder array for sessions data
-        sessions: [],
+        letterClass: "text-animate",
+        welcomeArray: "Sessions",
+        sessions: [], // Placeholder array for sessions data
       };
     },
+    mounted() {
+      setTimeout(() => {
+        this.letterClass = "text-animate-hover";
+      }, 4000);
+      this.fetchSessions(); // Fetch sessions data when component is mounted
+    },
+    components: {
+      AnimatedLetters,
+      Navbar
+    },
+    methods: {
+      fetchSessions() {
+        // Here you can fetch the sessions data from the database using API calls or other methods
+        // For now, let's simulate some sample sessions data
+        this.sessions = [
+        { id: 1, classType: "Yoga", capacity: 20, duration: "1 hour", instructor: "John Doe", time: "10:00 AM", date: "2024-04-06" },
+        { id: 2, classType: "Pilates", capacity: 15, duration: "1 hour", instructor: "Jane Smith", time: "11:30 AM", date: "2024-04-07" },
+        // Add more sessions as needed
+        ];
+      },
+      addSession() {
+        // Implement logic to add a new session
+      }
+    }
     // Additional methods to fetch and handle sessions data would be added here
   };
   </script>
   
   <style scoped>
+  .sessions-client-view .text-zone {
+    position: absolute;
+    align-content: center;
+    left: 10%;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40%;
+    max-height: 90%;
+    display: absolute;
+  }
+
   .sessions-client-view {
-    background-color: #fff; /* Use the color that matches the image */
     padding: 20px;
     margin: auto;
-    width: 80%;
-    max-width: 1000px;
+  }
+ 
+  .content {
+  position: relative;
+  }
+
+  .sessions-client-view h1 {
+    top: 40%; /* Adjust distance below navbar */
+    color: #fff;
+    font-size: 60px;
+    margin: 0;
+    font-weight: 600;
+    cursor: pointer;
+    text-align: center;
   }
   
   .table-container {
     overflow-x: auto;
+    top: calc(30%); 
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
   }
   
   table {
     width: 100%;
     border-collapse: collapse;
-    margin-bottom: 20px;
+    /* margin-bottom: 20px; */
   }
   
   table, th, td {
-    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+    border: 1px solid #ccc;
+    color: #FFF;
   }
   
   th {
-    background-color: #e74c3c;
-    color: white;
-    padding: 10px;
+    background-color: #f0f0f0;
+    color: #444;
+    font-size: 20px; /* Adjust the font size here */
+  padding: 5px;
+  }
+
+  tbody tr:hover {
+    background-color: #0040ff;
   }
   
-  td {
+  td { 
+    /* background-color: #0040ff; */
     padding: 10px;
-    text-align: center;
-  }
+    /* text-align: center; */
+   } 
   
   tr:nth-child(even) {
-    background-color: #f2f2f2;
+    background-color: #f2f2f27f;
+  }
+  tr:nth-child(odd) {
+    background-color: #f2f2f2c8;
   }
   
   .pagination {
@@ -92,19 +163,21 @@
   .register-button {
     display: flex;
     justify-content: flex-end;
-  }
-  
-  button {
-    padding: 10px 20px;
-    background-color: #e74c3c;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  button:hover {
-    opacity: 0.9;
-  }
+    position: absolute;
+    bottom: 300px; 
+    right: 130px; 
+}
+button {
+  padding: 10px 20px;
+  background-color: #0040ff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:hover {
+  opacity: 0.85;
+}
   </style>
   
