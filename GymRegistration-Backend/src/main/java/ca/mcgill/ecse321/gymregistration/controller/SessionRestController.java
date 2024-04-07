@@ -7,6 +7,8 @@ import ca.mcgill.ecse321.gymregistration.service.InstructorService;
 import ca.mcgill.ecse321.gymregistration.service.OwnerService;
 import ca.mcgill.ecse321.gymregistration.service.SessionService;
 import java.sql.Time;
+
+import ca.mcgill.ecse321.gymregistration.service.exception.GRSException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
