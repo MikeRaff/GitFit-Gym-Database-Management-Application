@@ -89,7 +89,7 @@
       }, 4000);
       
       // makes it so that if you are logged in you cannot register
-      let user = localStorage.getItem('user-info');
+      let user = localStorage.getItem('email');
       if (user) {
         this.$router.push({name:'Home'});
       }
@@ -189,7 +189,7 @@
 
             // remembers that account is created and sends them home
             if(response.status == 201) {
-              localStorage.setItem('user-info', JSON.stringify(response.data));
+              localStorage.setItem('email', this.email);
               this.$router.push({name:'Home'});
             }
           })

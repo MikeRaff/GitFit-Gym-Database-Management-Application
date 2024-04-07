@@ -76,8 +76,9 @@ export default {
   }, 4000);
   
   // makes it so that if you are logged in you cannot login
-  let user = localStorage.getItem('user-info');
+  let user = localStorage.getItem('email');
     if (user) {
+      alert("Can not be signed into more than one account at a time.");
       this.$router.push({name:'Home'});
     }
   },
@@ -100,8 +101,12 @@ export default {
 
           // remembers (stores) that user is logged in & send them home
           if (response.status === 200) {
-            localStorage.setItem('user-info', JSON.stringify(response.data[0]));
-            this.$router.push({name:'Home'});
+            const storedEmail = localStorage.getItem('email');
+            if (storedEmail !== null && storedEmail !== undefined) {
+            } else {
+              localStorage.setItem('email', this.email);
+              this.$router.push({ name: 'Home' });
+            }
           }
         })
         .catch(error => {
