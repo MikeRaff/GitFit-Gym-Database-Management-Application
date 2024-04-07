@@ -81,7 +81,7 @@ public class CustomerRestController {
      * @throws IllegalArgumentException
      */
     @PutMapping(value = {"/customers/updateCreditCard/{newCreditCard}", "/customers/updateCreditCard/{newCreditCard}/"})
-    public ResponseEntity<CustomerDto> updateCustomerCreditCard(@PathVariable("newCreditCard") int newCreditCard, @RequestBody CustomerDto customerDto) throws IllegalArgumentException{
+    public ResponseEntity<CustomerDto> updateCustomerCreditCard(@PathVariable("newCreditCard") String newCreditCard, @RequestBody CustomerDto customerDto) throws IllegalArgumentException{
         Customer customer = customerService.updateCreditCard(customerDto.getEmail(), customerDto.getPassword(), newCreditCard);
         return new ResponseEntity<>(new CustomerDto(customer), HttpStatus.OK);
     }

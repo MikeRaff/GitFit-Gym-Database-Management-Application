@@ -52,7 +52,7 @@ public class CustomerTests {
         Person jim = createAndPersistPerson("Jim");
 
         // Create customer.
-        Customer customer = createAndPersistCustomerWithCreditCard("customeremail@emailprovider.net", "password", jim, 123456789);
+        Customer customer = createAndPersistCustomerWithCreditCard("customeremail@emailprovider.net", "password", jim, "1234 5678 1234 5678");
 
         // Read customer from the database.
         Customer customerFromDB = customerRepository.findCustomerById(customer.getId());
@@ -69,8 +69,8 @@ public class CustomerTests {
 
         // Create customers with the same person.
         createAndPersistCustomer("customer1@emailprovider.ca", "customer1Password", bob);
-        createAndPersistCustomerWithCreditCard("customer2@emailprovider.ca", "customer2Password", bob, 456789123);
-        createAndPersistCustomerWithCreditCard("customer3@emailprovider.ca", "customer3Password", bob, 987654321);
+        createAndPersistCustomerWithCreditCard("customer2@emailprovider.ca", "customer2Password", bob, "1234 5678 1234 5678");
+        createAndPersistCustomerWithCreditCard("customer3@emailprovider.ca", "customer3Password", bob, "8765 4321 8765 4321");
 
         // Find customers by person name.
         List<Customer> customers = customerRepository.findCustomersByPerson_Name(bob.getName());
@@ -90,7 +90,7 @@ public class CustomerTests {
         return customerRepository.save(customer);
     }
 
-    private Customer createAndPersistCustomerWithCreditCard(String email, String password, Person person, int creditCardNumber) {
+    private Customer createAndPersistCustomerWithCreditCard(String email, String password, Person person, String creditCardNumber) {
         Customer customer = new Customer(email, password, person, creditCardNumber);
         return customerRepository.save(customer);
     }
