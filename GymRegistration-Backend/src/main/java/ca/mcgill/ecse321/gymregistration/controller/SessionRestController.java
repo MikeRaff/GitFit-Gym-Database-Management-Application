@@ -46,24 +46,38 @@ public class SessionRestController {
         System.out.println(session==null);
         return new ResponseEntity<>(new SessionDto(session), HttpStatus.OK);
     }
-    /**
+     /**
      * CreateSession: creates a new session
+     * 
      * @param sessionDto: the session to be created
-     * @param email: the email of the user creating the session
+     * @param email:      the email of the user creating the session
      * @return the created session
      * @throws IllegalArgumentException
      */
-    @PostMapping(value = { "/sessions/create/{email}", "/sessions/create/{email}/"})
-    public ResponseEntity<SessionDto> createSession(@PathVariable("email") String email, @RequestBody SessionDto sessionDto) throws IllegalArgumentException{
-       
-        GymUser gymUser = ownerService.getOwnerByEmail(email);
-        if(gymUser == null)
+    @PostMapping(value = { "/sessions/create/{email}", "/sessions/create/{email}/" })
+    public ResponseEntity<SessionDto> createSession(@PathVariable("email") String email,
+            @RequestBody SessionDto sessionDto) throws IllegalArgumentException {
+
+        GymUser gymUser = null;
+        try {
             gymUser = instructorService.getInstructorByEmail(email);
-        if(gymUser == null) //if still
-            gymUser = customerService.getCustomerByEmail(email);
-        Session session = sessionService.createSession(sessionDto.getDate(), sessionDto.getStartTime(), sessionDto.getEndTime(), sessionDto.getDescription(), sessionDto.getName(), sessionDto.getLocation(), sessionDto.getClassType(), sessionDto.getCapacity(), gymUser);
+        } catch (GRSException e) {
+            try {
+                gymUser = ownerService.getOwnerByEmail(email);
+            } catch (GRSException e2) {
+                try {
+                    gymUser = customerService.getCustomerByEmail(email);
+                } catch (GRSException e3) {
+                   throw new GRSException(HttpStatus.NOT_FOUND, "No gymuser found");
+                }
+            }
+        }
+        Session session = sessionService.createSession(sessionDto.getDate(), Time.valueOf(sessionDto.getStartTime()),
+        Time.valueOf(sessionDto.getEndTime()), sessionDto.getDescription(), sessionDto.getName(), sessionDto.getLocation(),
+                sessionDto.getClassType(), sessionDto.getCapacity(), gymUser);
         return new ResponseEntity<>(new SessionDto(session), HttpStatus.CREATED);
     }
+
     /**
      * UpdateSession: updated a session
      * @param id: the id of the session to be updated
