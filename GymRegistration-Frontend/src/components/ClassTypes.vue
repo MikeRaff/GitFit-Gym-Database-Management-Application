@@ -8,37 +8,21 @@
       <br />
       <h2>Explore Our Diverse Range of Class Types! <br /><br /> Discover a wide variety of gym classes tailored to suit your fitness needs, from yoga and HIIT to strength training and more. <br/><br /> If you're a gym owner or an instructor, you can create new class types right here!
       </h2>
+      <div v-if="classTypes.length > 0">
+        <h3>Class Types:</h3>
+        <ul>
+          <li v-for="classType in classTypes" :key="classType.id">{{ classType.name }}</li>
+        </ul>
+      </div>
+      <div v-else-if="classTypesNotFound">
+        <p>There are no class types in the system.</p>
+      </div>
     </div>
   </div>
-      <!-- <div id="eventregistration">
-      <h2>Persons</h2>
-      <table>
-        <tr v-for="person in persons" :key="person.name">
-          <td>{{ person.name }}</td>
-          <td>
-            <ul>
-              <li v-for="event in person.events" :key="event.name">
-                {{ event.name }}
-              </li>
-            </ul>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <input type="text" v-model="newPerson" placeholder="Person Name">
-          </td>
-          <td>
-            <button v-bind:disabled="!newPerson" @click="createPerson(newPerson)">Create Person</button>
-          </td>
-        </tr>
-      </table>
-      <p>
-        <span v-if="errorPerson" style="color:red">Error: {{ errorPerson }}</span>
-      </p>
-    </div> -->
   </template>
   
 <script>
+import AXIOS from './axiosConfig.js';
 import AnimatedLetters from  "./AnimatedLetters";
 import Navbar from "./Navbar";
 
@@ -47,12 +31,29 @@ export default {
     return {
       letterClass: "text-animate",
       titleArray: "ClassTypes".split(""),
+      classTypes: [],
+      classTypesNotFound: false,
     };
   },
   mounted() {
     setTimeout(() => {
       this.letterClass = "text-animate-hover";
     }, 4000);
+    this.fetchClassTypes();
+  },
+  methods: {
+    async fetchClassTypes() {
+        try {
+            const response = await AXIOS.get('/class-types');
+            this.classTypes = response.data;
+        } catch (error) {
+            if (error.response && error.response.status === 404) {
+                this.classTypesNotFound = true;
+            } else {
+                console.error('Error fetching class types:', error);
+            }
+        }
+    }
   },
   components: {
     AnimatedLetters,
