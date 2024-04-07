@@ -6,7 +6,7 @@
         <AnimatedLetters :letterClass="letterClass" :strArray="titleArray" :idx="12" />
       </h1>
       <br />
-      <h2>Explore Our Diverse Range of Class Types! <br /><br /> Discover a wide variety of gym classes tailored to suit your fitness needs, from yoga and HIIT to strength training and more. <br/><br /> If you're a gym owner or an instructor, you can create new class types right here!
+      <h2>Explore Our Diverse Range of Class Types! <br /><br /> Discover a wide variety of gym classes tailored to suit your fitness needs, from yoga and HIIT to strength training and more. <br/><br />
       </h2>
       <div v-if="classTypes.length > 0">
         <h3>Class Types:</h3>
@@ -17,6 +17,10 @@
       <div v-else-if="classTypesNotFound">
         <p>There are no class types in the system.</p>
       </div>
+      <h2>If you're a gym owner or an instructor, you can create new class types right here!</h2>
+      <input type="email" v-model="email" placeholder="Enter your email">
+      <input type="text" v-model="newClassTypeName" placeholder="Enter new class type name">
+      <button @click="addClassType">Add Class Type</button>
     </div>
   </div>
   </template>
@@ -33,6 +37,8 @@ export default {
       titleArray: "ClassTypes".split(""),
       classTypes: [],
       classTypesNotFound: false,
+      email: "",
+      newClassTypeName: "",
     };
   },
   mounted() {
@@ -52,6 +58,23 @@ export default {
             } else {
                 console.error('Error fetching class types:', error);
             }
+        }
+    },
+    async addClassType() {
+        if (!this.email) {
+            alert("Please provide your email before adding a class type.");
+            return;
+        }
+        try {
+            const response = await AXIOS.post('/class-types/create/' + this.email, {
+                name: this.newClassTypeName,
+                approved: true
+            });
+            this.classTypes.push(response.data);
+            this.newClassTypeName = "";
+        } catch (error) {
+            alert(error.response.data);
+            console.error('Error adding class type:', error);
         }
     }
   },
