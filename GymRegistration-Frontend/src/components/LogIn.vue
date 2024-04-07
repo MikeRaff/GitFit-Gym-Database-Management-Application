@@ -2,8 +2,8 @@
   <div class="container login-page">
     <Navbar />
     <div class="text-zone">
-      <h1>Login
-        <!-- AnimatedLetters :letterClass="letterClass" :strArray="welcomeArray" :idx="14" -->
+      <h1>
+        <AnimatedLetters :letterClass="letterClass" :strArray="welcomeArray" :idx="14"/>
       </h1>
 
       <h2>Enter your login credentials</h2>
@@ -28,7 +28,7 @@
         </label>
 
         <div class="wrap">
-          <button type="submit" @click="login">
+          <button type="submit" @click="login()">
             login
           </button>
         </div>
@@ -42,55 +42,45 @@
 
     </div>
   </div>
-  
 </template>
 
 <script>
-//import AnimatedLetters from "./AnimatedLetters";
+import AXIOS from './axiosConfig.js';
+import AnimatedLetters from "./AnimatedLetters";
 import Navbar from "./Navbar";
-/*import axios from "axios";
-import config from "../../config";
-
-const frontEndUrl = 'http://' + config.dev.host + ':' + config.dev.port;
-const backendUrl = 'http://' + config.dev.backendHost + ':' + config.dev.backendPort;
-
-const AXIOS = axios.create({
-  baseURL: backendUrl,
-  headers: { 'Access-Control-Allow-Origin': frontEndUrl }
-});
-*/
 
 export default {
   name: "LogIn",
   data() {
     return {
-      //letterClass: "text-animate",
-      //welcomeArray: "LogIn",
+      letterClass: "text-animate",
+      welcomeArray: "LogIn",
       email: '',
       password: '',
       accountType: ''
     };
   },
   mounted() {
-  //  setTimeout(() => {
-  //    this.letterClass = "text-animate-hover";
-  //  }, 4000);
+  setTimeout(() => {
+    this.letterClass = "text-animate-hover";
+  }, 4000);
   
-
-
+  // no idea if its good or necessary
+  // makes it so that if you are logged in you cannot login
   let user = localStorage.getItem('user-info');
     if (user) {
       this.$router.push({name:'Home'});
     }
-  
-
-    
   },
+
   components: {
-    //AnimatedLetters,
+    AnimatedLetters,
     Navbar
   },
+
   methods: {
+    // probably needs a lot of work
+    // based on billys work
     async login() {
       try{
         // Construct the URL with the account type parameter
@@ -102,16 +92,14 @@ export default {
         // Handle the response here (e.g., show a success message, redirect, etc.)
         console.log('Login successfull', response.data);
 
-
-
-
+        // no clue if its good or even necessary
+        // remembers that user is logged in & send them home
         if (response.status === 200 && response.data.length > 0) {
           localStorage.setItem('user-info', JSON.stringify(response.data[0]));
           this.$router.push({name:'Home'});
         }
 
-       
-
+        // reinitialize fields??
 
         // Optionally, return the response for further processing
         return response.data;
@@ -121,95 +109,86 @@ export default {
         console.error('An error occurred while logging in:', error.response);
       }
     }
-  },
-  computed: {
-    isLoginButtonDisabled() {
-      return (
-        !this.email 
-        || !this.password 
-        || !this.accountType
-      );
-    }
   }
 };
 </script>
 
 <style scoped>
 .login-page .text-zone {
-    position: absolute;
-    align-content: center;
-    left: 50%;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 40%;
-    max-height: 90%;
-    display: absolute;
+  position: absolute;
+  align-content: center;
+  left: 50%;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40%;
+  max-height: 90%;
+  display: absolute;
 }
 
 .login-page h1 {
-    color: #fff;
-    font-size: 60px;
-    margin: 0;
-    font-weight: 600;
-    cursor: pointer;
-    text-align: center;
+  color: #fff;
+  font-size: 60px;
+  margin: 0;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: center;
 }
 
 .login-page h1::before {
-    color: #00b3ff;
-    position: absolute;
-    margin-top: -40px;
-    left: 15px;
-    opacity: 0.6;
+  color: #00b3ff;
+  position: absolute;
+  margin-top: -40px;
+  left: 15px;
+  opacity: 0.6;
 }
 
 .login-page h1::after {
-    color: #00b3ff;
-    position: absolute;
-    margin-top: 18px;
-    left: 20px;
-    animation: fadeIn 1s 1.7s backwards;
-    opacity: 0.6;
+  color: #00b3ff;
+  position: absolute;
+  margin-top: 18px;
+  left: 20px;
+  animation: fadeIn 1s 1.7s backwards;
+  opacity: 0.6;
 }
 
 .login-page h2 {
-    color: #fff;
-    margin-top: 20px;
-    font-weight: 400;
-    font-size: 14px;
-    letter-spacing: 2px;
-    animation: fadeIn 1s 1.8s backwards;
-    text-align: center;
+  color: #fff;
+  margin-top: 20px;
+  font-weight: 400;
+  font-size: 14px;
+  letter-spacing: 2px;
+  animation: fadeIn 1s 1.8s backwards;
+  text-align: center;
 }
 
 .login-page p {
-    color: #fff;
-    text-align: center;
+  color: #fff;
+  text-align: center;
 }
 
 .login-page .flat-button {
-    border: none;
-    color: #fff;
-    background-image: linear-gradient(30deg, #0040ff, #15fd98);
-    border-radius: 10px;
-    background-size: 100% auto;
-    font-family: inherit;
-    font-size: 20px;
-    text-align: center;
-    padding: 0.6em 1.5em;
-    white-space: nowrap;
-    text-decoration: none;
-    margin-top: 25px;
-    float: left;
-    white-space: nowrap;
-    width: 200px;
+  border: none;
+  color: #fff;
+  background-image: linear-gradient(30deg, #0040ff, #15fd98);
+  border-radius: 10px;
+  background-size: 100% auto;
+  font-family: inherit;
+  font-size: 20px;
+  text-align: center;
+  padding: 0.6em 1.5em;
+  white-space: nowrap;
+  text-decoration: none;
+  margin-top: 25px;
+  float: left;
+  white-space: nowrap;
+  width: 200px;
 }
 
 .login-page .flat-button:hover {
-    background-position: right center;
-    background-size: 200% auto;
-    -webkit-animation: pulse 2s infinite;
-    animation: pulse512 1.5s infinite;
+  background-position: right center;
+  background-size: 200% auto;
+  -webkit-animation: pulse 2s infinite;
+  animation: pulse512 1.5s infinite;
 }
 
 .login-page label {
@@ -255,66 +234,66 @@ export default {
 }
 
 @keyframes pulse512 {
-    0% {
-        box-shadow: 0 0 0 0 rgba(0, 64, 255, 0.6);
-    }
+  0% {
+    box-shadow: 0 0 0 0 rgba(0, 64, 255, 0.6);
+  }
 
-    70% {
-        box-shadow: 0 0 0 10px rgba(0, 64, 255, 0%);
-    }
+  70% {
+    box-shadow: 0 0 0 10px rgba(0, 64, 255, 0%);
+  }
 
-    100% {
-        box-shadow: 0 0 0 0 rgba(0, 64, 255, 0%);
-    }
+  100% {
+    box-shadow: 0 0 0 0 rgba(0, 64, 255, 0%);
+  }
 }
 
 @media screen and (max-width: 1580px) {
-    .login-page h1 {
-        font-size: 50px;
-    }
+  .login-page h1 {
+    font-size: 50px;
+  }
 }
 
 @media screen and (max-width: 1320px) {
-    .login-page h1 {
-        font-size: 40px;
-    }
+  .login-page h1 {
+    font-size: 40px;
+  }
 }
 
 @media screen and (max-width: 1050px) {
-    .login-page h1 {
-        font-size: 29px;
-        justify-content: center;
-        letter-spacing: 0.5px;
-    }
+  .login-page h1 {
+    font-size: 29px;
+    justify-content: center;
+    letter-spacing: 0.5px;
+  }
 
-    .login-page .text-zone {
-        position: initial;
-        width: 100%;
-        transform: none;
-        padding: 10px;
-        box-sizing: border-box;
-        display: inline-block;
-        text-align: left;
-        margin-left: 20px;
-    }
+  .login-page .text-zone {
+    position: initial;
+    width: 100%;
+    transform: none;
+    padding: 10px;
+    box-sizing: border-box;
+    display: inline-block;
+    text-align: left;
+    margin-left: 20px;
+  }
 
-    .login-page h2 {
-        font-size: 12px;
-    }
+  .login-page h2 {
+    font-size: 12px;
+  }
 
-    .login-page .logo-container {
-        position: relative;
-        width: 200px;
-        height: auto;
-        right: 0;
-        box-sizing: border-box;
-        margin: auto;
-        left: 0;
-    }
+  .login-page .logo-container {
+    position: relative;
+    width: 200px;
+    height: auto;
+    right: 0;
+    box-sizing: border-box;
+    margin: auto;
+    left: 0;
+  }
 
-    .login-page .flat-button {
-        float: none;
-        display: block;
-    }
+  .login-page .flat-button {
+    float: none;
+    display: block;
+  }
 }
 </style>
