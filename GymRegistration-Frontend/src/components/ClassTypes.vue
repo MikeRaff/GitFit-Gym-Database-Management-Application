@@ -66,13 +66,14 @@ export default {
             return;
         }
         try {
-            const response = await AXIOS.post('/class-types/create/john@example.com', {
+            const response = await AXIOS.post('/class-types/create/' + this.email, {
                 name: this.newClassTypeName,
                 approved: true
             });
             this.classTypes.push(response.data);
             this.newClassTypeName = "";
         } catch (error) {
+            alert(error.response.data);
             console.error('Error adding class type:', error);
         }
     }
