@@ -22,9 +22,6 @@
         </tbody>
       </table>
     </div>
-    <div class="pagination">
-      Page <span>1</span> <span>2</span> <span>3</span> <span>4</span>
-    </div>
     <div class="delete-button">
       <button>Delete</button>
     </div>
@@ -62,7 +59,7 @@ export default {
         { id: 1, name: "John Doe", email: "john@example.com" },
         { id: 2, name: "Jane Smith", email: "jane@example.com" },
         { id: 3, name: "John ", email: "john1@example.com" },
-        { id: 4, name: "Jane ", email: "jane2@example.com" },
+
       ];
     },
     deleteAccount() {
@@ -73,6 +70,28 @@ export default {
 </script>
 
 <style scoped>
+.accounts-page .text-animate {
+  position: absolute;
+  top: calc(50% + 30px); /* Adjust distance below navbar */
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #fff;
+  font-size: 60px;
+  margin: 0;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: center;
+}
+.accounts-page .text-animate-hover {
+  color: #fff;
+  font-size: 60px;
+  margin: 0;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: center;
+  transition: color 0.5s ease-in-out;
+}
+
 .accounts-page .text-zone {
   position: absolute;
   align-content: center;
@@ -87,6 +106,10 @@ export default {
   padding: 20px;
   margin: auto;
 }
+.content {
+  position: relative;
+}
+
 .accounts-page h1 {
   top: 40%; /* Adjust distance below navbar */
   color: #fff;
@@ -96,31 +119,36 @@ export default {
   cursor: pointer;
   text-align: center;
 }
-.content {
-  position: relative;
-}
 
 .accounts-table-container {
   overflow-x: auto;
-  top: calc(30%); 
+  overflow-y: auto;
+  top: calc(45% + 20px); 
   position: absolute;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -40%);
   width: 80%;
+  max-height: calc(80%);
 }
+
 
 table {
   width: 100%;
   border-collapse: collapse;
 }
 
+table, th, td {
+    padding: 8px;
+    text-align: left;
+    border: 1px solid #ccc;
+    color: #FFF;
+  }
+
 th {
   background-color: #f0f0f0;
   color: #444;
   font-size: 20px; /* Adjust the font size here */
   padding: 5px;
-
-
 }
 
 tbody tr:hover {
@@ -132,23 +160,18 @@ td {
 } 
 
 tr:nth-child(even) {
-  background-color: #f2f2f27f;
+  background-color: #f2f2f261;
 }
 tr:nth-child(odd) {
-  background-color: #f2f2f2c8;
-}
-
-.pagination {
-  text-align: center;
-  margin-bottom: 20px;
+  background-color: #f2f2f2af;
 }
 
 .delete-button {
   display: flex;
   justify-content: flex-end;
   position: absolute;
-  bottom: 300px; 
-  right: 130px; 
+  bottom: 30px; 
+  right: 40px; 
 }
 
 button {
