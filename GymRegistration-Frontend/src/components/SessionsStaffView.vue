@@ -125,7 +125,7 @@ export default {
         return;
       }
  
-      AXIOS.delete(`/sessions/delete/${this.selectedSessionId}/${user}`)
+      AXIOS.delete('/sessions/delete/' +this.selectedSessionId)
         .then(() => {
           this.sessions = this.sessions.filter(session => session.id !== this.selectedSessionId);
           this.selectedSessionId = null; // Clear selection
