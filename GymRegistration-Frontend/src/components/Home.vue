@@ -56,7 +56,7 @@ export default {
 
 .home-page h1 {
     color: #fff;
-    font-size: 60px;
+    font-size: 57px;
     margin: 0;
     font-weight: 600;
     cursor: pointer;
