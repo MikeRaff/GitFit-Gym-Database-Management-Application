@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="ca.mcgill.ecse321.gymregistration.service.TestOwnerService" tests="12" skipped="0" failures="0" errors="0" timestamp="2024-04-08T06:35:13" hostname="Eriks-MacBook-Air-2.local" time="1.157">
+<testsuite name="ca.mcgill.ecse321.gymregistration.service.TestOwnerService" tests="12" skipped="0" failures="0" errors="0" timestamp="2024-04-08T18:25:16" hostname="Eriks-MacBook-Air-2.local" time="0.262">
   <properties/>
-  <testcase name="testDeleteOwner()" classname="ca.mcgill.ecse321.gymregistration.service.TestOwnerService" time="0.035"/>
-  <testcase name="testGetOwnerByInvalidEmail()" classname="ca.mcgill.ecse321.gymregistration.service.TestOwnerService" time="0.012"/>
-  <testcase name="testUpdateEmail()" classname="ca.mcgill.ecse321.gymregistration.service.TestOwnerService" time="0.015"/>
-  <testcase name="testCreateOwner()" classname="ca.mcgill.ecse321.gymregistration.service.TestOwnerService" time="0.236"/>
-  <testcase name="testUpdateNonExistantOwner()" classname="ca.mcgill.ecse321.gymregistration.service.TestOwnerService" time="0.014"/>
-  <testcase name="testLogInOwner()" classname="ca.mcgill.ecse321.gymregistration.service.TestOwnerService" time="0.008"/>
-  <testcase name="testLogInOwnerInvalidPassword()" classname="ca.mcgill.ecse321.gymregistration.service.TestOwnerService" time="0.011"/>
-  <testcase name="testGetOwnerByEmail()" classname="ca.mcgill.ecse321.gymregistration.service.TestOwnerService" time="0.007"/>
-  <testcase name="testUpdatePassword()" classname="ca.mcgill.ecse321.gymregistration.service.TestOwnerService" time="0.015"/>
-  <testcase name="testUpdateInvalidPassword()" classname="ca.mcgill.ecse321.gymregistration.service.TestOwnerService" time="0.009"/>
-  <testcase name="testLogInOwnerInvalidEmail()" classname="ca.mcgill.ecse321.gymregistration.service.TestOwnerService" time="0.01"/>
-  <testcase name="testUpdateInvalidEmail()" classname="ca.mcgill.ecse321.gymregistration.service.TestOwnerService" time="0.011"/>
-  <system-out><![CDATA[2024-04-08T02:35:13.197-04:00  INFO 91168 --- [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [ca.mcgill.ecse321.gymregistration.service.TestOwnerService]: TestOwnerService does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-2024-04-08T02:35:13.237-04:00  INFO 91168 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration ca.mcgill.ecse321.gymregistration.GymregistrationApplication for test class ca.mcgill.ecse321.gymregistration.service.TestOwnerService
+  <testcase name="testDeleteOwner()" classname="ca.mcgill.ecse321.gymregistration.service.TestOwnerService" time="0.025"/>
+  <testcase name="testGetOwnerByInvalidEmail()" classname="ca.mcgill.ecse321.gymregistration.service.TestOwnerService" time="0.014"/>
+  <testcase name="testUpdateEmail()" classname="ca.mcgill.ecse321.gymregistration.service.TestOwnerService" time="0.011"/>
+  <testcase name="testCreateOwner()" classname="ca.mcgill.ecse321.gymregistration.service.TestOwnerService" time="0.015"/>
+  <testcase name="testUpdateNonExistantOwner()" classname="ca.mcgill.ecse321.gymregistration.service.TestOwnerService" time="0.015"/>
+  <testcase name="testLogInOwner()" classname="ca.mcgill.ecse321.gymregistration.service.TestOwnerService" time="0.01"/>
+  <testcase name="testLogInOwnerInvalidPassword()" classname="ca.mcgill.ecse321.gymregistration.service.TestOwnerService" time="0.013"/>
+  <testcase name="testGetOwnerByEmail()" classname="ca.mcgill.ecse321.gymregistration.service.TestOwnerService" time="0.012"/>
+  <testcase name="testUpdatePassword()" classname="ca.mcgill.ecse321.gymregistration.service.TestOwnerService" time="0.01"/>
+  <testcase name="testUpdateInvalidPassword()" classname="ca.mcgill.ecse321.gymregistration.service.TestOwnerService" time="0.015"/>
+  <testcase name="testLogInOwnerInvalidEmail()" classname="ca.mcgill.ecse321.gymregistration.service.TestOwnerService" time="0.009"/>
+  <testcase name="testUpdateInvalidEmail()" classname="ca.mcgill.ecse321.gymregistration.service.TestOwnerService" time="0.025"/>
+  <system-out><![CDATA[2024-04-08T14:25:16.867-04:00  INFO 97837 --- [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [ca.mcgill.ecse321.gymregistration.service.TestOwnerService]: TestOwnerService does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2024-04-08T14:25:16.877-04:00  INFO 97837 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration ca.mcgill.ecse321.gymregistration.GymregistrationApplication for test class ca.mcgill.ecse321.gymregistration.service.TestOwnerService
 ]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>
