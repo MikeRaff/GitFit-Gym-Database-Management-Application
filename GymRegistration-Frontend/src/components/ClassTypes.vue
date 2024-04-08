@@ -21,8 +21,8 @@
       <input type="text" v-model="newClassTypeName" placeholder="Enter new class type name">
       <button @click="addClassType">Add Class Type</button>
       <h2>If you're an instructor, please propose class types here:</h2>
-      <input type="text" v-model="newClassTypeName" placeholder="Enter proposed class type name">
-      <button @click="addClassType">Propose Class Type</button>
+      <input type="text" v-model="proposedClassName" placeholder="Enter proposed class type name">
+      <button @click="proposeClassType">Propose Class Type</button>
     </div>
   </div>
   </template>
@@ -40,6 +40,7 @@ export default {
       classTypes: [],
       classTypesNotFound: false,
       newClassTypeName: "",
+      proposedClassName: "",
     };
   },
   mounted() {
@@ -77,6 +78,25 @@ export default {
         } catch (error) {
             alert(error.response.data);
             console.error('Error adding class type:', error);
+        }
+    },
+    async proposeClassType() {
+        const storedEmail = localStorage.getItem('email');
+        if (!storedEmail) {
+            alert("You must sign in first.");
+            return;
+        }
+        try {
+            const response = await AXIOS.post('/class-types/propose/' + this.proposedClassName, {
+                email: storedEmail,
+                password: "password",
+                person: null
+            });
+            this.classTypes.push(response.data);
+            this.proposedClassName = "";
+        } catch (error) {
+            alert(error.response.data);
+            console.error('Error proposing class type:', error);
         }
     }
   },
