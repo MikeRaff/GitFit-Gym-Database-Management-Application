@@ -187,11 +187,13 @@ export default {
   width: 50%;
   padding-right: 10px;
   margin-left: 20px;
+  animation: fadeIn 1s 1.8s backwards;
 }
 
 .right-section {
   width: 50%;
   padding-left: 10px;
+  animation: fadeIn 1s 1.8s backwards;
 }
 
 .classtype-page h1 {
