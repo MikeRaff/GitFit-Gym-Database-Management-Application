@@ -1,41 +1,45 @@
 <template>
     <div class="container classtype-page">
       <Navbar /> 
-      <div class="text-zone">
-        <h1>
+      <h1>
           <AnimatedLetters :letterClass="letterClass" :strArray="titleArray" :idx="12" />
-        </h1>
+    </h1>
+      <div class="text-zone">
         <br />
-        <h2>Explore Our Diverse Range of Class Types! <br /><br /> Discover a wide variety of gym classes tailored to suit your fitness needs, from yoga and HIIT to strength training and more. <br/><br />
-        </h2>
-        <div v-if="approvedClassTypes.length > 0">
-          <h3>Approved Class Types:</h3>
-          <ul>
-            <li v-for="classType in approvedClassTypes" :key="classType.id">
-              {{ classType.name }}
-              <button @click="deleteClassType(classType)">Remove</button>
-            </li>
-          </ul>
+        <div class="left-section">
+          <h2>Explore Our Diverse Range of Class Types! <br /><br /> Discover a wide variety of gym classes tailored to suit your fitness needs, from yoga and HIIT to strength training and more. <br/><br />
+          </h2>
+          <div v-if="approvedClassTypes.length > 0">
+            <h3>Approved Class Types:</h3>
+            <ul>
+              <li v-for="classType in approvedClassTypes" :key="classType.id">
+                {{ classType.name }}
+                <button @click="deleteClassType(classType)">Remove</button>
+              </li>
+            </ul>
+          </div>
+          <div v-if="unapprovedClassTypes.length > 0">
+            <h3>Class Types Needing Approval:</h3>
+            <ul>
+              <li v-for="classType in unapprovedClassTypes" :key="classType.id">
+                {{ classType.name }}
+                <button @click="approveClassType(classType)">Approve</button>
+                <button @click="deleteClassType(classType)">Remove</button>
+              </li>
+            </ul>
+          </div>
+          <div v-else-if="classTypesNotFound">
+            <p>There are no class types in the system.</p>
+          </div>
         </div>
-        <div v-if="unapprovedClassTypes.length > 0">
-          <h3>Class Types Needing Approval:</h3>
-          <ul>
-            <li v-for="classType in unapprovedClassTypes" :key="classType.id">
-              {{ classType.name }}
-              <button @click="approveClassType(classType)">Approve</button>
-              <button @click="deleteClassType(classType)">Remove</button>
-            </li>
-          </ul>
+        <div class="right-section">
+          <h2>If you're a gym owner you can create new class types here:</h2>
+          <input type="text" v-model="newClassTypeName" placeholder="Enter new class type name">
+          <button @click="addClassType">Add Class Type</button>
+          <h2>If you're an instructor, please propose class types here:</h2>
+          <input type="text" v-model="proposedClassName" placeholder="Enter proposed class type name">
+          <button @click="proposeClassType">Propose Class Type</button>
         </div>
-        <div v-else-if="classTypesNotFound">
-          <p>There are no class types in the system.</p>
-        </div>
-        <h2>If you're a gym owner you can create new class types right here:</h2>
-        <input type="text" v-model="newClassTypeName" placeholder="Enter new class type name">
-        <button @click="addClassType">Add Class Type</button>
-        <h2>If you're an instructor, please propose class types here:</h2>
-        <input type="text" v-model="proposedClassName" placeholder="Enter proposed class type name">
-        <button @click="proposeClassType">Propose Class Type</button>
       </div>
     </div>
   </template>
@@ -96,6 +100,10 @@ export default {
             });
             this.classTypes.push(response.data);
             this.newClassTypeName = "";
+
+            if (this.classTypesNotFound && this.classTypes.length > 0) {
+                this.classTypesNotFound = false;
+            }
         } catch (error) {
             alert(error.response.data);
             console.error('Error adding class type:', error);
@@ -167,108 +175,198 @@ export default {
   
   <style scoped>
 .classtype-page .text-zone {
-    position: absolute;
-    align-content: center;
-    left: 10%;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 40%;
-    max-height: 90%;
-    display: absolute;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.left-section {
+  width: 50%;
+  padding-right: 10px;
+  margin-left: 20px;
+}
+
+.right-section {
+  width: 50%;
+  padding-left: 10px;
 }
 
 .classtype-page h1 {
-    color: #fff;
-    font-size: 60px;
-    margin: 0;
-    font-weight: 600;
-    cursor: pointer;
+  color: #fff;
+  font-size: 60px;
+  margin-top: 120px;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: center;
 }
 
 .classtype-page h1::before {
-    color: #00b3ff;
-    position: absolute;
-    margin-top: -40px;
-    left: 15px;
-    opacity: 0.6;
+  color: #00b3ff;
+  position: absolute;
+  margin-top: -40px;
+  left: 15px;
+  opacity: 0.6;
 }
 
 .classtype-page h1::after {
-    color: #00b3ff;
-    position: absolute;
-    margin-top: 18px;
-    left: 20px;
-    animation: fadeIn 1s 1.7s backwards;
-    opacity: 0.6;
+  color: #00b3ff;
+  position: absolute;
+  margin-top: 18px;
+  left: 20px;
+  animation: fadeIn 1s 1.7s backwards;
+  opacity: 0.6;
 }
 
 .classtype-page h2 {
-    color: #fff;
-    margin-top: 20px;
-    font-weight: 400;
-    font-size: 14px;
-    letter-spacing: 2px;
-    animation: fadeIn 1s 1.8s backwards;
+  color: #fff;
+  margin-top: 20px;
+  font-weight: 400;
+  font-size: 14px;
+  letter-spacing: 2px;
+  animation: fadeIn 1s 1.8s backwards;
 }
 
+.classtype-page h3 {
+  color: #fff; /* White text */
+  font-size: 24px; /* Adjust font size as needed */
+  margin-top: 30px; /* Adjust margin top as needed */
+  font-weight: 600; /* Bold font weight */
+}
 
+.classtype-page h3::before {
+  content: ""; /* Add a pseudo-element for styling */
+  display: inline-block;
+  width: 10px; /* Adjust width as needed */
+  height: 10px; /* Adjust height as needed */
+  background-color: #00b3ff; /* Blue color for the bullet */
+  margin-right: 10px; /* Adjust margin-right as needed */
+  border-radius: 50%; /* Round shape for the bullet */
+}
+
+.classtype-page h3 + ul {
+  margin-top: 10px; /* Adjust margin top between heading and list */
+}
+
+.classtype-page h3 + ul li {
+  color: #fff; /* White text for list items */
+  margin-top: 5px; /* Adjust margin top between list items */
+}
+
+.classtype-page h3 + ul li button {
+  background-color: #00b3ff; /* Blue color for buttons */
+  color: #fff; /* White text for buttons */
+  border: none;
+  padding: 5px 10px; /* Adjust padding as needed */
+  cursor: pointer;
+  margin-left: 10px; /* Adjust margin left between buttons */
+  border-radius: 5px; /* Rounded corners for buttons */
+}
+
+.classtype-page h3 + ul li button:hover {
+  background-color: #0080ff; /* Darker blue color on hover */
+}
+
+.classtype-page input[type="text"] {
+  padding: 10px; /* Adjust padding as needed */
+  margin-top: 10px; /* Adjust margin top as needed */
+  width: 100%; /* Take up full width */
+  border: 2px solid #00b3ff; /* Blue border */
+  border-radius: 5px; /* Rounded corners */
+  background-color: #1a1a1a; /* Dark background */
+  color: #fff; /* White text */
+  box-sizing: border-box; /* Include padding and border in width */
+}
+
+.classtype-page input[type="text"]::placeholder {
+  color: #aaa; /* Placeholder text color */
+}
+
+/* Stylings for buttons */
+.classtype-page button {
+  background-color: #00b3ff; /* Blue color for buttons */
+  color: #fff; /* White text for buttons */
+  border: none;
+  padding: 10px 20px; /* Adjust padding as needed */
+  margin-top: 10px; /* Adjust margin top as needed */
+  cursor: pointer;
+  border-radius: 5px; /* Rounded corners for buttons */
+  transition: background-color 0.3s; /* Smooth transition */
+}
+
+.classtype-page button:hover {
+  background-color: #0080ff; /* Darker blue color on hover */
+}
+
+.classtype-page button + button {
+  margin-left: 10px; /* Adjust margin left between buttons */
+}
 
 @keyframes pulse512 {
-    0% {
-        box-shadow: 0 0 0 0 rgba(0, 64, 255, 0.6);
-    }
+  0% {
+    box-shadow: 0 0 0 0 rgba(0, 64, 255, 0.6);
+  }
 
-    70% {
-        box-shadow: 0 0 0 10px rgba(0, 64, 255, 0%);
-    }
+  70% {
+    box-shadow: 0 0 0 10px rgba(0, 64, 255, 0%);
+  }
 
-    100% {
-        box-shadow: 0 0 0 0 rgba(0, 64, 255, 0%);
-    }
+  100% {
+    box-shadow: 0 0 0 0 rgba(0, 64, 255, 0%);
+  }
 }
 
 @media screen and (max-width: 1580px) {
-    .classtype-page h1 {
-        font-size: 50px;
-    }
+  .classtype-page h1 {
+    font-size: 50px;
+  }
+  
 }
 
 @media screen and (max-width: 1320px) {
-    .classtype-page h1 {
-        font-size: 40px;
-    }
+  .classtype-page h1 {
+    font-size: 40px;
+  }
+}
+@media screen and (max-width: 1150px) {
+  .classtype-page h1 {
+    margin-top: 0;
+  }
 }
 
 @media screen and (max-width: 1050px) {
-    .classtype-page h1 {
-        font-size: 29px;
-        justify-content: center;
-        letter-spacing: 0.5px;
-    }
+  .classtype-page h1 {
+    font-size: 29px;
+    justify-content: center;
+    letter-spacing: 0.5px;
+  }
 
-    .classtype-page .text-zone {
-        position: initial;
-        width: 100%;
-        transform: none;
-        padding: 10px;
-        box-sizing: border-box;
-        display: inline-block;
-        text-align: left;
-        margin-left: 20px;
-    }
+  .classtype-page .text-zone {
+    position: initial;
+    width: 100%;
+    transform: none;
+    padding: 10px;
+    box-sizing: border-box;
+    display: inline-block;
+    text-align: left;
+    margin-left: 20px;
+  }
 
-    .classtype-page h2 {
-        font-size: 12px;
-    }
+  .classtype-page h2 {
+    font-size: 12px;
+  }
 
-    .classtype-page .logo-container {
-        position: relative;
-        width: 200px;
-        height: auto;
-        right: 0;
-        box-sizing: border-box;
-        margin: auto;
-        left: 0;
-    }
+  .classtype-page .logo-container {
+    position: relative;
+    width: 200px;
+    height: auto;
+    right: 0;
+    box-sizing: border-box;
+    margin: auto;
+    left: 0;
+  }
 }
+
   </style>  
