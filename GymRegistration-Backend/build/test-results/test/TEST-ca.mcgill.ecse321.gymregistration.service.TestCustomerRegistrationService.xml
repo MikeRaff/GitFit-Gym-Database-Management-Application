@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="ca.mcgill.ecse321.gymregistration.service.TestCustomerRegistrationService" tests="22" skipped="0" failures="0" errors="0" timestamp="2024-04-08T06:35:06" hostname="Eriks-MacBook-Air-2.local" time="3.437">
+<testsuite name="ca.mcgill.ecse321.gymregistration.service.TestCustomerRegistrationService" tests="22" skipped="0" failures="0" errors="0" timestamp="2024-04-08T18:25:18" hostname="Eriks-MacBook-Air-2.local" time="2.059">
   <properties/>
-  <testcase name="testRegisterForPastSession()" classname="ca.mcgill.ecse321.gymregistration.service.TestCustomerRegistrationService" time="2.516"/>
-  <testcase name="testRegisterForSessionTwice()" classname="ca.mcgill.ecse321.gymregistration.service.TestCustomerRegistrationService" time="0.044"/>
-  <testcase name="testRemoveCustomerFromSessionNonExistantSession()" classname="ca.mcgill.ecse321.gymregistration.service.TestCustomerRegistrationService" time="0.024"/>
-  <testcase name="testRemoveCustomerFromAllSessionsInvalidPermissions()" classname="ca.mcgill.ecse321.gymregistration.service.TestCustomerRegistrationService" time="0.015"/>
-  <testcase name="testGetRegistrationsByCustomer()" classname="ca.mcgill.ecse321.gymregistration.service.TestCustomerRegistrationService" time="0.02"/>
-  <testcase name="testRegisterForSessionAtCapacity()" classname="ca.mcgill.ecse321.gymregistration.service.TestCustomerRegistrationService" time="0.271"/>
-  <testcase name="testRegisterForNonexistentSession()" classname="ca.mcgill.ecse321.gymregistration.service.TestCustomerRegistrationService" time="0.053"/>
-  <testcase name="testRegisterForSessionEmptyCreditInformation()" classname="ca.mcgill.ecse321.gymregistration.service.TestCustomerRegistrationService" time="0.022"/>
-  <testcase name="testRemoveCustomerFromAllSessionsInvalidCustomer()" classname="ca.mcgill.ecse321.gymregistration.service.TestCustomerRegistrationService" time="0.02"/>
-  <testcase name="testRegisterCustomerForSession()" classname="ca.mcgill.ecse321.gymregistration.service.TestCustomerRegistrationService" time="0.027"/>
-  <testcase name="testRemoveCustomerFromSession()" classname="ca.mcgill.ecse321.gymregistration.service.TestCustomerRegistrationService" time="0.083"/>
-  <testcase name="testRegisterForInProgress()" classname="ca.mcgill.ecse321.gymregistration.service.TestCustomerRegistrationService" time="0.023"/>
+  <testcase name="testRegisterForPastSession()" classname="ca.mcgill.ecse321.gymregistration.service.TestCustomerRegistrationService" time="1.509"/>
+  <testcase name="testRegisterForSessionTwice()" classname="ca.mcgill.ecse321.gymregistration.service.TestCustomerRegistrationService" time="0.037"/>
+  <testcase name="testRemoveCustomerFromSessionNonExistantSession()" classname="ca.mcgill.ecse321.gymregistration.service.TestCustomerRegistrationService" time="0.022"/>
+  <testcase name="testRemoveCustomerFromAllSessionsInvalidPermissions()" classname="ca.mcgill.ecse321.gymregistration.service.TestCustomerRegistrationService" time="0.021"/>
+  <testcase name="testGetRegistrationsByCustomer()" classname="ca.mcgill.ecse321.gymregistration.service.TestCustomerRegistrationService" time="0.021"/>
+  <testcase name="testRegisterForSessionAtCapacity()" classname="ca.mcgill.ecse321.gymregistration.service.TestCustomerRegistrationService" time="0.168"/>
+  <testcase name="testRegisterForNonexistentSession()" classname="ca.mcgill.ecse321.gymregistration.service.TestCustomerRegistrationService" time="0.016"/>
+  <testcase name="testRegisterForSessionEmptyCreditInformation()" classname="ca.mcgill.ecse321.gymregistration.service.TestCustomerRegistrationService" time="0.013"/>
+  <testcase name="testRemoveCustomerFromAllSessionsInvalidCustomer()" classname="ca.mcgill.ecse321.gymregistration.service.TestCustomerRegistrationService" time="0.006"/>
+  <testcase name="testRegisterCustomerForSession()" classname="ca.mcgill.ecse321.gymregistration.service.TestCustomerRegistrationService" time="0.011"/>
+  <testcase name="testRemoveCustomerFromSession()" classname="ca.mcgill.ecse321.gymregistration.service.TestCustomerRegistrationService" time="0.013"/>
+  <testcase name="testRegisterForInProgress()" classname="ca.mcgill.ecse321.gymregistration.service.TestCustomerRegistrationService" time="0.015"/>
   <testcase name="testGetRegistration()" classname="ca.mcgill.ecse321.gymregistration.service.TestCustomerRegistrationService" time="0.012"/>
-  <testcase name="testUpdateRegistration()" classname="ca.mcgill.ecse321.gymregistration.service.TestCustomerRegistrationService" time="0.026"/>
-  <testcase name="testRemoveCustomerFromSessionNonExistantCustomer()" classname="ca.mcgill.ecse321.gymregistration.service.TestCustomerRegistrationService" time="0.014"/>
-  <testcase name="testRemoveCustomerFromSessionNullEmail()" classname="ca.mcgill.ecse321.gymregistration.service.TestCustomerRegistrationService" time="0.016"/>
-  <testcase name="testRemoveCustomerFromSessionInvalidPermissions()" classname="ca.mcgill.ecse321.gymregistration.service.TestCustomerRegistrationService" time="0.009"/>
-  <testcase name="testRemoveCustomerFromSessionInvalidSessionId()" classname="ca.mcgill.ecse321.gymregistration.service.TestCustomerRegistrationService" time="0.009"/>
-  <testcase name="testGetRegistrationsBySession()" classname="ca.mcgill.ecse321.gymregistration.service.TestCustomerRegistrationService" time="0.02"/>
-  <testcase name="testRemoveCustomerAllFromSessions()" classname="ca.mcgill.ecse321.gymregistration.service.TestCustomerRegistrationService" time="0.01"/>
-  <testcase name="testRegisterForSessionNullCreditInformation()" classname="ca.mcgill.ecse321.gymregistration.service.TestCustomerRegistrationService" time="0.009"/>
-  <testcase name="testRegisterNonexistentCustomer()" classname="ca.mcgill.ecse321.gymregistration.service.TestCustomerRegistrationService" time="0.013"/>
+  <testcase name="testUpdateRegistration()" classname="ca.mcgill.ecse321.gymregistration.service.TestCustomerRegistrationService" time="0.012"/>
+  <testcase name="testRemoveCustomerFromSessionNonExistantCustomer()" classname="ca.mcgill.ecse321.gymregistration.service.TestCustomerRegistrationService" time="0.008"/>
+  <testcase name="testRemoveCustomerFromSessionNullEmail()" classname="ca.mcgill.ecse321.gymregistration.service.TestCustomerRegistrationService" time="0.007"/>
+  <testcase name="testRemoveCustomerFromSessionInvalidPermissions()" classname="ca.mcgill.ecse321.gymregistration.service.TestCustomerRegistrationService" time="0.007"/>
+  <testcase name="testRemoveCustomerFromSessionInvalidSessionId()" classname="ca.mcgill.ecse321.gymregistration.service.TestCustomerRegistrationService" time="0.006"/>
+  <testcase name="testGetRegistrationsBySession()" classname="ca.mcgill.ecse321.gymregistration.service.TestCustomerRegistrationService" time="0.023"/>
+  <testcase name="testRemoveCustomerAllFromSessions()" classname="ca.mcgill.ecse321.gymregistration.service.TestCustomerRegistrationService" time="0.008"/>
+  <testcase name="testRegisterForSessionNullCreditInformation()" classname="ca.mcgill.ecse321.gymregistration.service.TestCustomerRegistrationService" time="0.006"/>
+  <testcase name="testRegisterNonexistentCustomer()" classname="ca.mcgill.ecse321.gymregistration.service.TestCustomerRegistrationService" time="0.008"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>
