@@ -1,30 +1,41 @@
 <template>
-  <div class="container classtype-page">
-    <Navbar /> 
-    <div class="text-zone">
-      <h1>
-        <AnimatedLetters :letterClass="letterClass" :strArray="titleArray" :idx="12" />
-      </h1>
-      <br />
-      <h2>Explore Our Diverse Range of Class Types! <br /><br /> Discover a wide variety of gym classes tailored to suit your fitness needs, from yoga and HIIT to strength training and more. <br/><br />
-      </h2>
-      <div v-if="classTypes.length > 0">
-        <h3>Class Types:</h3>
-        <ul>
-          <li v-for="classType in classTypes" :key="classType.id">{{ classType.name }}</li>
-        </ul>
+    <div class="container classtype-page">
+      <Navbar /> 
+      <div class="text-zone">
+        <h1>
+          <AnimatedLetters :letterClass="letterClass" :strArray="titleArray" :idx="12" />
+        </h1>
+        <br />
+        <h2>Explore Our Diverse Range of Class Types! <br /><br /> Discover a wide variety of gym classes tailored to suit your fitness needs, from yoga and HIIT to strength training and more. <br/><br />
+        </h2>
+        <div v-if="approvedClassTypes.length > 0">
+          <h3>Approved Class Types:</h3>
+          <ul>
+            <li v-for="classType in approvedClassTypes" :key="classType.id">
+              {{ classType.name }}
+            </li>
+          </ul>
+        </div>
+        <div v-if="unapprovedClassTypes.length > 0">
+          <h3>Class Types Needing Approval:</h3>
+          <ul>
+            <li v-for="classType in unapprovedClassTypes" :key="classType.id">
+              {{ classType.name }}
+              <button @click="approveClassType(classType)">Approve</button>
+            </li>
+          </ul>
+        </div>
+        <div v-else-if="classTypesNotFound">
+          <p>There are no class types in the system.</p>
+        </div>
+        <h2>If you're a gym owner you can create new class types right here:</h2>
+        <input type="text" v-model="newClassTypeName" placeholder="Enter new class type name">
+        <button @click="addClassType">Add Class Type</button>
+        <h2>If you're an instructor, please propose class types here:</h2>
+        <input type="text" v-model="proposedClassName" placeholder="Enter proposed class type name">
+        <button @click="proposeClassType">Propose Class Type</button>
       </div>
-      <div v-else-if="classTypesNotFound">
-        <p>There are no class types in the system.</p>
-      </div>
-      <h2>If you're a gym owner you can create new class types right here:</h2>
-      <input type="text" v-model="newClassTypeName" placeholder="Enter new class type name">
-      <button @click="addClassType">Add Class Type</button>
-      <h2>If you're an instructor, please propose class types here:</h2>
-      <input type="text" v-model="proposedClassName" placeholder="Enter proposed class type name">
-      <button @click="proposeClassType">Propose Class Type</button>
     </div>
-  </div>
   </template>
   
 <script>
@@ -42,6 +53,14 @@ export default {
       newClassTypeName: "",
       proposedClassName: "",
     };
+  },
+  computed: {
+    approvedClassTypes() {
+      return this.classTypes.filter(classType => classType.approved);
+    },
+    unapprovedClassTypes() {
+      return this.classTypes.filter(classType => !classType.approved);
+    }
   },
   mounted() {
     setTimeout(() => {
@@ -97,6 +116,21 @@ export default {
         } catch (error) {
             alert(error.response.data);
             console.error('Error proposing class type:', error);
+        }
+    },
+    async approveClassType(classType) {
+        const storedEmail = localStorage.getItem('email');
+        if (!storedEmail) {
+            alert("You must sign in first.");
+            return;
+        }
+        try {
+            const response = await AXIOS.put('/class-types/approve/' + classType.name, {
+                email: storedEmail
+            });
+            classType.approved = true;
+        } catch (error) {
+            console.error('Error approving class type:', error);
         }
     }
   },
