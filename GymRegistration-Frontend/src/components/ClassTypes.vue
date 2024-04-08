@@ -13,6 +13,7 @@
           <ul>
             <li v-for="classType in approvedClassTypes" :key="classType.id">
               {{ classType.name }}
+              <button @click="deleteClassType(classType)">Remove</button>
             </li>
           </ul>
         </div>
@@ -22,6 +23,7 @@
             <li v-for="classType in unapprovedClassTypes" :key="classType.id">
               {{ classType.name }}
               <button @click="approveClassType(classType)">Approve</button>
+              <button @click="deleteClassType(classType)">Remove</button>
             </li>
           </ul>
         </div>
@@ -131,6 +133,28 @@ export default {
             classType.approved = true;
         } catch (error) {
             console.error('Error approving class type:', error);
+        }
+    }, 
+    async deleteClassType(classType) {
+        const storedEmail = localStorage.getItem('email');
+        if (!storedEmail) {
+            alert("You must sign in first.");
+            return;
+        }
+        try {
+            const response = await AXIOS.delete('/class-types/delete/' + classType.name, {
+                data: {
+                    email: storedEmail,
+                    password: "password",
+                    person: null
+                }
+            });
+            const index = this.classTypes.findIndex(ct => ct.id === classType.id);
+            if (index !== -1) {
+            this.classTypes.splice(index, 1);
+            }
+        } catch (error) {
+            console.error('Error deleting class type:', error);
         }
     }
   },
