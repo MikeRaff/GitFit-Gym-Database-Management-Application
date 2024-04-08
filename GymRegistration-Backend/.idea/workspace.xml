@@ -5,24 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8b559f4f-1cbf-4215-8cfa-543b8af52d7a" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.gradle/8.5/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.5/executionHistory/executionHistory.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.5/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.5/executionHistory/executionHistory.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.5/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.5/fileHashes/fileHashes.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.5/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.5/fileHashes/fileHashes.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.5/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.5/fileHashes/resourceHashesCache.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/file-system.probe" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/ca/mcgill/ecse321/gymregistration/controller/CustomerRestController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/ca/mcgill/ecse321/gymregistration/controller/CustomerRestController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/ca/mcgill/ecse321/gymregistration/controller/InstructorRestController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/ca/mcgill/ecse321/gymregistration/controller/InstructorRestController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/ca/mcgill/ecse321/gymregistration/controller/OwnerRestController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/ca/mcgill/ecse321/gymregistration/controller/OwnerRestController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/ca/mcgill/ecse321/gymregistration/controller/PersonRestController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/ca/mcgill/ecse321/gymregistration/controller/PersonRestController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/ca/mcgill/ecse321/gymregistration/controller/SessionRestController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/ca/mcgill/ecse321/gymregistration/controller/SessionRestController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/ca/mcgill/ecse321/gymregistration/dto/SessionDto.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/ca/mcgill/ecse321/gymregistration/dto/SessionDto.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/ca/mcgill/ecse321/gymregistration/service/OwnerService.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/ca/mcgill/ecse321/gymregistration/service/OwnerService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ca/mcgill/ecse321/gymregistration/controller/SessionRestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ca/mcgill/ecse321/gymregistration/controller/SessionRestController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GymRegistration-Frontend/src/components/ClassTypes.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../GymRegistration-Frontend/src/components/ClassTypes.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,6 +37,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Class" />
+        <option value="Interface" />
       </list>
     </option>
   </component>
@@ -92,6 +77,29 @@
   }
 }]]></component>
   <component name="RunManager" selected="Spring Boot.GymregistrationApplication">
+    <configuration name="GymregistrationApplicationTests" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;ca.mcgill.ecse321.gymregistration.GymregistrationApplicationTests&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
     <configuration name="InstructorServiceIntegrationTests" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -161,29 +169,6 @@
       <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
-    <configuration name="TestOwnerServiceIntegration" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value=":test" />
-            <option value="--tests" />
-            <option value="&quot;ca.mcgill.ecse321.gymregistration.integration.TestOwnerServiceIntegration&quot;" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <method v="2" />
-    </configuration>
     <configuration name="Tests in 'gymregistration'" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -214,11 +199,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Gradle.SessionServiceIntegrationTest.testCreateandGetSession" />
         <item itemvalue="Gradle.Tests in 'gymregistration'" />
+        <item itemvalue="Gradle.GymregistrationApplicationTests" />
+        <item itemvalue="Gradle.SessionServiceIntegrationTest.testCreateandGetSession" />
         <item itemvalue="Gradle.OwnerServiceIntegrationTests" />
         <item itemvalue="Gradle.InstructorServiceIntegrationTests" />
-        <item itemvalue="Gradle.TestOwnerServiceIntegration" />
       </list>
     </recent_temporary>
   </component>
@@ -238,7 +223,7 @@
       <workItem from="1711935335947" duration="2951000" />
       <workItem from="1711938871688" duration="792000" />
       <workItem from="1711995265619" duration="1338000" />
-      <workItem from="1712466113184" duration="3211000" />
+      <workItem from="1712466113184" duration="10701000" />
     </task>
     <servers />
   </component>

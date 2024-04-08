@@ -914,7 +914,9 @@ public class TestSessionService {
      */
     @Test
     public void testDeleteCustomer() {
-        Customer customer = new Customer("email", "1", new Person("Bob"), 123);
+        String creditCardNumber = "8765 4321 8765 4321";
+        Customer customer = new Customer("email", "1", new Person("Bob"), creditCardNumber);
+        
         try {
             sessionService.deleteSession(ID, customer);
             fail();

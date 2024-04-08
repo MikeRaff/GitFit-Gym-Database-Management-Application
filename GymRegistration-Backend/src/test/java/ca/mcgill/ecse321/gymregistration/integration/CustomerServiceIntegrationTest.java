@@ -56,7 +56,7 @@ public class CustomerServiceIntegrationTest {
     @Test
     public void testCreateCustomerAndUpdateCreditCard(){
         String email = testCreateCustomer("customer@email.com", "password");
-        testUpdateCustomerCreditCard(email, "password", 1234);
+        testUpdateCustomerCreditCard(email, "password", "1234 5678 1234 5678");
     }
 
     @Test
@@ -135,7 +135,7 @@ public class CustomerServiceIntegrationTest {
         }
     }
 
-    private void testUpdateCustomerCreditCard(String email, String password, int newCreditCard){
+    private void testUpdateCustomerCreditCard(String email, String password, String newCreditCard){
         CustomerDto customerDto = new CustomerDto(email, password, null);
 
         HttpEntity<CustomerDto> requestEntity = new HttpEntity<>(customerDto, null);

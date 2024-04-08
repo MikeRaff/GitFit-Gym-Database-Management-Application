@@ -70,7 +70,7 @@ public class CustomerService {
      * @throws GRSException customer not found, invalid email and password combination
      */
     @Transactional
-    public Customer updateCreditCard(String email, String password, int creditCardNumber){
+    public Customer updateCreditCard(String email, String password, String creditCardNumber){
         Customer customer = customerRepository.findCustomerByEmailAndPassword(email, password);
         if (customer == null) {
             throw new GRSException(HttpStatus.NOT_FOUND, "Customer not found, invalid email and password combination.");

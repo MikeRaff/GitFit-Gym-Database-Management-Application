@@ -1,6 +1,10 @@
 <template>
   <div class="session-view-instructor">
+    <Navbar /> 
     <div class="table-container">
+      <h1>
+          <AnimatedLetters :letterClass="letterClass" :strArray="welcomeArray" :idx="14" />
+        </h1>
       <table>
         <thead>
           <tr>
@@ -24,9 +28,6 @@
         </tbody>
       </table>
     </div>
-    <div class="pagination">
-      Page <span>1</span> <span>2</span> <span>3</span> <span>4</span>
-    </div>
     <div class="session-actions">
       <button>Edit Session</button>
       <button>Create New Session</button>
@@ -35,28 +36,46 @@
 </template>
 
 <script>
-import axios from "axios";
-import config from "../../config";
+  import AnimatedLetters from "./AnimatedLetters";
+  import Navbar from "./Navbar"; 
 
-const frontEndUrl = 'http://' + config.dev.host + ':' + config.dev.port;
-const backendUrl = 'http://' + config.dev.backendHost + ':' + config.dev.backendPort;
-console.log("backend url", backendUrl);
-const AXIOS = axios.create({
-  baseURL: backendUrl,
-  headers: { 'Access-Control-Allow-Origin': frontEndUrl }
-});
+  import axios from "axios";
+  import config from "../../config";
+  const frontEndUrl = 'http://' + config.dev.host + ':' + config.dev.port;
+  const backendUrl = 'http://' + config.dev.backendHost + ':' + config.dev.backendPort;
+  console.log("backend url", backendUrl);
+  const AXIOS = axios.create({
+    baseURL: backendUrl,
+    headers: { 'Access-Control-Allow-Origin': frontEndUrl }
+  });
 
 export default {
   name: 'SessionsStaffView',
   created() {
     this.getSessions();
   },
-  data() {
+
+ data() {
     return {
+      letterClass: "text-animate",
+      welcomeArray: "Sessions",
       sessions: [],
       leadInstructors: []
     };
   },
+
+  mounted() {
+      setTimeout(() => {
+        this.letterClass = "text-animate-hover";
+      }, 4000);
+      this.getSessions(); // Fetch sessions data when component is mounted
+    },
+
+    components: {
+      AnimatedLetters,
+      Navbar
+    },
+
   methods: {
     getSessions() {
       const url = '/sessions';
@@ -88,21 +107,75 @@ export default {
         });
         
       }
-    }
+    },
+      createNewSession() {
+        // Implement logic to add a new session
+      }
   }
 };
 </script>
 
 <style scoped>
-.session-view-instructor {
-  background-color: #fff;
-  padding: 20px;
-  overflow-y: auto;
+.text-animate {
+  position: absolute;
+  top: calc(50% + 30px); /* Adjust distance below navbar */
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #fff;
+  font-size: 60px;
+  margin: 0;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: center;
+}
+.text-animate-hover {
+  color: #fff;
+  font-size: 60px;
+  margin: 0;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: center;
+  transition: color 0.5s ease-in-out;
 }
 
+.session-view-instructor .text-zone {
+    position: absolute;
+    align-content: center;
+    left: 10%;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40%;
+    max-height: 90%;
+    display: absolute;
+  }
+
+.session-view-instructor {
+    padding: 20px;
+    margin: auto;
+  }
+  .content {
+  position: relative;
+  }
+
+  .session-view-instructor h1{
+    top: 40%; /* Adjust distance below navbar */
+    color: #fff;
+    font-size: 60px;
+    margin: 0;
+    font-weight: 600;
+    cursor: pointer;
+    text-align: center;
+  }
+
 .table-container {
-  overflow-x: auto;
-  overflow-y: auto;
+    overflow-x: auto;
+    overflow-y: auto;
+    top: calc(45% + 20px); 
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -40%);
+    width: 80%;
+    max-height: calc(80%);
 }
 
 table {
@@ -110,48 +183,60 @@ table {
   border-collapse: collapse;
 }
 
-table,
-th,
-td {
-  border: 1px solid #ddd;
-}
+table, th, td {
+    padding: 8px;
+    text-align: left;
+    border: 1px solid #ccc;
+    color: #FFF;
+  }
 
-th,
-td {
-  text-align: left;
-  padding: 8px;
-}
+  th {
+    background-color: #f0f0f0;
+    color: #444;
+    font-size: 20px; /* Adjust the font size here */
+    padding: 5px;
+  }
 
-th {
-  background-color: #e74c3c;
-  color: white;
-}
-
-tr:nth-child(even) {
-  background-color: #f2f2f2;
-}
-
-.pagination {
-  margin-top: 20px;
-  text-align: center;
-}
+  tbody tr:hover {
+    background-color: #0040ff;
+  }
+  
+  td { 
+    /* background-color: #0040ff; */
+    padding: 10px;
+    /* text-align: center; */
+   } 
+  
+  tr:nth-child(even) {
+    background-color: #f2f2f261;
+  }
+  tr:nth-child(odd) {
+    background-color: #f2f2f2af;
+  }
 
 .session-actions {
-  margin-top: 20px;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
+    position: absolute;
+    bottom: 30px; 
+    right: 40px; 
+}
+
+/* Add margin-right to the first button */
+.session-actions button:first-child {
+  margin-right: 10px;
 }
 
 button {
-  background-color: #e74c3c;
-  color: white;
   padding: 10px 20px;
+  background-color: #0040ff;
+  color: #fff;
   border: none;
-  border-radius: 5px;
+  border-radius: 4px;
   cursor: pointer;
 }
 
 button:hover {
-  opacity: 0.9;
+  opacity: 0.85;
 }
 </style>

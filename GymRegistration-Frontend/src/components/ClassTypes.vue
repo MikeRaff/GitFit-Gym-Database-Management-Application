@@ -17,10 +17,12 @@
       <div v-else-if="classTypesNotFound">
         <p>There are no class types in the system.</p>
       </div>
-      <h2>If you're a gym owner or an instructor, you can create new class types right here!</h2>
-      <input type="email" v-model="email" placeholder="Enter your email">
+      <h2>If you're a gym owner you can create new class types right here:</h2>
       <input type="text" v-model="newClassTypeName" placeholder="Enter new class type name">
       <button @click="addClassType">Add Class Type</button>
+      <h2>If you're an instructor, please propose class types here:</h2>
+      <input type="text" v-model="newClassTypeName" placeholder="Enter proposed class type name">
+      <button @click="addClassType">Propose Class Type</button>
     </div>
   </div>
   </template>
@@ -37,7 +39,6 @@ export default {
       titleArray: "ClassTypes".split(""),
       classTypes: [],
       classTypesNotFound: false,
-      email: "",
       newClassTypeName: "",
     };
   },
@@ -61,12 +62,13 @@ export default {
         }
     },
     async addClassType() {
-        if (!this.email) {
-            alert("Please provide your email before adding a class type.");
+        const storedEmail = localStorage.getItem('email');
+        if (!storedEmail) {
+            alert("You must sign in first.");
             return;
         }
         try {
-            const response = await AXIOS.post('/class-types/create/' + this.email, {
+            const response = await AXIOS.post('/class-types/create/' + storedEmail, {
                 name: this.newClassTypeName,
                 approved: true
             });

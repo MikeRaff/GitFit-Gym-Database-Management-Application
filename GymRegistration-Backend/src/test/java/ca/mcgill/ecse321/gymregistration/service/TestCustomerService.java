@@ -58,7 +58,7 @@ public class TestCustomerService {
     private final Customer CUSTOMER = new Customer();
     private static final String EMAIL = "customer@email.com";
     private static final String PASSWORD = "password";
-    private static final int CREDIT = 1234;
+    private static final String CREDIT = "1234 5678 1234 5678";
 
     private final Person PERSON = new Person();
     private static final String PERSON_NAME = "George Bush";
@@ -261,7 +261,7 @@ public class TestCustomerService {
 
     @Test
     public void testUpdateCredit(){
-        int newCreditCardNumber = 4321;
+        String newCreditCardNumber = "8765 4321 8765 4321";
 
         Customer customer = null;
         try{
@@ -293,7 +293,7 @@ public class TestCustomerService {
     public void testUpdateCreditCustomerNotFound(){
         String email = "Testemail";
         String password = "Testpassword";
-        int newCreditCardNumber = 4321;
+        String newCreditCardNumber = "8765 4321 8765 4321";
 
         Customer customer = null;
         try{
@@ -308,7 +308,7 @@ public class TestCustomerService {
     @Test
     public void testUpdateCreditCustomerWrongPassword(){
         String password = "Testpassword";
-        int newCreditCardNumber = 4321;
+        String newCreditCardNumber = "8765 4321 8765 4321";
 
         Customer customer = null;
         try{
@@ -323,7 +323,7 @@ public class TestCustomerService {
     @Test
     public void testUpdateCreditCustomerWrongEmail(){
         String email = "testEmail";
-        int newCreditCardNumber = 4321;
+        String newCreditCardNumber = "8765 4321 8765 4321";
 
         Customer customer = null;
         try{
