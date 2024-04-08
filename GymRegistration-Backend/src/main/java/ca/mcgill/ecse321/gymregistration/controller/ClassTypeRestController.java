@@ -131,7 +131,8 @@ public class ClassTypeRestController {
      * @throws IllegalArgumentException
      */
     @DeleteMapping(value = {"/class-types/delete/{name}", "/class-types/delete/{name}/"})
-    public void deleteClassType(@PathVariable("name") String name, @RequestBody GymUser gymUser) throws IllegalArgumentException{
+    public void deleteClassType(@PathVariable("name") String name, @RequestBody GymUserDto gymUserDto) throws IllegalArgumentException{
+        GymUser gymUser = ownerRepository.findOwnerByEmail(gymUserDto.getEmail());
         classTypeService.deleteClassType(name, gymUser);
     }
 }
