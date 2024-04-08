@@ -111,7 +111,7 @@ public class OwnerServiceIntegrationTests {
     }
 
     private void testGetOwner(String email) {
-        ResponseEntity<OwnerDto> response = client.getForEntity("/owner/" + email, OwnerDto.class);
+        ResponseEntity<OwnerDto> response = client.getForEntity("/owners/" + email, OwnerDto.class);
         assertNotNull(response);
         
         assertEquals(HttpStatus.OK, response.getStatusCode(), "Response has correct status");

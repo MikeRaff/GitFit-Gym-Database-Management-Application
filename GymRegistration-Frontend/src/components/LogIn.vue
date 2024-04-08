@@ -12,12 +12,12 @@
 
         <div class="form-group">
           <label for="email">Email address:</label>
-          <input type="email" id="email" v-model="email" placeholder="Enter your Email" required/>
+          <input type="email" id="email" v-model="loginDto.email" placeholder="Enter your Email" required/>
         </div>
 
         <div class="form-group">
           <label for="password">Password:</label>
-          <input type="password" id="password" v-model="password" placeholder="Enter your Password" required/>
+        <input type="password" id="password" v-model="loginDto.password" placeholder="Enter your Password" required/>
         </div>
 
         <div class="form-group">
@@ -35,7 +35,7 @@
         </div>
 
         <div class="wrap">
-          <button type="submit" @click="login()">
+          <button type="submit">
             login
           </button>
         </div>
@@ -64,9 +64,12 @@ export default {
     return {
       letterClass: "text-animate",
       welcomeArray: "LogIn",
-      email: '',
-      password: '',
-      accountType: ''
+      accountType: '',
+      loginDto: {
+        email: '',
+        password: ''
+      },
+      accountsDto: []
     };
   },
 
@@ -89,9 +92,31 @@ export default {
   },
 
   methods: {
+    // Based on billy's work
+    async getAccountByEmail() {
+        const url = `/${this.accountType}/${this.loginDto.email}`;
+
+        const response = await AXIOS.get(url)
+          .then(response => {
+            this.accountsDto = response.data;
+            console.log('Found accounts', this.accountsDto);
+          })
+          .catch(error => {
+            console.log('Tried logging with email but no account found:', this.loginDto.email);
+            console.error('There was an error getting the accounts:', error.response.data);
+          });
+    },
+      
     async login() {
+      await this.getAccountByEmail();
+
+      if(this.accountsDto.length === 0) {
+        alert('The account doesnt exist. Please register first.');
+        return;
+      }
+
       // Create url for the GET request
-      const url = `/${this.accountType}/login/${this.email}/${this.password}`;
+      const url = `/${this.accountType}/login/${this.loginDto.email}/${this.loginDto.password}`;
 
       // Make the GET request with the url
       const response = await AXIOS.get(url)
@@ -104,16 +129,16 @@ export default {
             const storedEmail = localStorage.getItem('email');
             if (storedEmail !== null && storedEmail !== undefined) {
             } else {
-              localStorage.setItem('email', this.email);
+              localStorage.setItem('email', this.loginDto.email);
               this.$router.push({ name: 'Home' });
             }
           }
         })
         .catch(error => {
-          alert(error.response);
-          console.log(this.email);
+          alert('Failed to Login.');
+          console.log('Tried login in with email but no account matched:', this.loginDto.email);
           console.log('Desired account type:', this.accountType);
-          console.error('Response dara:', error.response.data);
+          console.error('Response data:', error.response.data);
           console.error('Response status:', error.response.status);
           console.error('Response headers:', error.response.headers);
         })
