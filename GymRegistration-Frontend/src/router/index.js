@@ -9,7 +9,7 @@ import SessionsStaffView from '@/components/SessionsStaffView'
 import SessionsClientView from '@/components/SessionsClientView'
 import Accounts from '@/components/Accounts'
 import ClassTypes from '@/components/ClassTypes'
-
+import EditSession from '@/components/EditSession'
 
 Vue.use(Router)
 
@@ -59,6 +59,12 @@ export default new Router({
       path: '/accounts', 
       name: 'Accounts',
       component: Accounts
-    }
+    },
+    {
+      path: '/edit-session', 
+      name: 'EditSession',
+      component: EditSession,
+      props: true
+    },
   ]
 })

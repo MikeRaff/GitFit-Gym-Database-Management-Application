@@ -125,7 +125,7 @@ export default {
         return;
       }
  
-      AXIOS.delete('/sessions/delete/' +this.selectedSessionId)
+      AXIOS.delete('/sessions/delete/' +this.selectedSessionId + '/' + user)
         .then(() => {
           this.sessions = this.sessions.filter(session => session.id !== this.selectedSessionId);
           this.selectedSessionId = null; // Clear selection
@@ -139,7 +139,7 @@ export default {
     this.$router.push('/create-session');
    },
    editSession() {
-    this.$router.push({name: 'EditSession', params: { sessionId: this.sessionId } });
+    this.$router.push({name: 'EditSession', params: { sessionId: parseInt(this.selectedSessionId) } });
    },
   }
 };

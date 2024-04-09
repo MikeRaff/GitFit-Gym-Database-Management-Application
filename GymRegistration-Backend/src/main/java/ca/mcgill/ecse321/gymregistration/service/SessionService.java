@@ -98,7 +98,7 @@ public class SessionService {
         toUpdate.setLocation(newSession.getLocation());
         toUpdate.setClassType(newSession.getClassType());
         toUpdate.setCapacity(newSession.getCapacity());
-        toUpdate.setId(newSession.getId());
+        toUpdate.setId(oldSessionId);
         sessionRepository.save(toUpdate);
         return toUpdate;
     }
@@ -157,6 +157,7 @@ public class SessionService {
         if(session == null){
             throw new GRSException(HttpStatus.NOT_FOUND, "Session not found.");
         }
+        instructorRegistrationRepository.deleteInstructorRegistrationsBySessionId(id);
         sessionRepository.deleteSessionById(id);
     }
 }
