@@ -124,16 +124,18 @@ export default {
         alert('Please select a session to delete.');
         return;
       }
- 
-      AXIOS.delete('/sessions/delete/' +this.selectedSessionId)
-        .then(() => {
-          this.sessions = this.sessions.filter(session => session.id !== this.selectedSessionId);
-          this.selectedSessionId = null; // Clear selection
-        })
-        .catch(error => {
-          alert("Deleting Failed: Are you sure you have permission?");
-          console.error('There was an error deleting the session:', error.response);
-        });
+
+      this.sessions = this.sessions.filter(session => session.id !== this.selectedSessionId);
+      this.selectedSessionId = null; // Clear selection
+      // AXIOS.delete('/sessions/delete/' +this.selectedSessionId)
+      //   .then(() => {
+      //     this.sessions = this.sessions.filter(session => session.id !== this.selectedSessionId);
+      //     this.selectedSessionId = null; // Clear selection
+      //   })
+      //   .catch(error => {
+      //     alert("Deleting Failed: Are you sure you have permission?");
+      //     console.error('There was an error deleting the session:', error.response);
+      //   });
     },
     createNewSession() {
     this.$router.push('/create-session');
@@ -283,5 +285,8 @@ button {
 
 button:hover {
   opacity: 0.85;
+}
+.selected td {
+  background-color: blue; /* Highlight selected account in blue */
 }
 </style>
