@@ -103,10 +103,16 @@ public class ClassTypeRestController {
      * @return The updated class type
      * @throws IllegalArgumentException
      */
-    @PutMapping(value = {"/class-types/{name}", "/class-types/{name}/"})
-    public ResponseEntity<ClassTypeDto> updateClassType(@PathVariable("name") String name, @RequestBody ClassTypeDto classTypeDto, @RequestBody GymUser gymUser) throws IllegalArgumentException{
+    @PutMapping(value = {"/class-types/{name}/email/{email}", "/class-types/{name}/email/{email}/"})
+    public ResponseEntity<ClassTypeDto> updateClassType(
+            @PathVariable("name") String name,
+            @RequestBody ClassTypeDto classTypeDto,
+            @PathVariable("email") String email) throws IllegalArgumentException {
+
+        Owner owner = ownerRepository.findOwnerByEmail(email); // Adjust this according to your GymUser constructor
+
         ClassType toUpdate = classTypeService.getClassTypeByName(name);
-        ClassType classType = classTypeService.updateClassType(toUpdate.getName(), classTypeDto.getName(), classTypeDto.isApproved(), gymUser);
+        ClassType classType = classTypeService.updateClassType(toUpdate.getName(), classTypeDto.getName(), classTypeDto.isApproved(), owner);
         return new ResponseEntity<>(new ClassTypeDto(classType), HttpStatus.OK);
     }
 
@@ -131,7 +137,8 @@ public class ClassTypeRestController {
      * @throws IllegalArgumentException
      */
     @DeleteMapping(value = {"/class-types/delete/{name}", "/class-types/delete/{name}/"})
-    public void deleteClassType(@PathVariable("name") String name, @RequestBody GymUser gymUser) throws IllegalArgumentException{
+    public void deleteClassType(@PathVariable("name") String name, @RequestBody GymUserDto gymUserDto) throws IllegalArgumentException{
+        GymUser gymUser = ownerRepository.findOwnerByEmail(gymUserDto.getEmail());
         classTypeService.deleteClassType(name, gymUser);
     }
 }

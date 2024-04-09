@@ -17,4 +17,6 @@ public interface InstructorRegistrationRepository extends CrudRepository<Instruc
     List<InstructorRegistration> findInstructorRegistrationsByInstructor_Email(String email);
     
     List<InstructorRegistration> findAll();
+
+    void deleteInstructorRegistrationsBySessionId(int id);
 }

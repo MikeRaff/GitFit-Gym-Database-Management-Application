@@ -7,16 +7,16 @@
             <a class="classtypes-link" href="#/class-types" target="_self" rel="noopener noreferrer" @click="closeNav" data-text="ClassTypes">
                 <img src="@/assets/ClassTypes.png" class="icon" alt="ClassTypes Logo" />
             </a>
-            <a class="session-link" href="#/view-session-client" target="_self" rel="noopener noreferrer" @click="closeNav" data-text="Sessions">
+            <a class="session-link" href="#/view-session-staff" target="_self" rel="noopener noreferrer" @click="closeNav" data-text="Sessions">
                 <img src="@/assets/Session.png" class="icon" alt="Session Logo" />
             </a>
             <a class="account-link" href="#/accounts" target="_self" rel="noopener noreferrer" @click="closeNav" data-text="Accounts">
                 <img src="@/assets/Account.png" class="icon" alt="Account Logo" />
             </a>
-            <a class="button-link" href="#/login" target="_self" rel="noopener noreferrer" @click="closeNav">
+            <a v-if="!storedEmail" class="button-link" href="#/login" target="_self" rel="noopener noreferrer" @click="closeNav">
                 SIGN IN
             </a>
-            <a class="button-link" href="#/" target="_self" rel="noopener noreferrer" @click="logout">
+            <a v-if="storedEmail" class="button-link" href="#/" target="_self" rel="noopener noreferrer" @click="logout">
                 LOG OUT
             </a>
             <img src="@/assets/Closed.png" width="40px" alt="Gym Logo" class="close-icon" @click="closeNav" />
@@ -30,6 +30,7 @@ export default {
     data() {
         return {
             showNav: false,
+            storedEmail: localStorage.getItem('email')
         }
     },
     methods: {
@@ -42,6 +43,7 @@ export default {
         logout() {
             this.closeNav();
             localStorage.clear();
+            this.storedEmail = null;
             this.$router.push({ name: 'Home' });
         }
     }
@@ -110,6 +112,7 @@ export default {
     font-size: 15px;
     padding: 0.6em 1.5em;
     white-space: nowrap;
+    outline: none;
 }
 
 .nav-bar .button-link:hover {
@@ -118,6 +121,7 @@ export default {
     -webkit-animation: pulse 2s infinite;
     animation: pulse512 1.5s infinite;
 }
+
 
 @keyframes pulse512 {
     0% {

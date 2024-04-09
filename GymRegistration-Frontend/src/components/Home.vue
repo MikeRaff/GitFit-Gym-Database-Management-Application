@@ -26,7 +26,7 @@ export default {
     return {
       letterClass: "text-animate",
       welcomeArray1: "Welcome To".split(""),
-      welcomeArray2: "Gym Registration!".split("")
+      welcomeArray2: "Gym Tech!".split("")
     };
   },
   mounted() {
@@ -56,7 +56,7 @@ export default {
 
 .home-page h1 {
     color: #fff;
-    font-size: 60px;
+    font-size: 57px;
     margin: 0;
     font-weight: 600;
     cursor: pointer;
