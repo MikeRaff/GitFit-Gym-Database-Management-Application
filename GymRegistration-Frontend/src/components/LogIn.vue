@@ -1,11 +1,12 @@
 <template>
   <div class="container login-page">
     <Navbar />
-    <div class="text-zone">
 
-      <h1>
-      <AnimatedLetters :letterClass="letterClass" :strArray="welcomeArray" :idx="14"/>
-      </h1>
+    <h1>
+    <AnimatedLetters :letterClass="letterClass" :strArray="welcomeArray" :idx="14"/>
+    </h1>
+
+    <div class="text-zone">
 
       <h2>Enter your login credentials</h2>
       <form @submit.prevent="login">
@@ -130,6 +131,7 @@ export default {
             if (storedEmail !== null && storedEmail !== undefined) {
             } else {
               localStorage.setItem('email', this.loginDto.email);
+              alert('Login successful');
               this.$router.push({ name: 'Home' });
             }
           }
@@ -150,21 +152,26 @@ export default {
 </script>
 
 <style scoped>
+.login-page .container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .login-page .text-zone {
-  position: absolute;
-  align-content: center;
-  left: 50%;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 40%;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
   max-height: 90%;
-  display: absolute;
+  margin-left: 30%;
+  margin-right: 30%;
 }
 
 .login-page h1 {
   color: #fff;
   font-size: 60px;
-  margin: 0;
+  margin-top: 120px;
   font-weight: 600;
   cursor: pointer;
   text-align: center;
@@ -200,35 +207,12 @@ export default {
 .login-page p {
   color: #fff;
   text-align: center;
-}
-
-.login-page .flat-button {
-  border: none;
-  color: #fff;
-  background-image: linear-gradient(30deg, #0040ff, #15fd98);
-  border-radius: 10px;
-  background-size: 100% auto;
-  font-family: inherit;
-  font-size: 20px;
-  text-align: center;
-  padding: 0.6em 1.5em;
-  white-space: nowrap;
-  text-decoration: none;
-  margin-top: 25px;
-  float: left;
-  white-space: nowrap;
-  width: 200px;
-}
-
-.login-page .flat-button:hover {
-  background-position: right center;
-  background-size: 200% auto;
-  -webkit-animation: pulse 2s infinite;
-  animation: pulse512 1.5s infinite;
+  animation: 1s 2.2s fadeIn backwards;
 }
 
 .login-page .form-group {
   margin-bottom: 15px;
+  animation: fadeIn 1s 1.9s backwards;
 }
 
 .login-page label {
@@ -239,16 +223,23 @@ export default {
   text-align: left;
   color: #fff;
   font-weight: bold;
+  animation: 1s 2s fadeIn backwards;
 }
 
 .login-page input {
   display: block;
   width: 100%;
   margin-bottom: 10px;
-  padding: 5px;
+  padding: 10px;
   box-sizing: border-box;
-  border: 1px solid #fff;
+  border: 2px solid #00b3ff;
   border-radius: 5px;
+  background-color: #1a1a1a;
+  color: #fff;
+}
+
+.login-page input::placeholder {
+  color: #aaa;
 }
 
 .login-page button {
@@ -261,18 +252,26 @@ export default {
   background-color: #4CAF50;
   width: 100%;
   font-size: 16px;
+  transition: background-color 0.3s;
+  animation: 1s 2.1s fadeIn backwards;
+}
+
+.login-page button:hover {
+  background-color: #0f8112;
 }
 
 .login-page select {
   display: block;
   width: 100%;
   margin-bottom: 15px;
-  padding: 15px;
+  padding: 10px;
   box-sizing: border-box;
-  border: 1px solid #fff;
+  border: 2px solid #00b3ff;
   border-radius: 5px;  
   font-size: inherit;
   line-height: inherit;
+  background-color: #1a1a1a;
+  color: #fff;
 }
 
 @keyframes pulse512 {
@@ -298,6 +297,12 @@ export default {
 @media screen and (max-width: 1320px) {
   .login-page h1 {
     font-size: 40px;
+  }
+}
+
+@media screen and (max-width: 1150px) {
+  .login-page h1 {
+    margin-top: 0;
   }
 }
 
@@ -331,11 +336,6 @@ export default {
     box-sizing: border-box;
     margin: auto;
     left: 0;
-  }
-
-  .login-page .flat-button {
-    float: none;
-    display: block;
   }
 }
 </style>

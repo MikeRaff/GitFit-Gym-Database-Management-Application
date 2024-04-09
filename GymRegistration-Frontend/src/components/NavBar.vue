@@ -44,6 +44,7 @@ export default {
             this.closeNav();
             localStorage.clear();
             this.storedEmail = null;
+            alert('You have been logged out');
             this.$router.push({ name: 'Home' });
         }
     }
