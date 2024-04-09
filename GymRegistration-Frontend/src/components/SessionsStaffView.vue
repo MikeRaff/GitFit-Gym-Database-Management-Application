@@ -284,4 +284,7 @@ button {
 button:hover {
   opacity: 0.85;
 }
+.selected td {
+  background-color: blue; /* Highlight selected account in blue */
+}
 </style>

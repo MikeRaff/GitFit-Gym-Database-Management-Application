@@ -124,6 +124,8 @@ export default {
                     // Handle the response here (e.g., show a success message, redirect, etc.)
                     console.log('Session created successfully', response.data);
                     newsession = response.data;
+                    alert("Session was created successfully!");
+                    this.$router.push('/view-session-staff');
                 })
                 .catch(error => {
                     console.error('Response data:', error.response.data);
