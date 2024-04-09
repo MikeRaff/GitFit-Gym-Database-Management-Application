@@ -14,6 +14,7 @@
             <ul>
               <li v-for="classType in approvedClassTypes" :key="classType.id">
                 {{ classType.name }}
+                <button @click="editClassType(classType)">Edit</button>
                 <button @click="deleteClassType(classType)">Remove</button>
               </li>
             </ul>
@@ -164,6 +165,30 @@ export default {
         } catch (error) {
             console.error('Error deleting class type:', error);
         }
+    },
+    async editClassType(classType) {
+      const newName = prompt("Enter new class type name:", classType.name);
+      if (newName !== null) {
+        const storedEmail = localStorage.getItem('email');
+        if (!storedEmail) {
+          alert("You must sign in first.");
+          return;
+        }
+        try {
+          const response = await AXIOS.put('/class-types/' + classType.name + '/email/' + storedEmail, {
+            name: newName,
+            approved: classType.approved
+          })
+          const updatedClassType = response.data;
+          const index = this.classTypes.findIndex(ct => ct.id === updatedClassType.id);
+          if (index !== -1) {
+            this.classTypes.splice(index, 1, updatedClassType);
+          }
+        } catch (error) {
+          alert(error.response.data);
+          console.error("Error updating class type: ", error)
+        }
+      }
     }
   },
   components: {
@@ -174,13 +199,17 @@ export default {
 </script>
   
   <style scoped>
+.classtype-page .container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .classtype-page .text-zone {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 100%;
+  flex: 1;
   display: flex;
   justify-content: center;
+  overflow-y: auto; /* Added overflow handling */
 }
 
 .left-section {
@@ -324,7 +353,6 @@ export default {
   .classtype-page h1 {
     font-size: 50px;
   }
-  
 }
 
 @media screen and (max-width: 1320px) {
@@ -332,6 +360,7 @@ export default {
     font-size: 40px;
   }
 }
+
 @media screen and (max-width: 1150px) {
   .classtype-page h1 {
     margin-top: 0;
