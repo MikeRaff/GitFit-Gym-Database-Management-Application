@@ -174,13 +174,17 @@ export default {
 </script>
   
   <style scoped>
+.classtype-page .container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .classtype-page .text-zone {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 100%;
+  flex: 1;
   display: flex;
   justify-content: center;
+  overflow-y: auto; /* Added overflow handling */
 }
 
 .left-section {
@@ -324,7 +328,6 @@ export default {
   .classtype-page h1 {
     font-size: 50px;
   }
-  
 }
 
 @media screen and (max-width: 1320px) {
@@ -332,6 +335,7 @@ export default {
     font-size: 40px;
   }
 }
+
 @media screen and (max-width: 1150px) {
   .classtype-page h1 {
     margin-top: 0;
