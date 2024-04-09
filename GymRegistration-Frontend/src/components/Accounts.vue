@@ -1,6 +1,6 @@
 <template>
   <div class="accounts-page">
-    <Navbar /> <!-- Added navbar component here -->
+    <Navbar />
     <div class="accounts-table-container">
       <h1>
         <AnimatedLetters :letterClass="letterClass" :strArray="welcomeArray" :idx="14" />
@@ -14,7 +14,8 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="account in accounts" :key="account.id">
+          <tr v-for="account in accounts" :key="account.id" @click="selectAccount(account.id)"
+              :class="{ selected: selectedAccountId === account.id }">
             <td>{{ account.id }}</td>
             <td>{{ account.name }}</td>
             <td>{{ account.email }}</td>
@@ -23,14 +24,14 @@
       </table>
     </div>
     <div class="delete-button">
-      <button>Delete</button>
+      <button @click="deleteAccount">Delete</button>
     </div>
   </div>
 </template>
 
 <script>
 import AnimatedLetters from "./AnimatedLetters";
-import Navbar from "./Navbar"; 
+import Navbar from "./Navbar";
 
 export default {
   name: 'Accounts',
@@ -39,6 +40,7 @@ export default {
       letterClass: "text-animate",
       welcomeArray: "Accounts",
       accounts: [], // Initialize accounts data
+      selectedAccountId: null,
     };
   },
   mounted() {
@@ -59,11 +61,19 @@ export default {
         { id: 1, name: "John Doe", email: "john@example.com" },
         { id: 2, name: "Jane Smith", email: "jane@example.com" },
         { id: 3, name: "John ", email: "john1@example.com" },
-
       ];
     },
+    selectAccount(accountId) {
+      this.selectedAccountId = accountId;
+    },
     deleteAccount() {
-      // Implement logic to delete an account
+      if (!this.selectedAccountId) {
+        alert('Please select an account to delete.');
+        return;
+      }
+      // Simulate deleting the account from the front-end
+      this.accounts = this.accounts.filter(account => account.id !== this.selectedAccountId);
+      this.selectedAccountId = null; // Clear selection
     }
   }
 };
@@ -185,5 +195,8 @@ button {
 
 button:hover {
   opacity: 0.85;
+}
+.selected td {
+  background-color: blue; /* Highlight selected account in blue */
 }
 </style>
