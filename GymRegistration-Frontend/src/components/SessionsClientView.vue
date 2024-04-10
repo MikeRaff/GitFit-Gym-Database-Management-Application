@@ -18,7 +18,7 @@
         </thead>
         <tbody>
           <tr v-for="session in sessions" :key="session.id">
-            <td>{{ session.classType }}</td> <!-- Changed to session.classType -->
+            <td>{{ session.classType.name }}</td> <!-- Changed to session.classType -->
             <td>{{ session.capacity }}</td>
             <td>{{ session.startTime }}</td>
             <td>{{ session.endTime }}</td>
