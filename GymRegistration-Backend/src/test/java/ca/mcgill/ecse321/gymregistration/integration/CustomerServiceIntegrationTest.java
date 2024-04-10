@@ -20,9 +20,7 @@ import org.springframework.http.ResponseEntity;
 import ca.mcgill.ecse321.gymregistration.dao.CustomerRepository;
 import ca.mcgill.ecse321.gymregistration.dao.PersonRepository;
 import ca.mcgill.ecse321.gymregistration.dto.CustomerDto;
-import ca.mcgill.ecse321.gymregistration.dto.GymUserDto;
 import ca.mcgill.ecse321.gymregistration.dto.InstructorDto;
-import ca.mcgill.ecse321.gymregistration.dto.OwnerDto;
 import ca.mcgill.ecse321.gymregistration.model.Owner;
 import ca.mcgill.ecse321.gymregistration.model.Person;
 

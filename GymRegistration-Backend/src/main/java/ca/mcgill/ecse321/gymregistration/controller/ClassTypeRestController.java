@@ -1,6 +1,5 @@
 package ca.mcgill.ecse321.gymregistration.controller;
 
-import ca.mcgill.ecse321.gymregistration.dao.ClassTypeRepository;
 import ca.mcgill.ecse321.gymregistration.dao.CustomerRepository;
 import ca.mcgill.ecse321.gymregistration.dao.InstructorRepository;
 import ca.mcgill.ecse321.gymregistration.dao.OwnerRepository;
@@ -21,8 +20,6 @@ import java.util.stream.Collectors;
 public class ClassTypeRestController {
     @Autowired
     private ClassTypeService classTypeService;
-    @Autowired 
-    private ClassTypeRepository classTypeRepository;
     @Autowired
     private OwnerRepository ownerRepository;
     @Autowired
@@ -69,7 +66,7 @@ public class ClassTypeRestController {
     /**
      * ProposeClassType: proposing a class type
      * @param name: name of class type
-     * @param gymUser: user proposing the class type
+     * @param gymUserdto: user proposing the class type
      * @return Proposed class type
      * @throws IllegalArgumentException
      */
@@ -99,7 +96,7 @@ public class ClassTypeRestController {
      * UpdateClassType: updating an existing class type
      * @param name: name of class type to update
      * @param classTypeDto : class type dto to be updated
-     * @param gymUser: user updating the class type
+     * @param email: email of the user updating the class type
      * @return The updated class type
      * @throws IllegalArgumentException
      */
@@ -110,7 +107,6 @@ public class ClassTypeRestController {
             @PathVariable("email") String email) throws IllegalArgumentException {
 
         Owner owner = ownerRepository.findOwnerByEmail(email); // Adjust this according to your GymUser constructor
-
         ClassType toUpdate = classTypeService.getClassTypeByName(name);
         ClassType classType = classTypeService.updateClassType(toUpdate.getName(), classTypeDto.getName(), classTypeDto.isApproved(), owner);
         return new ResponseEntity<>(new ClassTypeDto(classType), HttpStatus.OK);

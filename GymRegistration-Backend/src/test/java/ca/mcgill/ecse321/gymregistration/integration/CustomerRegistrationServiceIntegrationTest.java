@@ -7,8 +7,6 @@ import java.sql.Date;
 import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.List;
-
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,23 +14,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import ca.mcgill.ecse321.gymregistration.dao.CustomerRegistrationRepository;
 import ca.mcgill.ecse321.gymregistration.dao.CustomerRepository;
-import ca.mcgill.ecse321.gymregistration.dao.InstructorRegistrationRepository;
-import ca.mcgill.ecse321.gymregistration.dao.InstructorRepository;
 import ca.mcgill.ecse321.gymregistration.dao.SessionRepository;
-import ca.mcgill.ecse321.gymregistration.dto.CustomerDto;
 import ca.mcgill.ecse321.gymregistration.dto.CustomerRegistrationDto;
-import ca.mcgill.ecse321.gymregistration.dto.InstructorRegistrationDto;
 import ca.mcgill.ecse321.gymregistration.model.Customer;
-import ca.mcgill.ecse321.gymregistration.model.CustomerRegistration;
-import ca.mcgill.ecse321.gymregistration.model.Instructor;
-import ca.mcgill.ecse321.gymregistration.model.InstructorRegistration;
 import ca.mcgill.ecse321.gymregistration.model.Session;;
 
 

@@ -17,4 +17,5 @@ public interface CustomerRegistrationRepository extends CrudRepository<CustomerR
     List<CustomerRegistration> findCustomerRegistrationsByCustomer_Email(String email);
 
     void deleteCustomerRegistrationsByCustomer_Email(String email);
+    void deleteCustomerRegistrationsBySession_Id(int id);
 }

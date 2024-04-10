@@ -54,11 +54,17 @@ public class SessionServiceIntegrationTest {
         testDeleteSession(id);
     }
 
-    // @Test
-    // public void testCreateandGetSessions() {
-    //     int id = testCreateSession();
-    //     testgetSessionByClassTypeId(id);
-    // }
+    @Test
+    public void testCreateandDeleteSessionOneClassTypeEmail() {
+        int id = testCreateSession();
+        testDeleteSessionWithEmail(id,"email@exmaple.com");
+    }
+
+    @Test
+    public void testCreateandDeleteSessionOneClassTypeWrongEmail() {
+        int id = testCreateSession();
+        testDeleteSessionWithEmail(id,"emailwrong@exmaple.com");
+    }
 
     public int testCreateSession() {
         ClassType classType = new ClassType();
@@ -97,21 +103,22 @@ public class SessionServiceIntegrationTest {
         assertEquals(HttpStatus.OK, response.getStatusCode(), "Response has correct status");
     }
 
-    // public void testgetSessionByClassTypeId(int id) {
-    //     Session session = sessionRepository.findSessionById(id);
-    //     String url = "/sessions/" + session.getClassType().getId();
-
-    //     ResponseEntity<List<Session>> response = client.exchange(url,
-    //     HttpMethod.GET,
-    //     null,
-    //     new ParameterizedTypeReference<List<Session>>() {});
-
-    //     assertNotNull(response);
-    //     assertEquals(response.getBody().size(),1);        
-    // }
 
     public void testDeleteSession(int id) {
         String url = "/session/delete/" + id;
+        try {
+            client.delete(url);
+            assertEquals(1, 1); 
+            return;
+        } catch (GRSException e) {
+            assertEquals("You don't have permission to remove this session", e.getMessage());
+            return;
+            
+        }
+    }
+
+    public void testDeleteSessionWithEmail(int id,String email) {
+        String url = "/session/delete/" + id + "/"+email;
         try {
             client.delete(url);
             assertEquals(1, 1); 

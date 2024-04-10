@@ -68,6 +68,14 @@ public class ClassTypeServiceIntegrationTest {
     System.out.println("Moving on");
     testApproveProposedClassType("Yoga", id);
     }
+
+    @Test
+    public void testCreateandUpdateClassType()
+    {
+        int id = testProposeClassType("Yoga");
+        System.out.println("moving on update");
+        testUpdateClassType("Example@email.com", id, "Goat Yoga", "Yoga");
+    }
    
 
     public ClassTypeDto testCreateClassType(String name, boolean isApproved) {
@@ -136,4 +144,21 @@ public class ClassTypeServiceIntegrationTest {
     // Optionally, you can verify the returned ClassTypeDto content or other aspects of the response
     return response.getBody().getId();
 }
+
+public void testUpdateClassType(String email, int id, String newClassName, String oldName)
+{
+    ClassTypeDto classTypeDto= new ClassTypeDto(id,newClassName, true);
+
+    String url = "/class-types/"+oldName+"/email/"+email;
+
+    ResponseEntity<ClassTypeDto> response = client.exchange(url, HttpMethod.PUT, new HttpEntity<>(classTypeDto), ClassTypeDto.class);
+
+    assertNotNull(response);
+    assertEquals(HttpStatus.OK, response.getStatusCode(), "Response has correct status");
+    assertNotNull(response.getBody(), "Response has body");
+    assertEquals(newClassName, response.getBody().getName());
+    assertEquals(id, response.getBody().getId());
+    assertTrue(response.getBody().isApproved());
+}
+
 }

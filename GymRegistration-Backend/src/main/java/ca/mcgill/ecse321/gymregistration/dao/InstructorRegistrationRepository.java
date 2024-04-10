@@ -18,5 +18,5 @@ public interface InstructorRegistrationRepository extends CrudRepository<Instruc
     
     List<InstructorRegistration> findAll();
 
-    void deleteInstructorRegistrationsBySessionId(int id);
+    void deleteInstructorRegistrationsBySession_Id(int id);
 }

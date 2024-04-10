@@ -6,12 +6,12 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import ca.mcgill.ecse321.gymregistration.dao.CustomerRegistrationRepository;
 import ca.mcgill.ecse321.gymregistration.dao.InstructorRegistrationRepository;
 import ca.mcgill.ecse321.gymregistration.model.*;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-
 import ca.mcgill.ecse321.gymregistration.dao.SessionRepository;
 import ca.mcgill.ecse321.gymregistration.service.exception.GRSException;
 import org.springframework.stereotype.Service;
@@ -22,6 +22,8 @@ public class SessionService {
     SessionRepository sessionRepository;
     @Autowired
     InstructorRegistrationRepository instructorRegistrationRepository;
+    @Autowired
+    CustomerRegistrationRepository customerRegistrationRepository;
 
     /**
      * Create Session: creates a new session
@@ -157,7 +159,17 @@ public class SessionService {
         if(session == null){
             throw new GRSException(HttpStatus.NOT_FOUND, "Session not found.");
         }
-        instructorRegistrationRepository.deleteInstructorRegistrationsBySessionId(id);
+        instructorRegistrationRepository.deleteInstructorRegistrationsBySession_Id(id);
+        try{ //may be that there are no registrations yet
+        customerRegistrationRepository.deleteCustomerRegistrationsBySession_Id(id);
+        }
+        catch(Exception exception)
+        {
+            System.out.println("may not exist or may be empty");
+        }
+        finally{
         sessionRepository.deleteSessionById(id);
+        }
     }
+
 }
