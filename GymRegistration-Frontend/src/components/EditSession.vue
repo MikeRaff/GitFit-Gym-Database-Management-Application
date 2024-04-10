@@ -218,7 +218,7 @@ export default {
 
             AXIOS.get(url)
                 .then(response => {
-                    this.instructorsDto = response.data;
+                    this.availableInstructors = response.data;
                     console.log("found instructors", this.instructorsDto);
                 })
                 .catch(error => {
