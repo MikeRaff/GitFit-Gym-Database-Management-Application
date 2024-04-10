@@ -46,7 +46,7 @@ cd gymregistration
 |----|-----|----|------|----|
 |~30%| ~25%|~20|~15|~10%|
 
-## :TV: Deliverable 3 :sleeping::
+## 📺 Deliverable 3 :sleeping::
 [Frontend Notation](https://github.com/McGill-ECSE321-Winter2024/project-group-3/wiki/%F0%9F%93%BA-Frontend)
 [Project Board](https://github.com/orgs/McGill-ECSE321-Winter2024/projects/36/views/1)  
 [Project Management and Project Report](https://github.com/McGill-ECSE321-Winter2024/project-group-3/wiki/%F0%9F%93%93-Project-Management-and-Project-Report)  
