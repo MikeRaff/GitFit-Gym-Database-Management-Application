@@ -76,6 +76,9 @@ export default {
     this.fetchClassTypes();
   },
   methods: {
+    /** returns a list of classtype objects
+     *  
+     */
     async fetchClassTypes() {
         try {
             const response = await AXIOS.get('/class-types');
@@ -88,6 +91,9 @@ export default {
             }
         }
     },
+    /**
+     * creates a classtype dto and calls the post endpoint
+     */
     async addClassType() {
         const storedEmail = localStorage.getItem('email');
         if (!storedEmail) {
@@ -110,6 +116,9 @@ export default {
             console.error('Error adding class type:', error);
         }
     },
+    /**
+     * Allows certain users to post a classtype with that is not approved
+     */
     async proposeClassType() {
         const storedEmail = localStorage.getItem('email');
         if (!storedEmail) {
@@ -129,6 +138,11 @@ export default {
             console.error('Error proposing class type:', error);
         }
     },
+    /**
+     * Changes the isapproved to false
+     * @param {*} classType the classtype object being updated
+     * 
+     */
     async approveClassType(classType) {
         const storedEmail = localStorage.getItem('email');
         if (!storedEmail) {
@@ -144,6 +158,10 @@ export default {
             console.error('Error approving class type:', error);
         }
     }, 
+    /**
+     * Calls the delete method on a classtype
+     * @param {*} classType //the classtype to be deleted
+     */
     async deleteClassType(classType) {
         const storedEmail = localStorage.getItem('email');
         if (!storedEmail) {
@@ -166,6 +184,10 @@ export default {
             console.error('Error deleting class type:', error);
         }
     },
+    /**
+     * Calls put on a classtype
+     * @param {*} classType //the classtype to be edited
+     */
     async editClassType(classType) {
       const newName = prompt("Enter new class type name:", classType.name);
       if (newName !== null) {

@@ -119,6 +119,9 @@ export default {
         };
     },
     methods: {
+        /**
+         * Returns a session dto and updates the global variable
+         */
         getSessionDetails() {
             const url = '/sessions/' + this.sessionId;
             AXIOS.get(url)
@@ -130,6 +133,9 @@ export default {
                     console.error('There was an error getting the session:', error);
                 });
         },
+        /**
+         * Stores the data from the global object in a dto and then calls put
+         */
         updateSession() {
             console.log("attempting to update session", this.sessionId);
             const url = '/sessions/'+this.sessionId+'/'+user;
@@ -165,6 +171,9 @@ export default {
             }
             this.$router.push('/view-session-staff');
         },
+        /**
+         * deletes an instructor registration with the selected instructor
+         */
         removeInstructor() {
             const regurl = '/instructor-registration/delete/' + this.selectedRemoveInstructor.id + '/'
                 + this.selectedRemoveInstructor.instructor.email + '/' + user;
@@ -178,6 +187,9 @@ export default {
                     console.error('There was an error removing the instructor:', error.response);
                 });
         },
+        /**
+         * Creates a new instructor registration with the selected instructor
+         */
         addInstructor() {
             this.InstructorRegDto.instructor = this.selectedAddInstructor;
             this.InstructorRegDto.session = this.sessionDto;
@@ -199,6 +211,9 @@ export default {
                     console.error('Headers:', error.response.headers);
                 });
         },
+        /**
+         * Retuns a list of all the instructor registrations for this session
+         */
         getSessionInstructors() {
 
             const url = '/instructor-registration-s/';
@@ -213,6 +228,9 @@ export default {
                 });
 
         },
+        /**
+         * Gets all instructors in the database
+         */
         getInstructors() {
             const url = '/instructors';
 
@@ -225,6 +243,9 @@ export default {
                     console.error('There was an error getting the instructors:', error);
                 });
         }, // ... other methods for fetching session details, available instructors, etc.
+        /**
+         * Gets all the classtypes in the database
+         */
         getClassTypes() {
             //The URL should be the endpoint from ClassTypeRestController that returns all classtypes
             const url = '/class-types';
@@ -248,6 +269,7 @@ export default {
 
     },
     watch: {
+        //updates global variables
         selectedAddInstructor(newEmail) {
             console.log("new email", newEmail);
             this.selectedAddInstructor = this.availableInstructors.find(instructor => instructor.email === newEmail) || null;

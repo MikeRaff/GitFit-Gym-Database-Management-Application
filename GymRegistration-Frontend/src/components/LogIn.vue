@@ -107,7 +107,7 @@ export default {
             console.error('There was an error getting the accounts:', error.response.data);
           });
     },
-      
+    
     async login() {
       await this.getAccountByEmail();
 

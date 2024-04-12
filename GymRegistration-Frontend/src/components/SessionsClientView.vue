@@ -109,7 +109,7 @@
     },
 
     fetchSessions() {
-        // Here you can fetch the sessions data from the database using API calls or other methods
+        // can fetch the sessions data from the database using API calls or other methods
         // For now, let's simulate some sample sessions data
         this.sessions = [
         { id: 1, classType: "Yoga", capacity: 20, duration: "1 hour", instructor: "John Doe", time: "10:00 AM", date: "2024-04-06" },
@@ -117,11 +117,7 @@
 
         ];
       },
-      addSession() {
-        // Implement logic to add a new session
-      }
     }
-    // Additional methods to fetch and handle sessions data would be added here
   };
   </script>
   
