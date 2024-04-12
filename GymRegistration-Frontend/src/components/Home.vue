@@ -9,7 +9,7 @@
       </h1>
       <br />
       <h2>Register for Gym Classes Effortlessly! <br /> Simply browse, select your desired classes, and sign up...
-        <br /><br /><br /><router-link to="/app" class="flat-button">GET STARTED</router-link>
+        <br /><br /><br /><router-link to="/login" class="flat-button">GET STARTED</router-link>
       </h2>
     </div>
     <Logo class="Home"/>
