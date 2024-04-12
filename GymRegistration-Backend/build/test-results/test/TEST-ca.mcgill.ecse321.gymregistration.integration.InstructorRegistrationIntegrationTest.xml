@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ca.mcgill.ecse321.gymregistration.integration.InstructorRegistrationIntegrationTest" tests="9" skipped="0" failures="0" errors="0" timestamp="2024-04-12T23:11:29" hostname="Eriks-MacBook-Air-2.local" time="1.124">
+  <properties/>
+  <testcase name="testCreateandGetInstructorRegistration()" classname="ca.mcgill.ecse321.gymregistration.integration.InstructorRegistrationIntegrationTest" time="0.184"/>
+  <testcase name="testCreateandDeleteInstructorRegistrationTwoInstructorsWithoutPermission()" classname="ca.mcgill.ecse321.gymregistration.integration.InstructorRegistrationIntegrationTest" time="0.184"/>
+  <testcase name="testCreateandGetInstructorRegistrationBySessionId()" classname="ca.mcgill.ecse321.gymregistration.integration.InstructorRegistrationIntegrationTest" time="0.12"/>
+  <testcase name="testCreateandDeleteInstructorRegistrationTwoInstructors()" classname="ca.mcgill.ecse321.gymregistration.integration.InstructorRegistrationIntegrationTest" time="0.113"/>
+  <testcase name="testCreateandGetInstructorRegistrationByEmail()" classname="ca.mcgill.ecse321.gymregistration.integration.InstructorRegistrationIntegrationTest" time="0.124"/>
+  <testcase name="testCreateInvalidInstructorRegistrationBadSession()" classname="ca.mcgill.ecse321.gymregistration.integration.InstructorRegistrationIntegrationTest" time="0.057"/>
+  <testcase name="testCreateandDeleteInstructorRegistrationTwoInstructorsAsOwner()" classname="ca.mcgill.ecse321.gymregistration.integration.InstructorRegistrationIntegrationTest" time="0.123"/>
+  <testcase name="testCreateInvalidInstructorRegistrationBadEmail()" classname="ca.mcgill.ecse321.gymregistration.integration.InstructorRegistrationIntegrationTest" time="0.09"/>
+  <testcase name="testCreateandDeleteInstructorRegistrationOneInstructor()" classname="ca.mcgill.ecse321.gymregistration.integration.InstructorRegistrationIntegrationTest" time="0.102"/>
+  <system-out><![CDATA[2024-04-12T19:11:29.384-04:00  INFO 57049 --- [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [ca.mcgill.ecse321.gymregistration.integration.InstructorRegistrationIntegrationTest]: InstructorRegistrationIntegrationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2024-04-12T19:11:29.389-04:00  INFO 57049 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration ca.mcgill.ecse321.gymregistration.GymregistrationApplication for test class ca.mcgill.ecse321.gymregistration.integration.InstructorRegistrationIntegrationTest
+Session not found.
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

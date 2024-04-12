@@ -47,15 +47,13 @@ public class ClassTypeRestController {
         ClassType classType = classTypeService.getClassTypeByName(name);
         return new ResponseEntity<>(new ClassTypeDto(classType), HttpStatus.OK);
     }
-
     /**
      * CreateClassType: creating a class type
+     * @param email: email of user creating the class type
      * @param classTypeDto : class type dto to be created
-     * @param Email: email of user creating the class type
      * @return Class type in system
      * @throws IllegalArgumentException
      */
-
     @PostMapping(value = { "/class-types/create/{email}", "/class-types/create/{email}/"})
     public ResponseEntity<ClassTypeDto> createClassType(@PathVariable("email") String email, @RequestBody ClassTypeDto classTypeDto) throws IllegalArgumentException{
         Owner owner = ownerRepository.findOwnerByEmail(email);
@@ -130,6 +128,12 @@ public class ClassTypeRestController {
      * DeleteClassType: deleting a class type from the system
      * @param name: Name of class type to be deleted
      * @param gymUser: user deleting the class type
+     * @throws IllegalArgumentException
+     */
+    /**
+     * DeleteClassType: deleting a class type from the system
+     * @param name: Name of class type to be deleted
+     * @param gymUserDto: user deleting the class type
      * @throws IllegalArgumentException
      */
     @DeleteMapping(value = {"/class-types/delete/{name}", "/class-types/delete/{name}/"})

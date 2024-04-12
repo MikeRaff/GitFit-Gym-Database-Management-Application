@@ -55,13 +55,11 @@ public class CustomerRestController {
         Customer customer = customerService.getCustomerByEmail(email);
         return new ResponseEntity<>(new CustomerDto(customer), HttpStatus.OK);
     }
-
     /**
      * CreateCustomer: creating a customer
-     * @param email: email of customer
-     * @param password: password of customer
-     * @param person: Person to be created
+     * @param customerDto: Customer information
      * @return Created customer
+     * @throws IllegalArgumentException
      */
     @PostMapping(value= { "/customers/create", "/customers/create/"})
     public ResponseEntity<CustomerDto> createCustomer(@RequestBody CustomerDto customerDto)throws IllegalArgumentException{
@@ -74,9 +72,8 @@ public class CustomerRestController {
     }
     /**
      * UpdateCustomerCreditCard: updating customer credit card
-     * @param email: email of customer
-     * @param password: password of customer
-     * @param creditCardNumber: credit card of customer
+     * @param newCreditCard: credit card of customer
+     * @param customerDto: Customer information
      * @return Updated customer
      * @throws IllegalArgumentException
      */
@@ -85,11 +82,9 @@ public class CustomerRestController {
         Customer customer = customerService.updateCreditCard(customerDto.getEmail(), customerDto.getPassword(), newCreditCard);
         return new ResponseEntity<>(new CustomerDto(customer), HttpStatus.OK);
     }
-
     /**
      * UpdateCustomerEmail: updating customer email
-     * @param oldEmail: old email of customer
-     * @param password: password of customer
+     * @param customerDto: customer information
      * @param newEmail: new email of customer
      * @return Edited customer
      * @throws IllegalArgumentException
@@ -99,13 +94,11 @@ public class CustomerRestController {
         Customer customer = customerService.updateEmail(customerDto.getEmail(), customerDto.getPassword(), newEmail);
         return new ResponseEntity<>(new CustomerDto(customer), HttpStatus.OK);
     }
-
     /**
      * UpdateCustomerPassword: updating a customers password
-     * @param email: email of customer
-     * @param oldPassword: old password of customer
+     * @param customerDto: customer information
      * @param newPassword: new password of customer
-     * @return Updated customer
+     * @return
      * @throws IllegalArgumentException
      */
     @PutMapping(value = {"/customers/updatePassword/{newPassword}", "/customers/updatedPassword/{newPassword}/"})
@@ -117,7 +110,7 @@ public class CustomerRestController {
     /**
      * UpdateCustomerType: changing customer to instructor
      * @param email: email of customer
-     * @param gymUser: new gym user type
+     * @param owner: new gym user type
      * @return Instructor
      * @throws IllegalArgumentException
      */
@@ -130,7 +123,7 @@ public class CustomerRestController {
     /**
      * DeleteCustomer: deleting a customer from database
      * @param email: email of customer
-     * @param gymUser: type of customer
+     * @param owner: type of customer
      * @throws IllegalArgumentException
      */
     @DeleteMapping(value = {"/customers/delete/{email}", "/customers/delete/{email}/"})
