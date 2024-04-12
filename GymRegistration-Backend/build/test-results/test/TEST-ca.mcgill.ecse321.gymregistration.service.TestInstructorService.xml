@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ca.mcgill.ecse321.gymregistration.service.TestInstructorService" tests="14" skipped="0" failures="0" errors="0" timestamp="2024-04-12T23:11:43" hostname="Eriks-MacBook-Air-2.local" time="0.428">
+  <properties/>
+  <testcase name="testCreateInstructor()" classname="ca.mcgill.ecse321.gymregistration.service.TestInstructorService" time="0.068"/>
+  <testcase name="ChangeAccountTypeInvalidPermissions()" classname="ca.mcgill.ecse321.gymregistration.service.TestInstructorService" time="0.016"/>
+  <testcase name="testLoginInstructor()" classname="ca.mcgill.ecse321.gymregistration.service.TestInstructorService" time="0.015"/>
+  <testcase name="testGetInstructorByEmail()" classname="ca.mcgill.ecse321.gymregistration.service.TestInstructorService" time="0.025"/>
+  <testcase name="testDeleteInstructor()" classname="ca.mcgill.ecse321.gymregistration.service.TestInstructorService" time="0.021"/>
+  <testcase name="updateEmailInvalidInstructor()" classname="ca.mcgill.ecse321.gymregistration.service.TestInstructorService" time="0.028"/>
+  <testcase name="testCreateInstructorNullEmail()" classname="ca.mcgill.ecse321.gymregistration.service.TestInstructorService" time="0.038"/>
+  <testcase name="testDeleteInvalidInstructor()" classname="ca.mcgill.ecse321.gymregistration.service.TestInstructorService" time="0.024"/>
+  <testcase name="testNonExistantInstructor()" classname="ca.mcgill.ecse321.gymregistration.service.TestInstructorService" time="0.015"/>
+  <testcase name="testDeleteInstructorInvalidPermissions()" classname="ca.mcgill.ecse321.gymregistration.service.TestInstructorService" time="0.009"/>
+  <testcase name="testLoginInstructorInvalidEmail()" classname="ca.mcgill.ecse321.gymregistration.service.TestInstructorService" time="0.014"/>
+  <testcase name="ChangeAccountType()" classname="ca.mcgill.ecse321.gymregistration.service.TestInstructorService" time="0.01"/>
+  <testcase name="testUpdateEmailInstuctor()" classname="ca.mcgill.ecse321.gymregistration.service.TestInstructorService" time="0.009"/>
+  <testcase name="testGetInstructorByInvalidEmail()" classname="ca.mcgill.ecse321.gymregistration.service.TestInstructorService" time="0.007"/>
+  <system-out><![CDATA[2024-04-12T19:11:43.109-04:00  INFO 57049 --- [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [ca.mcgill.ecse321.gymregistration.service.TestInstructorService]: TestInstructorService does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2024-04-12T19:11:43.305-04:00  INFO 57049 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration ca.mcgill.ecse321.gymregistration.GymregistrationApplication for test class ca.mcgill.ecse321.gymregistration.service.TestInstructorService
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

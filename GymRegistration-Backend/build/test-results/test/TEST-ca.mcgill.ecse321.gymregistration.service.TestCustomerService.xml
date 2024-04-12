@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ca.mcgill.ecse321.gymregistration.service.TestCustomerService" tests="44" skipped="0" failures="0" errors="0" timestamp="2024-04-12T23:11:39" hostname="Eriks-MacBook-Air-2.local" time="2.047">
+  <properties/>
+  <testcase name="getCustomerEmailNull()" classname="ca.mcgill.ecse321.gymregistration.service.TestCustomerService" time="0.981"/>
+  <testcase name="testDeleteCustomerByHimself()" classname="ca.mcgill.ecse321.gymregistration.service.TestCustomerService" time="0.015"/>
+  <testcase name="getCustomerEmailEmpty()" classname="ca.mcgill.ecse321.gymregistration.service.TestCustomerService" time="0.006"/>
+  <testcase name="testUpdateCreditCustomerWrongPassword()" classname="ca.mcgill.ecse321.gymregistration.service.TestCustomerService" time="0.009"/>
+  <testcase name="getCustomer()" classname="ca.mcgill.ecse321.gymregistration.service.TestCustomerService" time="0.324"/>
+  <testcase name="testUpdateEmailToSame()" classname="ca.mcgill.ecse321.gymregistration.service.TestCustomerService" time="0.06"/>
+  <testcase name="createCustomerTest()" classname="ca.mcgill.ecse321.gymregistration.service.TestCustomerService" time="0.009"/>
+  <testcase name="testUpdateEmailWrongOldEmail()" classname="ca.mcgill.ecse321.gymregistration.service.TestCustomerService" time="0.009"/>
+  <testcase name="testChangeAccountTypeByCustomer()" classname="ca.mcgill.ecse321.gymregistration.service.TestCustomerService" time="0.007"/>
+  <testcase name="createCustomerEmailAlreadyExists()" classname="ca.mcgill.ecse321.gymregistration.service.TestCustomerService" time="0.008"/>
+  <testcase name="testUpdateEmail()" classname="ca.mcgill.ecse321.gymregistration.service.TestCustomerService" time="0.006"/>
+  <testcase name="testDeleteCustomerDoesNotExist()" classname="ca.mcgill.ecse321.gymregistration.service.TestCustomerService" time="0.004"/>
+  <testcase name="createCustomerEmptyPassword()" classname="ca.mcgill.ecse321.gymregistration.service.TestCustomerService" time="0.01"/>
+  <testcase name="testUpdateEmailCustomerNotFound()" classname="ca.mcgill.ecse321.gymregistration.service.TestCustomerService" time="0.006"/>
+  <testcase name="createCustomerEmptyEmail()" classname="ca.mcgill.ecse321.gymregistration.service.TestCustomerService" time="0.009"/>
+  <testcase name="testUpdateCredit()" classname="ca.mcgill.ecse321.gymregistration.service.TestCustomerService" time="0.007"/>
+  <testcase name="createCustomerNullEmail()" classname="ca.mcgill.ecse321.gymregistration.service.TestCustomerService" time="0.013"/>
+  <testcase name="testUpdateEmailWrongPassword()" classname="ca.mcgill.ecse321.gymregistration.service.TestCustomerService" time="0.01"/>
+  <testcase name="testDeleteCustomerByInstructor()" classname="ca.mcgill.ecse321.gymregistration.service.TestCustomerService" time="0.006"/>
+  <testcase name="testChangeAccountTypeByInstructor()" classname="ca.mcgill.ecse321.gymregistration.service.TestCustomerService" time="0.015"/>
+  <testcase name="testUpdateCreditCustomerWrongEmail()" classname="ca.mcgill.ecse321.gymregistration.service.TestCustomerService" time="0.006"/>
+  <testcase name="testLoginCustomerInvalidPassword()" classname="ca.mcgill.ecse321.gymregistration.service.TestCustomerService" time="0.011"/>
+  <testcase name="testChangeAccountType()" classname="ca.mcgill.ecse321.gymregistration.service.TestCustomerService" time="0.021"/>
+  <testcase name="getAllCustomersNone()" classname="ca.mcgill.ecse321.gymregistration.service.TestCustomerService" time="0.032"/>
+  <testcase name="getAllCustomersMultiple()" classname="ca.mcgill.ecse321.gymregistration.service.TestCustomerService" time="0.051"/>
+  <testcase name="testDeleteCustomerbyAnotherCustomer()" classname="ca.mcgill.ecse321.gymregistration.service.TestCustomerService" time="0.018"/>
+  <testcase name="createCustomerInvalidEmail()" classname="ca.mcgill.ecse321.gymregistration.service.TestCustomerService" time="0.009"/>
+  <testcase name="testUpdatePasswordCustomerNotFound()" classname="ca.mcgill.ecse321.gymregistration.service.TestCustomerService" time="0.014"/>
+  <testcase name="getAllCustomersOne()" classname="ca.mcgill.ecse321.gymregistration.service.TestCustomerService" time="0.012"/>
+  <testcase name="testChangeAccountTypeNoCustomerFound()" classname="ca.mcgill.ecse321.gymregistration.service.TestCustomerService" time="0.008"/>
+  <testcase name="testUpdatePasswordToNull()" classname="ca.mcgill.ecse321.gymregistration.service.TestCustomerService" time="0.014"/>
+  <testcase name="testUpdatePasswordToSame()" classname="ca.mcgill.ecse321.gymregistration.service.TestCustomerService" time="0.006"/>
+  <testcase name="testUpdateCreditCustomerNotFound()" classname="ca.mcgill.ecse321.gymregistration.service.TestCustomerService" time="0.011"/>
+  <testcase name="testUpdateToInvalidEmail()" classname="ca.mcgill.ecse321.gymregistration.service.TestCustomerService" time="0.009"/>
+  <testcase name="testUpdatePassword()" classname="ca.mcgill.ecse321.gymregistration.service.TestCustomerService" time="0.01"/>
+  <testcase name="createCustomerNullPassword()" classname="ca.mcgill.ecse321.gymregistration.service.TestCustomerService" time="0.012"/>
+  <testcase name="testUpdatePasswordWrongEmail()" classname="ca.mcgill.ecse321.gymregistration.service.TestCustomerService" time="0.013"/>
+  <testcase name="createCustomerPersonNotInSystem()" classname="ca.mcgill.ecse321.gymregistration.service.TestCustomerService" time="0.016"/>
+  <testcase name="testUpdateCreditSameNumber()" classname="ca.mcgill.ecse321.gymregistration.service.TestCustomerService" time="0.01"/>
+  <testcase name="testLoginCustomerInvalidEmail()" classname="ca.mcgill.ecse321.gymregistration.service.TestCustomerService" time="0.013"/>
+  <testcase name="testUpdatePasswordWrongOldPassword()" classname="ca.mcgill.ecse321.gymregistration.service.TestCustomerService" time="0.012"/>
+  <testcase name="testLoginCustomer()" classname="ca.mcgill.ecse321.gymregistration.service.TestCustomerService" time="0.014"/>
+  <testcase name="testDeleteCustomerByOwner()" classname="ca.mcgill.ecse321.gymregistration.service.TestCustomerService" time="0.024"/>
+  <testcase name="testLoginCustomerNotInSystem()" classname="ca.mcgill.ecse321.gymregistration.service.TestCustomerService" time="0.015"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

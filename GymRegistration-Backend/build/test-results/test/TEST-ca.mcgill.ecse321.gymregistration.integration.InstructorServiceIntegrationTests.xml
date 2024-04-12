@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ca.mcgill.ecse321.gymregistration.integration.InstructorServiceIntegrationTests" tests="6" skipped="0" failures="0" errors="0" timestamp="2024-04-12T23:11:30" hostname="Eriks-MacBook-Air-2.local" time="0.498">
+  <properties/>
+  <testcase name="testCreateInvalidInstructor()" classname="ca.mcgill.ecse321.gymregistration.integration.InstructorServiceIntegrationTests" time="0.072"/>
+  <testcase name="testcreateAndLogInInstructor()" classname="ca.mcgill.ecse321.gymregistration.integration.InstructorServiceIntegrationTests" time="0.086"/>
+  <testcase name="testCreateAndGetInstructors()" classname="ca.mcgill.ecse321.gymregistration.integration.InstructorServiceIntegrationTests" time="0.172"/>
+  <testcase name="testCreateAndGetInstructor()" classname="ca.mcgill.ecse321.gymregistration.integration.InstructorServiceIntegrationTests" time="0.046"/>
+  <testcase name="testCreateAndDeleteInstructor()" classname="ca.mcgill.ecse321.gymregistration.integration.InstructorServiceIntegrationTests" time="0.041"/>
+  <testcase name="testCreateandUpdateInstructorEmail()" classname="ca.mcgill.ecse321.gymregistration.integration.InstructorServiceIntegrationTests" time="0.073"/>
+  <system-out><![CDATA[2024-04-12T19:11:30.530-04:00  INFO 57049 --- [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [ca.mcgill.ecse321.gymregistration.integration.InstructorServiceIntegrationTests]: InstructorServiceIntegrationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2024-04-12T19:11:30.536-04:00  INFO 57049 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration ca.mcgill.ecse321.gymregistration.GymregistrationApplication for test class ca.mcgill.ecse321.gymregistration.integration.InstructorServiceIntegrationTests
+2024-04-12T19:11:30.960-04:00  WARN 57049 --- [o-auto-1-exec-1] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.http.converter.HttpMessageNotReadableException: Required request body is missing: public void ca.mcgill.ecse321.gymregistration.controller.InstructorRestController.deleteInstructor(java.lang.String,ca.mcgill.ecse321.gymregistration.model.GymUser) throws java.lang.IllegalArgumentException]
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
