@@ -158,9 +158,9 @@ export default {
           this.customerObject = customer;
           return response.data;
         })
-          .catch(error => {
+        .catch(error => {
             console.error('There was an error getting the customer:', error);
-          });
+        });
     },
 
     registerToSession() {
@@ -169,11 +169,11 @@ export default {
         return;
       }
       this.getCustomer()
-      .then((response) => {
-        this.customerRegistrationDto.customer = response.data;
-      }).catch(error => {
-        console.error('There was an error getting the customer:', error);
-      });
+        .then((response) => {
+          this.customerRegistrationDto.customer = response.data;
+        }).catch(error => {
+          console.error('There was an error getting the customer:', error);
+        });
       this.customerRegistrationDto.session = this.sessionDto;
 
       console.log("registration customer: " + this.customerRegistrationDto.customer);
