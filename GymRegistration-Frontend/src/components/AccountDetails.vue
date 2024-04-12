@@ -1,19 +1,9 @@
 <template>
     <div class="container-details-page">
         <Navbar />
-
-        <!-- <h1>
-            <AnimatedLetters :letterClass="letterClass" :strArray="welcomeArray" :idx="14" />
-        </h1>
-
-        <div class="user-info">
-            <p><strong> Email: </strong> {{ customerDto.email }}</p>
-            <p><strong> Password: </strong> {{ customerDto.password }}</p>
-            <p><strong> Credit Card: </strong> {{ customerDto.creditCard }}</p>
-
-            
-        </div> -->
-
+        <h1>
+        <AnimatedLetters :letterClass="letterClass" :strArray="welcomeArray" :idx="14" />
+      </h1>
         <div class="user-info">
 
             <div class="form-group">
@@ -160,6 +150,50 @@ export default {
 
 
 <style scoped>
+.container-details-page .text-animate {
+  position: absolute;
+  top: calc(50% + 30px); /* Adjust distance below navbar */
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #fff;
+  font-size: 60px;
+  margin: 0;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: center;
+}
+.container-details-page .text-animate-hover {
+  color: #fff;
+  font-size: 60px;
+  margin: 0;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: center;
+  transition: color 0.5s ease-in-out;
+}
+
+.container-details-page .text-zone {
+  position: absolute;
+  align-content: center;
+  left: 10%;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40%;
+  max-height: 90%;
+  display: absolute;
+}
+
+.container-details-page h1 {
+  position: relative;
+  top: 50%; /* Adjust distance below navbar */
+  color: #fff;
+  font-size: 60px;
+  margin: 0;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: center;
+}
+
 .container-details-page {
     margin-top: 100px;
 }
