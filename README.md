@@ -56,3 +56,4 @@ cd gymregistration
 
 
 # ⚠️ NOTE: PLEASE USE JAVA 21; THE TESTS WILL FAIL IF YOU DON'T
+# ⚠️ NOTE: PLEASE RUN ./gradlew clean build TO AVOID FAILING TESTS
