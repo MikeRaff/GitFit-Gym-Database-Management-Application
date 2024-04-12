@@ -131,6 +131,7 @@ export default {
             if (storedEmail !== null && storedEmail !== undefined) {
             } else {
               localStorage.setItem('email', this.loginDto.email);
+              localStorage.setItem('accountType', this.accountType);
               alert('Login successful');
               this.$router.push({ name: 'Home' });
             }
