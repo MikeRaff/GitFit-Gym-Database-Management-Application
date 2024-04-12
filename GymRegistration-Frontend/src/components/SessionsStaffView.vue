@@ -136,11 +136,11 @@ export default {
         });
     },
     createNewSession() {
-    this.$router.push('/create-session');
-   },
-   editSession() {
-    this.$router.push({name: 'EditSession', params: { sessionId: parseInt(this.selectedSessionId) } });
-   },
+      this.$router.push('/create-session');
+    },
+    editSession() {
+      this.$router.push({name: 'EditSession', params: { sessionId: parseInt(this.selectedSessionId) } });
+    },
   }
 };
 </script>
