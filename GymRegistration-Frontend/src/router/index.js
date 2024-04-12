@@ -10,6 +10,8 @@ import SessionsClientView from '@/components/SessionsClientView'
 import Accounts from '@/components/Accounts'
 import ClassTypes from '@/components/ClassTypes'
 import EditSession from '@/components/EditSession'
+import AccountDetails from '@/components/AccountDetails'
+import CustomerRegistrationsView from '../components/CustomerRegistrationsView'
 
 Vue.use(Router)
 
@@ -66,5 +68,15 @@ export default new Router({
       component: EditSession,
       props: true
     },
+    {
+      path: '/account-details',
+      name: 'AccountDetails',
+      component: AccountDetails
+    },
+    {
+      path: '/customer-registrations',
+      name: 'CustomerRegistrationsView',
+      component: CustomerRegistrationsView
+    }
   ]
 })

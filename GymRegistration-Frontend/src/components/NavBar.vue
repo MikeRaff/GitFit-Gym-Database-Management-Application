@@ -4,14 +4,20 @@
             <a href="#/" target="_self" rel="noopener noreferrer" @click="closeNav" data-text="Home">
                 <img class="icon" src="@/assets/Home.png" alt="Home Logo" />
             </a>
-            <a class="classtypes-link" href="#/class-types" target="_self" rel="noopener noreferrer" @click="closeNav" data-text="ClassTypes">
+            <a class="classtypes-link"  href="#/class-types" target="_self" rel="noopener noreferrer" @click="closeNav" data-text="ClassTypes">
                 <img src="@/assets/ClassTypes.png" class="icon" alt="ClassTypes Logo" />
             </a>
-            <a class="session-link" href="#/view-session-staff" target="_self" rel="noopener noreferrer" @click="closeNav" data-text="Sessions">
+            <a class="session-link" :href="getSessionLink(accountType)" target="_self" rel="noopener noreferrer" @click="closeNav" data-text="Sessions">
                 <img src="@/assets/Session.png" class="icon" alt="Session Logo" />
             </a>
             <a class="account-link" href="#/accounts" target="_self" rel="noopener noreferrer" @click="closeNav" data-text="Accounts">
                 <img src="@/assets/Account.png" class="icon" alt="Account Logo" />
+            </a>
+            <a v-if="storedEmail" class="account-details-link" href="#/account-details" @click="closeNav" data-text="Account Details"> 
+                <img src="@/assets/AccountSettings.png" class="icon" alt="Account Details" />
+            </a>
+            <a v-if="storedEmail" class="customer-registrations-link" href="#/customer-registrations" @click="closeNav" data-text="Registrations"> 
+                <img src="" class="icon" alt="Account Details" />
             </a>
             <a v-if="!storedEmail" class="button-link" href="#/login" target="_self" rel="noopener noreferrer" @click="closeNav">
                 SIGN IN
@@ -30,10 +36,19 @@ export default {
     data() {
         return {
             showNav: false,
-            storedEmail: localStorage.getItem('email')
+            storedEmail: localStorage.getItem('email'),
+            accountType: localStorage.getItem('accountType')
         }
     },
     methods: {
+        getSessionLink(){
+            switch(localStorage.getItem('accountType')){
+                case 'customers':
+                    return '#/view-session-client';
+                default:
+                    return '#/view-session-staff';
+            }
+        },
         closeNav() {
             this.showNav = false;
         },
