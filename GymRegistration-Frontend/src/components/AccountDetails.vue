@@ -73,27 +73,31 @@ export default {
         this.getCustomer();
     },
     methods: {
+        // Method to toggle edit mode
         toggleEditMode() {
             this.editMode = !this.editMode;
             this.isReadonly = !this.isReadonly;
+            // Log the current value of isReadonly
             console.log(isReadonly);
+            // Refresh customer data
             this.getCustomer();
         },
+        // Method to fetch customer data
         async getCustomer() {
             console.log("Getting customer...");
+            // Retrieve email from local storage
             const email = localStorage.getItem('email');
+            // Fetch customer data from server
             AXIOS.get('/customers/' + email)
                 .then(response => {
                     console.log("Successfully Found Customer", response.data);
                     this.customerDto.creditCard = response.data.creditCardNumber;
                     this.customerDto.email = response.data.email;
                     this.customerDto.password = response.data.password;
-
                     // to reset data in the <input> for each field
                     this.oldFields.creditCard = response.data.creditCardNumber;
                     this.oldFields.email = response.data.email;
                     this.oldFields.password = response.data.password;
-
                     // to later pass customerDto object in put requests
                     let customer = response.data;
                     this.customerObject = customer;
@@ -102,9 +106,10 @@ export default {
                     console.error('There was an error getting the customer:', error);
                 });
         },
+        // Method to save changes
         saveChanges() {
             console.log("Attempting to update customer information");
-
+            // Update email
             AXIOS.put('/customers/updateEmail/' + this.customerDto.email, this.customerObject)
                 .then(response => {
                     console.log("email changed", response.data);
@@ -112,7 +117,7 @@ export default {
                 .catch(error => {
                     console.error('error changing email:', error);
                 });
-
+            //Update password  
             AXIOS.put('/customers/updatePassword' + this.customerDto.password, this.customerObject)
                 .then(response => {
                     console.log("password changed", response.data);
@@ -120,7 +125,7 @@ export default {
                 .catch(error => {
                     console.error('error changing password:', error);
                 });
-
+            //Update credit card 
             AXIOS.put('/customers/updateCreditCard/' + this.customerDto.creditCard, this.customerObject)
                 .then(response => {
                     console.log("credit card changed", response.data);
@@ -132,11 +137,11 @@ export default {
         },
         cancelEdit() {
             console.log("Attempting to cancel changes");
-
+            //restore original data
             this.customerDto.email = this.oldFields.email;
             this.customerDto.password = this.oldFields.password;
             this.customerDto.creditCard = this.oldFields.creditCard;
-
+            //exit edit mode
             this.toggleEditMode();
         }
 
@@ -152,7 +157,7 @@ export default {
 <style scoped>
 .container-details-page .text-animate {
   position: absolute;
-  top: calc(50% + 30px); /* Adjust distance below navbar */
+  top: calc(50% + 30px);
   left: 50%;
   transform: translate(-50%, -50%);
   color: #fff;
@@ -185,7 +190,7 @@ export default {
 
 .container-details-page h1 {
   position: relative;
-  top: 50%; /* Adjust distance below navbar */
+  top: 50%;
   color: #fff;
   font-size: 60px;
   margin: 0;
@@ -211,7 +216,6 @@ export default {
 
 .form-group label {
     color: #ecf0f1;
-    /* Light grey color */
     display: block;
     margin-bottom: 5px;
 }
@@ -223,13 +227,9 @@ export default {
     padding: 10px;
     border-radius: 4px;
     border: 1px solid #34495e;
-    /* Darker blue border */
     background-color: #34495e;
-    /* Darker blue background */
     color: #ecf0f1;
-    /* Light grey text */
     box-sizing: border-box;
-    /* Border box */
     margin-bottom: 10px;
 }
 
@@ -243,13 +243,11 @@ export default {
     height: 100px;
 }
 
-/* Hover and focus states for inputs and buttons */
 .form-group input:hover,
 .form-group select:hover,
 .form-group textarea:hover,
 button:hover {
     background-color: #3d566e;
-    /* Slightly lighter blue on hover */
 }
 
 .form-group input:focus,
@@ -257,7 +255,6 @@ button:hover {
 .form-group textarea:focus {
     outline: none;
     border-color: #3498db;
-    /* Light blue border for focus */
 }
 
 button {
@@ -266,14 +263,11 @@ button {
     border: none;
     border-radius: 4px;
     background-image: linear-gradient(to right, #3498db, #2ecc71);
-    /* Gradient from blue to green */
     color: #ffffff;
-    /* White text */
     font-size: 16px;
     cursor: pointer;
     transition: background-color 0.3s ease;
     margin-top: 20px;
-    /* Space from the last form field */
 }
 
 button:focus {

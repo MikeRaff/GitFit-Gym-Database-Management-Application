@@ -283,78 +283,77 @@ export default {
 }
 
 .classtype-page h3 {
-  color: #fff; /* White text */
-  font-size: 24px; /* Adjust font size as needed */
-  margin-top: 30px; /* Adjust margin top as needed */
-  font-weight: 600; /* Bold font weight */
+  color: #fff; 
+  font-size: 24px; 
+  margin-top: 30px; 
+  font-weight: 600; 
 }
 
 .classtype-page h3::before {
-  content: ""; /* Add a pseudo-element for styling */
+  content: ""; 
   display: inline-block;
-  width: 10px; /* Adjust width as needed */
-  height: 10px; /* Adjust height as needed */
-  background-color: #00b3ff; /* Blue color for the bullet */
-  margin-right: 10px; /* Adjust margin-right as needed */
-  border-radius: 50%; /* Round shape for the bullet */
+  width: 10px;
+  height: 10px; 
+  background-color: #00b3ff;
+  margin-right: 10px; 
+  border-radius: 50%; 
 }
 
 .classtype-page h3 + ul {
-  margin-top: 10px; /* Adjust margin top between heading and list */
+  margin-top: 10px; 
 }
 
 .classtype-page h3 + ul li {
-  color: #fff; /* White text for list items */
-  margin-top: 5px; /* Adjust margin top between list items */
+  color: #fff; 
+  margin-top: 5px;
 }
 
 .classtype-page h3 + ul li button {
-  background-color: #00b3ff; /* Blue color for buttons */
-  color: #fff; /* White text for buttons */
+  background-color: #00b3ff;
+  color: #fff;
   border: none;
-  padding: 5px 10px; /* Adjust padding as needed */
+  padding: 5px 10px;
   cursor: pointer;
-  margin-left: 10px; /* Adjust margin left between buttons */
-  border-radius: 5px; /* Rounded corners for buttons */
+  margin-left: 10px; 
+  border-radius: 5px; 
 }
 
 .classtype-page h3 + ul li button:hover {
-  background-color: #0080ff; /* Darker blue color on hover */
+  background-color: #0080ff; 
 }
 
 .classtype-page input[type="text"] {
-  padding: 10px; /* Adjust padding as needed */
-  margin-top: 10px; /* Adjust margin top as needed */
-  width: 100%; /* Take up full width */
-  border: 2px solid #00b3ff; /* Blue border */
-  border-radius: 5px; /* Rounded corners */
-  background-color: #1a1a1a; /* Dark background */
-  color: #fff; /* White text */
-  box-sizing: border-box; /* Include padding and border in width */
+  padding: 10px; 
+  margin-top: 10px;
+  width: 100%;
+  border: 2px solid #00b3ff;
+  border-radius: 5px;
+  background-color: #1a1a1a; 
+  color: #fff; 
+  box-sizing: border-box; 
 }
 
 .classtype-page input[type="text"]::placeholder {
-  color: #aaa; /* Placeholder text color */
+  color: #aaa; 
 }
 
-/* Stylings for buttons */
 .classtype-page button {
-  background-color: #00b3ff; /* Blue color for buttons */
-  color: #fff; /* White text for buttons */
+  background-color: #00b3ff; 
+  color: #fff; 
   border: none;
-  padding: 10px 20px; /* Adjust padding as needed */
-  margin-top: 10px; /* Adjust margin top as needed */
+  padding: 10px 20px;
+  margin-top: 10px; 
   cursor: pointer;
-  border-radius: 5px; /* Rounded corners for buttons */
-  transition: background-color 0.3s; /* Smooth transition */
+  border-radius: 5px; 
+  transition: background-color 0.3s; 
 }
 
 .classtype-page button:hover {
-  background-color: #0080ff; /* Darker blue color on hover */
+  background-color: #0080ff; 
 }
 
 .classtype-page button + button {
-  margin-left: 10px; /* Adjust margin left between buttons */
+  margin-left: 10px; 
 }
 
 @keyframes pulse512 {

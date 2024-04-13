@@ -1,4 +1,6 @@
+
 <template>
+  <!-- Note: This is a demo component, it is not routed to anywhere -->
     <div id="eventregistration">
       <h2>Persons</h2>
       <table>

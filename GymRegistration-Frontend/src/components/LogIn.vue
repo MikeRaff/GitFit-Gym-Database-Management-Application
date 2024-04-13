@@ -93,7 +93,6 @@ export default {
   },
 
   methods: {
-    // Based on billy's work
     async getAccountByEmail() {
         const url = `/${this.accountType}/${this.loginDto.email}`;
 
@@ -145,8 +144,6 @@ export default {
           console.error('Response status:', error.response.status);
           console.error('Response headers:', error.response.headers);
         })
-
-        // reinitialize fields??
     }
   }
 };

@@ -198,7 +198,6 @@ export default {
 .text-animate {
   position: absolute;
   top: calc(50% + 30px);
-  /* Adjust distance below navbar */
   left: 50%;
   transform: translate(-50%, -50%);
   color: #fff;
@@ -241,7 +240,6 @@ export default {
 
 .sessions-client-view h1 {
   top: 40%;
-  /* Adjust distance below navbar */
   color: #fff;
   font-size: 60px;
   margin: 0;
@@ -279,7 +277,6 @@ th {
   background-color: #f0f0f0;
   color: #444;
   font-size: 20px;
-  /* Adjust the font size here */
   padding: 5px;
 }
 
@@ -288,9 +285,7 @@ tbody tr:hover {
 }
 
 td {
-  /* background-color: #0040ff; */
   padding: 10px;
-  /* text-align: center; */
 }
 
 tr:nth-child(even) {
@@ -324,11 +319,9 @@ button:hover {
 
 .selected {
   background-color: #0040ff;
-  /* your hover color */
 }
 
 .selected td {
   background-color: blue;
-  /* Highlight selected account in blue */
 }
 </style>
