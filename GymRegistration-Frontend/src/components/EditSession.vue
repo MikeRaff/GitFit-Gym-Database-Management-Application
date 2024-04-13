@@ -60,7 +60,6 @@
 
 <script>
 
-import AnimatedLetters from "./AnimatedLetters";
 import Navbar from "./Navbar";
 import moment from "moment";
 import axios from "axios";
@@ -293,28 +292,22 @@ export default {
 </script>
 
 <style scoped>
-/* Add top padding to the body or the main content wrapper to push it down below the navbar */
 
 .session-form {
     background-color: #2c3e50;
-    /* Dark blue background */
     padding: 20px;
     max-width: 600px;
-    /* Adjust as necessary */
     margin: 50px auto;
-    /* Center the form */
     border-radius: 5px;
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
 }
 
 .body-content {
     padding-top: 70px;
-    /* Adjust the value based on the height of your navbar */
 }
 
 .session-form h2 {
     color: #ecf0f1;
-    /* Light grey color */
     text-align: center;
     margin-bottom: 30px;
 }
@@ -325,7 +318,6 @@ export default {
 
 .form-group label {
     color: #ecf0f1;
-    /* Light grey color */
     display: block;
     margin-bottom: 5px;
 }
@@ -337,13 +329,9 @@ export default {
     padding: 10px;
     border-radius: 4px;
     border: 1px solid #34495e;
-    /* Darker blue border */
     background-color: #34495e;
-    /* Darker blue background */
     color: #ecf0f1;
-    /* Light grey text */
     box-sizing: border-box;
-    /* Border box */
     margin-bottom: 10px;
 }
 
@@ -357,13 +345,11 @@ export default {
     height: 100px;
 }
 
-/* Hover and focus states for inputs and buttons */
 .form-group input:hover,
 .form-group select:hover,
 .form-group textarea:hover,
 button:hover {
     background-color: #3d566e;
-    /* Slightly lighter blue on hover */
 }
 
 .form-group input:focus,
@@ -371,7 +357,6 @@ button:hover {
 .form-group textarea:focus {
     outline: none;
     border-color: #3498db;
-    /* Light blue border for focus */
 }
 
 button {
@@ -380,19 +365,15 @@ button {
     border: none;
     border-radius: 4px;
     background-image: linear-gradient(to right, #3498db, #2ecc71);
-    /* Gradient from blue to green */
     color: #ffffff;
-    /* White text */
     font-size: 16px;
     cursor: pointer;
     transition: background-color 0.3s ease;
     margin-top: 20px;
-    /* Space from the last form field */
 }
 
 button:focus {
     outline: none;
 }
 
-/* If there's a footer or any additional elements, you can add them below */
 </style>

@@ -200,7 +200,7 @@ export default {
 <style scoped>
 .session-form {
     background-color: #222; /* Dark background */
-    color: #fff; /* White text */
+    color: #fff; 
     padding: 20px;
     max-width: 700px;
     margin: 30px auto;
@@ -220,66 +220,62 @@ export default {
 .form-group {
     margin-bottom: 15px;
     width: 90%; 
-    display: flex; /* Enables flexbox */
+    display: flex; 
     flex-direction: column; /* Stack children vertically */
     align-items: center; /* Center children horizontally */
-    /* Other styles */
 }
 
 .form-group label {
-    color: #fff; /* White label text */
+    color: #fff;
     margin-bottom: 5px;
-    font-size: 18px; /* Larger font size for readability */
+    font-size: 18px; 
 }
 
 .form-group input,
 .form-group select,
 .form-group textarea {
-    background-color: #333; /* Slightly lighter dark background for inputs */
-    color: #fff; /* White text for input */
+    background-color: #333; 
+    color: #fff; 
     padding: 10px;
     border-radius: 4px;
-    border: 1px solid #444; /* Slight border for definition */
-    margin-bottom: 15px; /* Space below inputs */
+    border: 1px solid #444; 
+    margin-bottom: 15px;
 }
 
 .form-group textarea {
-    height: 100px; /* Set a default height */
-    resize: vertical; /* Allow the user to vertically resize the textarea */
-    overflow-y: auto; /* Scrollbar as needed */
+    height: 100px;
+    resize: vertical; 
+    overflow-y: auto; 
 }
 .form-group .duration-input {
-    background-color: #333; /* Dark background */
-    color: #fff; /* White text */
-    border: 1px solid #444; /* Slight border for definition */
-    /* ... any other styles ... */
+    background-color: #333; 
+    color: #fff; 
+    border: 1px solid #444; 
 }
 
-/* Align the label closer to the textarea */
 .form-group label[for="description"] {
     display: block;
-    margin-bottom: 0.5rem; /* reduce the bottom margin to move it closer */
-    color: #fff; /* assuming you want it white as per your theme */
-    font-size: 1rem; /* adjust the font size as needed */
+    margin-bottom: 0.5rem; 
+    color: #fff; 
+    font-size: 1rem; 
 }
 
 /* Adjust the position of the textarea */
 .form-group textarea {
-    width: calc(100% - 20px); /* adjust width as necessary, accounting for padding */
+    width: calc(100% - 20px); 
     padding: 10px;
     border-radius: 4px;
-    border: 1px solid #444; /* Slight border for definition */
-    background-color: #333; /* Dark background for textarea */
-    color: #fff; /* White text color */
-    margin-left: auto; /* This will align the textarea to the right */
-    margin-right: auto; /* This will align the textarea to the right */
-    display: block; /* Ensure it's a block element to honor width and margin */
+    border: 1px solid #444; 
+    background-color: #333; 
+    color: #fff; 
+    margin-left: auto; 
+    margin-right: auto; 
+    display: block; 
 }
 
 .form-group textarea {
-    /* other styles... */
-    margin-top: 10px; /* Adjust as needed */
-    margin-bottom: 20px; /* Space below the textarea, adjust as needed */
+    margin-top: 10px; 
+    margin-bottom: 20px; 
 }
 
 button {
@@ -295,7 +291,7 @@ button {
 }
 
 button:hover {
-    background-position: right center; /* Shift background on hover */
+    background-position: right center;
 }
 
 @media screen and (max-width: 1050px) {

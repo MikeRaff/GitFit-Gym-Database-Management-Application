@@ -29,18 +29,12 @@
         <div class="session-actions">
             <button @click="editRegistration">Edit Registration</button>
             <button @click="createNewRegistration">Create New Registration</button>
-            <button @click="deleteSession">Delete Selected Registration</button>
+            <button @click="deleteRegistration">Delete Selected Registration</button>
         </div>
     </div>
 </template>
 
 <script>
-/**
- * 
- * ALL THIS PAGE BASICALLY COPIED FROM SessionsStaffView.vue
- * 
- * If you need to make it work/understand/debug, refer to SessionStaffView.vue
- */
 
 import AnimatedLetters from "./AnimatedLetters";
 import Navbar from "./Navbar";
@@ -80,7 +74,7 @@ export default {
         };
     },
     methods: {
-        // See Comment at top of <script>
+        //al get methods
         getRegistrations() {
             const url = '/customer-registrations/' + user;
             AXIOS.get(url)
@@ -109,18 +103,57 @@ export default {
                     })
             }
         },
+        //selecting a registration
         selectRegistration(registrationId) {
             this.selectedRegistraionId = registrationId;
             console.log("registration id: ", this.selectedRegistraionId);
         },
-        deleteSession(){
+        deleteRegistration() {
+            if (!this.selectedRegistrationId) {
+                console.error("No registration selected for deletion.");
+                return;
+            }
 
+            const url = `/customer-registrations/remove/${this.selectedRegistrationId}`;
+            AXIOS.delete(url)
+                .then(response => {
+                    console.log("Successfully deleted registration", response);
+                })
+                .catch(error => {
+                    console.error('Error deleting registration:', error);
+                });
         },
-        createNewRegistration(){
+        createNewRegistration() {
+            const registrationData = {
+                date: this.date,
+                session: this.session,
+                customer: this.customer
+            };
 
+            AXIOS.post('/customer-registrations/register', registrationData)
+                .then(response => {
+                    console.log("Successfully created new registration", response);
+                })
+                .catch(error => {
+                    console.error('Error creating new registration:', error);
+                });
         },
-        editRegistration(){
+        editRegistration() {
+            const registrationIdToUpdate = this.selectedRegistrationId;
 
+            const updatedRegistrationData = {
+                date: this.date,
+                session: this.session,
+                customer: this.customer
+            };
+
+            AXIOS.put(`/customer-registration/update/${registrationIdToUpdate}`, updatedRegistrationData)
+                .then(response => {
+                    console.log("Successfully updated registration", response);
+                })
+                .catch(error => {
+                    console.error('Error updating registration:', error);
+                });
         }
     },
 
@@ -142,7 +175,6 @@ export default {
     .text-animate {
         position: absolute;
         top: calc(50% + 30px);
-        /* Adjust distance below navbar */
         left: 50%;
         transform: translate(-50%, -50%);
         color: #fff;
@@ -165,7 +197,6 @@ export default {
 
     .selected {
         background-color: #0040ff;
-        /* your hover color */
     }
 
     .sessionRegistrations-view .text-zone {
@@ -190,7 +221,6 @@ export default {
 
     .sessionRegistrations-view h1 {
         top: 40%;
-        /* Adjust distance below navbar */
         color: #fff;
         font-size: 60px;
         margin: 0;
@@ -228,7 +258,6 @@ export default {
         background-color: #f0f0f0;
         color: #444;
         font-size: 20px;
-        /* Adjust the font size here */
         padding: 5px;
     }
 
@@ -237,9 +266,7 @@ export default {
     }
 
     td {
-        /* background-color: #0040ff; */
         padding: 10px;
-        /* text-align: center; */
     }
 
     tr:nth-child(even) {
@@ -258,7 +285,6 @@ export default {
         right: 40px;
     }
 
-    /* Add margin-right to the first button */
     .session-actions button:first-child {
         margin-right: 10px;
     }
@@ -271,7 +297,6 @@ export default {
         border-radius: 4px;
         cursor: pointer;
         margin-left: 10px;
-        /* Add some space to the left of the button if needed */
     }
 
     button:hover {
@@ -280,6 +305,5 @@ export default {
 
     .selected td {
         background-color: blue;
-        /* Highlight selected account in blue */
     }
 </style>

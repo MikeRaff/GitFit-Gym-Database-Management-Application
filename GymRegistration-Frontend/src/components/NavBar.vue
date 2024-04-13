@@ -13,11 +13,11 @@
             <a class="account-link" href="#/accounts" target="_self" rel="noopener noreferrer" @click="closeNav" data-text="Accounts">
                 <img src="@/assets/Account.png" class="icon" alt="Account Logo" />
             </a>
-            <a v-if="storedEmail" class="account-details-link" href="#/account-details" @click="closeNav" data-text="Account Details"> 
-                <img src="@/assets/AccountSettings.png" class="icon" alt="Account Details" />
+            <a v-if="storedEmail" class="account-details-link" href="#/account-details" @click="closeNav" data-text="AccountDetails"> 
+                <img src="@/assets/AccountSettings.png" class="icon" alt="Details" />
             </a>
             <a v-if="storedEmail" class="customer-registrations-link" href="#/customer-registrations" @click="closeNav" data-text="Registrations"> 
-                <img src="" class="icon" alt="Account Details" />
+                <img src="@/assets/Registration.png" class="icon" alt="Account Details" />
             </a>
             <a v-if="!storedEmail" class="button-link" href="#/login" target="_self" rel="noopener noreferrer" @click="closeNav">
                 SIGN IN
@@ -91,7 +91,7 @@ export default {
     font-size: 25px;
     color: #f0f0f083;
     display: block;
-    margin: 0 80px;
+    margin: 0 60px;
     position: relative;
     text-decoration: none;
     outline: none;
