@@ -36,16 +36,6 @@ In this project, our team of software developers was tasked with creating a web 
 cd gymregistration 
 ./gradelw clean build or ./gradelw build
 
-### Effort Distrubtion For Code Pre Deadline
-|Erik|Billy|Paul|Jerome|Mike|
-|----|-----|----|------|----|
-|~50%| ~15%|~15|~15|~5%|
-
-### Effort Distrubtion For Code Post Deadline
-|Erik|Billy|Paul|Jerome|Mike|
-|----|-----|----|------|----|
-|~30%| ~25%|~20|~15|~10%|
-
 ## 📺 Deliverable 3 :sleeping::
 [Frontend Notation](https://github.com/McGill-ECSE321-Winter2024/project-group-3/wiki/%F0%9F%93%BA-Frontend)
 [Project Board](https://github.com/orgs/McGill-ECSE321-Winter2024/projects/36/views/1)  
